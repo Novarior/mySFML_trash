@@ -1,0 +1,220 @@
+#include "Process.hpp"
+
+void Process::loadGameData(){
+    std::ifstream ifs("gameconfig.cfg");
+	if (ifs.is_open()){ }
+	ifs.close();
+}
+
+void Process::saveGameData(){
+    std::ofstream ofs("gameconfig.cfg");
+	if (ofs.is_open())
+    {
+        ofs << this->noicedata.seed;
+        ofs << this->noicedata.mapSize.x << this->noicedata.mapSize.y;
+        ofs << this->noicedata.octaves;
+        ofs << this->noicedata.persistence;
+        ofs << this->noicedata.RenderWindow.x << this->noicedata.RenderWindow.y;
+        ofs << this->noicedata.gridSize;
+
+
+    }
+	ofs.close();    
+}
+
+void Process::initKeybinds(){
+    this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
+    this->keybinds["TAB"] = this->supportedKeys->at("Tab");
+    this->keybinds["KEY_A"] = this->supportedKeys->at("A");
+    this->keybinds["KEY_D"] = this->supportedKeys->at("D");
+    this->keybinds["KEY_S"] = this->supportedKeys->at("S");
+    this->keybinds["KEY_W"] = this->supportedKeys->at("W");
+}
+
+void Process::initTileMap(){
+    this->noicedata.gridSize = this->stateData->grid_size;
+    this->noicedata.octaves = 8;    
+    this->noicedata.seed = 1;
+    this->noicedata.frequency = 8;
+    this->noicedata.RenderWindow = sf::Vector2f(
+        this->stateData->gfxSettings->resolution.width,
+        this->stateData->gfxSettings->resolution.height);
+    this->noicedata.mapSize = sf::Vector2u(620,430);
+    this->noicedata.persistence = 0.6f;
+
+    this->myGN = new ProcessGenerationNoice(this->noicedata);
+    this->mapTiles = new TileMap(this->noicedata,myGN);
+}
+
+void Process::initView(){
+    this->view.setSize(sf::Vector2f(
+			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+
+	this->view.setCenter(sf::Vector2f(
+			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+
+    this->playerView.setSize(sf::Vector2f(
+			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+
+	this->playerView.setCenter(sf::Vector2f(
+			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+
+            this->renderTexture.create(
+		this->stateData->sWindow->getSize().x,
+		this->stateData->sWindow->getSize().y);
+
+	this->renderSprite.setTexture(this->renderTexture.getTexture());
+	this->renderSprite.setTextureRect(sf::IntRect(0, 0, 
+			this->stateData->sWindow->getSize().x,
+			this->stateData->sWindow->getSize().y));
+}
+
+void Process::initTabMenu(){
+    this->tabmenu=new gui::TabMenu(this->stateData->sWindow->getSize());
+
+    this->tabmenu->addButton("TTT_BUTTON",new gui::Button(
+        sf::Vector2f(this->stateData->sWindow->getSize().x-185,115),
+        sf::Vector2f(160,90),
+        this->stateData->font,"ttt", 20,
+        sf::Color::White,
+        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90), 
+        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90)));
+
+        this->tabmenu->addButton("REBUILD_BUTTON",new gui::Button(
+        sf::Vector2f(this->stateData->sWindow->getSize().x-185,25),
+        sf::Vector2f(160,90),
+        this->stateData->font,"reBuild", 20,
+        sf::Color::White,
+        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90), 
+        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90)));
+}
+
+void Process::initPlayer(){
+    this->player = new Player();
+}
+
+void Process::initPauseMenu(){
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+	this->pausemenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->stateData->font);
+	this->pausemenu->addButton("EXIT_BUTTON", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
+}
+
+
+Process::Process(StateData* state_data):State(state_data){
+    this->initKeybinds();
+    this->initView();
+    this->initTileMap();
+    this->initTabMenu();
+    this->initPlayer();
+    this->initPauseMenu();
+    this->gameClock.restart();
+}
+
+Process::~Process(){
+    delete this->myGN;
+    delete this->mapTiles;
+    delete this->tabmenu;
+    delete this->pausemenu;
+    delete this->player;
+}
+
+void Process::updateInput(const float& deltatime){
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TAB"))) && this->getKeytime())
+        this->tabmenu->toggleSwitch();
+
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
+        this->paused= !this->paused;
+}
+
+void Process::updatePlayerInputs(const float& deltatime){
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_A"))))
+        this->player->e_move(sf::Vector2f(-1.f,0.f),deltatime);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_D"))))
+        this->player->e_move(sf::Vector2f(1.f,0.f),deltatime);
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_W"))))
+        this->player->e_jump(deltatime);    
+}
+
+void Process::updateButtons(){
+    if(this->tabmenu->isPressed("REBUILD_BUTTON")&&this->getKeytime());       
+}
+
+void Process::update(const float& deltatime){
+    this->updateMousePositions(&this->view);
+    this->updateKeytime(deltatime);
+    this->updateInput(deltatime);
+
+    if(this->paused){ //update pause
+        this->pausemenu->update(this->mousePosWindow);
+        if(this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
+            this->endState();
+    }
+    else{ //update game
+        this->updatePlayerInputs(deltatime);
+        this->updateButtons();
+        if(this->tabmenu->isOpen())
+            this->tabmenu->update(deltatime,this->mousePosWindow);
+
+        this->player->e_update(deltatime);
+        this->player->e_updateCollison(this->mapTiles,deltatime);
+
+    }
+
+    if(this->debugMode){//update debug information
+        double fps = 1.0f/deltatime;
+        this->string_Stream 
+            << "FPS:\t" << fps << "\n"
+            << "Time Elapsed: " << this->m_gamedata.timeInitElapsed << '\n' 
+            << "Player:\n" 
+            << "\tvelX: " << this->player->e_getVelocity().x << "\n" 
+            << "\tvelY: " << this->player->e_getVelocity().y<<'\n'
+            << "Position:\n"
+            << "\tx: " << this->player->e_getPosition().x
+            << "\ty: " << this->player->e_getPosition().y <<'\n'
+            << "\tgrid x: " << this->player->e_getGridPosition(this->gridSize).x << '\n'
+            << "\tgrid y: " << this->player->e_getGridPosition(this->gridSize).y << '\n'
+            << "Map Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y << '\n'
+            << "Map Area Render:\t" 
+            << this->mapTiles->getRenderArea().fromX << ' '
+            << this->mapTiles->getRenderArea().fromY << ' '
+            << this->mapTiles->getRenderArea().toX << ' '
+            << this->mapTiles->getRenderArea().toY << '\n'
+            << "Pause:\t"<<this->paused;
+
+        this->dText.setString(this->string_Stream.str());
+        this->string_Stream.str("");}
+}
+
+void Process::render(sf::RenderWindow* target){
+    if(!target)
+        target=this->window;
+// re CLEAR pre rendered texture
+    this->renderTexture.clear();
+    this->renderTexture.setView(this->playerView);
+
+// render scne in custom view
+    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPosition(this->gridSize),this->debugMode);
+    this->playerView.setCenter(this->player->e_getPosition());
+    this->player->e_render(&this->renderTexture); 
+
+// reset view
+    this->renderTexture.setView(this->renderTexture.getDefaultView());
+
+//render other elements
+    if(this->tabmenu->isOpen())
+        this->tabmenu->render(&this->renderTexture);
+
+    if(this->debugMode)
+        this->renderTexture.draw(this->dText); 
+
+    if(this->paused) //Pause menu render
+		this->pausemenu->render(&this->renderTexture);
+
+//final render
+    this->renderTexture.display();
+    target->draw(this->renderSprite);
+}

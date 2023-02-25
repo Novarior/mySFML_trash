@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: clang сборка активного файла",
+			"label": "C/C++: clang сборка активного ARM.app файла",
 			"command": "/usr/bin/clang++",
 			"args": [
 				"-std=c++17",
@@ -29,6 +29,53 @@
 				"-Isource/include/",
 				"-o",
 				"${workspaceFolder}/main.app",
+				"-Lsource/lib",
+				"-lsfml-graphics",
+				"-lsfml-window",
+				"-lsfml-system",
+				"-w",
+				"-ferror-limit=100"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "компилятор: /usr/bin/clang"
+		},
+		{
+			"type": "cppbuild",
+			"label": "C/C++: clang сборка активного Winx86_64.exe файла",
+			"command": "/usr/bin/clang++",
+			"args": [
+				"-std=c++17",
+				"main.cpp",
+				"Core.cpp",
+				"states/State.cpp",
+				"states/MainMenu.cpp",
+				"states/PauseMenu.cpp",
+				"states/Process.cpp",
+				"states/gfx.cpp",
+				"states/NoiceView.cpp",
+				"math/mymath.cpp",
+				"math/ProcessGenerationNoice.cpp",
+				"GUI/GUISYS.cpp",
+				"GUI/tabMenu.cpp",
+				"entitys/entity.cpp",
+				"entitys/player.cpp",
+				"entitys/properties/hitbox.cpp",
+				"entitys/properties/movement.cpp",
+				"Content/rotationCircle.cpp",
+				"Content/Map/block.cpp",
+				"Content/Map/TileMap.cpp",
+				"-Isource/include/",
+				"-o",
+				"${workspaceFolder}/main.exe",
 				"-Lsource/lib",
 				"-lsfml-graphics",
 				"-lsfml-window",

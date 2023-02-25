@@ -20,8 +20,8 @@ void Entity::initSomeinit()
 
 void Entity::initHitbox()
 {
+//добавити ініціалізацію хітбокса суко
 }
-
 
 Entity::Entity()
 {

@@ -11,6 +11,7 @@ void NoiceView::initButton(){
         sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180), 
         sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
 }
+
 /*
 void NoiceView::createStepByStep(sf::Vector2f pos){
 double writebuff=0;

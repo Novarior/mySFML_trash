@@ -17,7 +17,6 @@ void Process::saveGameData(){
         ofs << this->noicedata.RenderWindow.x << this->noicedata.RenderWindow.y;
         ofs << this->noicedata.gridSize;
 
-
     }
 	ofs.close();    
 }

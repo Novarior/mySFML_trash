@@ -2,34 +2,34 @@
 #include "State.hpp"
 
 State::State(StateData* state_data){
-	this->stateData = state_data;
-	this->window = state_data->sWindow;
-	this->states = state_data->sStates;
-	this->quit = false;
-	this->paused = false;
-	this->keytime = 0.f;
-	this->keytimeMax = 10.f;
-    this->gridSize = state_data->grid_size;
-	this->supportedKeys = state_data->supportedKeys;
+	this->IstateData = state_data;
+	this->Iwindow = state_data->sWindow;
+	this->Istates = state_data->sStates;
+	this->Iquit = false;
+	this->Ipaused = false;
+	this->Ikeytime = 0.f;
+	this->IkeytimeMax = 10.f;
+    this->IgridSize = state_data->grid_size;
+	this->IsupportedKeys = state_data->supportedKeys;
 
-	this->string_Stream.str("");
+	this->dString_Stream.str("");
 	this->debugMode = true;
 
 	this->dText.setFillColor(sf::Color::White);
     this->dText.setCharacterSize(30);
-    this->dText.setFont(this->stateData->font);
+    this->dText.setFont(this->IstateData->debugFont );
 }
 
 State::~State(){ }
 
 //Accessors
 const bool & State::getQuit() const {
-	return this->quit;
+	return this->Iquit;
 }
 
 const bool State::getKeytime(){
-	if (this->keytime >= this->keytimeMax){
-		this->keytime = 0.f;
+	if (this->Ikeytime >= this->IkeytimeMax){
+		this->Ikeytime = 0.f;
 		return true;
 	}
 	return false;
@@ -37,33 +37,33 @@ const bool State::getKeytime(){
 
 //Functions
 void State::endState(){
-	this->quit = true;
+	this->Iquit = true;
 }
 
 void State::pauseState(){
-	this->paused = true;
+	this->Ipaused = true;
 }
 
 void State::unpauseState(){
-	this->paused = false;
+	this->Ipaused = false;
 }
 
 void State::updateMousePositions(sf::View* view){
 	this->mousePosScreen = sf::Mouse::getPosition();
-	this->mousePosWindow = sf::Mouse::getPosition(*this->window);
+	this->mousePosWindow = sf::Mouse::getPosition(*this->Iwindow);
 
 	if(view)
-		this->window->setView(*view);
+		this->Iwindow->setView(*view);
 	
-	this->mousePosView = this->window->mapPixelToCoords(sf::Mouse::getPosition(*this->window));
+	this->mousePosView = this->Iwindow->mapPixelToCoords(sf::Mouse::getPosition(*this->Iwindow));
 	this->mousePosGrid = sf::Vector2i(
-		static_cast<int>(this->mousePosView.x) / static_cast<int>(this->gridSize),
-		static_cast<int>(this->mousePosView.y) / static_cast<int>(this->gridSize));
+		static_cast<int>(this->mousePosView.x) / static_cast<int>(this->IgridSize),
+		static_cast<int>(this->mousePosView.y) / static_cast<int>(this->IgridSize));
 
-	this->window->setView(this->window->getDefaultView());
+	this->Iwindow->setView(this->Iwindow->getDefaultView());
 }
 
 void State::updateKeytime(const float& deltatime){
-	if (this->keytime < this->keytimeMax)
-		this->keytime += 100.f * deltatime;
+	if (this->Ikeytime < this->IkeytimeMax)
+		this->Ikeytime += 100.f * deltatime;
 }

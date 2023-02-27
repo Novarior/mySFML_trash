@@ -3,7 +3,7 @@
 #include "block.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"
 
-struct renderArea
+const struct renderArea
 {
     int fromX;
     int fromY;
@@ -22,8 +22,10 @@ private:
     sf::Vector2f maxSizeWorldFloat;
     noiceData m_dnoice;
     std::vector<std::vector<BrickBlock* > > tilemap;
+    std::map<std::string, sf::Texture> m_TexturesList;
 
     void Clear();
+    void loadTextuteMap();
 
 public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);

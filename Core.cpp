@@ -15,6 +15,9 @@ void Core::initStateData()
     if(!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/PlayfairDisplay-Black.ttf"))
     {
     }
+    if(!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Muli-Regular.ttf"))
+    {
+    }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;

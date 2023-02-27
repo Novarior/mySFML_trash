@@ -11,7 +11,6 @@
             "program": "${workspaceFolder}/main.app",
             "MIMode": "lldb"
         },
-        
         {
             "name": "(lldb) Запустить",
             "type": "cppdbg",
@@ -20,10 +19,14 @@
             "args": [],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
-            "environment": [],
+            "environment": [
+                {
+                    "name": "Test",
+                    "value": "Debug"
+                }
+            ],
             "externalConsole": true,
             "MIMode": "lldb"
         }
-
     ]
 }

@@ -8,7 +8,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 
 	//Init container
 	this->container.setSize(sf::Vector2f(
-			static_cast<float>(vm.width) / 4.f,
+			static_cast<float>(vm.width) / 2.5f,
 			static_cast<float>(vm.height) - gui::p2pY(9.3f, vm)));
 
 	this->container.setFillColor(sf::Color(30, 30, 30, 180));
@@ -16,7 +16,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 
 	//Init text
 	this->menuText.setFont(this->font);
-	this->menuText.setFillColor(sf::Color(255, 255, 255, 200));
+	this->menuText.setFillColor(sf::Color(200, 200, 200, 255));
 	this->menuText.setCharacterSize(gui::calcCharSize(vm));
 	this->menuText.setString("PAUSED");
 	this->menuText.setPosition(

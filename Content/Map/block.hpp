@@ -5,12 +5,13 @@
 class BrickBlock
 {
     private:
-    sf::RectangleShape shape;
-    sf::RectangleShape hitbox;
+    sf::RectangleShape m_Shape;
+    sf::RectangleShape m_Hitbox;
+    sf::Texture& m_Texture;
     bool collision;
 
     public:
-        BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collosion);
+        BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collosion, sf::Texture& texture);
         virtual ~BrickBlock();
 
         const bool& getCollision();

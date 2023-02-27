@@ -22,22 +22,22 @@ void Process::saveGameData(){
 }
 
 void Process::initKeybinds(){
-    this->keybinds["CLOSE"] = this->supportedKeys->at("Escape");
-    this->keybinds["TAB"] = this->supportedKeys->at("Tab");
-    this->keybinds["KEY_A"] = this->supportedKeys->at("A");
-    this->keybinds["KEY_D"] = this->supportedKeys->at("D");
-    this->keybinds["KEY_S"] = this->supportedKeys->at("S");
-    this->keybinds["KEY_W"] = this->supportedKeys->at("W");
+    this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
+    this->Ikeybinds["TAB"] = this->IsupportedKeys->at("Tab");
+    this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");
+    this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
+    this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
+    this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
 }
 
 void Process::initTileMap(){
-    this->noicedata.gridSize = this->stateData->grid_size;
+    this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.octaves = 8;    
     this->noicedata.seed = 1;
     this->noicedata.frequency = 8;
     this->noicedata.RenderWindow = sf::Vector2f(
-        this->stateData->gfxSettings->resolution.width,
-        this->stateData->gfxSettings->resolution.height);
+        this->IstateData->gfxSettings->resolution.width,
+        this->IstateData->gfxSettings->resolution.height);
     this->noicedata.mapSize = sf::Vector2u(620,430);
     this->noicedata.persistence = 0.6f;
 
@@ -47,46 +47,46 @@ void Process::initTileMap(){
 
 void Process::initView(){
     this->view.setSize(sf::Vector2f(
-			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 
 	this->view.setCenter(sf::Vector2f(
-			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 
     this->playerView.setSize(sf::Vector2f(
-			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 
 	this->playerView.setCenter(sf::Vector2f(
-			static_cast<float>(this->stateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->stateData->sWindow->getSize().y / 2)));
+			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 
             this->renderTexture.create(
-		this->stateData->sWindow->getSize().x,
-		this->stateData->sWindow->getSize().y);
+		this->IstateData->sWindow->getSize().x,
+		this->IstateData->sWindow->getSize().y);
 
 	this->renderSprite.setTexture(this->renderTexture.getTexture());
 	this->renderSprite.setTextureRect(sf::IntRect(0, 0, 
-			this->stateData->sWindow->getSize().x,
-			this->stateData->sWindow->getSize().y));
+			this->IstateData->sWindow->getSize().x,
+			this->IstateData->sWindow->getSize().y));
 }
 
 void Process::initTabMenu(){
-    this->tabmenu=new gui::TabMenu(this->stateData->sWindow->getSize());
+    this->tabmenu=new gui::TabMenu(this->IstateData->sWindow->getSize());
 
     this->tabmenu->addButton("TTT_BUTTON",new gui::Button(
-        sf::Vector2f(this->stateData->sWindow->getSize().x-185,115),
+        sf::Vector2f(this->IstateData->sWindow->getSize().x-185,115),
         sf::Vector2f(160,90),
-        this->stateData->font,"ttt", 20,
+        this->IstateData->font,"ttt", 20,
         sf::Color::White,
         sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90), 
         sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90)));
 
         this->tabmenu->addButton("REBUILD_BUTTON",new gui::Button(
-        sf::Vector2f(this->stateData->sWindow->getSize().x-185,25),
+        sf::Vector2f(this->IstateData->sWindow->getSize().x-185,25),
         sf::Vector2f(160,90),
-        this->stateData->font,"reBuild", 20,
+        this->IstateData->font,"reBuild", 20,
         sf::Color::White,
         sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90), 
         sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90)));
@@ -97,8 +97,8 @@ void Process::initPlayer(){
 }
 
 void Process::initPauseMenu(){
-	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
-	this->pausemenu = new PauseMenu(this->stateData->gfxSettings->resolution, this->stateData->font);
+	const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
+	this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
 	this->pausemenu->addButton("EXIT_BUTTON", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
@@ -122,19 +122,19 @@ Process::~Process(){
 }
 
 void Process::updateInput(const float& deltatime){
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TAB"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime())
         this->tabmenu->toggleSwitch();
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
-        this->paused= !this->paused;
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
+        this->Ipaused= !this->Ipaused;
 }
 
 void Process::updatePlayerInputs(const float& deltatime){
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_A"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_A"))))
         this->player->e_move(sf::Vector2f(-1.f,0.f),deltatime);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_D"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
         this->player->e_move(sf::Vector2f(1.f,0.f),deltatime);
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("KEY_W"))))
+    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
         this->player->e_jump(deltatime);    
 }
 
@@ -147,7 +147,7 @@ void Process::update(const float& deltatime){
     this->updateKeytime(deltatime);
     this->updateInput(deltatime);
 
-    if(this->paused){ //update pause
+    if(this->Ipaused){ //update pause
         this->pausemenu->update(this->mousePosWindow);
         if(this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
@@ -165,7 +165,7 @@ void Process::update(const float& deltatime){
 
     if(this->debugMode){//update debug information
         double fps = 1.0f/deltatime;
-        this->string_Stream 
+        this->dString_Stream 
             << "FPS:\t" << fps << "\n"
             << "Time Elapsed: " << this->m_gamedata.timeInitElapsed << '\n' 
             << "Player:\n" 
@@ -174,29 +174,29 @@ void Process::update(const float& deltatime){
             << "Position:\n"
             << "\tx: " << this->player->e_getPosition().x
             << "\ty: " << this->player->e_getPosition().y <<'\n'
-            << "\tgrid x: " << this->player->e_getGridPosition(this->gridSize).x << '\n'
-            << "\tgrid y: " << this->player->e_getGridPosition(this->gridSize).y << '\n'
+            << "\tgrid x: " << this->player->e_getGridPosition(this->IgridSize).x << '\n'
+            << "\tgrid y: " << this->player->e_getGridPosition(this->IgridSize).y << '\n'
             << "Map Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y << '\n'
             << "Map Area Render:\t" 
             << this->mapTiles->getRenderArea().fromX << ' '
             << this->mapTiles->getRenderArea().fromY << ' '
             << this->mapTiles->getRenderArea().toX << ' '
             << this->mapTiles->getRenderArea().toY << '\n'
-            << "Pause:\t"<<this->paused;
+            << "Pause:\t"<<this->Ipaused;
 
-        this->dText.setString(this->string_Stream.str());
-        this->string_Stream.str("");}
+        this->dText.setString(this->dString_Stream.str());
+        this->dString_Stream.str("");}
 }
 
 void Process::render(sf::RenderWindow* target){
     if(!target)
-        target=this->window;
+        target=this->Iwindow;
 // re CLEAR pre rendered texture
     this->renderTexture.clear();
     this->renderTexture.setView(this->playerView);
 
 // render scne in custom view
-    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPosition(this->gridSize),this->debugMode);
+    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPosition(this->IgridSize),this->debugMode);
     this->playerView.setCenter(this->player->e_getPosition());
     this->player->e_render(&this->renderTexture); 
 
@@ -210,7 +210,7 @@ void Process::render(sf::RenderWindow* target){
     if(this->debugMode)
         this->renderTexture.draw(this->dText); 
 
-    if(this->paused) //Pause menu render
+    if(this->Ipaused) //Pause menu render
 		this->pausemenu->render(&this->renderTexture);
 
 //final render

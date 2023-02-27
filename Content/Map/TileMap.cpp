@@ -13,8 +13,23 @@ void TileMap::Clear(){
     }
 }
 
+void TileMap::loadTextuteMap(){
+
+    if(!this->m_TexturesList["GRASS"].loadFromFile("Content/Textures/Tiles/grass.png"))
+         std::cout<<"\nTexture GRASS Dosent LOAD \n";
+    if(!this->m_TexturesList["STONE"].loadFromFile("Content/Textures/Tiles/stone.png"))
+        std::cout<<"\nTexture STONE Dosent LOAD \n";
+    if(!this->m_TexturesList["OCEAN"].loadFromFile("Content/Textures/Tiles/ocean.png"))
+        std::cout<<"\nTexture OCEAN Dosent LOAD \n";
+    if(!this->m_TexturesList["SAND"].loadFromFile("Content/Textures/Tiles/ocean.png"))
+        std::cout<<"\nTexture SAND Dosent LOAD \n";
+    if(!this->m_TexturesList["GROUND"].loadFromFile("Content/Textures/Tiles/ocean.png"))
+        std::cout<<"\nTexture GROUND Dosent LOAD \n";
+}
+
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice){
     this->Clear();
+    this->loadTextuteMap();
     double writebuff;
     bool collisionBuff;
     this->m_dnoice = datanoice;
@@ -45,22 +60,56 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice){
             if(writebuff<0x3f)
                 collisionBuff = false;
             
-            if(writebuff<55){ //sea
-                buff = sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff*1.9, 255); }
-            else if(writebuff < 66){ //sand
-                buff = sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90+writebuff*0.1, 255); }
-            else if(writebuff < 160){ //grass
-                buff = sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255); }   
-            else if(writebuff < 165){ //ground
-                buff = sf::Color(90-writebuff*0.1, 71+writebuff*0.15, 55+writebuff*0.1, 255); } 
-            else if(writebuff < 175){ //cave
-                buff = sf::Color(40+writebuff*0.1, 71-writebuff*0.2, 55-writebuff*0.2, 255); } 
-            else{ //other
-                buff = sf::Color(writebuff,writebuff,writebuff,255); }         
-            this->tilemap[x].push_back(new BrickBlock(
+            if(writebuff<55)
+            { //sea
+                buff = sf::Color(0, 10 + writebuff * 1.6, 100 + writebuff*1.9, 255); 
+                this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
                     sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
-                    collisionBuff));
+                    collisionBuff, this->m_TexturesList["OCEAN"]));
+            }
+            else if(writebuff < 66)
+            { //sand
+                buff = sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90+writebuff*0.1, 255);
+                this->tilemap[x].push_back(new BrickBlock(
+                    sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
+                    sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
+                    collisionBuff, this->m_TexturesList["SAND"]));
+            }
+            else if(writebuff < 160)
+            { //grass
+                buff = sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255); 
+                this->tilemap[x].push_back(new BrickBlock(
+                    sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
+                    sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
+                    collisionBuff, this->m_TexturesList["GRASS"]));
+                    }   
+            else if(writebuff < 165)
+            { //ground
+                buff = sf::Color(90-writebuff*0.1, 71+writebuff*0.15, 55+writebuff*0.1, 255);
+                this->tilemap[x].push_back(new BrickBlock(
+                    sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
+                    sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
+                    collisionBuff, this->m_TexturesList["GROUND"]));
+            } 
+            else if(writebuff < 175)
+            { //cave
+                buff = sf::Color(40+writebuff*0.1, 71-writebuff*0.2, 55-writebuff*0.2, 255);
+                this->tilemap[x].push_back(new BrickBlock(
+                    sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
+                    sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
+                    collisionBuff, this->m_TexturesList["STONE"]));
+            } 
+            else
+            { //other
+                buff = sf::Color(writebuff,writebuff,writebuff,255);
+                this->tilemap[x].push_back(new BrickBlock(
+                    sf::Vector2f(this->m_dnoice.gridSize,this->m_dnoice.gridSize),
+                    sf::Vector2f(x*this->m_dnoice.gridSize, y*this->m_dnoice.gridSize),buff,
+                    collisionBuff, this->m_TexturesList["GRASS"]));
+            }         
+
+                    
         }
 }
 

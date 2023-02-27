@@ -1,19 +1,21 @@
 #include "block.hpp"
 
-BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collision)
+BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collision,sf::Texture& texture):m_Texture(texture)
 {
-    this->shape.setSize(size);
-    this->shape.setPosition(position);
-    this->shape.setFillColor(color);
+    this->m_Shape.setSize(size);
+    this->m_Shape.setPosition(position);
+    this->m_Shape.setFillColor(color);
+    this->m_Shape.setTexture(&this->m_Texture);
 
     this->collision=collision;
+
     if(this->collision)
     {
-        this->hitbox.setSize(size);
-        this->hitbox.setPosition(position);
-        this->hitbox.setFillColor(sf::Color::Transparent);
-        this->hitbox.setOutlineColor(sf::Color::Red);
-        this->hitbox.setOutlineThickness(0);
+        this->m_Hitbox.setSize(size);
+        this->m_Hitbox.setPosition(position);
+        this->m_Hitbox.setFillColor(sf::Color::Transparent);
+        this->m_Hitbox.setOutlineColor(sf::Color::Red);
+        this->m_Hitbox.setOutlineThickness(0);
     }
 }
 
@@ -29,13 +31,13 @@ const bool& BrickBlock::getCollision()
 
 sf::RectangleShape& BrickBlock::getRectangleShape()
 {
-    return this->shape;
+    return this->m_Shape;
 }
 
 void BrickBlock::render(sf::RenderTarget* target)
 {
-    target->draw(this->shape);
+    target->draw(this->m_Shape);
 
     if(this->collision)
-    target->draw(this->hitbox);
+        target->draw(this->m_Hitbox);
 }

@@ -13,6 +13,7 @@ class StateData
     float grid_size;
     sf::RenderWindow* sWindow;
 	sf::Font font;
+	sf::Font debugFont;
 	GraphicsSettings* gfxSettings;
     std::stack<State*>* sStates;
 	std::map<std::string, int>* supportedKeys;
@@ -21,24 +22,24 @@ class State
 {
     private:
     protected:
-	StateData* stateData;
-	std::stack<State*>* states;
-	sf::RenderWindow* window;
-	std::map<std::string, int>* supportedKeys;
-	std::map<std::string, int> keybinds;
+	StateData* IstateData;
+	std::stack<State*>* Istates;
+	sf::RenderWindow* Iwindow;
+	std::map<std::string, int>* IsupportedKeys;
+	std::map<std::string, int> Ikeybinds;
 
-	bool quit;
-	bool paused;
-	float keytime;
-	float keytimeMax;
-	float gridSize;
+	bool Iquit;
+	bool Ipaused;
+	float Ikeytime;
+	float IkeytimeMax;
+	float IgridSize;
 
 	sf::Vector2i mousePosScreen;
 	sf::Vector2i mousePosWindow;
 	sf::Vector2f mousePosView;
 	sf::Vector2i mousePosGrid;
 
-	std::stringstream string_Stream;
+	std::stringstream dString_Stream;
 	sf::Text dText;
 	bool debugMode;
 	//Resources

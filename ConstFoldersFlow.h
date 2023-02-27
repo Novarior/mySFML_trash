@@ -4,6 +4,4 @@
 const char $DIR_HOME[] = "cd $home/Documents";
 const char $DIR_FOLDERHOME[] = "cd $home/Desktop/try/";
 
-
-
-#endif CPP_CONST_PATH_FILES_HPP
+#endif

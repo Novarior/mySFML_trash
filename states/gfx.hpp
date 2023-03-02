@@ -4,7 +4,7 @@
 
 class GraphicsSettings
 {
-public:
+	public:
 	GraphicsSettings();
 
 	//Variables

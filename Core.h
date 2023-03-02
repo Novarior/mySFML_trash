@@ -5,7 +5,7 @@
 #include "states/gfx.hpp"
 class Core
 {
-private:
+    private:
     float deltaTime;
     sf::Clock deltaClock;
     void createWindow();
@@ -25,7 +25,7 @@ private:
 
     void initWindow();
 
-public:
+    public:
     Core();
     virtual ~Core();
 

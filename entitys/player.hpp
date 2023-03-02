@@ -7,11 +7,11 @@ class Player: public Entity
     private:
 
     public:
-        Player();
-        virtual ~Player();
+    Player();
+    virtual ~Player();
 
-        void e_update(const float& deltatime);
-        void e_render(sf::RenderTarget* target);
+    void e_update(const float& deltatime);
+    void e_render(sf::RenderTarget* target);
 
 };
 

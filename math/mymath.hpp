@@ -3,7 +3,7 @@
 
 #include "../header.h"
 
-enum colorMode {RED_GRADIENT, GREEN_GRADIENT, BLURE_GRADIENT,GRAY_GRADIENT};
+enum colorMode { RED_GRADIENT, GREEN_GRADIENT, BLURE_GRADIENT, GRAY_GRADIENT };
 
 static sf::Color getRandomColor(unsigned short gradient);
 static sf::Color getRandomColor();

@@ -7,21 +7,21 @@ class State;
 
 class StateData
 {
-    public:
-    StateData(){}
+	public:
+	StateData() {}
 
-    float grid_size;
-    sf::RenderWindow* sWindow;
+	float grid_size;
+	sf::RenderWindow* sWindow;
 	sf::Font font;
 	sf::Font debugFont;
 	GraphicsSettings* gfxSettings;
-    std::stack<State*>* sStates;
+	std::stack<State*>* sStates;
 	std::map<std::string, int>* supportedKeys;
 };
 class State
 {
-    private:
-    protected:
+	private:
+	protected:
 	StateData* IstateData;
 	std::stack<State*>* Istates;
 	sf::RenderWindow* Iwindow;
@@ -51,8 +51,8 @@ class State
 
 
 
-    public:
-    State(StateData* state_data);
+	public:
+	State(StateData* state_data);
 	virtual ~State();
 
 	//Accessors
@@ -60,10 +60,10 @@ class State
 	const bool getKeytime();
 
 	//Functions	
-	void endState(); 
+	void endState();
 	void pauseState();
 	void unpauseState();
-	
+
 	virtual void updateMousePositions(sf::View* view = NULL);
 	virtual void updateKeytime(const float& deltatime);
 	virtual void updateInput(const float& deltatime) = 0;

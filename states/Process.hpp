@@ -18,7 +18,7 @@ struct Gamedata
 
 class Process:public State
 {
-private:
+    private:
     sf::Clock gameClock;
     sf::View view;
     sf::View playerView;
@@ -42,14 +42,14 @@ private:
     void loadGameData();
     void saveGameData();
 
-public:
+    public:
     Process(StateData* state_data);
     virtual ~Process();
 
 
     void updateInput(const float& deltatime);
     void updateButtons();
-    void updatePlayerInputs(const float &deltatime);
+    void updatePlayerInputs(const float& deltatime);
     void update(const float& deltatime);
     void render(sf::RenderWindow* target);
 };

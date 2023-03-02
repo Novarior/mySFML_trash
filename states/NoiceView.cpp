@@ -1,15 +1,15 @@
 #include "NoiceView.hpp"
 
-void NoiceView::initKeybinds(){
+void NoiceView::initKeybinds() {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
 }
 
-void NoiceView::initButton(){
+void NoiceView::initButton() {
     this->buttons["EXIT_BTN"] = new gui::Button(
-        sf::Vector2f(),sf::Vector2f(250,100),
+        sf::Vector2f(), sf::Vector2f(250, 100),
         this->IstateData->font, "Exit", 20,
-        sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180), 
-        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
 
 
@@ -27,15 +27,20 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
 
             if (writebuff < 55) { //sea
                 this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.9, 255));
-            } else if (writebuff < 66) { //sand
+            }
+            else if (writebuff < 66) { //sand
                 this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255));
-            } else if (writebuff < 160) { //grass
+            }
+            else if (writebuff < 160) { //grass
                 this->image.setPixel(x, y, sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255));
-            } else if (writebuff < 165) { //ground
+            }
+            else if (writebuff < 165) { //ground
                 this->image.setPixel(x, y, sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255));
-            } else if (writebuff < 175) { //cave
+            }
+            else if (writebuff < 175) { //cave
                 this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
-            } else { //other
+            }
+            else { //other
                 this->image.setPixel(x, y, sf::Color(writebuff, writebuff, writebuff, 255));
             }
         }
@@ -44,11 +49,11 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
     this->shape.setTexture(&this->texture);
 }
 
-NoiceView::NoiceView(StateData* statedata):State(statedata){
+NoiceView::NoiceView(StateData* statedata):State(statedata) {
     this->initKeybinds();
 
     this->noicedata.gridSize = this->IstateData->grid_size;
-    this->noicedata.octaves = 8;    
+    this->noicedata.octaves = 8;
     this->noicedata.seed = 1;
     this->noicedata.frequency = 8;
     this->noicedata.RenderWindow = sf::Vector2f(
@@ -57,50 +62,50 @@ NoiceView::NoiceView(StateData* statedata):State(statedata){
     this->noicedata.mapSize = sf::Vector2u(this->noicedata.RenderWindow);
     this->noicedata.persistence = 0.6f;
 
-    this->image.create(this->noicedata.RenderWindow.x,this->noicedata.RenderWindow.y);
+    this->image.create(this->noicedata.RenderWindow.x, this->noicedata.RenderWindow.y);
     this->shape.setSize(this->noicedata.RenderWindow);
-    this->texture.create(this->noicedata.RenderWindow.x,this->noicedata.RenderWindow.y);
+    this->texture.create(this->noicedata.RenderWindow.x, this->noicedata.RenderWindow.y);
     this->myGN = new ProcessGenerationNoice(this->noicedata);
-    this->isGeneratorClosed = false;   
-    this->tick=0;   
-    this->gridSizeX = this->noicedata.RenderWindow.x/10;
-    this->gridSizeY = this->noicedata.RenderWindow.y/10;
-    this->closeGrid=sf::Vector2f();
+    this->isGeneratorClosed = false;
+    this->tick = 0;
+    this->gridSizeX = this->noicedata.RenderWindow.x / 10;
+    this->gridSizeY = this->noicedata.RenderWindow.y / 10;
+    this->closeGrid = sf::Vector2f();
 }
 
-NoiceView::~NoiceView(){
+NoiceView::~NoiceView() {
     delete this->myGN;
 }
 
-void NoiceView::updateInput(const float& deltatime){
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
+void NoiceView::updateInput(const float& deltatime) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
 }
 
-void NoiceView::update(const float& deltatime){
+void NoiceView::update(const float& deltatime) {
     this->updateKeytime(deltatime);
     this->updateInput(deltatime);
 
 
-    if(!this->isGeneratorClosed){
-        if(this->tick==2){
-            this->tick=0;
+    if (!this->isGeneratorClosed) {
+        if (this->tick == 2) {
+            this->tick = 0;
 
             this->createStepByStep(this->closeGrid);
-            if(this->closeGrid.x==9){
-                this->closeGrid.x=0;
-                this->closeGrid.y+=1;
+            if (this->closeGrid.x == 9) {
+                this->closeGrid.x = 0;
+                this->closeGrid.y += 1;
             }
-            else    
-                this->closeGrid.x+=1;
+            else
+                this->closeGrid.x += 1;
 
-            if(this->closeGrid.y==10)
-                this->isGeneratorClosed=true;
-        }   
+            if (this->closeGrid.y == 10)
+                this->isGeneratorClosed = true;
+        }
     }
-    this->tick++;   
+    this->tick++;
 }
 
-void NoiceView::render(sf::RenderWindow* target){
+void NoiceView::render(sf::RenderWindow* target) {
     target->draw(this->shape);
 }

@@ -6,7 +6,7 @@
 class BrickBlock;
 class TileMap;
 
-enum movestate {NONe=-1,Idle, Jump, Fall};
+enum movestate { NONe = -1, Idle, Jump, Fall };
 
 #define MAXSPEEDENTITY = 0x3ff;
 class Movement
@@ -20,7 +20,7 @@ class Movement
     sf::RectangleShape& sprite;
 
     unsigned short m_state;
-    
+
 
     public:
     Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel);

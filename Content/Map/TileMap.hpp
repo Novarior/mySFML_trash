@@ -17,7 +17,7 @@ const struct renderArea
 
 class TileMap
 {
-private:
+    private:
     renderArea m_Area;
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldFloat;
@@ -28,7 +28,7 @@ private:
     void Clear();
     void loadTextuteMap();
 
-public:
+    public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);
     virtual ~TileMap();
 

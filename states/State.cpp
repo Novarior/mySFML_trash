@@ -1,7 +1,7 @@
 #include "../header.h"
 #include "State.hpp"
 
-State::State(StateData* state_data){
+State::State(StateData* state_data) {
 	this->IstateData = state_data;
 	this->Iwindow = state_data->sWindow;
 	this->Istates = state_data->sStates;
@@ -9,26 +9,26 @@ State::State(StateData* state_data){
 	this->Ipaused = false;
 	this->Ikeytime = 0.f;
 	this->IkeytimeMax = 10.f;
-    this->IgridSize = state_data->grid_size;
+	this->IgridSize = state_data->grid_size;
 	this->IsupportedKeys = state_data->supportedKeys;
 
 	this->dString_Stream.str("");
 	this->debugMode = true;
 
 	this->dText.setFillColor(sf::Color::White);
-    this->dText.setCharacterSize(30);
-    this->dText.setFont(this->IstateData->debugFont );
+	this->dText.setCharacterSize(30);
+	this->dText.setFont(this->IstateData->debugFont);
 }
 
-State::~State(){ }
+State::~State() { }
 
 //Accessors
-const bool & State::getQuit() const {
+const bool& State::getQuit() const {
 	return this->Iquit;
 }
 
-const bool State::getKeytime(){
-	if (this->Ikeytime >= this->IkeytimeMax){
+const bool State::getKeytime() {
+	if (this->Ikeytime >= this->IkeytimeMax) {
 		this->Ikeytime = 0.f;
 		return true;
 	}
@@ -36,25 +36,25 @@ const bool State::getKeytime(){
 }
 
 //Functions
-void State::endState(){
+void State::endState() {
 	this->Iquit = true;
 }
 
-void State::pauseState(){
+void State::pauseState() {
 	this->Ipaused = true;
 }
 
-void State::unpauseState(){
+void State::unpauseState() {
 	this->Ipaused = false;
 }
 
-void State::updateMousePositions(sf::View* view){
+void State::updateMousePositions(sf::View* view) {
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->Iwindow);
 
-	if(view)
+	if (view)
 		this->Iwindow->setView(*view);
-	
+
 	this->mousePosView = this->Iwindow->mapPixelToCoords(sf::Mouse::getPosition(*this->Iwindow));
 	this->mousePosGrid = sf::Vector2i(
 		static_cast<int>(this->mousePosView.x) / static_cast<int>(this->IgridSize),
@@ -63,7 +63,7 @@ void State::updateMousePositions(sf::View* view){
 	this->Iwindow->setView(this->Iwindow->getDefaultView());
 }
 
-void State::updateKeytime(const float& deltatime){
+void State::updateKeytime(const float& deltatime) {
 	if (this->Ikeytime < this->IkeytimeMax)
 		this->Ikeytime += 100.f * deltatime;
 }

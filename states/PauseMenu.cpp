@@ -8,8 +8,8 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 
 	//Init container
 	this->container.setSize(sf::Vector2f(
-			static_cast<float>(vm.width) / 2.5f,
-			static_cast<float>(vm.height) - gui::p2pY(9.3f, vm)));
+		static_cast<float>(vm.width) / 2.5f,
+		static_cast<float>(vm.height) - gui::p2pY(9.3f, vm)));
 
 	this->container.setFillColor(sf::Color(30, 30, 30, 180));
 	this->container.setPosition(static_cast<float>(vm.width) / 2.f - this->container.getSize().x / 2.f, 30.f);
@@ -21,7 +21,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 	this->menuText.setString("PAUSED");
 	this->menuText.setPosition(
 		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
-		this->container.getPosition().y + gui::p2pY(4.f, vm) 
+		this->container.getPosition().y + gui::p2pY(4.f, vm)
 	);
 }
 
@@ -46,17 +46,17 @@ const bool PauseMenu::isButtonPressed(const std::string key)
 }
 
 void PauseMenu::addButton(
-	std::string key, 
+	std::string key,
 	float y,
 	float width,
 	float height,
-	unsigned char_size, 
+	unsigned char_size,
 	std::string text)
 {
 	float x = this->container.getPosition().x + this->container.getSize().x / 2.f - width / 2.f;
 
 	this->buttons[key] = new gui::Button(
-		sf::Vector2f(x, y),sf::Vector2f(width, height),
+		sf::Vector2f(x, y), sf::Vector2f(width, height),
 		this->font, text, 60,
 		sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50),
 		sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
@@ -64,7 +64,7 @@ void PauseMenu::addButton(
 
 void PauseMenu::update(const sf::Vector2i& mousePosWindow)
 {
-	for (auto &i : this->buttons)
+	for (auto& i : this->buttons)
 	{
 		i.second->update(mousePosWindow);
 	}
@@ -75,7 +75,7 @@ void PauseMenu::render(sf::RenderTarget* target)
 	target->draw(this->background);
 	target->draw(this->container);
 
-	for (auto &i : this->buttons)
+	for (auto& i : this->buttons)
 	{
 		i.second->render(target);
 	}

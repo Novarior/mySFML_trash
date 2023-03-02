@@ -26,7 +26,7 @@ class ProcessGenerationNoice
     double Interpolate(double a, double b, double x);
     double SmoothedNoise(int i, int x, int y);
     double Noise(int i, int x, int y);
-   
+
 
     ProcessGenerationNoice(noiceData data);
     virtual ~ProcessGenerationNoice();

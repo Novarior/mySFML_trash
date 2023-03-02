@@ -20,7 +20,7 @@ void Entity::initSomeinit()
 
 void Entity::initHitbox()
 {
-//добавити ініціалізацію хітбокса суко
+    //добавити ініціалізацію хітбокса суко
 }
 
 Entity::Entity()
@@ -44,25 +44,25 @@ Movement* Entity::getMovement()
     return this->e_movement;
 }
 
-void Entity::e_move(sf::Vector2f directionalmove,const float& deltaTime)
+void Entity::e_move(sf::Vector2f directionalmove, const float& deltaTime)
 {
-    this->e_movement->move(directionalmove,deltaTime);
+    this->e_movement->move(directionalmove, deltaTime);
 
-        this->mState = IDLE;
-    if(this->e_movement->getVelocity().x!=0 || this->e_movement->getVelocity().y!=0)
+    this->mState = IDLE;
+    if (this->e_movement->getVelocity().x != 0 || this->e_movement->getVelocity().y != 0)
     {
         this->mState = WALK;
     }
 }
 void Entity::e_updateAnimation(std::string keyNameAnimation, const float& deltaTime)
 {
-    if(this->isDuck)
+    if (this->isDuck)
     {
-        this->sprite.setScale(sf::Vector2f(1.f,0.5f));
+        this->sprite.setScale(sf::Vector2f(1.f, 0.5f));
     }
     else
     {
-        this->sprite.setScale(sf::Vector2f(1.f,1.f));
+        this->sprite.setScale(sf::Vector2f(1.f, 1.f));
     }
 }
 void Entity::e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision)
@@ -76,7 +76,7 @@ sf::Vector2f Entity::e_getPosition()
 }
 sf::Vector2i Entity::e_getGridPosition(unsigned int grisSize)
 {
-    return sf::Vector2i(this->sprite.getPosition().x / grisSize,this->sprite.getPosition().y / grisSize);
+    return sf::Vector2i(this->sprite.getPosition().x / grisSize, this->sprite.getPosition().y / grisSize);
 }
 sf::Vector2f Entity::e_getVelocity()
 {

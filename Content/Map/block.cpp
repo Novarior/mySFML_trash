@@ -1,15 +1,15 @@
 #include "block.hpp"
 
-BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collision,sf::Texture& texture):m_Texture(texture)
+BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collision, sf::Texture& texture):m_Texture(texture)
 {
     this->m_Shape.setSize(size);
     this->m_Shape.setPosition(position);
     this->m_Shape.setFillColor(color);
     this->m_Shape.setTexture(&this->m_Texture);
 
-    this->collision=collision;
+    this->collision = collision;
 
-    if(this->collision)
+    if (this->collision)
     {
         this->m_Hitbox.setSize(size);
         this->m_Hitbox.setPosition(position);
@@ -23,7 +23,7 @@ BrickBlock::~BrickBlock()
 {
 
 }
-        
+
 const bool& BrickBlock::getCollision()
 {
     return this->collision;
@@ -38,6 +38,6 @@ void BrickBlock::render(sf::RenderTarget* target)
 {
     target->draw(this->m_Shape);
 
-    if(this->collision)
+    if (this->collision)
         target->draw(this->m_Hitbox);
 }

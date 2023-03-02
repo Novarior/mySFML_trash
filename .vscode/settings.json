@@ -86,7 +86,6 @@
         "span": "cpp",
         "valarray": "cpp"
     },
-    "C_Cpp.clang_format_style": "LLVM",
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
     "editor.fontLigatures": false,
@@ -107,5 +106,12 @@
     "debug.onTaskErrors": "showErrors",
     "C_Cpp.clang_format_fallbackStyle": "file",
     "C_Cpp.autocompleteAddParentheses": true,
-    "C_Cpp.codeAnalysis.clangTidy.codeAction.formatFixes": false
+    "C_Cpp.codeAnalysis.clangTidy.codeAction.formatFixes": true,
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "/Users/dmitrijsusenko/Desktop/try",
+            "binaryPath": "/Users/dmitrijsusenko/Desktop/try/myAppleUnit",
+            "binaryArgs": []
+        }
+    ]
 }

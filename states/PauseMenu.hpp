@@ -7,7 +7,7 @@
 
 class PauseMenu
 {
-private:
+	private:
 	sf::Text menuText;
 	sf::Font& font;
 	sf::RectangleShape background;
@@ -17,7 +17,7 @@ private:
 
 	//Private Functions
 
-public:
+	public:
 	PauseMenu(sf::VideoMode vm, sf::Font& font);
 	virtual ~PauseMenu();
 
@@ -27,11 +27,11 @@ public:
 	//Functions
 	const bool isButtonPressed(const std::string key);
 	void addButton(
-		std::string key, 
+		std::string key,
 		float y,
 		float width,
 		float height,
-		unsigned char_size, 
+		unsigned char_size,
 		std::string text);
 
 	void update(const sf::Vector2i& mousePosWindow);

@@ -11,11 +11,11 @@ class BrickBlock
     bool collision;
 
     public:
-        BrickBlock(sf::Vector2f size, sf::Vector2f position,sf::Color color,bool collosion, sf::Texture& texture);
-        virtual ~BrickBlock();
+    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture);
+    virtual ~BrickBlock();
 
-        const bool& getCollision();
-        sf::RectangleShape& getRectangleShape();
-        void render(sf::RenderTarget* target);
+    const bool& getCollision();
+    sf::RectangleShape& getRectangleShape();
+    void render(sf::RenderTarget* target);
 };
 #endif

@@ -6,29 +6,29 @@
 
 namespace gui
 {
-class TabMenu
-{
-private:
-    sf::RectangleShape tabshape;
-    std::map<std::string, gui::Button*> buttons;
-    bool isopen;
+    class TabMenu
+    {
+        private:
+        sf::RectangleShape tabshape;
+        std::map<std::string, gui::Button*> buttons;
+        bool isopen;
 
-public:
-    TabMenu(sf::Vector2u windowsize);
-    virtual ~TabMenu();
+        public:
+        TabMenu(sf::Vector2u windowsize);
+        virtual ~TabMenu();
 
-    void addButton(std::string keyButton, gui::Button* button);
-    void opentab();
-    void closetab();
-    const bool isOpen();
-    void toggleSwitch();
+        void addButton(std::string keyButton, gui::Button* button);
+        void opentab();
+        void closetab();
+        const bool isOpen();
+        void toggleSwitch();
 
-    const bool isPressed(std::string key_button);
+        const bool isPressed(std::string key_button);
 
 
-    void updateButtons(sf::Vector2i mousePosWindow);
-    void update(const float& deltatime,sf::Vector2i mousePosWindow);
-    void render(sf::RenderTarget* target);
-};
+        void updateButtons(sf::Vector2i mousePosWindow);
+        void update(const float& deltatime, sf::Vector2i mousePosWindow);
+        void render(sf::RenderTarget* target);
+    };
 }
 #endif

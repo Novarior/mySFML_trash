@@ -8,7 +8,7 @@ struct BlocksGenData
 {
     sf::Vector2u windowSize;
     sf::Vector2f offset;
-    sf::Vector2f pos ;
+    sf::Vector2f pos;
     float amplifire;
     unsigned countPhantomBlocks;
     float frequency;
@@ -16,7 +16,7 @@ struct BlocksGenData
 
 class RotarionCircle
 {
-private:
+    private:
     sf::CircleShape shape;
     std::list<sf::CircleShape> phantoms;
     float i;
@@ -24,7 +24,7 @@ private:
     bool fastRm;
 
 
-public:
+    public:
     RotarionCircle(BlocksGenData gendata);
     virtual ~RotarionCircle();
 

@@ -7,13 +7,13 @@
 #include "../math/noice.hpp"
 class NoiceView: public State
 {
-private:
+    private:
     noiceData noicedata;
     ProcessGenerationNoice* myGN;
     sf::Image image;
     sf::Texture texture;
     sf::RectangleShape shape;
-    std::map<std::string,gui::Button*> buttons;
+    std::map<std::string, gui::Button*> buttons;
 
     short tick;
     int gridSizeX, gridSizeY;
@@ -21,17 +21,17 @@ private:
     bool isGeneratorClosed;
 
 
-    void initKeybinds(); 
+    void initKeybinds();
     void initButton();
 
     void createStepByStep(sf::Vector2f pos);
-public:
+    public:
     NoiceView(StateData* statedata);
     virtual ~NoiceView();
 
 
-	void updateInput(const float& deltatime);
+    void updateInput(const float& deltatime);
     void update(const float& deltatime);
-	void render(sf::RenderWindow* target);
+    void render(sf::RenderWindow* target);
 };
 #endif

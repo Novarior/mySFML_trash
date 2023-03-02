@@ -2,7 +2,7 @@
 #define GUI_H
 #include "../header.h"
 
-enum button_states{BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE};
+enum button_states { BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE };
 
 namespace gui
 {
@@ -12,7 +12,7 @@ namespace gui
 
 	class Button
 	{
-	private:
+		private:
 		short unsigned buttonState;
 		short unsigned id;
 
@@ -32,7 +32,7 @@ namespace gui
 		sf::Color outlineHoverColor;
 		sf::Color outlineActiveColor;
 
-	public:
+		public:
 		Button(sf::Vector2f pos, sf::Vector2f size,
 			sf::Font& font, std::string text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -57,7 +57,7 @@ namespace gui
 
 	class DropDownList
 	{
-	private:
+		private:
 		float keytime;
 		float keytimeMax;
 
@@ -66,9 +66,9 @@ namespace gui
 		std::vector<gui::Button*> list;
 		bool showList;
 
-	public:
-		DropDownList(float x, float y, float width, float height, 
-			sf::Font& font, std::string list[], 
+		public:
+		DropDownList(float x, float y, float width, float height,
+			sf::Font& font, std::string list[],
 			unsigned nrOfElements, unsigned default_index = 0);
 		~DropDownList();
 
@@ -84,7 +84,7 @@ namespace gui
 
 	class TextureSelector
 	{
-	private:
+		private:
 		float keytime;
 		const float keytimeMax;
 		float gridSize;
@@ -97,9 +97,9 @@ namespace gui
 		sf::Vector2u mousePosGrid;
 		sf::IntRect textureRect;
 
-	public:
-		TextureSelector(float x, float y, float width, float height, 
-			float gridSize, const sf::Texture* texture_sheet, 
+		public:
+		TextureSelector(float x, float y, float width, float height,
+			float gridSize, const sf::Texture* texture_sheet,
 			sf::Font& font, std::string text);
 		~TextureSelector();
 
@@ -116,14 +116,14 @@ namespace gui
 
 	class ProgressBar
 	{
-	private:
+		private:
 		std::string barString;
 		sf::Text text;
 		float maxWidth;
 		sf::RectangleShape back;
 		sf::RectangleShape inner;
 
-	public:
+		public:
 		ProgressBar(float x, float y, float width, float height,
 			sf::Color inner_color, unsigned character_size,
 			sf::VideoMode& vm, sf::Font* font = NULL);

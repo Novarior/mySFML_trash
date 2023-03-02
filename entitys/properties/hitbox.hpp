@@ -4,15 +4,15 @@
 
 class HitboxCounter
 {
-private:
-    sf::RectangleShape& sprite; 
+    private:
+    sf::RectangleShape& sprite;
     sf::RectangleShape hitbox;
     sf::Vector2f offset;
 
-public:
-    HitboxCounter(sf::RectangleShape& sprite,sf::Vector2f size,sf::Vector2f offset);
+    public:
+    HitboxCounter(sf::RectangleShape& sprite, sf::Vector2f size, sf::Vector2f offset);
     virtual ~HitboxCounter();
- 
+
     void collision();
     bool getCollison();
     bool intersects(const sf::FloatRect& frect);

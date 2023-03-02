@@ -3,7 +3,7 @@
 //initialisations root data and build first frame app
 void Core::initVar()
 {
-    this->mWindow=NULL;
+    this->mWindow = NULL;
     srand(std::time(NULL));
     this->gfxSettings.loadFromFile("Config.cfg");
 }
@@ -12,10 +12,10 @@ void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if(!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/PlayfairDisplay-Black.ttf"))
+    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/PlayfairDisplay-Black.ttf"))
     {
     }
-    if(!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Muli-Regular.ttf"))
+    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Muli-Regular.ttf"))
     {
     }
     this->mStatedata.supportedKeys = &this->supportedKeys;
@@ -25,7 +25,7 @@ void Core::initStateData()
 
 void Core::initKeyBinds()
 {
-	this->supportedKeys["A"] = 0;
+    this->supportedKeys["A"] = 0;
     this->supportedKeys["C"] = 2;
     this->supportedKeys["D"] = 3;
     this->supportedKeys["L"] = 11;
@@ -44,21 +44,21 @@ void Core::initState()
 
 void Core::initWindow()
 {
-    	if(this->gfxSettings.fullscreen)
-		this->mWindow = new sf::RenderWindow(
-			this->gfxSettings.resolution, 
-			this->gfxSettings.title, 
-			sf::Style::Fullscreen, 
-			this->gfxSettings.contextSettings);
-	else
-		this->mWindow = new sf::RenderWindow(
-			this->gfxSettings.resolution,
-			this->gfxSettings.title,
-			sf::Style::Titlebar | sf::Style::Close, 
-			this->gfxSettings.contextSettings);
+    if (this->gfxSettings.fullscreen)
+        this->mWindow = new sf::RenderWindow(
+            this->gfxSettings.resolution,
+            this->gfxSettings.title,
+            sf::Style::Fullscreen,
+            this->gfxSettings.contextSettings);
+    else
+        this->mWindow = new sf::RenderWindow(
+            this->gfxSettings.resolution,
+            this->gfxSettings.title,
+            sf::Style::Titlebar | sf::Style::Close,
+            this->gfxSettings.contextSettings);
 
-	this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
-	this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+    this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
+    this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
 
 }
 
@@ -78,8 +78,8 @@ Core::~Core()
 
 const bool Core::run()
 {
-    
-    while(this->mWindow->isOpen())
+
+    while (this->mWindow->isOpen())
     {
         this->updateDeltaTime();
         this->update();
@@ -92,46 +92,46 @@ const bool Core::run()
 void Core::update()
 {
     this->updateEventsWindow();
-	if (!this->mState.empty())
-	{
-		if (this->mWindow->hasFocus())
-		{
-			this->mState.top()->update(this->deltaTime);
-			if (this->mState.top()->getQuit())
-			{
-				this->mState.top()->endState();
-				delete this->mState.top();
-				this->mState.pop();
-			}
-		}
-	}
-    
-	//Application end
-	else
-	{
-    		this->mWindow->close();
-	}
+    if (!this->mState.empty())
+    {
+        if (this->mWindow->hasFocus())
+        {
+            this->mState.top()->update(this->deltaTime);
+            if (this->mState.top()->getQuit())
+            {
+                this->mState.top()->endState();
+                delete this->mState.top();
+                this->mState.pop();
+            }
+        }
+    }
+
+    //Application end
+    else
+    {
+        this->mWindow->close();
+    }
 }
 
 void Core::updateEventsWindow()
 {
-    while(this->mWindow->pollEvent(this->mEvents))
-        if(this->mEvents.type==sf::Event::Closed)
+    while (this->mWindow->pollEvent(this->mEvents))
+        if (this->mEvents.type == sf::Event::Closed)
             this->mWindow->close();
-    
+
 }
 
 void Core::render()
 {
     this->mWindow->clear();
 
-    if(!this->mState.empty())
+    if (!this->mState.empty())
         this->mState.top()->render(this->mWindow);
-    
+
     this->mWindow->display();
 }
 
 void Core::updateDeltaTime()
 {
-    this->deltaTime=this->deltaClock.restart().asSeconds();
-} 
+    this->deltaTime = this->deltaClock.restart().asSeconds();
+}

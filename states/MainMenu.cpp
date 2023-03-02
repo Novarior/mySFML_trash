@@ -1,74 +1,74 @@
 #include "MainMenu.hpp"
 
-void MainMenu::initRenderDefines(){
+void MainMenu::initRenderDefines() {
     this->renderTexture.create(
-		this->IstateData->sWindow->getSize().x,
-		this->IstateData->sWindow->getSize().y);
+        this->IstateData->sWindow->getSize().x,
+        this->IstateData->sWindow->getSize().y);
 
-	this->renderSprite.setTexture(this->renderTexture.getTexture());
-	this->renderSprite.setTextureRect(sf::IntRect(0, 0, 
-			this->IstateData->sWindow->getSize().x,
-			this->IstateData->sWindow->getSize().y));
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
+    this->renderSprite.setTextureRect(sf::IntRect(0, 0,
+        this->IstateData->sWindow->getSize().x,
+        this->IstateData->sWindow->getSize().y));
 }
 
-void MainMenu::initKeybinds(){   
+void MainMenu::initKeybinds() {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
 }
 
-void MainMenu::initView(){
+void MainMenu::initView() {
     this->view.setSize(sf::Vector2f(
-			static_cast<float>(this->IstateData->sWindow->getSize().x ),
-			static_cast<float>(this->IstateData->sWindow->getSize().y)));
+        static_cast<float>(this->IstateData->sWindow->getSize().x),
+        static_cast<float>(this->IstateData->sWindow->getSize().y)));
 
-	this->view.setCenter(sf::Vector2f(
-			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
+    this->view.setCenter(sf::Vector2f(
+        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 }
 
-void MainMenu::initBackground(){
+void MainMenu::initBackground() {
     this->background.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
-    this->background.setFillColor(sf::Color(0,0,30));
+    this->background.setFillColor(sf::Color(0, 0, 30));
     this->background.setPosition(sf::Vector2f());
 }
 
-void MainMenu::initButtons(){
-    int offsetX=this->IstateData->sWindow->getSize().x;
-    int offsetY=this->IstateData->sWindow->getSize().y;
+void MainMenu::initButtons() {
+    int offsetX = this->IstateData->sWindow->getSize().x;
+    int offsetY = this->IstateData->sWindow->getSize().y;
 
     this->buttons["EXIT_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX-275,offsetY-125),sf::Vector2f(250,100),
+        sf::Vector2f(offsetX - 275, offsetY - 125), sf::Vector2f(250, 100),
         this->IstateData->font, "Exit", 20,
-        sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180), 
-        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["SOME_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX-275,offsetY-225),sf::Vector2f(250,100),
+        sf::Vector2f(offsetX - 275, offsetY - 225), sf::Vector2f(250, 100),
         this->IstateData->font, "Play", 20,
-        sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180),
-        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["PERLIN"] = new gui::Button(
-        sf::Vector2f(offsetX-275,offsetY-325),sf::Vector2f(250,100),
+        sf::Vector2f(offsetX - 275, offsetY - 325), sf::Vector2f(250, 100),
         this->IstateData->font, "Noice", 20,
-        sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180),
-        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["G_TREE"] = new gui::Button(
-        sf::Vector2f(offsetX-275,offsetY-425),sf::Vector2f(250,100),
+        sf::Vector2f(offsetX - 275, offsetY - 425), sf::Vector2f(250, 100),
         this->IstateData->font, "Tree", 20,
-        sf::Color(200,200,200), sf::Color(180,180,180), sf::Color(160,160,180),
-        sf::Color(100,100,100), sf::Color(140,140,140), sf::Color(80,80,90));
-        
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
 }
 
-void MainMenu::initBlocks(){
+void MainMenu::initBlocks() {
     BlocksGenData bgd;
     bgd.amplifire = 500;
     bgd.countPhantomBlocks = 255;
-    bgd.offset=sf::Vector2f(
-        this->IstateData->sWindow->getSize().x/2,
-        this->IstateData->sWindow->getSize().y/2);
-    bgd.windowSize=this->IstateData->sWindow->getSize();
+    bgd.offset = sf::Vector2f(
+        this->IstateData->sWindow->getSize().x / 2,
+        this->IstateData->sWindow->getSize().y / 2);
+    bgd.windowSize = this->IstateData->sWindow->getSize();
     bgd.pos = sf::Vector2f();
     bgd.frequency = 2.5f;
 
@@ -81,48 +81,48 @@ void MainMenu::initBlocks(){
     this->rotationCyrcleShape->setShape(shape);
 }
 
-void MainMenu::initStartProcces(){
-    this->fadeShape.setFillColor(sf::Color(0,0,0,0));
+void MainMenu::initStartProcces() {
+    this->fadeShape.setFillColor(sf::Color(0, 0, 0, 0));
     this->fadeShape.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
 }
 
-bool MainMenu::isStarted(){
+bool MainMenu::isStarted() {
     return false;
 }
 
-void MainMenu::updateStartProcces(){
+void MainMenu::updateStartProcces() {
     sf::Color buff = this->fadeShape.getFillColor();
 
-    if(buff.a<255)
-        buff.a+=1; 
-    else{
-       this->Istates->push(new Process(this->IstateData));
+    if (buff.a < 255)
+        buff.a += 1;
+    else {
+        this->Istates->push(new Process(this->IstateData));
 
-        this->isstatred=false;
+        this->isstatred = false;
         this->resetView();
 
-       buff=sf::Color(0,0,0,0); 
+        buff = sf::Color(0, 0, 0, 0);
     }
     this->fadeShape.setFillColor(buff);
 
-    sf::Vector2f vSize=this->view.getSize();
-    vSize-=sf::Vector2f(1,1);
+    sf::Vector2f vSize = this->view.getSize();
+    vSize -= sf::Vector2f(1, 1);
     this->view.setSize(vSize);
 }
 
-void MainMenu::resetView(){
+void MainMenu::resetView() {
     this->view.setSize(sf::Vector2f(
-			static_cast<float>(this->IstateData->sWindow->getSize().x ),
-			static_cast<float>(this->IstateData->sWindow->getSize().y)));
+        static_cast<float>(this->IstateData->sWindow->getSize().x),
+        static_cast<float>(this->IstateData->sWindow->getSize().y)));
 
-	this->view.setCenter(sf::Vector2f(
-			static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-			static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
+    this->view.setCenter(sf::Vector2f(
+        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
+        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 }
 
-MainMenu::MainMenu(StateData* statedata):State(statedata){
+MainMenu::MainMenu(StateData* statedata):State(statedata) {
     this->initRenderDefines();
-    this->initKeybinds(); 
+    this->initKeybinds();
     this->initView();
     this->initBackground();
     this->initButtons();
@@ -131,60 +131,60 @@ MainMenu::MainMenu(StateData* statedata):State(statedata){
     this->m_tree = new GenTree();
 }
 
-MainMenu::~MainMenu(){
-	for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
-    	delete it->second;
-	
+MainMenu::~MainMenu() {
+    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
+        delete it->second;
+
     this->buttons.clear();
     delete this->rotationCyrcleShape;
     delete this->m_tree;
 }
 
-void MainMenu::update(const float& deltatime){
+void MainMenu::update(const float& deltatime) {
     this->updateKeytime(deltatime);
 
-    if(!this->isstatred){
+    if (!this->isstatred) {
         this->updateMousePositions(&this->view);
         this->updateInput(deltatime);
         this->updateButtons();
     }
     else
         this->updateStartProcces();
-    
+
     this->rotationCyrcleShape->update(deltatime);
 
-    if(this->debugMode)
+    if (this->debugMode)
     {
-        this->dString_Stream << "FPS:\t" << 1/deltatime << "\n";
+        this->dString_Stream << "FPS:\t" << 1 / deltatime << "\n";
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }
 }
 
-void MainMenu::updateInput(const float& deltatime){
- }
-
-void MainMenu::updateButtons(){
-    for(auto& it:this->buttons)
-       it.second->update(this->mousePosWindow);
-
-    if(this->buttons["EXIT_BTN"]->isPressed()&&this->getKeytime())
-        this->endState();
-    
-    if(this->buttons["SOME_BTN"]->isPressed()&&this->getKeytime())
-        this->isstatred=true;
-
-    if(this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new NoiceView(this->IstateData));
-
-    if(this->buttons["G_TREE"]->isPressed() && this->getKeytime())
-        this->m_tree->generateTree();
-        
+void MainMenu::updateInput(const float& deltatime) {
 }
 
-void MainMenu::render(sf::RenderWindow* target){
-    if(!target)
-        target=this->Iwindow;
+void MainMenu::updateButtons() {
+    for (auto& it : this->buttons)
+        it.second->update(this->mousePosWindow);
+
+    if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime())
+        this->endState();
+
+    if (this->buttons["SOME_BTN"]->isPressed() && this->getKeytime())
+        this->isstatred = true;
+
+    if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
+        this->Istates->push(new NoiceView(this->IstateData));
+
+    if (this->buttons["G_TREE"]->isPressed() && this->getKeytime())
+        this->m_tree->generateTree();
+
+}
+
+void MainMenu::render(sf::RenderWindow* target) {
+    if (!target)
+        target = this->Iwindow;
     this->renderTexture.clear();
     this->renderTexture.setView(this->view);
 
@@ -192,17 +192,17 @@ void MainMenu::render(sf::RenderWindow* target){
 
     this->rotationCyrcleShape->render(&renderTexture);
 
-    for(auto&it:this->buttons)
+    for (auto& it : this->buttons)
         it.second->render(&renderTexture);
 
     this->renderTexture.setView(this->renderTexture.getDefaultView());
 
-    if(this->isstatred)
+    if (this->isstatred)
         renderTexture.draw(this->fadeShape);
 
-    if(this->debugMode)
-        this->renderTexture.draw(this->dText); 
+    if (this->debugMode)
+        this->renderTexture.draw(this->dText);
 
     this->renderTexture.display();
-    target->draw(this->renderSprite);    
+    target->draw(this->renderSprite);
 }

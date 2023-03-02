@@ -83,7 +83,7 @@ namespace db {
 
     template<typename T>
     static constexpr auto dot_grad(int hash, T xf, T yf) -> T {
-        // In 2D case, the gradient may be any of 8 direction vectors pointing to the
+        // In 2D case, the gradient may be any of 8 direction vectors pointing to the 
         // edges of a unit-square. The distance vector is the input offset (relative to
         // the smallest bound).
         switch (hash & 0x7) {

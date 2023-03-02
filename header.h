@@ -27,4 +27,5 @@
 
 //include in program files
 #include "ConstFoldersFlow.h"
+#include "math/mymath.hpp"
 #endif

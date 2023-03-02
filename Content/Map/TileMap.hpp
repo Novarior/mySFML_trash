@@ -3,6 +3,7 @@
 #include "block.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"
 
+/** */
 const struct renderArea
 {
     int fromX;

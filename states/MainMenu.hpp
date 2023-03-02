@@ -6,6 +6,7 @@
 #include "NoiceView.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../Content/rotationCircle.hpp"
+#include "../Content/Map/genTree.hpp"
 
 class MainMenu : public State
 {
@@ -18,6 +19,7 @@ sf::Sprite renderSprite;
 
 std::map<std::string,gui::Button*> buttons;
 RotarionCircle* rotationCyrcleShape;
+GenTree* m_tree;
 
 
 void initRenderDefines();

@@ -11,16 +11,29 @@ private:
     std::vector<sf::RectangleShape> m_arrayshape;
 
 
-    const unsigned stepsize;
-    const unsigned brushsize;
+    const unsigned stepsize = 5;
+    const unsigned brushsize = 10;
+
     std::vector<sf::Vector2f> recordstepBuffer;
+
 
     std::string commands;
 public:
+
     GenTree();
+    /**
+     * @brief Destroy the Gen Tree object
+     * 
+     */
     virtual ~GenTree();
 
+    void generateTree();
     void update();
+    /**
+     * @brief 
+     * 
+     * @param target 
+     */
     void render(sf::RenderTarget* target);
     
 };

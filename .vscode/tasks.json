@@ -29,6 +29,7 @@
 				"Content/rotationCircle.cpp",
 				"Content/Map/block.cpp",
 				"Content/Map/TileMap.cpp",
+				"Content/Map/genTree.cpp",
 				"-Isource/include/",
 				"-o",
 				"${workspaceFolder}/main.app",

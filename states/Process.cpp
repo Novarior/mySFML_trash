@@ -28,6 +28,8 @@ void Process::initKeybinds() {
     this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
+    this->Ikeybinds["KEY_C"] = this->IsupportedKeys->at("C");
+
 }
 
 void Process::initTileMap() {
@@ -127,6 +129,8 @@ void Process::updateInput(const float& deltatime) {
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_C"))) && this->getKeytime()) {}
 }
 
 void Process::updatePlayerInputs(const float& deltatime) {

@@ -1,7 +1,13 @@
 #include "../header.h"
 #include "State.hpp"
 
-State::State(StateData* state_data) {
+/**
+ * @brief Construct a new State:: State object
+ *
+ * @param state_data
+ */
+State::State(StateData* state_data)
+{
 	this->IstateData = state_data;
 	this->Iwindow = state_data->sWindow;
 	this->Istates = state_data->sStates;
@@ -23,11 +29,13 @@ State::State(StateData* state_data) {
 State::~State() { }
 
 //Accessors
-const bool& State::getQuit() const {
+const bool& State::getQuit() const
+{
 	return this->Iquit;
 }
 
-const bool State::getKeytime() {
+const bool State::getKeytime()
+{
 	if (this->Ikeytime >= this->IkeytimeMax) {
 		this->Ikeytime = 0.f;
 		return true;
@@ -35,20 +43,13 @@ const bool State::getKeytime() {
 	return false;
 }
 
-//Functions
-void State::endState() {
+void State::endState()
+{
 	this->Iquit = true;
 }
 
-void State::pauseState() {
-	this->Ipaused = true;
-}
-
-void State::unpauseState() {
-	this->Ipaused = false;
-}
-
-void State::updateMousePositions(sf::View* view) {
+void State::updateMousePositions(sf::View* view)
+{
 	this->mousePosScreen = sf::Mouse::getPosition();
 	this->mousePosWindow = sf::Mouse::getPosition(*this->Iwindow);
 
@@ -63,7 +64,8 @@ void State::updateMousePositions(sf::View* view) {
 	this->Iwindow->setView(this->Iwindow->getDefaultView());
 }
 
-void State::updateKeytime(const float& deltatime) {
+void State::updateKeytime(const float& deltatime)
+{
 	if (this->Ikeytime < this->IkeytimeMax)
 		this->Ikeytime += 100.f * deltatime;
 }

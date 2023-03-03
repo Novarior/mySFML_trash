@@ -33,6 +33,25 @@ namespace gui
 		sf::Color outlineActiveColor;
 
 		public:
+		/**
+		 * @brief Construct a new Button object
+		 *
+		 * @param pos set position 
+		 * @param size
+		 * @param font
+		 * @param text
+		 * @param character_size
+		 * @param text_idle_color
+		 * @param text_hover_color
+		 * @param text_active_color
+		 * @param idle_color
+		 * @param hover_color
+		 * @param active_color
+		 * @param outline_idle_color
+		 * @param outline_hover_color
+		 * @param outline_active_color
+		 * @param id
+		 */
 		Button(sf::Vector2f pos, sf::Vector2f size,
 			sf::Font& font, std::string text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,

@@ -15,9 +15,9 @@ private:
     const unsigned brushsize = 10;
 
     std::vector<sf::Vector2f> recordstepBuffer;
-
-
     std::string commands;
+
+    void clear();
 public:
 
     GenTree();
@@ -32,7 +32,7 @@ public:
     /**
      * @brief 
      * 
-     * @param target 
+     * @param target render targer for render
      */
     void render(sf::RenderTarget* target);
     

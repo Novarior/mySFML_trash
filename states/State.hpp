@@ -5,6 +5,7 @@
 #include "gfx.hpp"
 class State;
 
+
 class StateData
 {
 	public:
@@ -47,9 +48,6 @@ class State
 
 	//Functions
 	virtual void initKeybinds() = 0;
-
-
-
 
 	public:
 	State(StateData* state_data);

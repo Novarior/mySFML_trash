@@ -2,7 +2,6 @@
 #define CPP_CONTENT_ROTATIONCIRCLE_HPP
 
 #include "../header.h"
-#include "../math/mymath.hpp"
 
 struct BlocksGenData
 {

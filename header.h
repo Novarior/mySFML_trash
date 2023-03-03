@@ -11,7 +11,6 @@
 #include <ostream>
 #include <vector>
 #include <string>
-#include <memory>
 #include <sstream>
 #include <cmath>
 #include <list>

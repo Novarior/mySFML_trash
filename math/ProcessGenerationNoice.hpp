@@ -1,7 +1,7 @@
 #ifndef CPP_MATH_PSEDO_GENERATION_NOICE_HPP
 #define CPP_MATH_PSEDO_GENERATION_NOICE_HPP
 #include "../header.h"
-#include "mymath.hpp"
+
 
 struct noiceData
 {

@@ -3,7 +3,7 @@
 
 #include "State.hpp"
 #include "../header.h"
-#include "../math/mymath.hpp"
+
 #include "../GUI/GUISYS.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"

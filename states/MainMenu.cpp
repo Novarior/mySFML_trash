@@ -200,6 +200,8 @@ void MainMenu::render(sf::RenderWindow* target) {
     if (this->isstatred)
         renderTexture.draw(this->fadeShape);
 
+    this->m_tree->render(&this->renderTexture);
+
     if (this->debugMode)
         this->renderTexture.draw(this->dText);
 

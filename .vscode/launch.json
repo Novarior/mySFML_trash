@@ -16,7 +16,9 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.app",
-            "args": [],
+            "args": [
+                "-gui"
+            ],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "environment": [
@@ -25,7 +27,7 @@
                     "value": "Debug"
                 }
             ],
-            "externalConsole": true,
+            "externalConsole": false,
             "MIMode": "lldb"
         }
     ]

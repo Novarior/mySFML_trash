@@ -16,10 +16,15 @@ void NoiceView::initButton() {
 void NoiceView::createStepByStep(sf::Vector2f pos)
 {
     double writebuff = 0;
+    double min = 10, max = 0;
 
     for (int x = pos.x * this->gridSizeX; x < (pos.x + 1) * this->gridSizeX; x++) {
         for (int y = pos.y * this->gridSizeY; y < (pos.y + 1) * this->gridSizeY; y++) {
             writebuff = myGN->getNoice(x, y);
+            if (writebuff < min)
+                min = writebuff;
+            if (writebuff > max)
+                max = writebuff;
             writebuff *= 255;
             writebuff = static_cast<int>(writebuff) % 255;
             if (writebuff < 0)
@@ -47,6 +52,7 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
     }
     this->texture.update(this->image);
     this->shape.setTexture(&this->texture);
+    std::cout << "\n\t\tS2S:\tpos: " << pos.x << " x " << pos.y << "\t\tMinMax: " << min << " x " << max;
 }
 
 NoiceView::NoiceView(StateData* statedata):State(statedata) {

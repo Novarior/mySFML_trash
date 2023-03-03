@@ -53,12 +53,13 @@ void MainMenu::initButtons() {
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
+    /*
     this->buttons["G_TREE"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 425), sf::Vector2f(250, 100),
         this->IstateData->font, "Tree", 20,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
+    */
 }
 
 void MainMenu::initBlocks() {
@@ -128,7 +129,6 @@ MainMenu::MainMenu(StateData* statedata):State(statedata) {
     this->initButtons();
     this->initBlocks();
     this->initStartProcces();
-    this->m_tree = new GenTree();
 }
 
 MainMenu::~MainMenu() {
@@ -137,7 +137,6 @@ MainMenu::~MainMenu() {
 
     this->buttons.clear();
     delete this->rotationCyrcleShape;
-    delete this->m_tree;
 }
 
 void MainMenu::update(const float& deltatime) {
@@ -176,10 +175,6 @@ void MainMenu::updateButtons() {
 
     if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
         this->Istates->push(new NoiceView(this->IstateData));
-
-    if (this->buttons["G_TREE"]->isPressed() && this->getKeytime())
-        this->m_tree->generateTree();
-
 }
 
 void MainMenu::render(sf::RenderWindow* target) {
@@ -199,8 +194,6 @@ void MainMenu::render(sf::RenderWindow* target) {
 
     if (this->isstatred)
         renderTexture.draw(this->fadeShape);
-
-    this->m_tree->render(&this->renderTexture);
 
     if (this->debugMode)
         this->renderTexture.draw(this->dText);

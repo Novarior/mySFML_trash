@@ -63,6 +63,7 @@ CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
+all: CMakeFiles/SFMLTest.dir/all
 all: CMakeFiles/FirstProject.dir/all
 .PHONY : all
 
@@ -99,6 +100,7 @@ clean: CMakeFiles/ContinuousTest.dir/clean
 clean: CMakeFiles/ContinuousCoverage.dir/clean
 clean: CMakeFiles/ContinuousMemCheck.dir/clean
 clean: CMakeFiles/ContinuousSubmit.dir/clean
+clean: CMakeFiles/SFMLTest.dir/clean
 clean: CMakeFiles/FirstProject.dir/clean
 .PHONY : clean
 
@@ -831,6 +833,32 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 .PHONY : CMakeFiles/ContinuousSubmit.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/SFMLTest.dir
+
+# All Build rule for target.
+CMakeFiles/SFMLTest.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=3,4 "Built target SFMLTest"
+.PHONY : CMakeFiles/SFMLTest.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/SFMLTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/SFMLTest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
+.PHONY : CMakeFiles/SFMLTest.dir/rule
+
+# Convenience name for target.
+SFMLTest: CMakeFiles/SFMLTest.dir/rule
+.PHONY : SFMLTest
+
+# clean rule for target.
+CMakeFiles/SFMLTest.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/clean
+.PHONY : CMakeFiles/SFMLTest.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/FirstProject.dir
 
 # All Build rule for target.
@@ -863,6 +891,7 @@ CMakeFiles/FirstProject.dir/clean:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
+	$(CMAKE_COMMAND) -P /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

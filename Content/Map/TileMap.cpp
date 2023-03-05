@@ -27,9 +27,9 @@ void TileMap::loadTextuteMap() {
         std::cout << "\nTexture GROUND Dosent LOAD \n";
 }
 
-void TileMap::pushTree(int x, int y)
+void TileMap::pushTree(int x, int y, int seed)
 {
-    int i = rand() % 2;
+    int i = 1 + x + seed * y % 3;
     this->m_TreeSprite.setPosition(x, y);
     this->m_TreeSprite.setScale(2, 2);
     this->m_TreeSprite.setTextureRect(list_treeRect[i]);
@@ -100,8 +100,8 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     collisionBuff, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
-                if (1 + rand() % 100 < 15)
-                    this->pushTree(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize);
+                if (x + y * x - y % 100 < 15)
+                    this->pushTree(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize, this->m_dnoice.seed);
             }
             else if (writebuff < 165)
             { //ground

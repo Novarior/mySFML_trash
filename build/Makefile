@@ -143,6 +143,7 @@ preinstall/fast:
 
 # clear depends
 depend:
+	$(CMAKE_COMMAND) -P /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
@@ -511,6 +512,19 @@ ContinuousSubmit/fast:
 .PHONY : ContinuousSubmit/fast
 
 #=============================================================================
+# Target rules for targets named SFMLTest
+
+# Build rule for target.
+SFMLTest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SFMLTest
+.PHONY : SFMLTest
+
+# fast build rule for target.
+SFMLTest/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/build
+.PHONY : SFMLTest/fast
+
+#=============================================================================
 # Target rules for targets named FirstProject
 
 # Build rule for target.
@@ -528,6 +542,7 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.o
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.o
 .PHONY : main.cpp.o
 
@@ -536,6 +551,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.i
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.i
 .PHONY : main.cpp.i
 
@@ -544,6 +560,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.s
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.s
 .PHONY : main.cpp.s
 
@@ -587,6 +604,7 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... FirstProject"
+	@echo "... SFMLTest"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
@@ -601,6 +619,7 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
+	$(CMAKE_COMMAND) -P /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

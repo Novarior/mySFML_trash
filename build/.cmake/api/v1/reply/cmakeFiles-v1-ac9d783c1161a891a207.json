@@ -167,6 +167,26 @@
 			"path" : "/opt/homebrew/Cellar/cmake/3.25.2/share/cmake/Modules/DartConfiguration.tcl.in"
 		},
 		{
+			"isExternal" : true,
+			"path" : "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfigVersion.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfig.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLSharedTargets.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLSharedTargets-release.cmake"
+		},
+		{
+			"isExternal" : true,
+			"path" : "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfigDependencies.cmake"
+		},
+		{
 			"isCMake" : true,
 			"isExternal" : true,
 			"path" : "/opt/homebrew/Cellar/cmake/3.25.2/share/cmake/Modules/CPack.cmake"

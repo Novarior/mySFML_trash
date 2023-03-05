@@ -1742,6 +1742,30 @@
 			"value" : ""
 		},
 		{
+			"name" : "SFML_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "The directory containing a CMake configuration file for SFML."
+				}
+			],
+			"type" : "PATH",
+			"value" : "/Library/Frameworks/SFML.framework/Resources/CMake"
+		},
+		{
+			"name" : "SFML_DOC_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a file."
+				}
+			],
+			"type" : "PATH",
+			"value" : "SFML_DOC_DIR-NOTFOUND"
+		},
+		{
 			"name" : "SITE",
 			"properties" : 
 			[

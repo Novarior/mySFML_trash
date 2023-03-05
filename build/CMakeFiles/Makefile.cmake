@@ -7,10 +7,17 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
+  "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfig.cmake"
+  "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfigDependencies.cmake"
+  "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLConfigVersion.cmake"
+  "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLSharedTargets-release.cmake"
+  "/Library/Frameworks/SFML.framework/Resources/CMake/SFMLSharedTargets.cmake"
   "/Users/dmitrijsusenko/Desktop/try/CMakeLists.txt"
   "CMakeFiles/3.25.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.25.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.2/CMakeSystem.cmake"
+  "CMakeFiles/VerifyGlobs.cmake"
+  "CMakeFiles/cmake.verify_globs"
   "/opt/homebrew/Cellar/cmake/3.25.2/share/cmake/Modules/CMakeCInformation.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.2/share/cmake/Modules/CMakeCXXInformation.cmake"
   "/opt/homebrew/Cellar/cmake/3.25.2/share/cmake/Modules/CMakeCommonLanguageInclude.cmake"
@@ -85,5 +92,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/ContinuousCoverage.dir/DependInfo.cmake"
   "CMakeFiles/ContinuousMemCheck.dir/DependInfo.cmake"
   "CMakeFiles/ContinuousSubmit.dir/DependInfo.cmake"
+  "CMakeFiles/SFMLTest.dir/DependInfo.cmake"
   "CMakeFiles/FirstProject.dir/DependInfo.cmake"
   )

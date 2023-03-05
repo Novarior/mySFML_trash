@@ -318,6 +318,12 @@ MEMORYCHECK_COMMAND:FILEPATH=MEMORYCHECK_COMMAND-NOTFOUND
 //File that contains suppressions for the memory checker
 MEMORYCHECK_SUPPRESSIONS_FILE:FILEPATH=
 
+//The directory containing a CMake configuration file for SFML.
+SFML_DIR:PATH=/Library/Frameworks/SFML.framework/Resources/CMake
+
+//Path to a file.
+SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
+
 //Name of the computer/site where compile is being run
 SITE:STRING=MacBook-Air-Dmitrij.local
 

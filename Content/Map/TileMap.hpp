@@ -31,7 +31,7 @@ class TileMap
 
     void Clear();
     void loadTextuteMap();
-    void pushTree(int x, int y);
+    void pushTree(int x, int y, int seed);
 
     public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);

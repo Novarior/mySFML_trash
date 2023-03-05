@@ -12,10 +12,10 @@ void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/PlayfairDisplay-Black.ttf"))
+    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/PlayfairDisplay-Black.ttf"))
     {
     }
-    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Muli-Regular.ttf"))
+    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/Muli-Regular.ttf"))
     {
     }
     this->mStatedata.supportedKeys = &this->supportedKeys;

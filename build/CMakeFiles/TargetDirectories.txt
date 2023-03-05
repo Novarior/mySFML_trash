@@ -26,6 +26,7 @@
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/ContinuousCoverage.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/ContinuousMemCheck.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/ContinuousSubmit.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/SFMLTest.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/FirstProject.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/package.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/package_source.dir

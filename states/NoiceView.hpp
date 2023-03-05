@@ -8,6 +8,16 @@
 class NoiceView: public State
 {
     private:
+    struct {
+        int grass = 0;
+        int dirt = 0;
+        int sand = 0;
+        int rock = 0;
+        int ocean = 0;
+        int mud = 0;
+        int other = 0;
+    } m_BlocksCounter;
+
     noiceData noicedata;
     ProcessGenerationNoice* myGN;
     sf::Image image;

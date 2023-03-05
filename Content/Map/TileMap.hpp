@@ -1,6 +1,7 @@
 #ifndef CPP_MAP_TILEMAP_HPP
 #define CPP_MAP_TILEMAP_HPP
 #include "block.hpp"
+#include "TreeList.h"
 #include "../../math/ProcessGenerationNoice.hpp"
 
 /** */
@@ -24,9 +25,13 @@ class TileMap
     noiceData m_dnoice;
     std::vector<std::vector<BrickBlock* > > tilemap;
     std::map<std::string, sf::Texture> m_TexturesList;
+    std::vector<sf::Sprite> m_TreeArray;
+    sf::Texture m_TreeTexture;
+    sf::Sprite m_TreeSprite;
 
     void Clear();
     void loadTextuteMap();
+    void pushTree(int x, int y);
 
     public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);

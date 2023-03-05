@@ -8,7 +8,7 @@ CXXFLAGS = -std=c++17 -ferror-limit=100 -fcolor-diagnostics -fansi-escape-codes 
 LDFLAGS = 
 
 # Makefile settings - Can be customized.
-APPNAME = myAppleUnit
+APPNAME = myapp
 EXT = .cpp
 SRCDIR = src
 OBJDIR = obj
@@ -44,7 +44,7 @@ $(APPNAME): $(OBJ)
 
 # Building rule for .o files and its .c/.cpp in combination with all .h
 $(OBJDIR)/%.o: $(SRCDIR)/%$(EXT)
-	$(CC) $(CXXFLAGS) -o $@ -cpp $<
+	$(CC) $(CXXFLAGS) -o $@ -c $<
 
 ################### Cleaning rules for Unix-based OS ###################
 # Cleans complete project

@@ -94,9 +94,9 @@
     "editor.formatOnPaste": true,
     "editor.minimap.autohide": true,
     "editor.minimap.scale": 1,
-    "editor.minimap.enabled": true,
+    "editor.minimap.enabled": false,
     "editor.minimap.renderCharacters": false,
-    "editor.minimap.size": "proportional",
+    "editor.minimap.size": "fill",
     "files.autoSave": "afterDelay",
     "window.autoDetectColorScheme": false,
     "window.title": "${activeEditorShort}${separator}${rootName}${separation}${appName}",
@@ -112,6 +112,11 @@
         {
             "cwd": "/Users/dmitrijsusenko/Desktop/try",
             "binaryPath": "/Users/dmitrijsusenko/Desktop/try/myAppleUnit",
+            "binaryArgs": []
+        },
+        {
+            "cwd": "/Users/dmitrijsusenko/Desktop/try",
+            "binaryPath": "/Users/dmitrijsusenko/Desktop/try/myapp",
             "binaryArgs": []
         }
     ]

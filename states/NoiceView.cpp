@@ -32,21 +32,27 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
 
             if (writebuff < 55) { //sea
                 this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.9, 255));
+                this->m_BlocksCounter.ocean++;
             }
             else if (writebuff < 66) { //sand
                 this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255));
+                this->m_BlocksCounter.sand++;
             }
             else if (writebuff < 160) { //grass
                 this->image.setPixel(x, y, sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255));
+                this->m_BlocksCounter.grass++;
             }
             else if (writebuff < 165) { //ground
                 this->image.setPixel(x, y, sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255));
+                this->m_BlocksCounter.dirt++;
             }
             else if (writebuff < 175) { //cave
                 this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
+                this->m_BlocksCounter.rock++;
             }
             else { //other
                 this->image.setPixel(x, y, sf::Color(writebuff, writebuff, writebuff, 255));
+                this->m_BlocksCounter.other++;
             }
         }
     }
@@ -109,9 +115,29 @@ void NoiceView::update(const float& deltatime) {
                 this->isGeneratorClosed = true;
         }
     }
+    if (this->debugMode) {//update debug information
+        double fps = 1.0f / deltatime;
+        this->dString_Stream
+            << "FPS:\t" << fps << "\n"
+            << "Block counter:"
+            << "\n\tgrass: " << this->m_BlocksCounter.grass
+            << "\n\tdirt: " << this->m_BlocksCounter.dirt
+            << "\n\tmud: " << this->m_BlocksCounter.mud
+            << "\n\tocean: " << this->m_BlocksCounter.ocean
+            << "\n\trock: " << this->m_BlocksCounter.rock
+            << "\n\tsand: " << this->m_BlocksCounter.sand
+            << "\n\tother " << this->m_BlocksCounter.other
+            << "Pause:\t" << this->Ipaused;
+
+        this->dText.setString(this->dString_Stream.str());
+        this->dString_Stream.str("");
+    }
     this->tick++;
 }
 
 void NoiceView::render(sf::RenderWindow* target) {
     target->draw(this->shape);
+
+    if (this->debugMode)
+        target->draw(this->dText);
 }

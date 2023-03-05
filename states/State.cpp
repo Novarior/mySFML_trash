@@ -22,7 +22,9 @@ State::State(StateData* state_data)
 	this->debugMode = true;
 
 	this->dText.setFillColor(sf::Color::White);
-	this->dText.setCharacterSize(30);
+	this->dText.setCharacterSize(35);
+	this->dText.setOutlineThickness(3);
+	this->dText.setOutlineColor(sf::Color::Black);
 	this->dText.setFont(this->IstateData->debugFont);
 }
 

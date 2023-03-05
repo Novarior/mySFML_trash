@@ -27,17 +27,24 @@ void TileMap::loadTextuteMap() {
         std::cout << "\nTexture GROUND Dosent LOAD \n";
 }
 
+void TileMap::pushTree(int x, int y)
+{
+    int i = rand() % 2;
+    this->m_TreeSprite.setPosition(x, y);
+    this->m_TreeSprite.setScale(2, 2);
+    this->m_TreeSprite.setTextureRect(list_treeRect[i]);
+    this->m_TreeArray.push_back(this->m_TreeSprite);
+}
+
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->Clear();
     this->loadTextuteMap();
+
     double writebuff;
     bool collisionBuff;
     this->m_dnoice = datanoice;
     this->maxSizeWorldGrid = this->m_dnoice.mapSize;
-    this->maxSizeWorldFloat = sf::Vector2f(
-        this->m_dnoice.mapSize.x * datanoice.gridSize,
-        this->m_dnoice.mapSize.y * datanoice.gridSize
-    );
+    this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSize.x * datanoice.gridSize, this->m_dnoice.mapSize.y * datanoice.gridSize);
 
     this->m_Area.offsetX = (datanoice.RenderWindow.x / datanoice.gridSize / 4) + 2;
     this->m_Area.offsetY = (datanoice.RenderWindow.y / datanoice.gridSize / 4) + 2;
@@ -45,6 +52,15 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->m_Area.fromY = 0;
     this->m_Area.toX = 0;
     this->m_Area.toY = 0;
+
+    if (!this->m_TreeTexture.loadFromFile("Content/Sprites/treee.png"))
+        std::cout << "\nFAIL LOAD ./Sprites/treee.png FILE";
+    else
+    {
+        this->m_TreeSprite.setTexture(this->m_TreeTexture);
+        this->m_TreeTexture.setSmooth(true);
+    }
+
 
 
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<BrickBlock*>());
@@ -61,12 +77,12 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 collisionBuff = false;
 
             if (writebuff < 55)
-            { //sea
+            { //Ocean
                 buff = sf::Color(0, 10 + writebuff * 1.6, 100 + writebuff * 1.9, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["OCEAN"]));
+                    collisionBuff, this->m_TexturesList["OCEAN"], BLOCK_OCEAN));
             }
             else if (writebuff < 66)
             { //sand
@@ -74,7 +90,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["SAND"]));
+                    collisionBuff, this->m_TexturesList["SAND"], BLOCK_SAND));
             }
             else if (writebuff < 160)
             { //grass
@@ -82,7 +98,10 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["GRASS"]));
+                    collisionBuff, this->m_TexturesList["GRASS"], BLOCK_GRASS));
+
+                if (1 + rand() % 100 < 15)
+                    this->pushTree(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize);
             }
             else if (writebuff < 165)
             { //ground
@@ -90,15 +109,15 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["GROUND"]));
+                    collisionBuff, this->m_TexturesList["GROUND"], BLOCK_DIRT));
             }
             else if (writebuff < 175)
-            { //cave
+            { //ROCK
                 buff = sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["STONE"]));
+                    collisionBuff, this->m_TexturesList["STONE"], BLOCK_ROCK));
             }
             else
             { //other
@@ -106,7 +125,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["GRASS"]));
+                    collisionBuff, this->m_TexturesList["GRASS"], NULL));
             }
 
 
@@ -115,6 +134,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
 
 TileMap::~TileMap() {
     this->Clear();
+    this->m_TreeArray.clear();
 }
 
 renderArea TileMap::getRenderArea() {
@@ -154,7 +174,16 @@ void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition,
     else if (this->m_Area.toY > this->maxSizeWorldGrid.y)
         this->m_Area.toY = this->maxSizeWorldGrid.y;
 
+    sf::FloatRect renrect(
+        this->m_Area.fromX * this->m_dnoice.gridSize, this->m_Area.fromY * this->m_dnoice.gridSize,
+        this->m_Area.toX * this->m_dnoice.gridSize, this->m_Area.toY * this->m_dnoice.gridSize);
+
     for (int x = this->m_Area.fromX; x < this->m_Area.toX; x++)
         for (int y = this->m_Area.fromY; y < this->m_Area.toY; y++)
             this->tilemap[x][y]->render(target);
+
+    if (!this->m_TreeArray.empty())
+        for (auto it : this->m_TreeArray)
+            if (renrect.contains(it.getPosition()))
+                target->draw(it);
 }

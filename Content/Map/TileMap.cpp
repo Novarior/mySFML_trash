@@ -21,18 +21,20 @@ void TileMap::loadTextuteMap() {
         std::cout << "\nTexture STONE Dosent LOAD \n";
     if (!this->m_TexturesList["OCEAN"].loadFromFile("Content/Textures/Tiles/ocean.png"))
         std::cout << "\nTexture OCEAN Dosent LOAD \n";
-    if (!this->m_TexturesList["SAND"].loadFromFile("Content/Textures/Tiles/ocean.png"))
+    if (!this->m_TexturesList["SAND"].loadFromFile("Content/Textures/Tiles/sand.jpg"))
         std::cout << "\nTexture SAND Dosent LOAD \n";
-    if (!this->m_TexturesList["GROUND"].loadFromFile("Content/Textures/Tiles/ocean.png"))
-        std::cout << "\nTexture GROUND Dosent LOAD \n";
+    if (!this->m_TexturesList["DIRT"].loadFromFile("Content/Textures/Tiles/dirt.jpeg"))
+        std::cout << "\nTexture DIRT Dosent LOAD \n";
 }
 
 void TileMap::pushTree(int x, int y, int seed)
 {
-    int i = 1 + x + seed * y % 3;
-    this->m_TreeSprite.setPosition(x, y);
-    this->m_TreeSprite.setScale(2, 2);
+    int i = (1 + x + seed + y) % 3;
     this->m_TreeSprite.setTextureRect(list_treeRect[i]);
+    this->m_TreeSprite.setPosition(
+        (x * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().width * 0.5,
+        (y * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().height * 0.75);
+    this->m_TreeSprite.setScale(2, 2);
     this->m_TreeArray.push_back(this->m_TreeSprite);
 }
 
@@ -46,13 +48,14 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->maxSizeWorldGrid = this->m_dnoice.mapSize;
     this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSize.x * datanoice.gridSize, this->m_dnoice.mapSize.y * datanoice.gridSize);
 
-    this->m_Area.offsetX = (datanoice.RenderWindow.x / datanoice.gridSize / 4) + 2;
-    this->m_Area.offsetY = (datanoice.RenderWindow.y / datanoice.gridSize / 4) + 2;
+    this->m_Area.offsetX = (datanoice.RenderWindow.x / datanoice.gridSize / 4) + 4;
+    this->m_Area.offsetY = (datanoice.RenderWindow.y / datanoice.gridSize / 4) + 4;
     this->m_Area.fromX = 0;
     this->m_Area.fromY = 0;
     this->m_Area.toX = 0;
     this->m_Area.toY = 0;
 
+    sf::Color buff;
     if (!this->m_TreeTexture.loadFromFile("Content/Sprites/treee.png"))
         std::cout << "\nFAIL LOAD ./Sprites/treee.png FILE";
     else
@@ -61,11 +64,8 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
         this->m_TreeTexture.setSmooth(true);
     }
 
-
-
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<BrickBlock*>());
 
-    sf::Color buff;
     for (int x = 0; x < this->m_dnoice.mapSize.x; x++)
         for (int y = 0; y < this->m_dnoice.mapSize.y; y++) {
             writebuff = noice->getNoice(x, y);
@@ -86,7 +86,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
             }
             else if (writebuff < 66)
             { //sand
-                buff = sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255);
+                buff = sf::Color(150 + writebuff * 1.5, 160 + writebuff * 1.4, 110 + writebuff * 0.1, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
@@ -100,24 +100,24 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     collisionBuff, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
-                if (x + y * x - y % 100 < 15)
-                    this->pushTree(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize, this->m_dnoice.seed);
+                if (rand() % 100 < 15)
+                    this->pushTree(x, y, this->m_dnoice.seed);
             }
             else if (writebuff < 165)
-            { //ground
+            { //dirt
                 buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["GROUND"], BLOCK_DIRT));
+                    collisionBuff, this->m_TexturesList["DIRT"], BLOCK_DIRT));
             }
             else if (writebuff < 175)
-            { //ROCK
+            { //stone
                 buff = sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    collisionBuff, this->m_TexturesList["STONE"], BLOCK_ROCK));
+                    collisionBuff, this->m_TexturesList["STONE"], BLOCK_STONE));
             }
             else
             { //other

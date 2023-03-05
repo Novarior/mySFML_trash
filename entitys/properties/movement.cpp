@@ -38,38 +38,44 @@ void Movement::update(const float& deltatime)
 {
 	if (this->velocity.x > 0.f) //Check for positive x
 	{
-		//Max velocity check
-		if (this->velocity.x > this->maxVelocity)
-			this->velocity.x = this->maxVelocity;
-
 		//Deceleration
 		this->velocity.x -= this->deceleration * deltatime;
 		if (this->velocity.x < 0.f)
 			this->velocity.x = 0.f;
+		//Max velocity check
+		if (this->velocity.x > this->maxVelocity)
+			this->velocity.x = this->maxVelocity;
 	}
 	else if (this->velocity.x < 0.f) //Check for negative x
 	{
-		//Max velocity check
-		if (this->velocity.x < -this->maxVelocity)
-			this->velocity.x = -this->maxVelocity;
-
 		//Deceleration
 		this->velocity.x += deceleration * deltatime;
 		if (this->velocity.x > 0.f)
 			this->velocity.x = 0.f;
+		//Max velocity check
+		if (this->velocity.x < -this->maxVelocity)
+			this->velocity.x = -this->maxVelocity;
 	}
 
-
-	if (this->velocity.y < 0.f) //Check for negative y
+	if (this->velocity.y > 0.f) //Check for positive y
 	{
+		//Deceleration
+		this->velocity.y -= this->deceleration * deltatime;
+		if (this->velocity.y < 0.f)
+			this->velocity.y = 0.f;
 		//Max velocity check
-		if (this->velocity.y < -this->maxVelocity * 1.4)
-			this->velocity.y = -this->maxVelocity * 1.4;
-
+		if (this->velocity.y > this->maxVelocity)
+			this->velocity.y = this->maxVelocity;
+	}
+	else if (this->velocity.y < 0.f) //Check for negative y
+	{
 		//Deceleration
 		this->velocity.y += deceleration * deltatime;
 		if (this->velocity.y > 0.f)
 			this->velocity.y = 0.f;
+		//Max velocity check
+		if (this->velocity.y < -this->maxVelocity)
+			this->velocity.y = -this->maxVelocity;
 	}
 
 	this->sprite.move(velocity.x, velocity.y);
@@ -101,16 +107,17 @@ void Movement::updateCollison(TileMap* map, const float& deltatime)
 		this->sprite.setPosition(map->getMapSizeOnFloat().y - this->sprite.getGlobalBounds().height, bufferPos.y);
 	}
 
-
-	if (this->sprite.getPosition().y < 1000.0f) {
-		this->velocity.y += this->deceleration * deltatime;
-		this->m_state = Fall;
-	}
-	else if (this->sprite.getPosition().y > 1000.0f) {
-		this->stopVelocityY();
-		this->sprite.setPosition(sf::Vector2f(bufferPos.x, 1000));
-		this->m_state = Idle;
-	}
+	/*
+		if (this->sprite.getPosition().y < 1000.0f) {
+			this->velocity.y += this->deceleration * deltatime;
+			this->m_state = Fall;
+		}
+		else if (this->sprite.getPosition().y > 1000.0f) {
+			this->stopVelocityY();
+			this->sprite.setPosition(sf::Vector2f(bufferPos.x, 1000));
+			this->m_state = Idle;
+		}
+	*/
 }
 
 void Movement::jump(const float& dealtatime)

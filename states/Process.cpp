@@ -138,8 +138,12 @@ void Process::updatePlayerInputs(const float& deltatime) {
         this->player->e_move(sf::Vector2f(-1.f, 0.f), deltatime);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
         this->player->e_move(sf::Vector2f(1.f, 0.f), deltatime);
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_S"))))
+        this->player->e_move(sf::Vector2f(0.f, 1.f), deltatime);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
-        this->player->e_jump(deltatime);
+        this->player->e_move(sf::Vector2f(0.f, -1.f), deltatime);
+
+    //this->player->e_jump(deltatime);
 }
 
 void Process::updateButtons() {

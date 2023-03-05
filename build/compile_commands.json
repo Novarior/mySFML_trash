@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
+  "command": "/usr/bin/clang++  -std=c++17 -ferror-limit=100 -fcolor-diagnostics -fansi-escape-codes main.cpp Core.cpp states/State.cpp states/MainMenu.cpp states/PauseMenu.cpp states/Process.cpp states/gfx.cpp states/NoiceView.cpp math/mymath.cpp math/ProcessGenerationNoice.cpp GUI/GUISYS.cpp GUI/tabMenu.cpp entitys/entity.cpp entitys/player.cpp entitys/properties/hitbox.cpp entitys/properties/movement.cpp Content/rotationCircle.cpp Content/Map/block.cpp Content/Map/TileMap.cpp Content/Map/genTree.cpp -Isource/include/ -o ${workspaceFolder}/main.app -Lsource/lib -lsfml-graphics -lsfml-window -lsfml-system -w   -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/FirstProject.dir/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/main.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/main.cpp"
+}
+]

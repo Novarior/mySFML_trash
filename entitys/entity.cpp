@@ -8,6 +8,10 @@ void Entity::initMovement()
 {
     this->e_movement = NULL;
 }
+void Entity::setPosition(const sf::Vector2f pos)
+{
+    this->sprite.setPosition(pos);
+}
 void Entity::initSomeinit()
 {
     this->isAlive = true;

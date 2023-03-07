@@ -7,7 +7,7 @@ Player::Player()
     this->sprite.setSize(sf::Vector2f(20.f, 20.f));
 
 
-    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f);
+    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, *this);
     this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(64, 64), sf::Vector2f(32, 32));
 }
 

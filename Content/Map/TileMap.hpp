@@ -24,7 +24,7 @@ class TileMap
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldFloat;
     noiceData m_dnoice;
-    std::vector<std::vector<BrickBlock* > > tilemap;
+    std::vector<std::vector<std::vector<BrickBlock* >  > > tilemap;
     std::map<std::string, sf::Texture> m_TexturesList;
     std::vector<sf::Sprite> m_TreeArray;
     sf::Texture m_TreeTexture;
@@ -41,8 +41,10 @@ class TileMap
     const sf::Vector2u getMapSizeOnTiles();
     const sf::Vector2f getMapSizeOnFloat();
 
-    renderArea getRenderArea();
+    sf::FloatRect getGlobalBounds(const unsigned int x, const unsigned int Y) const;
+    const bool getCollision(const unsigned int x, const unsigned int y) const;
 
+    renderArea getRenderArea();
 
     void render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug);
 };

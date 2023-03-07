@@ -30,6 +30,10 @@ const bool& BrickBlock::getCollision()
     return this->m_collision;
 }
 
+sf::FloatRect BrickBlock::getGlobalBounds() const
+{
+    return this->m_Shape.getGlobalBounds();
+}
 sf::RectangleShape& BrickBlock::getRectangleShape()
 {
     return this->m_Shape;

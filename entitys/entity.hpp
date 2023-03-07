@@ -38,9 +38,9 @@ class Entity
     virtual void e_move(sf::Vector2f directionalmove, const float& deltaTime);
     virtual void e_updateAnimation(std::string keyNameAnimation, const float& deltaTime);
     virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision);
-    virtual void e_updateCollison(TileMap* map, const float& deltatime);
+    virtual void e_updateMovement(TileMap* map, const float& deltatime);
     virtual void e_jump(const float& deltatime);
-    virtual void e_update(const float& deltatime = NULL) = 0;
+    virtual void e_update(TileMap* map, const float& deltatime = NULL) = 0;
     virtual void e_render(sf::RenderTarget* target = NULL) = 0;
     HitboxCounter* getHitbox();
     Movement* getMovement();

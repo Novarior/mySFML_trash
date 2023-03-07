@@ -10,7 +10,7 @@ class Player: public Entity
     Player();
     virtual ~Player();
 
-    void e_update(const float& deltatime);
+    void e_update(TileMap* map, const float& deltatime);
     void e_render(sf::RenderTarget* target);
 
 };

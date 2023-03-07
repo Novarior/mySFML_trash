@@ -25,6 +25,6 @@
 #include <SFML/System.hpp>
 
 //include in program files
-#include "ConstFoldersFlow.h"
+#include "states/ConstFoldersFlow.h"
 #include "math/mymath.hpp"
 #endif

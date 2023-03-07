@@ -21,6 +21,7 @@ class Movement
 
     unsigned short m_state;
 
+    void updateCollison(const float& deltatime, TileMap* map);
 
     public:
     Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel);
@@ -29,12 +30,11 @@ class Movement
     void stopVelocity();
     void stopVelocityX();
     void stopVelocityY();
+    sf::Vector2f getVelocity();
+
 
     void jump(const float& dealtatime);
-
-    sf::Vector2f getVelocity();
     void move(sf::Vector2f direction, const float& deltatime);
-    void update(const float& deltatime);
-    void updateCollison(TileMap* map, const float& deltatime);
+    void update(const float& deltatime, TileMap* map);
 };
 #endif

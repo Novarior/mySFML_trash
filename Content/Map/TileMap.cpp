@@ -15,16 +15,11 @@ void TileMap::Clear() {
 
 void TileMap::loadTextuteMap() {
 
-    if (!this->m_TexturesList["GRASS"].loadFromFile("Content/Textures/Tiles/grass.png"))
-        std::cout << "\nTexture GRASS Dosent LOAD \n";
-    if (!this->m_TexturesList["STONE"].loadFromFile("Content/Textures/Tiles/stone.png"))
-        std::cout << "\nTexture STONE Dosent LOAD \n";
-    if (!this->m_TexturesList["OCEAN"].loadFromFile("Content/Textures/Tiles/ocean.png"))
-        std::cout << "\nTexture OCEAN Dosent LOAD \n";
-    if (!this->m_TexturesList["SAND"].loadFromFile("Content/Textures/Tiles/sand.jpg"))
-        std::cout << "\nTexture SAND Dosent LOAD \n";
-    if (!this->m_TexturesList["DIRT"].loadFromFile("Content/Textures/Tiles/dirt.jpeg"))
-        std::cout << "\nTexture DIRT Dosent LOAD \n";
+    if (!this->m_TexturesList["GRASS"].loadFromFile(texture_DIRT));
+    if (!this->m_TexturesList["STONE"].loadFromFile(texture_STONE));
+    if (!this->m_TexturesList["OCEAN"].loadFromFile(texture_OCEAN));
+    if (!this->m_TexturesList["SAND"].loadFromFile(texture_SAND));
+    if (!this->m_TexturesList["DIRT"].loadFromFile(texture_DIRT));
 }
 
 void TileMap::pushTree(int x, int y, int seed)
@@ -34,7 +29,6 @@ void TileMap::pushTree(int x, int y, int seed)
     this->m_TreeSprite.setPosition(
         (x * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().width * 0.5,
         (y * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().height * 0.75);
-    this->m_TreeSprite.setScale(2, 2);
     this->m_TreeArray.push_back(this->m_TreeSprite);
 }
 
@@ -56,9 +50,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->m_Area.toY = 0;
 
     sf::Color buff;
-    if (!this->m_TreeTexture.loadFromFile("Content/Sprites/treee.png"))
-        std::cout << "\nFAIL LOAD ./Sprites/treee.png FILE";
-    else
+    if (this->m_TreeTexture.loadFromFile(texture_TREE))
     {
         this->m_TreeSprite.setTexture(this->m_TreeTexture);
         this->m_TreeTexture.setSmooth(true);
@@ -86,7 +78,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
             }
             else if (writebuff < 66)
             { //sand
-                buff = sf::Color(150 + writebuff * 1.5, 160 + writebuff * 1.4, 110 + writebuff * 0.1, 255);
+                buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
                 this->tilemap[x].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
@@ -100,7 +92,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     collisionBuff, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
-                if (rand() % 100 < 15)
+                if (rand() % 100 < 8)
                     this->pushTree(x, y, this->m_dnoice.seed);
             }
             else if (writebuff < 165)

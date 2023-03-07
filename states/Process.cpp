@@ -166,9 +166,7 @@ void Process::update(const float& deltatime) {
         if (this->tabmenu->isOpen())
             this->tabmenu->update(deltatime, this->mousePosWindow);
 
-        this->player->e_update(deltatime);
-        this->player->e_updateCollison(this->mapTiles, deltatime);
-
+        this->player->e_update(this->mapTiles, deltatime);
     }
 
     if (this->debugMode) {//update debug information

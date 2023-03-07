@@ -82,9 +82,9 @@ sf::Vector2f Entity::e_getVelocity()
 {
     return this->e_movement->getVelocity();
 }
-void Entity::e_updateCollison(TileMap* map, const float& deltatime)
+void Entity::e_updateMovement(TileMap* map, const float& deltatime)
 {
-    this->e_movement->updateCollison(map, deltatime);
+    this->e_movement->update(deltatime, map);
 }
 
 void Entity::e_jump(const float& deltatime)

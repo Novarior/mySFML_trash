@@ -34,7 +34,7 @@ void Movement::move(sf::Vector2f direction, const float& deltatime)
 	this->velocity.y += this->acceleration * direction.y * deltatime;
 }
 
-void Movement::update(const float& deltatime)
+void Movement::update(const float& deltatime, TileMap* map)
 {
 	if (this->velocity.x > 0.f) //Check for positive x
 	{
@@ -79,18 +79,20 @@ void Movement::update(const float& deltatime)
 	}
 
 	this->sprite.move(velocity.x, velocity.y);
+	
+	this->updateCollison(deltatime, map);
 }
 
-void Movement::updateCollison(TileMap* map, const float& deltatime)
+void Movement::updateCollison(const float& deltatime, TileMap* map)
 {
 	sf::Vector2f bufferPos = this->sprite.getPosition();
 	//chek left bound map
 	if (this->sprite.getPosition().x < 0)
 	{
 		this->stopVelocityX();
-		this->sprite.setPosition(0, bufferPos.y);
+		this->sprite.setPosition(0.f, bufferPos.y);
 	}
-	else if (this->sprite.getPosition().x + this->sprite.getGlobalBounds().width > map->getMapSizeOnFloat().x)
+	else if (bufferPos.x + this->sprite.getGlobalBounds().width > map->getMapSizeOnFloat().x)
 	{
 		this->stopVelocityX();
 		this->sprite.setPosition(map->getMapSizeOnFloat().x - this->sprite.getGlobalBounds().width, bufferPos.y);
@@ -99,12 +101,12 @@ void Movement::updateCollison(TileMap* map, const float& deltatime)
 	if (this->sprite.getPosition().y < 0)
 	{
 		this->stopVelocityY();
-		this->sprite.setPosition(bufferPos.x, 0);
+		this->sprite.setPosition(bufferPos.x, 0.f);
 	}
 	else if (this->sprite.getPosition().y + this->sprite.getGlobalBounds().height > map->getMapSizeOnFloat().y)
 	{
 		this->stopVelocityY();
-		this->sprite.setPosition(map->getMapSizeOnFloat().y - this->sprite.getGlobalBounds().height, bufferPos.y);
+		this->sprite.setPosition(bufferPos.x, map->getMapSizeOnFloat().y - this->sprite.getGlobalBounds().height);
 	}
 
 	/*

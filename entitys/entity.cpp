@@ -45,9 +45,19 @@ Movement& Entity::getMovement()
     return *this->e_movement;
 }
 
-void Entity::e_move(sf::Vector2f directionalmove, const float& deltaTime)
+void Entity::e_move(sf::Vector2f directionalmove, const float& delta_time)
 {
-    this->e_movement->move(directionalmove, deltaTime);
+    this->e_movement->move(directionalmove, delta_time);
+
+    this->mState = IDLE;
+    if (this->e_movement->getVelocity().x != 0 || this->e_movement->getVelocity().y != 0)
+    {
+        this->mState = WALK;
+    }
+}
+void Entity::e_move(const float dir_move_x, const float dir_move_y, const float& delta_time)
+{
+    this->e_movement->move(sf::Vector2f(dir_move_x, dir_move_y), delta_time);
 
     this->mState = IDLE;
     if (this->e_movement->getVelocity().x != 0 || this->e_movement->getVelocity().y != 0)
@@ -61,7 +71,7 @@ void Entity::e_setPosition(const sf::Vector2f pos)
     this->sprite.setPosition(pos);
 }
 
-void Entity::e_updateAnimation(std::string keyNameAnimation, const float& deltaTime)
+void Entity::e_updateAnimation(std::string keyNameAnimation, const float& delta_time)
 {
     if (this->isDuck)
     {
@@ -90,14 +100,14 @@ sf::Vector2f Entity::e_getVelocity()
 {
     return this->e_movement->getVelocity();
 }
-void Entity::e_updateMovement(TileMap* map, const float& deltatime)
+void Entity::e_updateMovement(TileMap* map, const float& delta_time)
 {
-    this->e_movement->update(deltatime, map);
-    this->e_movement->updateWorldCollison(deltatime, map);
-    this->e_movement->updateTileCollision(deltatime, map);
+    this->e_movement->update(delta_time, map);
+    this->e_movement->updateWorldCollison(delta_time, map);
+    this->e_movement->updateTileCollision(delta_time, map);
 }
 
-void Entity::e_jump(const float& deltatime)
+void Entity::e_jump(const float& delta_time)
 {
-    this->e_movement->jump(deltatime);
+    this->e_movement->jump(delta_time);
 }

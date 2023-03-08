@@ -58,7 +58,7 @@ void TabMenu::updateButtons(sf::Vector2i mousePosWindow)
         it.second->update(mousePosWindow);
 }
 
-void TabMenu::update(const float& deltatime, sf::Vector2i mousePosWindow)
+void TabMenu::update(const float& delta_time, sf::Vector2i mousePosWindow)
 {
     this->updateButtons(mousePosWindow);
 }

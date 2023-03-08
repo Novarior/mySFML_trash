@@ -66,8 +66,8 @@ void State::updateMousePositions(sf::View* view)
 	this->Iwindow->setView(this->Iwindow->getDefaultView());
 }
 
-void State::updateKeytime(const float& deltatime)
+void State::updateKeytime(const float& delta_time)
 {
 	if (this->Ikeytime < this->IkeytimeMax)
-		this->Ikeytime += 100.f * deltatime;
+		this->Ikeytime += 100.f * delta_time;
 }

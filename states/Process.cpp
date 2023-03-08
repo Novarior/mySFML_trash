@@ -162,7 +162,7 @@ Process::~Process() {
     delete this->player;
 }
 
-void Process::updateInput(const float& deltatime) {
+void Process::updateInput(const float& delta_time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime())
         this->tabmenu->toggleSwitch();
 
@@ -172,27 +172,27 @@ void Process::updateInput(const float& deltatime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_C"))) && this->getKeytime()) {}
 }
 
-void Process::updatePlayerInputs(const float& deltatime) {
+void Process::updatePlayerInputs(const float& delta_time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_A"))))
-        this->player->e_move(sf::Vector2f(-1.f, 0.f), deltatime);
+        this->player->e_move(sf::Vector2f(-1.f, 0.f), delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
-        this->player->e_move(sf::Vector2f(1.f, 0.f), deltatime);
+        this->player->e_move(sf::Vector2f(1.f, 0.f), delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_S"))))
-        this->player->e_move(sf::Vector2f(0.f, 1.f), deltatime);
+        this->player->e_move(sf::Vector2f(0.f, 1.f), delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
-        this->player->e_move(sf::Vector2f(0.f, -1.f), deltatime);
+        this->player->e_move(sf::Vector2f(0.f, -1.f), delta_time);
 
-    //this->player->e_jump(deltatime);
+    //this->player->e_jump(delta_time);
 }
 
 void Process::updateButtons() {
     if (this->tabmenu->isPressed("REBUILD_BUTTON") && this->getKeytime());
 }
 
-void Process::update(const float& deltatime) {
+void Process::update(const float& delta_time) {
     this->updateMousePositions(&this->view);
-    this->updateKeytime(deltatime);
-    this->updateInput(deltatime);
+    this->updateKeytime(delta_time);
+    this->updateInput(delta_time);
 
     if (this->Ipaused) { //update pause
         this->pausemenu->update(this->mousePosWindow);
@@ -201,19 +201,19 @@ void Process::update(const float& deltatime) {
             this->endState();
     }
     else { //update game
-        this->updatePlayerInputs(deltatime);
+        this->updatePlayerInputs(delta_time);
         this->updateButtons();
 
         if (this->tabmenu->isOpen())
-            this->tabmenu->update(deltatime, this->mousePosWindow);
+            this->tabmenu->update(delta_time, this->mousePosWindow);
 
         this->mapTiles->update(this->player->e_getPosition());
-        this->player->e_update(this->mapTiles, deltatime);
-        this->player->e_updateMovement(this->mapTiles, deltatime);
+        this->player->e_update(this->mapTiles, delta_time);
+        this->player->e_updateMovement(this->mapTiles, delta_time);
     }
 
     if (this->debugMode) {//update debug information
-        double fps = 1.0f / deltatime;
+        double fps = 1.0f / delta_time;
         this->dString_Stream
             << "FPS:\t" << fps << "\n"
             << "Player:\n"

@@ -33,6 +33,7 @@ class Entity
 
     sf::Vector2f e_getVelocity();
     virtual void e_move(sf::Vector2f directionalmove, const float& deltaTime);
+    virtual void e_move(const float dir_move_x, const float dir_move_y, const float& delta_time);
     virtual void e_updateAnimation(std::string keyNameAnimation, const float& deltaTime);
     virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision);
     virtual void e_updateMovement(TileMap* map, const float& deltatime);
@@ -45,8 +46,6 @@ class Entity
     virtual sf::Vector2f e_getPosition();
     virtual void e_setPosition(const sf::Vector2f pos);
     virtual sf::Vector2i e_getGridPosition(unsigned int grisSize);
-
-
 };
 
 #endif CPP_ENTITYCLASS_HPP

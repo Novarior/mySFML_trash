@@ -40,9 +40,9 @@ class MainMenu: public State
     virtual ~MainMenu();
 
 
-    void updateInput(const float& deltatime);
+    void updateInput(const float& delta_time);
     void updateButtons();
-    void update(const float& deltatime);
+    void update(const float& delta_time);
     void render(sf::RenderWindow* target);
 
 };

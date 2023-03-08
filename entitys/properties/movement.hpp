@@ -33,11 +33,11 @@ class Movement
     void stopVelocityY();
     sf::Vector2f getVelocity();
 
-    void updateWorldCollison(const float& deltatime, TileMap* map);
-    void updateTileCollision(const float& deltatime, TileMap* map);
+    void updateWorldCollison(const float& delta_time, TileMap* map);
+    void updateTileCollision(const float& delta_time, TileMap* map);
 
     void jump(const float& dealtatime);
-    void move(sf::Vector2f direction, const float& deltatime);
-    void update(const float& deltatime, TileMap* map);
+    void move(sf::Vector2f direction, const float& delta_time);
+    void update(const float& delta_time, TileMap* map);
 };
 #endif

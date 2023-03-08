@@ -3,7 +3,7 @@
 	"tasks": [
 		{
 			"type": "cppbuild",
-			"label": "C/C++: clang сборка активного ARM.app файла",
+			"label": "C/C++: сборка ARM_x64.app файла",
 			"command": "/usr/bin/clang++",
 			"args": [
 				"-std=c++17",
@@ -24,6 +24,8 @@
 				"GUI/tabMenu.cpp",
 				"entitys/entity.cpp",
 				"entitys/player.cpp",
+				"entitys/AI/AIFollow.cpp",
+				"entitys/AI/AIComponent.cpp",
 				"entitys/properties/hitbox.cpp",
 				"entitys/properties/movement.cpp",
 				"Content/rotationCircle.cpp",

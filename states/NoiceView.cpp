@@ -89,14 +89,14 @@ NoiceView::~NoiceView() {
     delete this->myGN;
 }
 
-void NoiceView::updateInput(const float& deltatime) {
+void NoiceView::updateInput(const float& delta_time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
 }
 
-void NoiceView::update(const float& deltatime) {
-    this->updateKeytime(deltatime);
-    this->updateInput(deltatime);
+void NoiceView::update(const float& delta_time) {
+    this->updateKeytime(delta_time);
+    this->updateInput(delta_time);
 
 
     if (!this->isGeneratorClosed) {
@@ -116,7 +116,7 @@ void NoiceView::update(const float& deltatime) {
         }
     }
     if (this->debugMode) {//update debug information
-        double fps = 1.0f / deltatime;
+        double fps = 1.0f / delta_time;
         this->dString_Stream
             << "FPS:\t" << fps << "\n"
             << "Block counter:"

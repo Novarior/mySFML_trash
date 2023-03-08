@@ -27,7 +27,7 @@ namespace gui
 
 
         void updateButtons(sf::Vector2i mousePosWindow);
-        void update(const float& deltatime, sf::Vector2i mousePosWindow);
+        void update(const float& delta_time, sf::Vector2i mousePosWindow);
         void render(sf::RenderTarget* target);
     };
 }

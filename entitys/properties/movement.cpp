@@ -28,18 +28,18 @@ void Movement::stopVelocityY()
 {
 	this->velocity.y = 0.f;
 }
-void Movement::move(sf::Vector2f direction, const float& deltatime)
+void Movement::move(sf::Vector2f direction, const float& delta_time)
 {
-	this->velocity.x += this->acceleration * direction.x * deltatime;
-	this->velocity.y += this->acceleration * direction.y * deltatime;
+	this->velocity.x += this->acceleration * direction.x * delta_time;
+	this->velocity.y += this->acceleration * direction.y * delta_time;
 }
 
-void Movement::update(const float& deltatime, TileMap* map)
+void Movement::update(const float& delta_time, TileMap* map)
 {
 	if (this->velocity.x > 0.f) //Check for positive x
 	{
 		//Deceleration
-		this->velocity.x -= this->deceleration * deltatime;
+		this->velocity.x -= this->deceleration * delta_time;
 		if (this->velocity.x < 0.f)
 			this->velocity.x = 0.f;
 		//Max velocity check
@@ -49,7 +49,7 @@ void Movement::update(const float& deltatime, TileMap* map)
 	else if (this->velocity.x < 0.f) //Check for negative x
 	{
 		//Deceleration
-		this->velocity.x += deceleration * deltatime;
+		this->velocity.x += deceleration * delta_time;
 		if (this->velocity.x > 0.f)
 			this->velocity.x = 0.f;
 		//Max velocity check
@@ -60,7 +60,7 @@ void Movement::update(const float& deltatime, TileMap* map)
 	if (this->velocity.y > 0.f) //Check for positive y
 	{
 		//Deceleration
-		this->velocity.y -= this->deceleration * deltatime;
+		this->velocity.y -= this->deceleration * delta_time;
 		if (this->velocity.y < 0.f)
 			this->velocity.y = 0.f;
 		//Max velocity check
@@ -70,7 +70,7 @@ void Movement::update(const float& deltatime, TileMap* map)
 	else if (this->velocity.y < 0.f) //Check for negative y
 	{
 		//Deceleration
-		this->velocity.y += deceleration * deltatime;
+		this->velocity.y += deceleration * delta_time;
 		if (this->velocity.y > 0.f)
 			this->velocity.y = 0.f;
 		//Max velocity check
@@ -80,7 +80,7 @@ void Movement::update(const float& deltatime, TileMap* map)
 	this->sprite.move(velocity.x, velocity.y);
 }
 
-void Movement::updateTileCollision(const float& deltatime, TileMap* map)
+void Movement::updateTileCollision(const float& delta_time, TileMap* map)
 {
 	int fromX = 0,
 		fromY = 0,
@@ -169,7 +169,7 @@ void Movement::updateTileCollision(const float& deltatime, TileMap* map)
 	}
 }
 
-void Movement::updateWorldCollison(const float& deltatime, TileMap* map)
+void Movement::updateWorldCollison(const float& delta_time, TileMap* map)
 {
 	sf::Vector2f bufferPos = this->sprite.getPosition();
 	//chek left bound map

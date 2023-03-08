@@ -29,10 +29,10 @@ Player::~Player()
     delete this->e_hitbox;
 }
 
-void Player::e_update(TileMap* map, const float& deltatime)
+void Player::e_update(TileMap* map, const float& delta_time)
 {
     if (this->isAlive) {
-        this->e_movement->update(deltatime, map);
+        this->e_movement->update(delta_time, map);
         this->e_hitbox->update();
     }
 }

@@ -53,10 +53,10 @@ class Process:public State
     virtual ~Process();
 
 
-    void updateInput(const float& deltatime);
+    void updateInput(const float& delta_time);
     void updateButtons();
-    void updatePlayerInputs(const float& deltatime);
-    void update(const float& deltatime);
+    void updatePlayerInputs(const float& delta_time);
+    void update(const float& delta_time);
     void render(sf::RenderWindow* target);
 };
 #endif

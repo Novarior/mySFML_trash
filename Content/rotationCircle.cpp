@@ -10,7 +10,7 @@ RotarionCircle::~RotarionCircle() {
     this->phantoms.clear();
 }
 
-void RotarionCircle::update(const float& deltatime) {
+void RotarionCircle::update(const float& delta_time) {
     // push on front 
     this->phantoms.push_front(this->shape);
     // itteration on massive and change Alpha channel
@@ -25,8 +25,8 @@ void RotarionCircle::update(const float& deltatime) {
         x++;
     }
     // move on XY >> pos
-    this->bgd.pos.x += 1.0 * deltatime;
-    this->bgd.pos.y += 1.0f * deltatime;
+    this->bgd.pos.x += 1.0 * delta_time;
+    this->bgd.pos.y += 1.0f * delta_time;
 
     // rotarion
     this->shape.setPosition(sf::Vector2f(
@@ -40,7 +40,7 @@ void RotarionCircle::update(const float& deltatime) {
         if (this->phantoms.size() == bgd.countPhantomBlocks)
             this->phantoms.pop_back();
 
-    this->i + deltatime;
+    this->i + delta_time;
 }
 
 void RotarionCircle::setShape(sf::CircleShape shape) {

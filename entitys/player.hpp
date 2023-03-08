@@ -11,7 +11,7 @@ class Player: public Entity
     Player(const sf::Vector2f basePos,const float grid);
     virtual ~Player();
 
-    void e_update(TileMap* map, const float& deltatime);
+    void e_update(TileMap* map, const float& delta_time);
     void e_render(sf::RenderTarget* target);
 
 };

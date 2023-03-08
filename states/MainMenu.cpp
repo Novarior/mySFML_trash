@@ -134,28 +134,28 @@ MainMenu::~MainMenu() {
     delete this->rotationCyrcleShape;
 }
 
-void MainMenu::update(const float& deltatime) {
-    this->updateKeytime(deltatime);
+void MainMenu::update(const float& delta_time) {
+    this->updateKeytime(delta_time);
 
     if (!this->isstatred) {
         this->updateMousePositions(&this->view);
-        this->updateInput(deltatime);
+        this->updateInput(delta_time);
         this->updateButtons();
     }
     else
         this->updateStartProcces();
 
-    this->rotationCyrcleShape->update(deltatime);
+    this->rotationCyrcleShape->update(delta_time);
 
     if (this->debugMode)
     {
-        this->dString_Stream << "FPS:\t" << 1 / deltatime << "\n";
+        this->dString_Stream << "FPS:\t" << 1 / delta_time << "\n";
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }
 }
 
-void MainMenu::updateInput(const float& deltatime) {
+void MainMenu::updateInput(const float& delta_time) {
 }
 
 void MainMenu::updateButtons() {

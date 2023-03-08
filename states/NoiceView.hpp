@@ -40,8 +40,8 @@ class NoiceView: public State
     virtual ~NoiceView();
 
 
-    void updateInput(const float& deltatime);
-    void update(const float& deltatime);
+    void updateInput(const float& delta_time);
+    void update(const float& delta_time);
     void render(sf::RenderWindow* target);
 };
 #endif

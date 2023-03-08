@@ -63,6 +63,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
 
     for (int x = 0; x < this->m_dnoice.mapSize.x; x++) {
         this->tilemap[x].resize(this->maxSizeWorldGrid.y, std::vector<BrickBlock*>());
+
         for (int y = 0; y < this->m_dnoice.mapSize.y; y++) {
             writebuff = noice->getNoice(x, y);
             writebuff *= 255;
@@ -95,7 +96,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
-                if (rand() % 100 < 8)
+                if (rand() % 100 < 15)
                     this->pushTree(x, y, this->m_dnoice.seed);
             }
             else if (writebuff < 165)
@@ -151,6 +152,42 @@ const bool TileMap::getCollision(const unsigned int x, const unsigned int y) con
 sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int y) const
 {
     return this->tilemap[x][y][0]->getGlobalBounds();
+}
+
+void TileMap::update(sf::Vector2f pos_entity)
+{
+    int fromX = 0,
+        fromY = 0,
+        toX = 0,
+        toY = 0;
+
+    fromX = pos_entity.x / this->m_dnoice.gridSize - 2;
+    if (fromX < 0)
+        fromX = 0;
+    else if (fromX > this->maxSizeWorldGrid.x)
+        fromX = this->maxSizeWorldGrid.x;
+
+    toX = pos_entity.x / this->m_dnoice.gridSize + 3;
+    if (toX < 0)
+        toX = 0;
+    else if (toX > this->maxSizeWorldGrid.x)
+        toX = this->maxSizeWorldGrid.x;
+
+    fromY = pos_entity.y / this->m_dnoice.gridSize - 2;
+    if (fromY < 0)
+        fromY = 0;
+    else if (fromY > this->maxSizeWorldGrid.y)
+        fromY = this->maxSizeWorldGrid.y;
+
+    toY = pos_entity.y / this->m_dnoice.gridSize + 3;
+    if (toY < 0)
+        toY = 0;
+    else if (toY > this->maxSizeWorldGrid.y)
+        toY = this->maxSizeWorldGrid.y;
+
+    for (int x = fromX;x < toX;x++)
+        for (int y = fromY;y < toY;y++)
+            this->tilemap[x][y][0]->update();
 }
 
 void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug) {

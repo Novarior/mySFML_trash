@@ -9,25 +9,26 @@
             "type": "cppdbg",
             "request": "attach",
             "program": "${workspaceFolder}/main.app",
-            "MIMode": "lldb"
+            "MIMode": "gbd"
         },
         {
             "name": "(lldb) Запустить",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/main.app",
-            "args": [
-                "-gui"
-            ],
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
+            "args": [
+                "-exec"
+            ],
             "environment": [
                 {
                     "name": "Test",
                     "value": "Debug"
                 }
             ],
-            "externalConsole": false,
+            "externalConsole": true,
+            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
             "MIMode": "lldb"
         }
     ]

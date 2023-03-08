@@ -27,9 +27,6 @@ class Entity
 
     movementState mState;
 
-
-
-
     public:
     Entity();
     virtual ~Entity();
@@ -43,8 +40,8 @@ class Entity
     virtual void e_jump(const float& deltatime);
     virtual void e_update(TileMap* map, const float& deltatime = NULL) = 0;
     virtual void e_render(sf::RenderTarget* target = NULL) = 0;
-    HitboxCounter* getHitbox();
-    Movement* getMovement();
+    HitboxCounter& getHitbox();
+    Movement& getMovement();
 
     virtual sf::Vector2f e_getPosition();
     virtual sf::Vector2i e_getGridPosition(unsigned int grisSize);

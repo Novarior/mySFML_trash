@@ -45,7 +45,7 @@ class TileMap
     const bool getCollision(const unsigned int x, const unsigned int y) const;
 
     renderArea getRenderArea();
-
+    void update(sf::Vector2f pos_entity);
     void render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug);
 };
 #endif

@@ -60,7 +60,7 @@
 				"kind": "build",
 				"isDefault": true
 			},
-			"detail": "компилятор: /usr/bin/clang"
+			"detail": "компилятор: /usr/bin/clang++"
 		},
 	]
 }

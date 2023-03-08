@@ -38,14 +38,14 @@ Entity::~Entity()
 {
 }
 
-HitboxCounter* Entity::getHitbox()
+HitboxCounter& Entity::getHitbox()
 {
-    return this->e_hitbox;
+    return *this->e_hitbox;
 }
 
-Movement* Entity::getMovement()
+Movement& Entity::getMovement()
 {
-    return this->e_movement;
+    return *this->e_movement;
 }
 
 void Entity::e_move(sf::Vector2f directionalmove, const float& deltaTime)
@@ -89,6 +89,8 @@ sf::Vector2f Entity::e_getVelocity()
 void Entity::e_updateMovement(TileMap* map, const float& deltatime)
 {
     this->e_movement->update(deltatime, map);
+    this->e_movement->updateWorldCollison(deltatime, map);
+    this->e_movement->updateTileCollision(deltatime, map);
 }
 
 void Entity::e_jump(const float& deltatime)

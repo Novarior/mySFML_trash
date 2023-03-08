@@ -17,9 +17,10 @@ class BrickBlock
     BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type);
     virtual ~BrickBlock();
 
-    sf::FloatRect getGlobalBounds() const;
+    const sf::FloatRect getGlobalBounds();
     const bool& getCollision();
     sf::RectangleShape& getRectangleShape();
+    void update();
     void render(sf::RenderTarget* target);
 };
 #endif

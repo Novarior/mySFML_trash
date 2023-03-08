@@ -16,7 +16,7 @@ BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color
         this->m_Hitbox.setPosition(position);
         this->m_Hitbox.setFillColor(sf::Color::Transparent);
         this->m_Hitbox.setOutlineColor(sf::Color::Red);
-        this->m_Hitbox.setOutlineThickness(0);
+        this->m_Hitbox.setOutlineThickness(-1);
     }
 }
 
@@ -27,16 +27,33 @@ BrickBlock::~BrickBlock()
 
 const bool& BrickBlock::getCollision()
 {
+    if (this->m_collision)
+        this->m_Hitbox.setOutlineColor(sf::Color::Green);
+
     return this->m_collision;
 }
 
-sf::FloatRect BrickBlock::getGlobalBounds() const
+const sf::FloatRect BrickBlock::getGlobalBounds()
 {
+    if (this->m_collision)
+        this->m_Hitbox.setFillColor(sf::Color::Blue);
+
     return this->m_Shape.getGlobalBounds();
 }
+
 sf::RectangleShape& BrickBlock::getRectangleShape()
 {
     return this->m_Shape;
+}
+
+void BrickBlock::update()
+{
+    if (this->m_collision)
+    {
+        this->m_Hitbox.setOutlineColor(sf::Color::Red);
+        this->m_Hitbox.setFillColor(sf::Color::Transparent);
+
+    }
 }
 
 void BrickBlock::render(sf::RenderTarget* target)

@@ -8,7 +8,7 @@ GraphicsSettings::GraphicsSettings() {
 	this->frameRateLimit = 120;
 	this->contextSettings.antialiasingLevel = 0;
 	this->videoModes = sf::VideoMode::getFullscreenModes();
-	this->gridSize = 64.f;
+	this->gridSize = 32.f;
 }
 
 //Functions

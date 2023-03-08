@@ -2,11 +2,11 @@
 #define CPP_MOVEMENT_HPP
 #include "../../header.h"
 #include "../../Content/Map/TileMap.hpp"
-#include "../../entitys/entity.hpp"
+
 
 class BrickBlock;
 class TileMap;
-class Entity;
+
 
 enum movestate { NONe = -1, Idle, Jump, Fall };
 
@@ -14,7 +14,6 @@ enum movestate { NONe = -1, Idle, Jump, Fall };
 class Movement
 {
     private:
-    Entity* m_self;
     sf::Vector2f direction;
     float acceleration;
     float deceleration;
@@ -26,7 +25,7 @@ class Movement
 
 
     public:
-    Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel, const float grid, Entity* self);
+    Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel, const float grid);
     ~Movement();
 
     void stopVelocity();

@@ -1,7 +1,7 @@
 #include "movement.hpp"
 
-Movement::Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel, const float grid, Entity* self):
-	sprite(sprite), acceleration(accel), deceleration(decel), maxVelocity(maxVel), gridSizeF(grid), m_self(self)
+Movement::Movement(sf::RectangleShape& sprite, float accel, float decel, float maxVel, const float grid):
+	sprite(sprite), acceleration(accel), deceleration(decel), maxVelocity(maxVel), gridSizeF(grid)
 {
 
 }
@@ -93,7 +93,7 @@ void Movement::updateTileCollision(const float& deltatime, TileMap* map)
 	else if (fromX > map->getMapSizeOnTiles().x)
 		fromX = map->getMapSizeOnTiles().x;
 
-	toX = this->sprite.getPosition().x / this->gridSizeF + 3;
+	toX = this->sprite.getPosition().x / this->gridSizeF + 2;
 	if (toX < 0)
 		toX = 0;
 	else if (toX > map->getMapSizeOnTiles().x)
@@ -105,7 +105,7 @@ void Movement::updateTileCollision(const float& deltatime, TileMap* map)
 	else if (fromY > map->getMapSizeOnTiles().y)
 		fromY = map->getMapSizeOnTiles().y;
 
-	toY = this->sprite.getPosition().y / this->gridSizeF + 3;
+	toY = this->sprite.getPosition().y / this->gridSizeF + 2;
 	if (toY < 0)
 		toY = 0;
 	else if (toY > map->getMapSizeOnTiles().y)
@@ -119,7 +119,7 @@ void Movement::updateTileCollision(const float& deltatime, TileMap* map)
 			sf::FloatRect playerBounds = this->sprite.getGlobalBounds();
 			sf::FloatRect wallBounds = map->getGlobalBounds(x, y);
 
-			if (map->getCollision(x,y))
+			if (map->getCollision(x, y))
 			{
 				//Bottom collision
 				if (playerBounds.top < wallBounds.top

@@ -166,7 +166,10 @@ void Process::update(const float& deltatime) {
         if (this->tabmenu->isOpen())
             this->tabmenu->update(deltatime, this->mousePosWindow);
 
+        this->mapTiles->update(this->player->e_getPosition());
+
         this->player->e_update(this->mapTiles, deltatime);
+        this->player->e_updateMovement(this->mapTiles, deltatime);
     }
 
     if (this->debugMode) {//update debug information

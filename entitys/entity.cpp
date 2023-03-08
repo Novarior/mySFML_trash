@@ -8,10 +8,7 @@ void Entity::initMovement()
 {
     this->e_movement = NULL;
 }
-void Entity::setPosition(const sf::Vector2f pos)
-{
-    this->sprite.setPosition(pos);
-}
+
 void Entity::initSomeinit()
 {
     this->isAlive = true;
@@ -58,6 +55,12 @@ void Entity::e_move(sf::Vector2f directionalmove, const float& deltaTime)
         this->mState = WALK;
     }
 }
+
+void Entity::e_setPosition(const sf::Vector2f pos)
+{
+    this->sprite.setPosition(pos);
+}
+
 void Entity::e_updateAnimation(std::string keyNameAnimation, const float& deltaTime)
 {
     if (this->isDuck)
@@ -78,6 +81,7 @@ sf::Vector2f Entity::e_getPosition()
 {
     return this->sprite.getPosition();
 }
+
 sf::Vector2i Entity::e_getGridPosition(unsigned int grisSize)
 {
     return sf::Vector2i(this->sprite.getPosition().x / grisSize, this->sprite.getPosition().y / grisSize);

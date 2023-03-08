@@ -1,26 +1,49 @@
 #include "Process.hpp"
 
-void Process::loadGameData() {
+const bool Process::loadGameData() {
     std::ifstream ifs("gameconfig.cfg");
-    if (ifs.is_open()) {}
-    ifs.close();
-}
+    if (ifs.is_open()) {
+        sf::Vector2f playerBuffPos;
 
-void Process::saveGameData() {
-    std::ofstream ofs("gameconfig.cfg");
-    if (ofs.is_open())
-    {
-        ofs << this->noicedata.seed;
-        ofs << this->noicedata.mapSize.x << this->noicedata.mapSize.y;
-        ofs << this->noicedata.octaves;
-        ofs << this->noicedata.persistence;
-        ofs << this->noicedata.RenderWindow.x << this->noicedata.RenderWindow.y;
-        ofs << this->noicedata.gridSize;
+        ifs >> this->noicedata.seed;
+        ifs >> this->noicedata.octaves;
+        ifs >> this->noicedata.gridSize;
+        ifs >> this->noicedata.frequency;
+        ifs >> this->noicedata.mapSize.x >> this->noicedata.mapSize.y;
+        ifs >> this->noicedata.RenderWindow.x >> this->noicedata.RenderWindow.y;
 
+        ifs >> this->noicedata.persistence;
+        ifs >> playerBuffPos.x >> playerBuffPos.y;
+
+        this->m_gamedata.currentPlayerPos = playerBuffPos;
     }
-    ofs.close();
+    else
+        return false;
+
+    ifs.close();
+    return true;
 }
 
+const bool Process::saveGameData() {
+
+    std::ofstream ofs("gameconfig.cfg");
+    if (ofs.is_open()) {
+        ofs << this->noicedata.seed << '\n';
+        ofs << this->noicedata.octaves << '\n';
+        ofs << this->noicedata.gridSize << '\n';
+        ofs << this->noicedata.frequency << '\n';
+        ofs << this->noicedata.mapSize.x << ' ' << this->noicedata.mapSize.y << '\n';
+        ofs << this->noicedata.RenderWindow.x << ' ' << this->noicedata.RenderWindow.y << '\n';
+        ofs << this->noicedata.persistence << '\n';
+        ofs << this->player->e_getPosition().x << ' ' << this->player->e_getPosition().y << '\n';
+    }
+    else
+        return false;
+    ofs.close();
+    return true;
+}
+
+//init data who dont use loaded dates
 void Process::initKeybinds() {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["TAB"] = this->IsupportedKeys->at("Tab");
@@ -29,20 +52,35 @@ void Process::initKeybinds() {
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
     this->Ikeybinds["KEY_C"] = this->IsupportedKeys->at("C");
+}
 
+void Process::initTabMenu() {
+    this->tabmenu = new gui::TabMenu(this->IstateData->sWindow->getSize());
+
+    this->tabmenu->addButton("TTT_BUTTON", new gui::Button(
+        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 115),
+        sf::Vector2f(160, 90),
+        this->IstateData->font, "ttt", 20,
+        sf::Color::White,
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
+
+    this->tabmenu->addButton("REBUILD_BUTTON", new gui::Button(
+        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 25),
+        sf::Vector2f(160, 90),
+        this->IstateData->font, "reBuild", 20,
+        sf::Color::White,
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
+}
+
+void Process::initPauseMenu() {
+    const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
+    this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
+    this->pausemenu->addButton("EXIT_BUTTON", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
 }
 
 void Process::initTileMap() {
-    this->noicedata.gridSize = this->IstateData->grid_size;
-    this->noicedata.octaves = 8;
-    this->noicedata.seed = 1;
-    this->noicedata.frequency = 8;
-    this->noicedata.RenderWindow = sf::Vector2f(
-        this->IstateData->gfxSettings->resolution.width,
-        this->IstateData->gfxSettings->resolution.height);
-    this->noicedata.mapSize = sf::Vector2u(620, 430);
-    this->noicedata.persistence = 0.6f;
-
     this->myGN = new ProcessGenerationNoice(this->noicedata);
     this->mapTiles = new TileMap(this->noicedata, myGN);
 }
@@ -69,53 +107,54 @@ void Process::initView() {
         this->IstateData->sWindow->getSize().y);
 
     this->renderSprite.setTexture(this->renderTexture.getTexture());
+
     this->renderSprite.setTextureRect(sf::IntRect(0, 0,
         this->IstateData->sWindow->getSize().x,
         this->IstateData->sWindow->getSize().y));
 }
 
-void Process::initTabMenu() {
-    this->tabmenu = new gui::TabMenu(this->IstateData->sWindow->getSize());
-
-    this->tabmenu->addButton("TTT_BUTTON", new gui::Button(
-        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 115),
-        sf::Vector2f(160, 90),
-        this->IstateData->font, "ttt", 20,
-        sf::Color::White,
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
-
-    this->tabmenu->addButton("REBUILD_BUTTON", new gui::Button(
-        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 25),
-        sf::Vector2f(160, 90),
-        this->IstateData->font, "reBuild", 20,
-        sf::Color::White,
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
-}
-
 void Process::initPlayer() {
-    this->player = new Player();
+    if (loaded)
+        this->player = new Player(this->m_gamedata.currentPlayerPos, this->IstateData->grid_size);
+    else
+        this->player = new Player(this->IstateData->grid_size);
 }
 
-void Process::initPauseMenu() {
-    const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
-    this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
-    this->pausemenu->addButton("EXIT_BUTTON", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
+//Defauld Init Data
+void Process::initTileMapData() {
+    if (!this->loaded) {
+        this->noicedata.seed = 1;
+        this->noicedata.gridSize = this->IstateData->grid_size;
+        this->noicedata.octaves = 8;
+        this->noicedata.frequency = 8;
+        this->noicedata.RenderWindow = sf::Vector2f(
+            this->IstateData->gfxSettings->resolution.width,
+            this->IstateData->gfxSettings->resolution.height);
+        this->noicedata.mapSize = sf::Vector2u(620, 430);
+        this->noicedata.persistence = 0.6f;
+    }
 }
 
+Process::Process(StateData* state_data, const bool defaultLoad):State(state_data) {
+    if (defaultLoad) {
+        if (this->loadGameData())
+            this->loaded = true;
+        else
+            this->loaded = false;
+    }
 
-Process::Process(StateData* state_data):State(state_data) {
     this->initKeybinds();
     this->initView();
-    this->initTileMap();
-    this->initTabMenu();
-    this->initPlayer();
     this->initPauseMenu();
-    this->gameClock.restart();
+    this->initTabMenu();
+    this->initTileMapData();
+    this->initTileMap();
+    this->initPlayer();
 }
 
 Process::~Process() {
+    this->saveGameData();
+
     delete this->myGN;
     delete this->mapTiles;
     delete this->tabmenu;
@@ -157,17 +196,18 @@ void Process::update(const float& deltatime) {
 
     if (this->Ipaused) { //update pause
         this->pausemenu->update(this->mousePosWindow);
+
         if (this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
     }
     else { //update game
         this->updatePlayerInputs(deltatime);
         this->updateButtons();
+
         if (this->tabmenu->isOpen())
             this->tabmenu->update(deltatime, this->mousePosWindow);
 
         this->mapTiles->update(this->player->e_getPosition());
-
         this->player->e_update(this->mapTiles, deltatime);
         this->player->e_updateMovement(this->mapTiles, deltatime);
     }
@@ -176,7 +216,6 @@ void Process::update(const float& deltatime) {
         double fps = 1.0f / deltatime;
         this->dString_Stream
             << "FPS:\t" << fps << "\n"
-            << "Time Elapsed: " << this->m_gamedata.timeInitElapsed << '\n'
             << "Player:\n"
             << "\tvelX: " << this->player->e_getVelocity().x << "\n"
             << "\tvelY: " << this->player->e_getVelocity().y << '\n'
@@ -201,7 +240,7 @@ void Process::update(const float& deltatime) {
 void Process::render(sf::RenderWindow* target) {
     if (!target)
         target = this->Iwindow;
-    // re CLEAR pre rendered texture
+    //CLEAR pre rendered texture
     this->renderTexture.clear();
     this->renderTexture.setView(this->playerView);
 

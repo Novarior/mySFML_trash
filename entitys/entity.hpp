@@ -31,7 +31,6 @@ class Entity
     Entity();
     virtual ~Entity();
 
-    void  setPosition(const sf::Vector2f);
     sf::Vector2f e_getVelocity();
     virtual void e_move(sf::Vector2f directionalmove, const float& deltaTime);
     virtual void e_updateAnimation(std::string keyNameAnimation, const float& deltaTime);
@@ -44,6 +43,7 @@ class Entity
     Movement& getMovement();
 
     virtual sf::Vector2f e_getPosition();
+    virtual void e_setPosition(const sf::Vector2f pos);
     virtual sf::Vector2i e_getGridPosition(unsigned int grisSize);
 
 

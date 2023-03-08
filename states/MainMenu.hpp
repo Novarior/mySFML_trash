@@ -30,7 +30,6 @@ class MainMenu: public State
     //elements for start 
     sf::RectangleShape fadeShape;
     bool isstatred;
-    bool isStarted();
     void initStartProcces();
     void updateStartProcces();
     void resetView();

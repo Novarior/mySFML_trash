@@ -1,14 +1,26 @@
 #include "player.hpp"
 
-Player::Player()
+Player::Player(const float grid)
 {
     this->sprite.setFillColor(sf::Color::Red);
     this->sprite.setPosition(0, 0);
-    this->sprite.setSize(sf::Vector2f(32.f, 32.f));
+    this->sprite.setSize(sf::Vector2f(grid * 1.5f, grid * 1.5f));
 
 
-    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, 32);
-    this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(32, 32), sf::Vector2f());
+    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, grid);
+    this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(grid * 1.5f, grid * 1.5f), sf::Vector2f());
+}
+
+
+Player::Player(const sf::Vector2f basePos, const float grid)
+{
+    this->sprite.setFillColor(sf::Color::Red);
+    this->sprite.setPosition(basePos);
+    this->sprite.setSize(sf::Vector2f(grid * 1.5f, grid * 1.5f));
+
+
+    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, grid);
+    this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(grid * 1.5f, grid * 1.5f), sf::Vector2f());
 }
 
 Player::~Player()

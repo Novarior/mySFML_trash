@@ -41,7 +41,7 @@ void MainMenu::initButtons() {
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    this->buttons["SOME_BTN"] = new gui::Button(
+    this->buttons["START_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 225), sf::Vector2f(250, 100),
         this->IstateData->font, "Play", 20,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
@@ -53,13 +53,12 @@ void MainMenu::initButtons() {
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    /*
-    this->buttons["G_TREE"] = new gui::Button(
+    this->buttons["CONT_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 425), sf::Vector2f(250, 100),
-        this->IstateData->font, "Tree", 20,
+        this->IstateData->font, "Continue", 20,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-    */
+
 }
 
 void MainMenu::initBlocks() {
@@ -87,17 +86,13 @@ void MainMenu::initStartProcces() {
     this->fadeShape.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
 }
 
-bool MainMenu::isStarted() {
-    return false;
-}
-
 void MainMenu::updateStartProcces() {
     sf::Color buff = this->fadeShape.getFillColor();
 
     if (buff.a < 255)
         buff.a += 1;
     else {
-        this->Istates->push(new Process(this->IstateData));
+        this->Istates->push(new Process(this->IstateData, false));
 
         this->isstatred = false;
         this->resetView();
@@ -170,8 +165,14 @@ void MainMenu::updateButtons() {
     if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime())
         this->endState();
 
-    if (this->buttons["SOME_BTN"]->isPressed() && this->getKeytime())
+    if (this->buttons["START_BTN"]->isPressed() && this->getKeytime())
         this->isstatred = true;
+
+    if (this->buttons["CONT_BTN"]->isPressed() && this->getKeytime()) {
+        this->Istates->push(new Process(this->IstateData, true));
+        this->resetView();
+    }
+
 
     if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
         this->Istates->push(new NoiceView(this->IstateData));

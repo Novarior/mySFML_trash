@@ -7,7 +7,8 @@ class Player: public Entity
     private:
 
     public:
-    Player();
+    Player(const float grid);
+    Player(const sf::Vector2f basePos,const float grid);
     virtual ~Player();
 
     void e_update(TileMap* map, const float& deltatime);

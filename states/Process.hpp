@@ -13,12 +13,15 @@
 
 struct Gamedata
 {
-    float timeInitElapsed;
+    unsigned seed;
+    sf::Vector2f currentPlayerPos;
+
 };
 
 class Process:public State
 {
     private:
+    bool loaded;
     sf::Clock gameClock;
     sf::View view;
     sf::View playerView;
@@ -32,18 +35,21 @@ class Process:public State
     Gamedata m_gamedata;
     Player* player;
 
-    void initView();
+
+    //init data who dont use loaded dates
     void initKeybinds();
-    void initTileMap();
-    void initTabMenu();
-    void initPlayer();
     void initPauseMenu();
-    void rebuildNoice();
-    void loadGameData();
-    void saveGameData();
+    void initTabMenu();
+    void initView();
+    void initTileMap();
+    void initTileMapData();
+    void initPlayer();
+
+    const bool loadGameData();
+    const bool saveGameData();
 
     public:
-    Process(StateData* state_data);
+    Process(StateData* state_data, const bool defaultLoad);
     virtual ~Process();
 
 

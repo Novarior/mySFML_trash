@@ -24,6 +24,7 @@
 				"GUI/tabMenu.cpp",
 				"entitys/entity.cpp",
 				"entitys/player.cpp",
+				"entitys/Enemys/test.cpp",
 				"entitys/AI/AIFollow.cpp",
 				"entitys/AI/AIComponent.cpp",
 				"entitys/properties/hitbox.cpp",

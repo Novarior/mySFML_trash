@@ -53,8 +53,8 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->m_Area.toY = 0;
 
     sf::Color buff;
-    if (this->m_TreeTexture.loadFromFile(texture_TREE))
-    {
+
+    if (this->m_TreeTexture.loadFromFile(texture_TREE)) {
         this->m_TreeSprite.setTexture(this->m_TreeTexture);
         this->m_TreeTexture.setSmooth(true);
     }
@@ -72,24 +72,21 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 writebuff = writebuff * -1;
 
 
-            if (writebuff < 55)
-            { //Ocean
+            if (writebuff < 55) { //Ocean
                 buff = sf::Color(0, 10 + writebuff * 1.6, 100 + writebuff * 1.9, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     true, this->m_TexturesList["OCEAN"], BLOCK_OCEAN));
             }
-            else if (writebuff < 66)
-            { //sand
+            else if (writebuff < 66) { //sand
                 buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     false, this->m_TexturesList["SAND"], BLOCK_SAND));
             }
-            else if (writebuff < 160)
-            { //grass
+            else if (writebuff < 160) { //grass
                 buff = sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
@@ -99,24 +96,21 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 if (rand() % 100 < 15)
                     this->pushTree(x, y, this->m_dnoice.seed);
             }
-            else if (writebuff < 165)
-            { //dirt
+            else if (writebuff < 165) { //dirt
                 buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     false, this->m_TexturesList["DIRT"], BLOCK_DIRT));
             }
-            else if (writebuff < 175)
-            { //stone
+            else if (writebuff < 175) { //stone
                 buff = sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     false, this->m_TexturesList["STONE"], BLOCK_STONE));
             }
-            else
-            { //other
+            else { //other
                 buff = sf::Color(writebuff, writebuff, writebuff, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
@@ -144,18 +138,108 @@ const sf::Vector2f TileMap::getMapSizeOnFloat() {
     return this->maxSizeWorldFloat;
 }
 
-const bool TileMap::getCollision(const unsigned int x, const unsigned int y) const
-{
+const bool TileMap::getCollision(const unsigned int x, const unsigned int y) const {
     return this->tilemap[x][y][0]->getCollision();
 }
 
-sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int y) const
-{
+sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int y) const {
     return this->tilemap[x][y][0]->getGlobalBounds();
 }
 
-void TileMap::update(sf::Vector2f pos_entity)
-{
+void TileMap::updateWorldBoundsCollision(Entity* entity, const float& delta_time) { //WORLD BOUNDS
+    if (entity->e_getPosition().x < 0.f) {
+        entity->e_setPosition(0.f, entity->e_getPosition().y);
+        entity->getMovement()->stopVelocityX();
+    }
+    else if (entity->e_getPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldFloat.x) {
+        entity->e_setPosition(this->maxSizeWorldFloat.x - entity->getGlobalBounds().width, entity->e_getPosition().y);
+        entity->getMovement()->stopVelocityX();
+    }
+    if (entity->e_getPosition().y < 0.f) {
+        entity->e_setPosition(entity->e_getPosition().x, 0.f);
+        entity->getMovement()->stopVelocityY();
+    }
+    else if (entity->e_getPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldFloat.y) {
+        entity->e_setPosition(entity->e_getPosition().x, this->maxSizeWorldFloat.y - entity->getGlobalBounds().height);
+        entity->getMovement()->stopVelocityY();
+    }
+}
+
+void TileMap::updateTileCollision(Entity* entity, const float& delta_time) { //TILES
+    this->fromX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x - 1;
+    if (this->fromX < 0)
+        this->fromX = 0;
+    else if (this->fromX > this->maxSizeWorldGrid.x)
+        this->fromX = this->maxSizeWorldGrid.x;
+
+    this->toX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x + 3;
+    if (this->toX < 0)
+        this->toX = 0;
+    else if (this->toX > this->maxSizeWorldGrid.x)
+        this->toX = this->maxSizeWorldGrid.x;
+
+    this->fromY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y - 1;
+    if (this->fromY < 0)
+        this->fromY = 0;
+    else if (this->fromY > this->maxSizeWorldGrid.y)
+        this->fromY = this->maxSizeWorldGrid.y;
+
+    this->toY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y + 3;
+    if (this->toY < 0)
+        this->toY = 0;
+    else if (this->toY > this->maxSizeWorldGrid.y)
+        this->toY = this->maxSizeWorldGrid.y;
+
+    for (int x = this->fromX; x < this->toX; x++) {
+        for (int y = this->fromY; y < this->toY; y++) {
+
+            sf::FloatRect playerBounds = entity->getGlobalBounds();
+            sf::FloatRect wallBounds = this->tilemap[x][y][0]->getGlobalBounds();
+            sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(delta_time);
+
+            if (this->tilemap[x][y][0]->getCollision() &&
+                this->tilemap[x][y][0]->intersects(nextPositionBounds)) {
+                //Bottom collision
+                if (playerBounds.top < wallBounds.top
+                    && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+                    && playerBounds.left < wallBounds.left + wallBounds.width
+                    && playerBounds.left + playerBounds.width > wallBounds.left) {
+                    entity->getMovement()->stopVelocityY();
+                    entity->e_setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+                }
+                //Top collision
+                else if (playerBounds.top > wallBounds.top
+                    && playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
+                    && playerBounds.left < wallBounds.left + wallBounds.width
+                    && playerBounds.left + playerBounds.width > wallBounds.left) {
+                    entity->getMovement()->stopVelocityY();
+                    entity->e_setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
+                }
+                //Right collision
+                if (playerBounds.left < wallBounds.left
+                    && playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
+                    && playerBounds.top < wallBounds.top + wallBounds.height
+                    && playerBounds.top + playerBounds.height > wallBounds.top) {
+                    entity->getMovement()->stopVelocityX();
+                    entity->e_setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
+                }
+                //Left collision
+                else if (playerBounds.left > wallBounds.left
+                    && playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
+                    && playerBounds.top < wallBounds.top + wallBounds.height
+                    && playerBounds.top + playerBounds.height > wallBounds.top) {
+                    entity->getMovement()->stopVelocityX();
+                    entity->e_setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                }
+            }
+        }
+    }
+}
+
+void TileMap::update(Entity* entity, const float& dt) {
+}
+
+void TileMap::update(sf::Vector2f pos_entity) {
     int fromX = 0,
         fromY = 0,
         toX = 0,
@@ -190,7 +274,8 @@ void TileMap::update(sf::Vector2f pos_entity)
             this->tilemap[x][y][0]->update();
 }
 
-void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug) {
+void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug) { //Render tiles
+
     this->m_Area.fromX = gridPosition.x - this->m_Area.offsetX;
     if (this->m_Area.fromX < 0)
         this->m_Area.fromX = 0;

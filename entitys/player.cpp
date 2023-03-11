@@ -1,44 +1,24 @@
 #include "player.hpp"
+//Initializer functions
 
-Player::Player(const float grid)
-{
-    this->sprite.setFillColor(sf::Color::Red);
-    this->sprite.setPosition(0, 0);
-    this->sprite.setSize(sf::Vector2f(grid * 1.5f, grid * 1.5f));
-
-
-    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, grid);
-    this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(grid * 1.5f, grid * 1.5f), sf::Vector2f());
+//Constructors / Destructors
+Player::Player(float x, float y, sf::Texture& texture_sheet) {
+    this->m_sprite.setTexture(texture_sheet);
+    this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 64.f, 64.f);
+    this->createMovementComponent(3.f, 15.f, 7.f);
+    this->e_setPosition(x, y);
 }
 
+Player::~Player() {}
 
-Player::Player(const sf::Vector2f basePos, const float grid)
-{
-    this->sprite.setFillColor(sf::Color::Red);
-    this->sprite.setPosition(basePos);
-    this->sprite.setSize(sf::Vector2f(grid * 1.5f, grid * 1.5f));
-
-
-    this->e_movement = new Movement(this->sprite, 16.f, 7.f, 5.f, grid);
-    this->e_hitbox = new HitboxCounter(this->sprite, sf::Vector2f(grid * 1.5f, grid * 1.5f), sf::Vector2f());
+void Player::e_update(const float& delta_time, sf::Vector2f& mouse_pos_view, const sf::View& view) {
+    this->e_movement->update(delta_time);
+    this->e_hitbox->update();
 }
 
-Player::~Player()
-{
-    delete this->e_movement;
-    delete this->e_hitbox;
-}
+void Player::e_render(sf::RenderTarget& target, const bool show_hitbox) {
+    target.draw(this->m_sprite);
 
-void Player::e_update(TileMap* map, const float& delta_time)
-{
-    if (this->isAlive) {
-        this->e_movement->update(delta_time, map);
-        this->e_hitbox->update();
-    }
-}
-
-void Player::e_render(sf::RenderTarget* target)
-{
-    this->e_hitbox->render(target);
-    target->draw(this->sprite);
+    if (show_hitbox)
+        this->e_hitbox->render(target);
 }

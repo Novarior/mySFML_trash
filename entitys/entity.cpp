@@ -1,113 +1,97 @@
 #include "entity.hpp"
 
-void Entity::initHitboxAndSprite()
-{
+void Entity::createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height) {
+    this->e_hitbox = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+}
+void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration) {
+    this->e_movement = new MovementComponent(this->m_sprite, acceleration, deceleration, maxVelocity);
+}
+
+Entity::Entity() {
+    this->e_movement = NULL;
     this->e_hitbox = NULL;
 }
-void Entity::initMovement()
-{
-    this->e_movement = NULL;
+
+Entity::~Entity() {
+    delete this->e_hitbox;
+    delete this->e_movement;
 }
 
-void Entity::initSomeinit()
-{
-    this->isAlive = true;
-    this->isFall = false;
-    this->isDuck = false;
-    this->isJump = false;
-    this->isCollision = false;
-    this->mState = IDLE;
+HitboxComponent* Entity::getHitbox() {
+    return this->e_hitbox;
 }
 
-void Entity::initHitbox()
-{
-    //добавити ініціалізацію хітбокса суко
+MovementComponent* Entity::getMovement() {
+    return this->e_movement;
 }
 
-Entity::Entity()
-{
-    this->initHitboxAndSprite();
-    this->initHitbox();
-    this->initMovement();
-    this->initSomeinit();
-}
-Entity::~Entity()
-{
+void Entity::setTexture(sf::Texture& texture) {
+    this->m_sprite.setTexture(texture);
 }
 
-HitboxCounter& Entity::getHitbox()
-{
-    return *this->e_hitbox;
+void Entity::e_move(const float& dir_x, const float& dir_y, const float& delta_time) {
+    this->e_movement->move(dir_x, dir_y, delta_time);
 }
 
-Movement& Entity::getMovement()
-{
-    return *this->e_movement;
+const float& Entity::getGridSizeFloat() const {
+    return this->gridSizeF;
 }
 
-void Entity::e_move(sf::Vector2f directionalmove, const float& delta_time)
-{
-    this->e_movement->move(directionalmove, delta_time);
+const sf::FloatRect Entity::getGlobalBounds() {
+    if (this->e_hitbox)
+        return this->e_hitbox->getGlobalBounds();
 
-    this->mState = IDLE;
-    if (this->e_movement->getVelocity().x != 0 || this->e_movement->getVelocity().y != 0)
-    {
-        this->mState = WALK;
+    return this->m_sprite.getGlobalBounds();
+}
+
+const sf::FloatRect Entity::getNextPositionBounds(const float& delta_time) {
+    if (this->e_hitbox && this->e_movement)
+        return this->e_hitbox->getNextPosition(this->e_movement->getVelocity() * delta_time);
+
+    return sf::FloatRect(1, 1, 1, 1);
+}
+
+void Entity::e_setPosition(const sf::Vector2f pos) {
+    this->m_sprite.setPosition(pos);
+}
+void Entity::e_setPosition(const float pos_x, const float pos_y) {
+    this->m_sprite.setPosition(sf::Vector2f(pos_x, pos_y));
+}
+
+void Entity::e_updateAnimation(std::string keyNameAnimation, const float& delta_time) {
+    if (this->isDuck) {
+        this->m_sprite.setScale(sf::Vector2f(1.f, 0.5f));
     }
-}
-void Entity::e_move(const float dir_move_x, const float dir_move_y, const float& delta_time)
-{
-    this->e_movement->move(sf::Vector2f(dir_move_x, dir_move_y), delta_time);
-
-    this->mState = IDLE;
-    if (this->e_movement->getVelocity().x != 0 || this->e_movement->getVelocity().y != 0)
-    {
-        this->mState = WALK;
+    else {
+        this->m_sprite.setScale(sf::Vector2f(1.f, 1.f));
     }
 }
 
-void Entity::e_setPosition(const sf::Vector2f pos)
-{
-    this->sprite.setPosition(pos);
-}
-
-void Entity::e_updateAnimation(std::string keyNameAnimation, const float& delta_time)
-{
-    if (this->isDuck)
-    {
-        this->sprite.setScale(sf::Vector2f(1.f, 0.5f));
-    }
-    else
-    {
-        this->sprite.setScale(sf::Vector2f(1.f, 1.f));
-    }
-}
-void Entity::e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision)
-{
+void Entity::e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision) {
     this->e_hitbox->update();
 }
 
-sf::Vector2f Entity::e_getPosition()
-{
-    return this->sprite.getPosition();
+const sf::Vector2f& Entity::e_getPosition() {
+    return this->m_sprite.getPosition();
 }
 
-sf::Vector2i Entity::e_getGridPosition(unsigned int grisSize)
-{
-    return sf::Vector2i(this->sprite.getPosition().x / grisSize, this->sprite.getPosition().y / grisSize);
+const sf::Vector2f Entity::e_getGridPositionFloat(const float& gridsize) {
+    return sf::Vector2f(this->m_sprite.getPosition().x / gridsize, this->m_sprite.getPosition().y / gridsize);
 }
-sf::Vector2f Entity::e_getVelocity()
-{
+
+const sf::Vector2i Entity::e_getGridPositionInt(const unsigned int& grisSize) {
+    if (this->e_hitbox)
+        return sf::Vector2i(
+            static_cast<int>(this->e_hitbox->getPosition().x) / grisSize,
+            static_cast<int>(this->e_hitbox->getPosition().y) / grisSize);
+
+    return sf::Vector2i(
+        static_cast<int>(this->m_sprite.getPosition().x) / grisSize,
+        static_cast<int>(this->m_sprite.getPosition().y) / grisSize);
+}
+const sf::Vector2f& Entity::e_getVelocity() {
     return this->e_movement->getVelocity();
 }
-void Entity::e_updateMovement(TileMap* map, const float& delta_time)
-{
-    this->e_movement->update(delta_time, map);
-    this->e_movement->updateWorldCollison(delta_time, map);
-    this->e_movement->updateTileCollision(delta_time, map);
-}
-
-void Entity::e_jump(const float& delta_time)
-{
-    this->e_movement->jump(delta_time);
+void Entity::e_updateMovement(const float& delta_time) {
+    this->e_movement->update(delta_time);
 }

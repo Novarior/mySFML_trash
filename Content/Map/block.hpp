@@ -18,9 +18,10 @@ class BrickBlock
     virtual ~BrickBlock();
 
     const sf::FloatRect getGlobalBounds();
+    const bool intersects(sf::FloatRect rect);
     const bool& getCollision();
     sf::RectangleShape& getRectangleShape();
     void update();
-    void render(sf::RenderTarget* target);
+    void render(sf::RenderTarget* target, const bool draw_collision = false);
 };
 #endif

@@ -114,10 +114,11 @@ void Process::initView() {
 }
 
 void Process::initPlayer() {
-    if (loaded)
-        this->player = new Player(this->m_gamedata.currentPlayerPos, this->IstateData->grid_size);
-    else
-        this->player = new Player(this->IstateData->grid_size);
+    if (!this->playerTextureSHIT.loadFromFile(texture_GRASS))
+        std::cout << "\n FAILLOADL";
+
+
+    this->player = new Player(100, 100, this->playerTextureSHIT);
 }
 
 //Defauld Init Data
@@ -174,19 +175,23 @@ void Process::updateInput(const float& delta_time) {
 
 void Process::updatePlayerInputs(const float& delta_time) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_A"))))
-        this->player->e_move(sf::Vector2f(-1.f, 0.f), delta_time);
+        this->player->e_move(-1.f, 0.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
-        this->player->e_move(sf::Vector2f(1.f, 0.f), delta_time);
+        this->player->e_move(1.f, 0.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_S"))))
-        this->player->e_move(sf::Vector2f(0.f, 1.f), delta_time);
+        this->player->e_move(0.f, 1.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
-        this->player->e_move(sf::Vector2f(0.f, -1.f), delta_time);
-
-    //this->player->e_jump(delta_time);
+        this->player->e_move(0.f, -1.f, delta_time);
 }
 
 void Process::updateButtons() {
     if (this->tabmenu->isPressed("REBUILD_BUTTON") && this->getKeytime());
+}
+
+void Process::updateTileMap(const float& delta_time) {
+    this->mapTiles->updateWorldBoundsCollision(this->player, delta_time);
+    this->mapTiles->updateTileCollision(this->player, delta_time);
+    this->mapTiles->update(this->player, delta_time);
 }
 
 void Process::update(const float& delta_time) {
@@ -202,30 +207,30 @@ void Process::update(const float& delta_time) {
     }
     else { //update game
         this->updatePlayerInputs(delta_time);
-        this->updateButtons();
+        this->updateTileMap(delta_time);
+        this->player->e_update(delta_time, this->mousePosView, this->playerView);
 
+        this->updateButtons();
+        
         if (this->tabmenu->isOpen())
             this->tabmenu->update(delta_time, this->mousePosWindow);
-
-        this->mapTiles->update(this->player->e_getPosition());
-        this->player->e_update(this->mapTiles, delta_time);
-        this->player->e_updateMovement(this->mapTiles, delta_time);
     }
 
     if (this->debugMode) {//update debug information
         double fps = 1.0f / delta_time;
         this->dString_Stream
-            << "FPS:\t" << fps << "\n"
-            << "Player:\n"
-            << "\tvelX: " << this->player->e_getVelocity().x << "\n"
-            << "\tvelY: " << this->player->e_getVelocity().y << '\n'
-            << "Position:\n"
-            << "\tx: " << this->player->e_getPosition().x
-            << "\ty: " << this->player->e_getPosition().y << '\n'
-            << "\tgrid x: " << this->player->e_getGridPosition(this->IgridSize).x << '\n'
-            << "\tgrid y: " << this->player->e_getGridPosition(this->IgridSize).y << '\n'
-            << "Map Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y << '\n'
-            << "Map Area Render:\t"
+            << "FPS:\t" << fps
+            << "\nPlayer:"
+            << "\nComponents: "
+            << "\n\tvelX: " << this->player->e_getVelocity().x
+            << "\n\tvelY: " << this->player->e_getVelocity().y
+            << "\nPosition:"
+            << "\n\tx: " << this->player->e_getPosition().x
+            << "\n\ty: " << this->player->e_getPosition().y
+            << "\n\tgrid x: " << this->player->e_getGridPositionFloat(this->IgridSize).x
+            << "\n\tgrid y: " << this->player->e_getGridPositionFloat(this->IgridSize).y
+            << "\nMap Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y
+            << "\nMap Area Render: "
             << this->mapTiles->getRenderArea().fromX << ' '
             << this->mapTiles->getRenderArea().fromY << ' '
             << this->mapTiles->getRenderArea().toX << ' '
@@ -245,9 +250,9 @@ void Process::render(sf::RenderWindow* target) {
     this->renderTexture.setView(this->playerView);
 
     // render scne in custom view
-    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPosition(this->IgridSize), this->debugMode);
+    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPositionInt(this->IgridSize), this->debugMode);
     this->playerView.setCenter(this->player->e_getPosition());
-    this->player->e_render(&this->renderTexture);
+    this->player->e_render(this->renderTexture, true);
 
     // reset view
     this->renderTexture.setView(this->renderTexture.getDefaultView());

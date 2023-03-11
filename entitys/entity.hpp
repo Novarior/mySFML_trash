@@ -9,43 +9,48 @@ enum movementState { IDLE = 0, WALK, JUMP, DUCK };
 class Entity
 {
     private:
-    void initHitboxAndSprite();
-    void initMovement();
-    void initSomeinit();
-    void initHitbox();
-
     protected:
-    sf::RectangleShape sprite;
-    Movement* e_movement;
-    HitboxCounter* e_hitbox;
+    sf::Sprite m_sprite;
+    MovementComponent* e_movement;
+    HitboxComponent* e_hitbox;
 
     bool isCollision;
     bool isAlive;
     bool isDuck;
     bool isFall;
     bool isJump;
+    float gridSizeF;
 
     movementState mState;
+
+    void createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
+    void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
 
     public:
     Entity();
     virtual ~Entity();
 
-    sf::Vector2f e_getVelocity();
-    virtual void e_move(sf::Vector2f directionalmove, const float& deltaTime);
-    virtual void e_move(const float dir_move_x, const float dir_move_y, const float& delta_time);
-    virtual void e_updateAnimation(std::string keyNameAnimation, const float& deltaTime);
+    HitboxComponent* getHitbox();
+    MovementComponent* getMovement();
+
+    virtual void setTexture(sf::Texture& texture);
+
+    virtual void e_move(const float& dir_x, const float& dir_y, const float& delta_time);
+    virtual void e_updateAnimation(std::string keyNameAnimation, const float& delta_time);
     virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision);
-    virtual void e_updateMovement(TileMap* map, const float& deltatime);
-    virtual void e_jump(const float& deltatime);
-    virtual void e_update(TileMap* map, const float& deltatime = NULL) = 0;
-    virtual void e_render(sf::RenderTarget* target = NULL) = 0;
-    HitboxCounter& getHitbox();
-    Movement& getMovement();
+    virtual void e_updateMovement(const float& delta_time);
 
-    virtual sf::Vector2f e_getPosition();
+    virtual const float& getGridSizeFloat() const;
+    virtual const sf::FloatRect getGlobalBounds();
+    virtual const sf::FloatRect getNextPositionBounds(const float& delta_time);
+    virtual const sf::Vector2f& e_getVelocity();
+    virtual const sf::Vector2f& e_getPosition();
+    virtual const sf::Vector2f e_getGridPositionFloat(const float& gridsize);
+    virtual const sf::Vector2i e_getGridPositionInt(const unsigned int& grisSize);
     virtual void e_setPosition(const sf::Vector2f pos);
-    virtual sf::Vector2i e_getGridPosition(unsigned int grisSize);
-};
+    virtual void e_setPosition(const float pos_x, const float pos_y);
 
+    virtual void e_update(const float& dt, sf::Vector2f& mouse_pos_view, const sf::View& view) = 0;
+    virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
+};
 #endif CPP_ENTITYCLASS_HPP

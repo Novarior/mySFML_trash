@@ -1,30 +1,23 @@
 #include "Core.h"
 
 //initialisations root data and build first frame app
-void Core::initVar()
-{
+void Core::initVar() {
     this->mWindow = NULL;
     srand(std::time(NULL));
     this->gfxSettings.loadFromFile("Config.cfg");
 }
 
-void Core::initStateData()
-{
+void Core::initStateData() {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/PlayfairDisplay-Black.ttf"))
-    {
-    }
-    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/Muli-Regular.ttf"))
-    {
-    }
+    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/PlayfairDisplay-Black.ttf")) {}
+    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/Muli-Regular.ttf")) {}
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
 }
 
-void Core::initKeyBinds()
-{
+void Core::initKeyBinds() {
     this->supportedKeys["A"] = 0;
     this->supportedKeys["C"] = 2;
     this->supportedKeys["D"] = 3;
@@ -37,13 +30,11 @@ void Core::initKeyBinds()
     this->supportedKeys["Tab"] = 60;
 }
 
-void Core::initState()
-{
+void Core::initState() {
     this->mState.push(new MainMenu(&this->mStatedata));
 }
 
-void Core::initWindow()
-{
+void Core::initWindow() {
     if (this->gfxSettings.fullscreen)
         this->mWindow = new sf::RenderWindow(
             this->gfxSettings.resolution,
@@ -62,8 +53,7 @@ void Core::initWindow()
 
 }
 
-Core::Core()
-{
+Core::Core() {
     this->initKeyBinds();
     this->initVar();
     this->initWindow();
@@ -71,58 +61,45 @@ Core::Core()
     this->initState();
 }
 
-Core::~Core()
-{
+Core::~Core() {
     delete this->mWindow;
 }
 
-const bool Core::run()
-{
-
-    while (this->mWindow->isOpen())
-    {
+const bool Core::run() {
+    while (this->mWindow->isOpen()) {
         this->updateDeltaTime();
         this->update();
         this->render();
     }
-
     return true;
 }
 
-void Core::update()
-{
+void Core::update() {
     this->updateEventsWindow();
-    if (!this->mState.empty())
-    {
-        if (this->mWindow->hasFocus())
-        {
+    if (!this->mState.empty()) {
+        if (this->mWindow->hasFocus()) {
             this->mState.top()->update(this->deltaTime);
-            if (this->mState.top()->getQuit())
-            {
+            if (this->mState.top()->getQuit()) {
                 this->mState.top()->endState();
                 delete this->mState.top();
                 this->mState.pop();
             }
         }
     }
-
     //Application end
-    else
-    {
+    else {
         this->mWindow->close();
     }
 }
 
-void Core::updateEventsWindow()
-{
+void Core::updateEventsWindow() {
     while (this->mWindow->pollEvent(this->mEvents))
         if (this->mEvents.type == sf::Event::Closed)
             this->mWindow->close();
 
 }
 
-void Core::render()
-{
+void Core::render() {
     this->mWindow->clear();
 
     if (!this->mState.empty())
@@ -131,7 +108,6 @@ void Core::render()
     this->mWindow->display();
 }
 
-void Core::updateDeltaTime()
-{
+void Core::updateDeltaTime() {
     this->deltaTime = this->deltaClock.restart().asSeconds();
 }

@@ -1,8 +1,7 @@
 #include "block.hpp"
 
 BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collision,
-    sf::Texture& texture, unsigned short type):m_Texture(texture), m_type(type)
-{
+    sf::Texture& texture, unsigned short type):m_Texture(texture), m_type(type) {
     this->m_Shape.setSize(size);
     this->m_Shape.setPosition(position);
     this->m_Shape.setFillColor(color);
@@ -10,8 +9,7 @@ BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color
 
     this->m_collision = collision;
 
-    if (this->m_collision)
-    {
+    if (this->m_collision) {
         this->m_Hitbox.setSize(size);
         this->m_Hitbox.setPosition(position);
         this->m_Hitbox.setFillColor(sf::Color::Transparent);
@@ -20,46 +18,37 @@ BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color
     }
 }
 
-BrickBlock::~BrickBlock()
-{
+BrickBlock::~BrickBlock() {
 
 }
 
-const bool& BrickBlock::getCollision()
-{
+const bool& BrickBlock::getCollision() {
     if (this->m_collision)
         this->m_Hitbox.setOutlineColor(sf::Color::Green);
 
     return this->m_collision;
 }
 
-const sf::FloatRect BrickBlock::getGlobalBounds()
-{
-    if (this->m_collision)
-        this->m_Hitbox.setFillColor(sf::Color::Blue);
-
+const sf::FloatRect BrickBlock::getGlobalBounds() {
     return this->m_Shape.getGlobalBounds();
 }
 
-sf::RectangleShape& BrickBlock::getRectangleShape()
-{
+sf::RectangleShape& BrickBlock::getRectangleShape() {
     return this->m_Shape;
 }
 
-void BrickBlock::update()
-{
-    if (this->m_collision)
-    {
-        this->m_Hitbox.setOutlineColor(sf::Color::Red);
-        this->m_Hitbox.setFillColor(sf::Color::Transparent);
-
-    }
+const bool BrickBlock::intersects(sf::FloatRect rect) {
+    return this->m_Shape.getGlobalBounds().intersects(rect);
 }
 
-void BrickBlock::render(sf::RenderTarget* target)
-{
+void BrickBlock::update() {
+
+
+}
+
+void BrickBlock::render(sf::RenderTarget* target, const bool draw_collision) {
     target->draw(this->m_Shape);
 
-    if (this->m_collision)
+    if (this->m_collision && draw_collision)
         target->draw(this->m_Hitbox);
 }

@@ -34,7 +34,7 @@ class Process:public State
     sf::Sprite renderSprite;
     Gamedata m_gamedata;
     Player* player;
-
+    sf::Texture playerTextureSHIT;
 
     //init data who dont use loaded dates
     void initKeybinds();
@@ -51,6 +51,8 @@ class Process:public State
     public:
     Process(StateData* state_data, const bool defaultLoad);
     virtual ~Process();
+
+    void updateTileMap(const float& delta_time);
 
 
     void updateInput(const float& delta_time);

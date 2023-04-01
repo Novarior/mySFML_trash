@@ -1,5 +1,5 @@
-/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/MyApplic.dir
-/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/package.dir
-/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/package_source.dir
-/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/edit_cache.dir
-/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/rebuild_cache.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/MyApplic.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/package.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/package_source.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/edit_cache.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/rebuild_cache.dir

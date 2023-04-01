@@ -1,5 +1,6 @@
 #ifndef CPP_ENTITYCLASS_HPP
 #define CPP_ENTITYCLASS_HPP
+
 #include "../header.h"
 #include "properties/movement.hpp"
 #include "properties/hitbox.hpp"
@@ -53,4 +54,4 @@ class Entity
     virtual void e_update(const float& dt, sf::Vector2f& mouse_pos_view, const sf::View& view) = 0;
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
 };
-#endif CPP_ENTITYCLASS_HPP
+#endif 

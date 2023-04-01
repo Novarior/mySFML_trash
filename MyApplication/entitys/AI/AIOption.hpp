@@ -1,5 +1,7 @@
-#pragma once
-#include "../Entity.hpp"
+#ifndef AIOption_H
+#define AIOption_H
+#include "../entity.hpp"
+
 enum FollowTargetEnum { NONE, T_PLAYER, T_ENTITY, T_PIONT };
 
 class AIOption
@@ -17,3 +19,4 @@ class AIOption
 
     virtual void update(const float& delta_time) = 0;
 };
+#endif

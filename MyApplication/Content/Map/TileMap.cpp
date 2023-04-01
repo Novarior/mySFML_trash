@@ -2,9 +2,9 @@
 
 void TileMap::Clear() {
     if (!this->tilemap.empty()) {
-        for (int x = 0; x < this->tilemap.size(); x++) {
-            for (int y = 0; y < this->tilemap[x].size(); y++) {
-                for (int z = 0; z < this->tilemap[x][y].size(); z++)
+        for (unsigned long x = 0; x < this->tilemap.size(); x++) {
+            for (unsigned long y = 0; y < this->tilemap[x].size(); y++) {
+                for (unsigned long z = 0; z < this->tilemap[x][y].size(); z++)
                 {
                     delete this->tilemap[x][y][z];
                     this->tilemap[x][y][z] = NULL;
@@ -18,11 +18,11 @@ void TileMap::Clear() {
 
 void TileMap::loadTextuteMap() {
 
-    if (!this->m_TexturesList["GRASS"].loadFromFile(texture_DIRT));
-    if (!this->m_TexturesList["STONE"].loadFromFile(texture_STONE));
-    if (!this->m_TexturesList["OCEAN"].loadFromFile(texture_OCEAN));
-    if (!this->m_TexturesList["SAND"].loadFromFile(texture_SAND));
-    if (!this->m_TexturesList["DIRT"].loadFromFile(texture_DIRT));
+    if (!this->m_TexturesList["GRASS"].loadFromFile(texture_DIRT)) {};
+    if (!this->m_TexturesList["STONE"].loadFromFile(texture_STONE)) {};
+    if (!this->m_TexturesList["OCEAN"].loadFromFile(texture_OCEAN)) {};
+    if (!this->m_TexturesList["SAND"].loadFromFile(texture_SAND)) {};
+    if (!this->m_TexturesList["DIRT"].loadFromFile(texture_DIRT)) {};
 }
 
 void TileMap::pushTree(int x, int y, int seed)
@@ -40,7 +40,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     this->loadTextuteMap();
 
     double writebuff;
-    bool collisionBuff;
+
     this->m_dnoice = datanoice;
     this->maxSizeWorldGrid = this->m_dnoice.mapSize;
     this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSize.x * datanoice.gridSize, this->m_dnoice.mapSize.y * datanoice.gridSize);
@@ -115,7 +115,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    true, this->m_TexturesList["GRASS"], NULL));
+                    true, this->m_TexturesList["OCEAN"], NAN_DEF));
             }
         }
     }
@@ -138,7 +138,7 @@ const sf::Vector2f TileMap::getMapSizeOnFloat() {
     return this->maxSizeWorldFloat;
 }
 
-const bool TileMap::getCollision(const unsigned int x, const unsigned int y) const {
+bool TileMap::getCollision(const unsigned int x, const unsigned int y) const {
     return this->tilemap[x][y][0]->getCollision();
 }
 
@@ -146,7 +146,7 @@ sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int 
     return this->tilemap[x][y][0]->getGlobalBounds();
 }
 
-void TileMap::updateWorldBoundsCollision(Entity* entity, const float& delta_time) { //WORLD BOUNDS
+void TileMap::updateWorldBoundsCollision(Entity* entity) { //WORLD BOUNDS
     if (entity->e_getPosition().x < 0.f) {
         entity->e_setPosition(0.f, entity->e_getPosition().y);
         entity->getMovement()->stopVelocityX();
@@ -312,4 +312,7 @@ void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition,
         for (auto it : this->m_TreeArray)
             if (renrect.contains(it.getPosition()))
                 target->draw(it);
+
+    if(debug)
+    {}
 }

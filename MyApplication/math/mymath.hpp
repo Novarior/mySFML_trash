@@ -5,8 +5,6 @@
 
 enum colorMode { RED_GRADIENT, GREEN_GRADIENT, BLURE_GRADIENT, GRAY_GRADIENT };
 
-static sf::Color getRandomColor(unsigned short gradient);
-static sf::Color getRandomColor();
 double randZeroToOne();
 
 double randDoubleFromToNum(double Min_val, double Max_val);

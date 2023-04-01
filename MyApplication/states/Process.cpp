@@ -185,11 +185,11 @@ void Process::updatePlayerInputs(const float& delta_time) {
 }
 
 void Process::updateButtons() {
-    if (this->tabmenu->isPressed("REBUILD_BUTTON") && this->getKeytime());
+    if (this->tabmenu->isPressed("REBUILD_BUTTON") && this->getKeytime()) {}
 }
 
 void Process::updateTileMap(const float& delta_time) {
-    this->mapTiles->updateWorldBoundsCollision(this->player, delta_time);
+    this->mapTiles->updateWorldBoundsCollision(this->player);
     this->mapTiles->updateTileCollision(this->player, delta_time);
     this->mapTiles->update(this->player, delta_time);
 }
@@ -211,7 +211,7 @@ void Process::update(const float& delta_time) {
         this->player->e_update(delta_time, this->mousePosView, this->playerView);
 
         this->updateButtons();
-        
+
         if (this->tabmenu->isOpen())
             this->tabmenu->update(delta_time, this->mousePosWindow);
     }

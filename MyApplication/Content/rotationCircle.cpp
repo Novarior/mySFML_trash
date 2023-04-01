@@ -39,8 +39,6 @@ void RotarionCircle::update(const float& delta_time) {
     if (this->phantoms.size() != 0 && this->phantoms.size() > 0)
         if (this->phantoms.size() == bgd.countPhantomBlocks)
             this->phantoms.pop_back();
-
-    this->i + delta_time;
 }
 
 void RotarionCircle::setShape(sf::CircleShape shape) {

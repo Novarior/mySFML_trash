@@ -1,5 +1,6 @@
-#pragma once
-#include "../Entity.hpp"
+#ifndef AIComponent_H
+#define AIComponent_H
+#include "../entity.hpp"
 #include "AIFollow.hpp"
 
 class AIComponent
@@ -14,3 +15,4 @@ class AIComponent
 
     void update(const float& delta_time);
 };
+#endif

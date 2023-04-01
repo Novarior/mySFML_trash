@@ -1,6 +1,7 @@
-#pragma once
-#include "AIOption.hpp"
+#ifndef AIFollow_H
+#define AIFollow_H
 
+#include "AIOption.hpp"
 
 class AIFollow:
     public AIOption
@@ -15,3 +16,4 @@ class AIFollow:
     void update(const float& delta_time);
 
 };
+#endif

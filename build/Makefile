@@ -60,7 +60,7 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /Users/dmitrijsusenko/Desktop/try
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/build
+CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/Build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,22 +78,12 @@ package/fast: package
 # Special rule for the target package_source
 package_source:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	/opt/homebrew/Cellar/cmake/3.25.2/bin/cpack --config ./CPackSourceConfig.cmake /Users/dmitrijsusenko/Desktop/try/build/CPackSourceConfig.cmake
+	/opt/homebrew/Cellar/cmake/3.25.2/bin/cpack --config ./CPackSourceConfig.cmake /Users/dmitrijsusenko/Desktop/try/Build/CPackSourceConfig.cmake
 .PHONY : package_source
 
 # Special rule for the target package_source
 package_source/fast: package_source
 .PHONY : package_source/fast
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/opt/homebrew/Cellar/cmake/3.25.2/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -117,9 +107,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles /Users/dmitrijsusenko/Desktop/try/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles /Users/dmitrijsusenko/Desktop/try/Build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -143,373 +133,8 @@ preinstall/fast:
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -P /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
-
-#=============================================================================
-# Target rules for targets named Experimental
-
-# Build rule for target.
-Experimental: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Experimental
-.PHONY : Experimental
-
-# fast build rule for target.
-Experimental/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Experimental.dir/build.make CMakeFiles/Experimental.dir/build
-.PHONY : Experimental/fast
-
-#=============================================================================
-# Target rules for targets named Nightly
-
-# Build rule for target.
-Nightly: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Nightly
-.PHONY : Nightly
-
-# fast build rule for target.
-Nightly/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Nightly.dir/build.make CMakeFiles/Nightly.dir/build
-.PHONY : Nightly/fast
-
-#=============================================================================
-# Target rules for targets named Continuous
-
-# Build rule for target.
-Continuous: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Continuous
-.PHONY : Continuous
-
-# fast build rule for target.
-Continuous/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Continuous.dir/build.make CMakeFiles/Continuous.dir/build
-.PHONY : Continuous/fast
-
-#=============================================================================
-# Target rules for targets named NightlyMemoryCheck
-
-# Build rule for target.
-NightlyMemoryCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemoryCheck
-.PHONY : NightlyMemoryCheck
-
-# fast build rule for target.
-NightlyMemoryCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemoryCheck.dir/build.make CMakeFiles/NightlyMemoryCheck.dir/build
-.PHONY : NightlyMemoryCheck/fast
-
-#=============================================================================
-# Target rules for targets named NightlyStart
-
-# Build rule for target.
-NightlyStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyStart
-.PHONY : NightlyStart
-
-# fast build rule for target.
-NightlyStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyStart.dir/build.make CMakeFiles/NightlyStart.dir/build
-.PHONY : NightlyStart/fast
-
-#=============================================================================
-# Target rules for targets named NightlyUpdate
-
-# Build rule for target.
-NightlyUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyUpdate
-.PHONY : NightlyUpdate
-
-# fast build rule for target.
-NightlyUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyUpdate.dir/build.make CMakeFiles/NightlyUpdate.dir/build
-.PHONY : NightlyUpdate/fast
-
-#=============================================================================
-# Target rules for targets named NightlyConfigure
-
-# Build rule for target.
-NightlyConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyConfigure
-.PHONY : NightlyConfigure
-
-# fast build rule for target.
-NightlyConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyConfigure.dir/build.make CMakeFiles/NightlyConfigure.dir/build
-.PHONY : NightlyConfigure/fast
-
-#=============================================================================
-# Target rules for targets named NightlyBuild
-
-# Build rule for target.
-NightlyBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyBuild
-.PHONY : NightlyBuild
-
-# fast build rule for target.
-NightlyBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyBuild.dir/build.make CMakeFiles/NightlyBuild.dir/build
-.PHONY : NightlyBuild/fast
-
-#=============================================================================
-# Target rules for targets named NightlyTest
-
-# Build rule for target.
-NightlyTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyTest
-.PHONY : NightlyTest
-
-# fast build rule for target.
-NightlyTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyTest.dir/build.make CMakeFiles/NightlyTest.dir/build
-.PHONY : NightlyTest/fast
-
-#=============================================================================
-# Target rules for targets named NightlyCoverage
-
-# Build rule for target.
-NightlyCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyCoverage
-.PHONY : NightlyCoverage
-
-# fast build rule for target.
-NightlyCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyCoverage.dir/build.make CMakeFiles/NightlyCoverage.dir/build
-.PHONY : NightlyCoverage/fast
-
-#=============================================================================
-# Target rules for targets named NightlyMemCheck
-
-# Build rule for target.
-NightlyMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlyMemCheck
-.PHONY : NightlyMemCheck
-
-# fast build rule for target.
-NightlyMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlyMemCheck.dir/build.make CMakeFiles/NightlyMemCheck.dir/build
-.PHONY : NightlyMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named NightlySubmit
-
-# Build rule for target.
-NightlySubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 NightlySubmit
-.PHONY : NightlySubmit
-
-# fast build rule for target.
-NightlySubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/NightlySubmit.dir/build.make CMakeFiles/NightlySubmit.dir/build
-.PHONY : NightlySubmit/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalStart
-
-# Build rule for target.
-ExperimentalStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalStart
-.PHONY : ExperimentalStart
-
-# fast build rule for target.
-ExperimentalStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalStart.dir/build.make CMakeFiles/ExperimentalStart.dir/build
-.PHONY : ExperimentalStart/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalUpdate
-
-# Build rule for target.
-ExperimentalUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalUpdate
-.PHONY : ExperimentalUpdate
-
-# fast build rule for target.
-ExperimentalUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalUpdate.dir/build.make CMakeFiles/ExperimentalUpdate.dir/build
-.PHONY : ExperimentalUpdate/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalConfigure
-
-# Build rule for target.
-ExperimentalConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalConfigure
-.PHONY : ExperimentalConfigure
-
-# fast build rule for target.
-ExperimentalConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalConfigure.dir/build.make CMakeFiles/ExperimentalConfigure.dir/build
-.PHONY : ExperimentalConfigure/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalBuild
-
-# Build rule for target.
-ExperimentalBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalBuild
-.PHONY : ExperimentalBuild
-
-# fast build rule for target.
-ExperimentalBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalBuild.dir/build.make CMakeFiles/ExperimentalBuild.dir/build
-.PHONY : ExperimentalBuild/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalTest
-
-# Build rule for target.
-ExperimentalTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalTest
-.PHONY : ExperimentalTest
-
-# fast build rule for target.
-ExperimentalTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalTest.dir/build.make CMakeFiles/ExperimentalTest.dir/build
-.PHONY : ExperimentalTest/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalCoverage
-
-# Build rule for target.
-ExperimentalCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalCoverage
-.PHONY : ExperimentalCoverage
-
-# fast build rule for target.
-ExperimentalCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalCoverage.dir/build.make CMakeFiles/ExperimentalCoverage.dir/build
-.PHONY : ExperimentalCoverage/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalMemCheck
-
-# Build rule for target.
-ExperimentalMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalMemCheck
-.PHONY : ExperimentalMemCheck
-
-# fast build rule for target.
-ExperimentalMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalMemCheck.dir/build.make CMakeFiles/ExperimentalMemCheck.dir/build
-.PHONY : ExperimentalMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named ExperimentalSubmit
-
-# Build rule for target.
-ExperimentalSubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ExperimentalSubmit
-.PHONY : ExperimentalSubmit
-
-# fast build rule for target.
-ExperimentalSubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ExperimentalSubmit.dir/build.make CMakeFiles/ExperimentalSubmit.dir/build
-.PHONY : ExperimentalSubmit/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousStart
-
-# Build rule for target.
-ContinuousStart: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousStart
-.PHONY : ContinuousStart
-
-# fast build rule for target.
-ContinuousStart/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousStart.dir/build.make CMakeFiles/ContinuousStart.dir/build
-.PHONY : ContinuousStart/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousUpdate
-
-# Build rule for target.
-ContinuousUpdate: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousUpdate
-.PHONY : ContinuousUpdate
-
-# fast build rule for target.
-ContinuousUpdate/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousUpdate.dir/build.make CMakeFiles/ContinuousUpdate.dir/build
-.PHONY : ContinuousUpdate/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousConfigure
-
-# Build rule for target.
-ContinuousConfigure: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousConfigure
-.PHONY : ContinuousConfigure
-
-# fast build rule for target.
-ContinuousConfigure/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousConfigure.dir/build.make CMakeFiles/ContinuousConfigure.dir/build
-.PHONY : ContinuousConfigure/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousBuild
-
-# Build rule for target.
-ContinuousBuild: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousBuild
-.PHONY : ContinuousBuild
-
-# fast build rule for target.
-ContinuousBuild/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousBuild.dir/build.make CMakeFiles/ContinuousBuild.dir/build
-.PHONY : ContinuousBuild/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousTest
-
-# Build rule for target.
-ContinuousTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousTest
-.PHONY : ContinuousTest
-
-# fast build rule for target.
-ContinuousTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousTest.dir/build.make CMakeFiles/ContinuousTest.dir/build
-.PHONY : ContinuousTest/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousCoverage
-
-# Build rule for target.
-ContinuousCoverage: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousCoverage
-.PHONY : ContinuousCoverage
-
-# fast build rule for target.
-ContinuousCoverage/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousCoverage.dir/build.make CMakeFiles/ContinuousCoverage.dir/build
-.PHONY : ContinuousCoverage/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousMemCheck
-
-# Build rule for target.
-ContinuousMemCheck: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousMemCheck
-.PHONY : ContinuousMemCheck
-
-# fast build rule for target.
-ContinuousMemCheck/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousMemCheck.dir/build.make CMakeFiles/ContinuousMemCheck.dir/build
-.PHONY : ContinuousMemCheck/fast
-
-#=============================================================================
-# Target rules for targets named ContinuousSubmit
-
-# Build rule for target.
-ContinuousSubmit: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 ContinuousSubmit
-.PHONY : ContinuousSubmit
-
-# fast build rule for target.
-ContinuousSubmit/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/ContinuousSubmit.dir/build.make CMakeFiles/ContinuousSubmit.dir/build
-.PHONY : ContinuousSubmit/fast
 
 #=============================================================================
 # Target rules for targets named MyApplic
@@ -523,6 +148,318 @@ MyApplic: cmake_check_build_system
 MyApplic/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/build
 .PHONY : MyApplic/fast
+
+MyApplication/Content/Map/TileMap.o: MyApplication/Content/Map/TileMap.cpp.o
+.PHONY : MyApplication/Content/Map/TileMap.o
+
+# target to build an object file
+MyApplication/Content/Map/TileMap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/TileMap.cpp.o
+.PHONY : MyApplication/Content/Map/TileMap.cpp.o
+
+MyApplication/Content/Map/TileMap.i: MyApplication/Content/Map/TileMap.cpp.i
+.PHONY : MyApplication/Content/Map/TileMap.i
+
+# target to preprocess a source file
+MyApplication/Content/Map/TileMap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/TileMap.cpp.i
+.PHONY : MyApplication/Content/Map/TileMap.cpp.i
+
+MyApplication/Content/Map/TileMap.s: MyApplication/Content/Map/TileMap.cpp.s
+.PHONY : MyApplication/Content/Map/TileMap.s
+
+# target to generate assembly for a file
+MyApplication/Content/Map/TileMap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/TileMap.cpp.s
+.PHONY : MyApplication/Content/Map/TileMap.cpp.s
+
+MyApplication/Content/Map/block.o: MyApplication/Content/Map/block.cpp.o
+.PHONY : MyApplication/Content/Map/block.o
+
+# target to build an object file
+MyApplication/Content/Map/block.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/block.cpp.o
+.PHONY : MyApplication/Content/Map/block.cpp.o
+
+MyApplication/Content/Map/block.i: MyApplication/Content/Map/block.cpp.i
+.PHONY : MyApplication/Content/Map/block.i
+
+# target to preprocess a source file
+MyApplication/Content/Map/block.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/block.cpp.i
+.PHONY : MyApplication/Content/Map/block.cpp.i
+
+MyApplication/Content/Map/block.s: MyApplication/Content/Map/block.cpp.s
+.PHONY : MyApplication/Content/Map/block.s
+
+# target to generate assembly for a file
+MyApplication/Content/Map/block.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/Map/block.cpp.s
+.PHONY : MyApplication/Content/Map/block.cpp.s
+
+MyApplication/Content/rotationCircle.o: MyApplication/Content/rotationCircle.cpp.o
+.PHONY : MyApplication/Content/rotationCircle.o
+
+# target to build an object file
+MyApplication/Content/rotationCircle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/rotationCircle.cpp.o
+.PHONY : MyApplication/Content/rotationCircle.cpp.o
+
+MyApplication/Content/rotationCircle.i: MyApplication/Content/rotationCircle.cpp.i
+.PHONY : MyApplication/Content/rotationCircle.i
+
+# target to preprocess a source file
+MyApplication/Content/rotationCircle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/rotationCircle.cpp.i
+.PHONY : MyApplication/Content/rotationCircle.cpp.i
+
+MyApplication/Content/rotationCircle.s: MyApplication/Content/rotationCircle.cpp.s
+.PHONY : MyApplication/Content/rotationCircle.s
+
+# target to generate assembly for a file
+MyApplication/Content/rotationCircle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Content/rotationCircle.cpp.s
+.PHONY : MyApplication/Content/rotationCircle.cpp.s
+
+MyApplication/Core.o: MyApplication/Core.cpp.o
+.PHONY : MyApplication/Core.o
+
+# target to build an object file
+MyApplication/Core.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Core.cpp.o
+.PHONY : MyApplication/Core.cpp.o
+
+MyApplication/Core.i: MyApplication/Core.cpp.i
+.PHONY : MyApplication/Core.i
+
+# target to preprocess a source file
+MyApplication/Core.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Core.cpp.i
+.PHONY : MyApplication/Core.cpp.i
+
+MyApplication/Core.s: MyApplication/Core.cpp.s
+.PHONY : MyApplication/Core.s
+
+# target to generate assembly for a file
+MyApplication/Core.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/Core.cpp.s
+.PHONY : MyApplication/Core.cpp.s
+
+MyApplication/GUI/GUISYS.o: MyApplication/GUI/GUISYS.cpp.o
+.PHONY : MyApplication/GUI/GUISYS.o
+
+# target to build an object file
+MyApplication/GUI/GUISYS.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/GUISYS.cpp.o
+.PHONY : MyApplication/GUI/GUISYS.cpp.o
+
+MyApplication/GUI/GUISYS.i: MyApplication/GUI/GUISYS.cpp.i
+.PHONY : MyApplication/GUI/GUISYS.i
+
+# target to preprocess a source file
+MyApplication/GUI/GUISYS.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/GUISYS.cpp.i
+.PHONY : MyApplication/GUI/GUISYS.cpp.i
+
+MyApplication/GUI/GUISYS.s: MyApplication/GUI/GUISYS.cpp.s
+.PHONY : MyApplication/GUI/GUISYS.s
+
+# target to generate assembly for a file
+MyApplication/GUI/GUISYS.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/GUISYS.cpp.s
+.PHONY : MyApplication/GUI/GUISYS.cpp.s
+
+MyApplication/GUI/tabMenu.o: MyApplication/GUI/tabMenu.cpp.o
+.PHONY : MyApplication/GUI/tabMenu.o
+
+# target to build an object file
+MyApplication/GUI/tabMenu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/tabMenu.cpp.o
+.PHONY : MyApplication/GUI/tabMenu.cpp.o
+
+MyApplication/GUI/tabMenu.i: MyApplication/GUI/tabMenu.cpp.i
+.PHONY : MyApplication/GUI/tabMenu.i
+
+# target to preprocess a source file
+MyApplication/GUI/tabMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/tabMenu.cpp.i
+.PHONY : MyApplication/GUI/tabMenu.cpp.i
+
+MyApplication/GUI/tabMenu.s: MyApplication/GUI/tabMenu.cpp.s
+.PHONY : MyApplication/GUI/tabMenu.s
+
+# target to generate assembly for a file
+MyApplication/GUI/tabMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/GUI/tabMenu.cpp.s
+.PHONY : MyApplication/GUI/tabMenu.cpp.s
+
+MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp.o
+.PHONY : MyApplication/entitys/AI/AIComponent.o
+
+# target to build an object file
+MyApplication/entitys/AI/AIComponent.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIComponent.cpp.o
+.PHONY : MyApplication/entitys/AI/AIComponent.cpp.o
+
+MyApplication/entitys/AI/AIComponent.i: MyApplication/entitys/AI/AIComponent.cpp.i
+.PHONY : MyApplication/entitys/AI/AIComponent.i
+
+# target to preprocess a source file
+MyApplication/entitys/AI/AIComponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIComponent.cpp.i
+.PHONY : MyApplication/entitys/AI/AIComponent.cpp.i
+
+MyApplication/entitys/AI/AIComponent.s: MyApplication/entitys/AI/AIComponent.cpp.s
+.PHONY : MyApplication/entitys/AI/AIComponent.s
+
+# target to generate assembly for a file
+MyApplication/entitys/AI/AIComponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIComponent.cpp.s
+.PHONY : MyApplication/entitys/AI/AIComponent.cpp.s
+
+MyApplication/entitys/AI/AIFollow.o: MyApplication/entitys/AI/AIFollow.cpp.o
+.PHONY : MyApplication/entitys/AI/AIFollow.o
+
+# target to build an object file
+MyApplication/entitys/AI/AIFollow.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIFollow.cpp.o
+.PHONY : MyApplication/entitys/AI/AIFollow.cpp.o
+
+MyApplication/entitys/AI/AIFollow.i: MyApplication/entitys/AI/AIFollow.cpp.i
+.PHONY : MyApplication/entitys/AI/AIFollow.i
+
+# target to preprocess a source file
+MyApplication/entitys/AI/AIFollow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIFollow.cpp.i
+.PHONY : MyApplication/entitys/AI/AIFollow.cpp.i
+
+MyApplication/entitys/AI/AIFollow.s: MyApplication/entitys/AI/AIFollow.cpp.s
+.PHONY : MyApplication/entitys/AI/AIFollow.s
+
+# target to generate assembly for a file
+MyApplication/entitys/AI/AIFollow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIFollow.cpp.s
+.PHONY : MyApplication/entitys/AI/AIFollow.cpp.s
+
+MyApplication/entitys/Enemys/test.o: MyApplication/entitys/Enemys/test.cpp.o
+.PHONY : MyApplication/entitys/Enemys/test.o
+
+# target to build an object file
+MyApplication/entitys/Enemys/test.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/Enemys/test.cpp.o
+.PHONY : MyApplication/entitys/Enemys/test.cpp.o
+
+MyApplication/entitys/Enemys/test.i: MyApplication/entitys/Enemys/test.cpp.i
+.PHONY : MyApplication/entitys/Enemys/test.i
+
+# target to preprocess a source file
+MyApplication/entitys/Enemys/test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/Enemys/test.cpp.i
+.PHONY : MyApplication/entitys/Enemys/test.cpp.i
+
+MyApplication/entitys/Enemys/test.s: MyApplication/entitys/Enemys/test.cpp.s
+.PHONY : MyApplication/entitys/Enemys/test.s
+
+# target to generate assembly for a file
+MyApplication/entitys/Enemys/test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/Enemys/test.cpp.s
+.PHONY : MyApplication/entitys/Enemys/test.cpp.s
+
+MyApplication/entitys/entity.o: MyApplication/entitys/entity.cpp.o
+.PHONY : MyApplication/entitys/entity.o
+
+# target to build an object file
+MyApplication/entitys/entity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/entity.cpp.o
+.PHONY : MyApplication/entitys/entity.cpp.o
+
+MyApplication/entitys/entity.i: MyApplication/entitys/entity.cpp.i
+.PHONY : MyApplication/entitys/entity.i
+
+# target to preprocess a source file
+MyApplication/entitys/entity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/entity.cpp.i
+.PHONY : MyApplication/entitys/entity.cpp.i
+
+MyApplication/entitys/entity.s: MyApplication/entitys/entity.cpp.s
+.PHONY : MyApplication/entitys/entity.s
+
+# target to generate assembly for a file
+MyApplication/entitys/entity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/entity.cpp.s
+.PHONY : MyApplication/entitys/entity.cpp.s
+
+MyApplication/entitys/player.o: MyApplication/entitys/player.cpp.o
+.PHONY : MyApplication/entitys/player.o
+
+# target to build an object file
+MyApplication/entitys/player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/player.cpp.o
+.PHONY : MyApplication/entitys/player.cpp.o
+
+MyApplication/entitys/player.i: MyApplication/entitys/player.cpp.i
+.PHONY : MyApplication/entitys/player.i
+
+# target to preprocess a source file
+MyApplication/entitys/player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/player.cpp.i
+.PHONY : MyApplication/entitys/player.cpp.i
+
+MyApplication/entitys/player.s: MyApplication/entitys/player.cpp.s
+.PHONY : MyApplication/entitys/player.s
+
+# target to generate assembly for a file
+MyApplication/entitys/player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/player.cpp.s
+.PHONY : MyApplication/entitys/player.cpp.s
+
+MyApplication/entitys/properties/hitbox.o: MyApplication/entitys/properties/hitbox.cpp.o
+.PHONY : MyApplication/entitys/properties/hitbox.o
+
+# target to build an object file
+MyApplication/entitys/properties/hitbox.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/hitbox.cpp.o
+.PHONY : MyApplication/entitys/properties/hitbox.cpp.o
+
+MyApplication/entitys/properties/hitbox.i: MyApplication/entitys/properties/hitbox.cpp.i
+.PHONY : MyApplication/entitys/properties/hitbox.i
+
+# target to preprocess a source file
+MyApplication/entitys/properties/hitbox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/hitbox.cpp.i
+.PHONY : MyApplication/entitys/properties/hitbox.cpp.i
+
+MyApplication/entitys/properties/hitbox.s: MyApplication/entitys/properties/hitbox.cpp.s
+.PHONY : MyApplication/entitys/properties/hitbox.s
+
+# target to generate assembly for a file
+MyApplication/entitys/properties/hitbox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/hitbox.cpp.s
+.PHONY : MyApplication/entitys/properties/hitbox.cpp.s
+
+MyApplication/entitys/properties/movement.o: MyApplication/entitys/properties/movement.cpp.o
+.PHONY : MyApplication/entitys/properties/movement.o
+
+# target to build an object file
+MyApplication/entitys/properties/movement.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/movement.cpp.o
+.PHONY : MyApplication/entitys/properties/movement.cpp.o
+
+MyApplication/entitys/properties/movement.i: MyApplication/entitys/properties/movement.cpp.i
+.PHONY : MyApplication/entitys/properties/movement.i
+
+# target to preprocess a source file
+MyApplication/entitys/properties/movement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/movement.cpp.i
+.PHONY : MyApplication/entitys/properties/movement.cpp.i
+
+MyApplication/entitys/properties/movement.s: MyApplication/entitys/properties/movement.cpp.s
+.PHONY : MyApplication/entitys/properties/movement.s
+
+# target to generate assembly for a file
+MyApplication/entitys/properties/movement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/movement.cpp.s
+.PHONY : MyApplication/entitys/properties/movement.cpp.s
 
 MyApplication/main.o: MyApplication/main.cpp.o
 .PHONY : MyApplication/main.o
@@ -548,6 +485,198 @@ MyApplication/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/main.cpp.s
 .PHONY : MyApplication/main.cpp.s
 
+MyApplication/math/ProcessGenerationNoice.o: MyApplication/math/ProcessGenerationNoice.cpp.o
+.PHONY : MyApplication/math/ProcessGenerationNoice.o
+
+# target to build an object file
+MyApplication/math/ProcessGenerationNoice.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/ProcessGenerationNoice.cpp.o
+.PHONY : MyApplication/math/ProcessGenerationNoice.cpp.o
+
+MyApplication/math/ProcessGenerationNoice.i: MyApplication/math/ProcessGenerationNoice.cpp.i
+.PHONY : MyApplication/math/ProcessGenerationNoice.i
+
+# target to preprocess a source file
+MyApplication/math/ProcessGenerationNoice.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/ProcessGenerationNoice.cpp.i
+.PHONY : MyApplication/math/ProcessGenerationNoice.cpp.i
+
+MyApplication/math/ProcessGenerationNoice.s: MyApplication/math/ProcessGenerationNoice.cpp.s
+.PHONY : MyApplication/math/ProcessGenerationNoice.s
+
+# target to generate assembly for a file
+MyApplication/math/ProcessGenerationNoice.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/ProcessGenerationNoice.cpp.s
+.PHONY : MyApplication/math/ProcessGenerationNoice.cpp.s
+
+MyApplication/math/mymath.o: MyApplication/math/mymath.cpp.o
+.PHONY : MyApplication/math/mymath.o
+
+# target to build an object file
+MyApplication/math/mymath.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/mymath.cpp.o
+.PHONY : MyApplication/math/mymath.cpp.o
+
+MyApplication/math/mymath.i: MyApplication/math/mymath.cpp.i
+.PHONY : MyApplication/math/mymath.i
+
+# target to preprocess a source file
+MyApplication/math/mymath.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/mymath.cpp.i
+.PHONY : MyApplication/math/mymath.cpp.i
+
+MyApplication/math/mymath.s: MyApplication/math/mymath.cpp.s
+.PHONY : MyApplication/math/mymath.s
+
+# target to generate assembly for a file
+MyApplication/math/mymath.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/math/mymath.cpp.s
+.PHONY : MyApplication/math/mymath.cpp.s
+
+MyApplication/states/MainMenu.o: MyApplication/states/MainMenu.cpp.o
+.PHONY : MyApplication/states/MainMenu.o
+
+# target to build an object file
+MyApplication/states/MainMenu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/MainMenu.cpp.o
+.PHONY : MyApplication/states/MainMenu.cpp.o
+
+MyApplication/states/MainMenu.i: MyApplication/states/MainMenu.cpp.i
+.PHONY : MyApplication/states/MainMenu.i
+
+# target to preprocess a source file
+MyApplication/states/MainMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/MainMenu.cpp.i
+.PHONY : MyApplication/states/MainMenu.cpp.i
+
+MyApplication/states/MainMenu.s: MyApplication/states/MainMenu.cpp.s
+.PHONY : MyApplication/states/MainMenu.s
+
+# target to generate assembly for a file
+MyApplication/states/MainMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/MainMenu.cpp.s
+.PHONY : MyApplication/states/MainMenu.cpp.s
+
+MyApplication/states/NoiceView.o: MyApplication/states/NoiceView.cpp.o
+.PHONY : MyApplication/states/NoiceView.o
+
+# target to build an object file
+MyApplication/states/NoiceView.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/NoiceView.cpp.o
+.PHONY : MyApplication/states/NoiceView.cpp.o
+
+MyApplication/states/NoiceView.i: MyApplication/states/NoiceView.cpp.i
+.PHONY : MyApplication/states/NoiceView.i
+
+# target to preprocess a source file
+MyApplication/states/NoiceView.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/NoiceView.cpp.i
+.PHONY : MyApplication/states/NoiceView.cpp.i
+
+MyApplication/states/NoiceView.s: MyApplication/states/NoiceView.cpp.s
+.PHONY : MyApplication/states/NoiceView.s
+
+# target to generate assembly for a file
+MyApplication/states/NoiceView.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/NoiceView.cpp.s
+.PHONY : MyApplication/states/NoiceView.cpp.s
+
+MyApplication/states/PauseMenu.o: MyApplication/states/PauseMenu.cpp.o
+.PHONY : MyApplication/states/PauseMenu.o
+
+# target to build an object file
+MyApplication/states/PauseMenu.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/PauseMenu.cpp.o
+.PHONY : MyApplication/states/PauseMenu.cpp.o
+
+MyApplication/states/PauseMenu.i: MyApplication/states/PauseMenu.cpp.i
+.PHONY : MyApplication/states/PauseMenu.i
+
+# target to preprocess a source file
+MyApplication/states/PauseMenu.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/PauseMenu.cpp.i
+.PHONY : MyApplication/states/PauseMenu.cpp.i
+
+MyApplication/states/PauseMenu.s: MyApplication/states/PauseMenu.cpp.s
+.PHONY : MyApplication/states/PauseMenu.s
+
+# target to generate assembly for a file
+MyApplication/states/PauseMenu.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/PauseMenu.cpp.s
+.PHONY : MyApplication/states/PauseMenu.cpp.s
+
+MyApplication/states/Process.o: MyApplication/states/Process.cpp.o
+.PHONY : MyApplication/states/Process.o
+
+# target to build an object file
+MyApplication/states/Process.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/Process.cpp.o
+.PHONY : MyApplication/states/Process.cpp.o
+
+MyApplication/states/Process.i: MyApplication/states/Process.cpp.i
+.PHONY : MyApplication/states/Process.i
+
+# target to preprocess a source file
+MyApplication/states/Process.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/Process.cpp.i
+.PHONY : MyApplication/states/Process.cpp.i
+
+MyApplication/states/Process.s: MyApplication/states/Process.cpp.s
+.PHONY : MyApplication/states/Process.s
+
+# target to generate assembly for a file
+MyApplication/states/Process.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/Process.cpp.s
+.PHONY : MyApplication/states/Process.cpp.s
+
+MyApplication/states/State.o: MyApplication/states/State.cpp.o
+.PHONY : MyApplication/states/State.o
+
+# target to build an object file
+MyApplication/states/State.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/State.cpp.o
+.PHONY : MyApplication/states/State.cpp.o
+
+MyApplication/states/State.i: MyApplication/states/State.cpp.i
+.PHONY : MyApplication/states/State.i
+
+# target to preprocess a source file
+MyApplication/states/State.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/State.cpp.i
+.PHONY : MyApplication/states/State.cpp.i
+
+MyApplication/states/State.s: MyApplication/states/State.cpp.s
+.PHONY : MyApplication/states/State.s
+
+# target to generate assembly for a file
+MyApplication/states/State.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/State.cpp.s
+.PHONY : MyApplication/states/State.cpp.s
+
+MyApplication/states/gfx.o: MyApplication/states/gfx.cpp.o
+.PHONY : MyApplication/states/gfx.o
+
+# target to build an object file
+MyApplication/states/gfx.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/gfx.cpp.o
+.PHONY : MyApplication/states/gfx.cpp.o
+
+MyApplication/states/gfx.i: MyApplication/states/gfx.cpp.i
+.PHONY : MyApplication/states/gfx.i
+
+# target to preprocess a source file
+MyApplication/states/gfx.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/gfx.cpp.i
+.PHONY : MyApplication/states/gfx.cpp.i
+
+MyApplication/states/gfx.s: MyApplication/states/gfx.cpp.s
+.PHONY : MyApplication/states/gfx.s
+
+# target to generate assembly for a file
+MyApplication/states/gfx.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/states/gfx.cpp.s
+.PHONY : MyApplication/states/gfx.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -558,39 +687,73 @@ help:
 	@echo "... package"
 	@echo "... package_source"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... Continuous"
-	@echo "... ContinuousBuild"
-	@echo "... ContinuousConfigure"
-	@echo "... ContinuousCoverage"
-	@echo "... ContinuousMemCheck"
-	@echo "... ContinuousStart"
-	@echo "... ContinuousSubmit"
-	@echo "... ContinuousTest"
-	@echo "... ContinuousUpdate"
-	@echo "... Experimental"
-	@echo "... ExperimentalBuild"
-	@echo "... ExperimentalConfigure"
-	@echo "... ExperimentalCoverage"
-	@echo "... ExperimentalMemCheck"
-	@echo "... ExperimentalStart"
-	@echo "... ExperimentalSubmit"
-	@echo "... ExperimentalTest"
-	@echo "... ExperimentalUpdate"
-	@echo "... Nightly"
-	@echo "... NightlyBuild"
-	@echo "... NightlyConfigure"
-	@echo "... NightlyCoverage"
-	@echo "... NightlyMemCheck"
-	@echo "... NightlyMemoryCheck"
-	@echo "... NightlyStart"
-	@echo "... NightlySubmit"
-	@echo "... NightlyTest"
-	@echo "... NightlyUpdate"
 	@echo "... MyApplic"
+	@echo "... MyApplication/Content/Map/TileMap.o"
+	@echo "... MyApplication/Content/Map/TileMap.i"
+	@echo "... MyApplication/Content/Map/TileMap.s"
+	@echo "... MyApplication/Content/Map/block.o"
+	@echo "... MyApplication/Content/Map/block.i"
+	@echo "... MyApplication/Content/Map/block.s"
+	@echo "... MyApplication/Content/rotationCircle.o"
+	@echo "... MyApplication/Content/rotationCircle.i"
+	@echo "... MyApplication/Content/rotationCircle.s"
+	@echo "... MyApplication/Core.o"
+	@echo "... MyApplication/Core.i"
+	@echo "... MyApplication/Core.s"
+	@echo "... MyApplication/GUI/GUISYS.o"
+	@echo "... MyApplication/GUI/GUISYS.i"
+	@echo "... MyApplication/GUI/GUISYS.s"
+	@echo "... MyApplication/GUI/tabMenu.o"
+	@echo "... MyApplication/GUI/tabMenu.i"
+	@echo "... MyApplication/GUI/tabMenu.s"
+	@echo "... MyApplication/entitys/AI/AIComponent.o"
+	@echo "... MyApplication/entitys/AI/AIComponent.i"
+	@echo "... MyApplication/entitys/AI/AIComponent.s"
+	@echo "... MyApplication/entitys/AI/AIFollow.o"
+	@echo "... MyApplication/entitys/AI/AIFollow.i"
+	@echo "... MyApplication/entitys/AI/AIFollow.s"
+	@echo "... MyApplication/entitys/Enemys/test.o"
+	@echo "... MyApplication/entitys/Enemys/test.i"
+	@echo "... MyApplication/entitys/Enemys/test.s"
+	@echo "... MyApplication/entitys/entity.o"
+	@echo "... MyApplication/entitys/entity.i"
+	@echo "... MyApplication/entitys/entity.s"
+	@echo "... MyApplication/entitys/player.o"
+	@echo "... MyApplication/entitys/player.i"
+	@echo "... MyApplication/entitys/player.s"
+	@echo "... MyApplication/entitys/properties/hitbox.o"
+	@echo "... MyApplication/entitys/properties/hitbox.i"
+	@echo "... MyApplication/entitys/properties/hitbox.s"
+	@echo "... MyApplication/entitys/properties/movement.o"
+	@echo "... MyApplication/entitys/properties/movement.i"
+	@echo "... MyApplication/entitys/properties/movement.s"
 	@echo "... MyApplication/main.o"
 	@echo "... MyApplication/main.i"
 	@echo "... MyApplication/main.s"
+	@echo "... MyApplication/math/ProcessGenerationNoice.o"
+	@echo "... MyApplication/math/ProcessGenerationNoice.i"
+	@echo "... MyApplication/math/ProcessGenerationNoice.s"
+	@echo "... MyApplication/math/mymath.o"
+	@echo "... MyApplication/math/mymath.i"
+	@echo "... MyApplication/math/mymath.s"
+	@echo "... MyApplication/states/MainMenu.o"
+	@echo "... MyApplication/states/MainMenu.i"
+	@echo "... MyApplication/states/MainMenu.s"
+	@echo "... MyApplication/states/NoiceView.o"
+	@echo "... MyApplication/states/NoiceView.i"
+	@echo "... MyApplication/states/NoiceView.s"
+	@echo "... MyApplication/states/PauseMenu.o"
+	@echo "... MyApplication/states/PauseMenu.i"
+	@echo "... MyApplication/states/PauseMenu.s"
+	@echo "... MyApplication/states/Process.o"
+	@echo "... MyApplication/states/Process.i"
+	@echo "... MyApplication/states/Process.s"
+	@echo "... MyApplication/states/State.o"
+	@echo "... MyApplication/states/State.i"
+	@echo "... MyApplication/states/State.s"
+	@echo "... MyApplication/states/gfx.o"
+	@echo "... MyApplication/states/gfx.i"
+	@echo "... MyApplication/states/gfx.s"
 .PHONY : help
 
 
@@ -602,7 +765,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -P /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/VerifyGlobs.cmake
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

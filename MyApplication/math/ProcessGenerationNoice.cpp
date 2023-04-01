@@ -15,18 +15,6 @@ double ProcessGenerationNoice::Interpolate(double a, double b, double x)
 
 }
 
-sf::Vector2f ProcessGenerationNoice::randomGradient(double ix, double iy) {
-  // No precomputed gradients mean this works for any number of grid coordinates
-  const unsigned w = 8 * sizeof(unsigned);
-  const unsigned s = w / 2; // rotation width
-  unsigned a = ix, b = iy;
-  a *= 3284157443; b ^= a << s | a >> w - s;
-  b *= 1911520717; a ^= b << s | b >> w - s;
-  a *= 2048419325;
-  double random = a * (3.14159265 / ~(~0u >> 1)); // in [0, 2*Pi]
-
-  return sf::Vector2f(cos(random), sin(random));
-}
 
 double ProcessGenerationNoice::Noise(int i, int x, int y) {
   int n = x + y * 57;

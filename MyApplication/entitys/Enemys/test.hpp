@@ -1,8 +1,6 @@
 #ifndef CPP_TEST_CLASS_HPP
 #define CPP_TEST_CLASS_HPP
 #include "../AI/AIFollow.hpp"
-#include "../entity.hpp"
-
 class TestEntity:public Entity
 {
     private:

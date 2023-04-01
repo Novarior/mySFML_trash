@@ -1,7 +1,112 @@
 [
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/usr/bin/clang++  -iframework /Library/Frameworks -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -F/Library/Frameworks/.  -std=gnu++20 -o CMakeFiles/MyApplic.dir/MyApplication/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/Core.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/State.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/MainMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/PauseMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/Process.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/gfx.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/states/NoiceView.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/math/mymath.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/math/ProcessGenerationNoice.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/GUI/GUISYS.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/GUI/tabMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/entity.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/player.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/Enemys/test.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIFollow.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/AI/AIComponent.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/hitbox.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/entitys/properties/movement.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/Content/rotationCircle.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/Content/Map/block.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/Build",
+  "command": "/usr/bin/clang++  -isystem /usr/local/include  -Wall -Wextra -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -std=gnu++17 -o CMakeFiles/MyApplic.dir/MyApplication/Content/Map/TileMap.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp"
 }
 ]

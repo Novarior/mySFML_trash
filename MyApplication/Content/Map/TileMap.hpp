@@ -7,8 +7,8 @@
 #include "../../entitys/entity.hpp"
 
 class Entity;
-/** */
-const struct renderArea
+
+struct renderArea
 {
     int fromX;
     int fromY;
@@ -48,13 +48,13 @@ class TileMap
     const sf::Vector2u getMapSizeOnTiles();
     const sf::Vector2f getMapSizeOnFloat();
 
-    void updateWorldBoundsCollision(Entity* entity, const float& delta_time);
+    void updateWorldBoundsCollision(Entity* entity);
     void updateTileCollision(Entity* entity, const float& delta_time);
     void update(Entity* entity, const float& delta_time);
     void update(sf::Vector2f pos_entity);
 
     sf::FloatRect getGlobalBounds(const unsigned int x, const unsigned int Y) const;
-    const bool getCollision(const unsigned int x, const unsigned int y) const;
+    bool getCollision(const unsigned int x, const unsigned int y) const;
 
     renderArea getRenderArea();
     void render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug);

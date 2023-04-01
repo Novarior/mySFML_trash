@@ -58,7 +58,6 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
     }
     this->texture.update(this->image);
     this->shape.setTexture(&this->texture);
-    std::cout << "\n\t\tS2S:\tpos: " << pos.x << " x " << pos.y << "\t\tMinMax: " << min << " x " << max;
 }
 
 NoiceView::NoiceView(StateData* statedata):State(statedata) {

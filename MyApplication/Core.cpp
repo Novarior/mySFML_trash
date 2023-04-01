@@ -4,7 +4,7 @@
 void Core::initVar() {
     this->mWindow = NULL;
     srand(std::time(NULL));
-    this->gfxSettings.loadFromFile("Config.cfg");
+    this->gfxSettings.loadFromFile("../Config.cfg");
 }
 
 void Core::initStateData() {
@@ -109,5 +109,6 @@ void Core::render() {
 }
 
 void Core::updateDeltaTime() {
+    this->deltaTime = 0;
     this->deltaTime = this->deltaClock.restart().asSeconds();
 }

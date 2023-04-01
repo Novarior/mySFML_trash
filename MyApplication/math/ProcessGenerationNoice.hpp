@@ -21,7 +21,6 @@ class ProcessGenerationNoice
     noiceData m_data;
 
     public:
-    sf::Vector2f randomGradient(double ix, double iy);
     double InterpolatedNoise(int i, double x, double y);
     double Interpolate(double a, double b, double x);
     double SmoothedNoise(int i, int x, int y);

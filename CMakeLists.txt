@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS  *.cpp)
 find_package(SFML COMPONENTS graphics window system)
-add_executable(MyApplic main.cpp)
+add_executable(MyApplic MyApplication/main.cpp)
 target_link_libraries(MyApplic sfml-graphics sfml-audio)
 
 

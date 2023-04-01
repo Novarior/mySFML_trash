@@ -524,29 +524,29 @@ MyApplic/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/build
 .PHONY : MyApplic/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+MyApplication/main.o: MyApplication/main.cpp.o
+.PHONY : MyApplication/main.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.o
-.PHONY : main.cpp.o
+MyApplication/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/main.cpp.o
+.PHONY : MyApplication/main.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+MyApplication/main.i: MyApplication/main.cpp.i
+.PHONY : MyApplication/main.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.i
-.PHONY : main.cpp.i
+MyApplication/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/main.cpp.i
+.PHONY : MyApplication/main.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+MyApplication/main.s: MyApplication/main.cpp.s
+.PHONY : MyApplication/main.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.s
-.PHONY : main.cpp.s
+MyApplication/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/MyApplication/main.cpp.s
+.PHONY : MyApplication/main.cpp.s
 
 # Help Target
 help:
@@ -588,9 +588,9 @@ help:
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
 	@echo "... MyApplic"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... MyApplication/main.o"
+	@echo "... MyApplication/main.i"
+	@echo "... MyApplication/main.s"
 .PHONY : help
 
 

@@ -5,11 +5,11 @@
 #include "gfx.hpp"
 class State;
 
-
 class StateData
 {
 	public:
-	StateData() {}
+	StateData() {
+	}
 
 	float grid_size;
 	sf::RenderWindow* sWindow;

@@ -149,7 +149,10 @@ void MainMenu::update(const float& delta_time) {
 
     if (this->debugMode)
     {
-        this->dString_Stream << "FPS:\t" << 1 / delta_time << "\n";
+        this->dString_Stream
+            << "FPS:\t" << 1 / delta_time
+            << "\nVersion: " << versionApp
+            << "\nOS: " << OperationSystem;
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }

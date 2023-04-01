@@ -10,8 +10,8 @@ void Core::initVar() {
 void Core::initStateData() {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/PlayfairDisplay-Black.ttf")) {}
-    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/Resourses/Fonts/Muli-Regular.ttf")) {}
+    if (!this->mStatedata.font.loadFromFile("/Users/dmitrijsusenko/Desktop/try/MyApplication/Resourses/Fonts/PlayfairDisplay-Black.ttf")) {}
+    if (!this->mStatedata.debugFont.loadFromFile("/Users/dmitrijsusenko/Desktop/try/MyApplication/Resourses/Fonts/Muli-Regular.ttf")) {}
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;

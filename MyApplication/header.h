@@ -1,11 +1,8 @@
 #ifndef CPP_CUSTOMHEADER_H
 #define CPP_CUSTOMHEADER_H
-
-#define TRY_VERSION_MAJOR 0
-#define TRY_VERSION_MINOR 0
-#define TRY_VERSION_PATCH 1
-
+#include "ConfigurationProgram.h"
 //including stl lib
+#include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <ostream>
@@ -18,12 +15,10 @@
 #include <map>
 #include <time.h>
 #include <algorithm>
-
 //include SFML libary
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-
 //include in program files
 #include "states/ConstFoldersFlow.h"
 #include "math/mymath.hpp"

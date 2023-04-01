@@ -1,1 +1,4 @@
 /.DS_Store
+/Build
+/MyApplication_x86-64.app
+/MyApplication_ARM64.app

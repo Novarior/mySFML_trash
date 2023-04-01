@@ -512,38 +512,24 @@ ContinuousSubmit/fast:
 .PHONY : ContinuousSubmit/fast
 
 #=============================================================================
-# Target rules for targets named SFMLTest
+# Target rules for targets named MyApplic
 
 # Build rule for target.
-SFMLTest: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 SFMLTest
-.PHONY : SFMLTest
+MyApplic: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyApplic
+.PHONY : MyApplic
 
 # fast build rule for target.
-SFMLTest/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/build
-.PHONY : SFMLTest/fast
-
-#=============================================================================
-# Target rules for targets named FirstProject
-
-# Build rule for target.
-FirstProject: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 FirstProject
-.PHONY : FirstProject
-
-# fast build rule for target.
-FirstProject/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/build
-.PHONY : FirstProject/fast
+MyApplic/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/build
+.PHONY : MyApplic/fast
 
 main.o: main.cpp.o
 .PHONY : main.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.o
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -551,8 +537,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.i
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -560,8 +545,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/main.cpp.s
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -603,8 +587,7 @@ help:
 	@echo "... NightlySubmit"
 	@echo "... NightlyTest"
 	@echo "... NightlyUpdate"
-	@echo "... FirstProject"
-	@echo "... SFMLTest"
+	@echo "... MyApplic"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

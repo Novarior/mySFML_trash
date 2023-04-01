@@ -63,8 +63,7 @@ CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/SFMLTest.dir/all
-all: CMakeFiles/FirstProject.dir/all
+all: CMakeFiles/MyApplic.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -100,8 +99,7 @@ clean: CMakeFiles/ContinuousTest.dir/clean
 clean: CMakeFiles/ContinuousCoverage.dir/clean
 clean: CMakeFiles/ContinuousMemCheck.dir/clean
 clean: CMakeFiles/ContinuousSubmit.dir/clean
-clean: CMakeFiles/SFMLTest.dir/clean
-clean: CMakeFiles/FirstProject.dir/clean
+clean: CMakeFiles/MyApplic.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -833,56 +831,30 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 .PHONY : CMakeFiles/ContinuousSubmit.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/SFMLTest.dir
+# Target rules for target CMakeFiles/MyApplic.dir
 
 # All Build rule for target.
-CMakeFiles/SFMLTest.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=3,4 "Built target SFMLTest"
-.PHONY : CMakeFiles/SFMLTest.dir/all
+CMakeFiles/MyApplic.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=1,2 "Built target MyApplic"
+.PHONY : CMakeFiles/MyApplic.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/SFMLTest.dir/rule: cmake_check_build_system
+CMakeFiles/MyApplic.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/SFMLTest.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/MyApplic.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
-.PHONY : CMakeFiles/SFMLTest.dir/rule
+.PHONY : CMakeFiles/MyApplic.dir/rule
 
 # Convenience name for target.
-SFMLTest: CMakeFiles/SFMLTest.dir/rule
-.PHONY : SFMLTest
+MyApplic: CMakeFiles/MyApplic.dir/rule
+.PHONY : MyApplic
 
 # clean rule for target.
-CMakeFiles/SFMLTest.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/SFMLTest.dir/build.make CMakeFiles/SFMLTest.dir/clean
-.PHONY : CMakeFiles/SFMLTest.dir/clean
-
-#=============================================================================
-# Target rules for target CMakeFiles/FirstProject.dir
-
-# All Build rule for target.
-CMakeFiles/FirstProject.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=1,2 "Built target FirstProject"
-.PHONY : CMakeFiles/FirstProject.dir/all
-
-# Build rule for subdir invocation for target.
-CMakeFiles/FirstProject.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/FirstProject.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
-.PHONY : CMakeFiles/FirstProject.dir/rule
-
-# Convenience name for target.
-FirstProject: CMakeFiles/FirstProject.dir/rule
-.PHONY : FirstProject
-
-# clean rule for target.
-CMakeFiles/FirstProject.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/FirstProject.dir/build.make CMakeFiles/FirstProject.dir/clean
-.PHONY : CMakeFiles/FirstProject.dir/clean
+CMakeFiles/MyApplic.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MyApplic.dir/build.make CMakeFiles/MyApplic.dir/clean
+.PHONY : CMakeFiles/MyApplic.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -5,13 +5,13 @@ cmake_policy(SET CMP0009 NEW)
 # SRC_FILES at CMakeLists.txt:12 (file)
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/Users/dmitrijsusenko/Desktop/try/*.cpp")
 set(OLD_GLOB
+  "/Users/dmitrijsusenko/Desktop/try/Build/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp"
   "/Users/dmitrijsusenko/Desktop/try/Content/Map/TileMap.cpp"
   "/Users/dmitrijsusenko/Desktop/try/Content/Map/block.cpp"
   "/Users/dmitrijsusenko/Desktop/try/Content/rotationCircle.cpp"
   "/Users/dmitrijsusenko/Desktop/try/Core.cpp"
   "/Users/dmitrijsusenko/Desktop/try/GUI/GUISYS.cpp"
   "/Users/dmitrijsusenko/Desktop/try/GUI/tabMenu.cpp"
-  "/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/3.25.2/CompilerIdCXX/CMakeCXXCompilerId.cpp"
   "/Users/dmitrijsusenko/Desktop/try/entitys/AI/AIComponent.cpp"
   "/Users/dmitrijsusenko/Desktop/try/entitys/AI/AIFollow.cpp"
   "/Users/dmitrijsusenko/Desktop/try/entitys/Enemys/test.cpp"

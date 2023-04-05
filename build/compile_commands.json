@@ -1,134 +1,134 @@
 [
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/main.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/main.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/Core.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/Core.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/Core.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/Core.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/State.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/State.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/State.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/State.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/MainMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/MainMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/MainMenu.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/MainMenu.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/PauseMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/PauseMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/PauseMenu.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/PauseMenu.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/Process.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/Process.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/Process.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/Process.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/gfx.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/gfx.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/gfx.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/gfx.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/states/NoiceView.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/states/NoiceView.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/states/NoiceView.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/states/NoiceView.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/math/mymath.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/math/mymath.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/math/mymath.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/math/mymath.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/math/ProcessGenerationNoice.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/math/ProcessGenerationNoice.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/math/ProcessGenerationNoice.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/math/ProcessGenerationNoice.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/GUI/GUISYS.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/GUI/GUISYS.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/GUI/GUISYS.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/GUI/GUISYS.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/GUI/tabMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/GUI/tabMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/GUI/tabMenu.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/GUI/tabMenu.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/entity.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/entity.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/entity.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/entity.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/player.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/player.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/player.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/player.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/Enemys/test.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/Enemys/test.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/Enemys/test.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/Enemys/test.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIFollow.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIFollow.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIFollow.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIFollow.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIComponent.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIComponent.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIComponent.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIComponent.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/hitbox.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/hitbox.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/hitbox.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/hitbox.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/movement.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/movement.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/movement.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/movement.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/Content/rotationCircle.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/Content/rotationCircle.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/Content/rotationCircle.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/Content/rotationCircle.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/block.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/Content/Map/block.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/block.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/Content/Map/block.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/TileMap.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/Binary-system.dir/MyApplication/Content/Map/TileMap.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
-  "output": "CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/TileMap.cpp.o"
+  "output": "CMakeFiles/Binary-system.dir/MyApplication/Content/Map/TileMap.cpp.o"
 }
 ]

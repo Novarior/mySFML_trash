@@ -117,24 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Project_MAC
+# Target rules for targets named Binary-system
 
 # Build rule for target.
-Project_MAC: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Project_MAC
-.PHONY : Project_MAC
+Binary-system: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Binary-system
+.PHONY : Binary-system
 
 # fast build rule for target.
-Project_MAC/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/build
-.PHONY : Project_MAC/fast
+Binary-system/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/build
+.PHONY : Binary-system/fast
 
 MyApplication/Content/Map/TileMap.o: MyApplication/Content/Map/TileMap.cpp.o
 .PHONY : MyApplication/Content/Map/TileMap.o
 
 # target to build an object file
 MyApplication/Content/Map/TileMap.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/TileMap.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/TileMap.cpp.o
 .PHONY : MyApplication/Content/Map/TileMap.cpp.o
 
 MyApplication/Content/Map/TileMap.i: MyApplication/Content/Map/TileMap.cpp.i
@@ -142,7 +142,7 @@ MyApplication/Content/Map/TileMap.i: MyApplication/Content/Map/TileMap.cpp.i
 
 # target to preprocess a source file
 MyApplication/Content/Map/TileMap.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/TileMap.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/TileMap.cpp.i
 .PHONY : MyApplication/Content/Map/TileMap.cpp.i
 
 MyApplication/Content/Map/TileMap.s: MyApplication/Content/Map/TileMap.cpp.s
@@ -150,7 +150,7 @@ MyApplication/Content/Map/TileMap.s: MyApplication/Content/Map/TileMap.cpp.s
 
 # target to generate assembly for a file
 MyApplication/Content/Map/TileMap.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/TileMap.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/TileMap.cpp.s
 .PHONY : MyApplication/Content/Map/TileMap.cpp.s
 
 MyApplication/Content/Map/block.o: MyApplication/Content/Map/block.cpp.o
@@ -158,7 +158,7 @@ MyApplication/Content/Map/block.o: MyApplication/Content/Map/block.cpp.o
 
 # target to build an object file
 MyApplication/Content/Map/block.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/block.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/block.cpp.o
 .PHONY : MyApplication/Content/Map/block.cpp.o
 
 MyApplication/Content/Map/block.i: MyApplication/Content/Map/block.cpp.i
@@ -166,7 +166,7 @@ MyApplication/Content/Map/block.i: MyApplication/Content/Map/block.cpp.i
 
 # target to preprocess a source file
 MyApplication/Content/Map/block.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/block.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/block.cpp.i
 .PHONY : MyApplication/Content/Map/block.cpp.i
 
 MyApplication/Content/Map/block.s: MyApplication/Content/Map/block.cpp.s
@@ -174,7 +174,7 @@ MyApplication/Content/Map/block.s: MyApplication/Content/Map/block.cpp.s
 
 # target to generate assembly for a file
 MyApplication/Content/Map/block.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/Map/block.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/Map/block.cpp.s
 .PHONY : MyApplication/Content/Map/block.cpp.s
 
 MyApplication/Content/rotationCircle.o: MyApplication/Content/rotationCircle.cpp.o
@@ -182,7 +182,7 @@ MyApplication/Content/rotationCircle.o: MyApplication/Content/rotationCircle.cpp
 
 # target to build an object file
 MyApplication/Content/rotationCircle.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/rotationCircle.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/rotationCircle.cpp.o
 .PHONY : MyApplication/Content/rotationCircle.cpp.o
 
 MyApplication/Content/rotationCircle.i: MyApplication/Content/rotationCircle.cpp.i
@@ -190,7 +190,7 @@ MyApplication/Content/rotationCircle.i: MyApplication/Content/rotationCircle.cpp
 
 # target to preprocess a source file
 MyApplication/Content/rotationCircle.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/rotationCircle.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/rotationCircle.cpp.i
 .PHONY : MyApplication/Content/rotationCircle.cpp.i
 
 MyApplication/Content/rotationCircle.s: MyApplication/Content/rotationCircle.cpp.s
@@ -198,7 +198,7 @@ MyApplication/Content/rotationCircle.s: MyApplication/Content/rotationCircle.cpp
 
 # target to generate assembly for a file
 MyApplication/Content/rotationCircle.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Content/rotationCircle.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Content/rotationCircle.cpp.s
 .PHONY : MyApplication/Content/rotationCircle.cpp.s
 
 MyApplication/Core.o: MyApplication/Core.cpp.o
@@ -206,7 +206,7 @@ MyApplication/Core.o: MyApplication/Core.cpp.o
 
 # target to build an object file
 MyApplication/Core.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Core.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Core.cpp.o
 .PHONY : MyApplication/Core.cpp.o
 
 MyApplication/Core.i: MyApplication/Core.cpp.i
@@ -214,7 +214,7 @@ MyApplication/Core.i: MyApplication/Core.cpp.i
 
 # target to preprocess a source file
 MyApplication/Core.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Core.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Core.cpp.i
 .PHONY : MyApplication/Core.cpp.i
 
 MyApplication/Core.s: MyApplication/Core.cpp.s
@@ -222,7 +222,7 @@ MyApplication/Core.s: MyApplication/Core.cpp.s
 
 # target to generate assembly for a file
 MyApplication/Core.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/Core.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/Core.cpp.s
 .PHONY : MyApplication/Core.cpp.s
 
 MyApplication/GUI/GUISYS.o: MyApplication/GUI/GUISYS.cpp.o
@@ -230,7 +230,7 @@ MyApplication/GUI/GUISYS.o: MyApplication/GUI/GUISYS.cpp.o
 
 # target to build an object file
 MyApplication/GUI/GUISYS.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/GUISYS.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/GUISYS.cpp.o
 .PHONY : MyApplication/GUI/GUISYS.cpp.o
 
 MyApplication/GUI/GUISYS.i: MyApplication/GUI/GUISYS.cpp.i
@@ -238,7 +238,7 @@ MyApplication/GUI/GUISYS.i: MyApplication/GUI/GUISYS.cpp.i
 
 # target to preprocess a source file
 MyApplication/GUI/GUISYS.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/GUISYS.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/GUISYS.cpp.i
 .PHONY : MyApplication/GUI/GUISYS.cpp.i
 
 MyApplication/GUI/GUISYS.s: MyApplication/GUI/GUISYS.cpp.s
@@ -246,7 +246,7 @@ MyApplication/GUI/GUISYS.s: MyApplication/GUI/GUISYS.cpp.s
 
 # target to generate assembly for a file
 MyApplication/GUI/GUISYS.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/GUISYS.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/GUISYS.cpp.s
 .PHONY : MyApplication/GUI/GUISYS.cpp.s
 
 MyApplication/GUI/tabMenu.o: MyApplication/GUI/tabMenu.cpp.o
@@ -254,7 +254,7 @@ MyApplication/GUI/tabMenu.o: MyApplication/GUI/tabMenu.cpp.o
 
 # target to build an object file
 MyApplication/GUI/tabMenu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/tabMenu.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/tabMenu.cpp.o
 .PHONY : MyApplication/GUI/tabMenu.cpp.o
 
 MyApplication/GUI/tabMenu.i: MyApplication/GUI/tabMenu.cpp.i
@@ -262,7 +262,7 @@ MyApplication/GUI/tabMenu.i: MyApplication/GUI/tabMenu.cpp.i
 
 # target to preprocess a source file
 MyApplication/GUI/tabMenu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/tabMenu.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/tabMenu.cpp.i
 .PHONY : MyApplication/GUI/tabMenu.cpp.i
 
 MyApplication/GUI/tabMenu.s: MyApplication/GUI/tabMenu.cpp.s
@@ -270,7 +270,7 @@ MyApplication/GUI/tabMenu.s: MyApplication/GUI/tabMenu.cpp.s
 
 # target to generate assembly for a file
 MyApplication/GUI/tabMenu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/GUI/tabMenu.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/GUI/tabMenu.cpp.s
 .PHONY : MyApplication/GUI/tabMenu.cpp.s
 
 MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp.o
@@ -278,7 +278,7 @@ MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp
 
 # target to build an object file
 MyApplication/entitys/AI/AIComponent.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIComponent.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIComponent.cpp.o
 .PHONY : MyApplication/entitys/AI/AIComponent.cpp.o
 
 MyApplication/entitys/AI/AIComponent.i: MyApplication/entitys/AI/AIComponent.cpp.i
@@ -286,7 +286,7 @@ MyApplication/entitys/AI/AIComponent.i: MyApplication/entitys/AI/AIComponent.cpp
 
 # target to preprocess a source file
 MyApplication/entitys/AI/AIComponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIComponent.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIComponent.cpp.i
 .PHONY : MyApplication/entitys/AI/AIComponent.cpp.i
 
 MyApplication/entitys/AI/AIComponent.s: MyApplication/entitys/AI/AIComponent.cpp.s
@@ -294,7 +294,7 @@ MyApplication/entitys/AI/AIComponent.s: MyApplication/entitys/AI/AIComponent.cpp
 
 # target to generate assembly for a file
 MyApplication/entitys/AI/AIComponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIComponent.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIComponent.cpp.s
 .PHONY : MyApplication/entitys/AI/AIComponent.cpp.s
 
 MyApplication/entitys/AI/AIFollow.o: MyApplication/entitys/AI/AIFollow.cpp.o
@@ -302,7 +302,7 @@ MyApplication/entitys/AI/AIFollow.o: MyApplication/entitys/AI/AIFollow.cpp.o
 
 # target to build an object file
 MyApplication/entitys/AI/AIFollow.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIFollow.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIFollow.cpp.o
 .PHONY : MyApplication/entitys/AI/AIFollow.cpp.o
 
 MyApplication/entitys/AI/AIFollow.i: MyApplication/entitys/AI/AIFollow.cpp.i
@@ -310,7 +310,7 @@ MyApplication/entitys/AI/AIFollow.i: MyApplication/entitys/AI/AIFollow.cpp.i
 
 # target to preprocess a source file
 MyApplication/entitys/AI/AIFollow.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIFollow.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIFollow.cpp.i
 .PHONY : MyApplication/entitys/AI/AIFollow.cpp.i
 
 MyApplication/entitys/AI/AIFollow.s: MyApplication/entitys/AI/AIFollow.cpp.s
@@ -318,7 +318,7 @@ MyApplication/entitys/AI/AIFollow.s: MyApplication/entitys/AI/AIFollow.cpp.s
 
 # target to generate assembly for a file
 MyApplication/entitys/AI/AIFollow.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/AI/AIFollow.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/AI/AIFollow.cpp.s
 .PHONY : MyApplication/entitys/AI/AIFollow.cpp.s
 
 MyApplication/entitys/Enemys/test.o: MyApplication/entitys/Enemys/test.cpp.o
@@ -326,7 +326,7 @@ MyApplication/entitys/Enemys/test.o: MyApplication/entitys/Enemys/test.cpp.o
 
 # target to build an object file
 MyApplication/entitys/Enemys/test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/Enemys/test.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/Enemys/test.cpp.o
 .PHONY : MyApplication/entitys/Enemys/test.cpp.o
 
 MyApplication/entitys/Enemys/test.i: MyApplication/entitys/Enemys/test.cpp.i
@@ -334,7 +334,7 @@ MyApplication/entitys/Enemys/test.i: MyApplication/entitys/Enemys/test.cpp.i
 
 # target to preprocess a source file
 MyApplication/entitys/Enemys/test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/Enemys/test.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/Enemys/test.cpp.i
 .PHONY : MyApplication/entitys/Enemys/test.cpp.i
 
 MyApplication/entitys/Enemys/test.s: MyApplication/entitys/Enemys/test.cpp.s
@@ -342,7 +342,7 @@ MyApplication/entitys/Enemys/test.s: MyApplication/entitys/Enemys/test.cpp.s
 
 # target to generate assembly for a file
 MyApplication/entitys/Enemys/test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/Enemys/test.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/Enemys/test.cpp.s
 .PHONY : MyApplication/entitys/Enemys/test.cpp.s
 
 MyApplication/entitys/entity.o: MyApplication/entitys/entity.cpp.o
@@ -350,7 +350,7 @@ MyApplication/entitys/entity.o: MyApplication/entitys/entity.cpp.o
 
 # target to build an object file
 MyApplication/entitys/entity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/entity.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/entity.cpp.o
 .PHONY : MyApplication/entitys/entity.cpp.o
 
 MyApplication/entitys/entity.i: MyApplication/entitys/entity.cpp.i
@@ -358,7 +358,7 @@ MyApplication/entitys/entity.i: MyApplication/entitys/entity.cpp.i
 
 # target to preprocess a source file
 MyApplication/entitys/entity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/entity.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/entity.cpp.i
 .PHONY : MyApplication/entitys/entity.cpp.i
 
 MyApplication/entitys/entity.s: MyApplication/entitys/entity.cpp.s
@@ -366,7 +366,7 @@ MyApplication/entitys/entity.s: MyApplication/entitys/entity.cpp.s
 
 # target to generate assembly for a file
 MyApplication/entitys/entity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/entity.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/entity.cpp.s
 .PHONY : MyApplication/entitys/entity.cpp.s
 
 MyApplication/entitys/player.o: MyApplication/entitys/player.cpp.o
@@ -374,7 +374,7 @@ MyApplication/entitys/player.o: MyApplication/entitys/player.cpp.o
 
 # target to build an object file
 MyApplication/entitys/player.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/player.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/player.cpp.o
 .PHONY : MyApplication/entitys/player.cpp.o
 
 MyApplication/entitys/player.i: MyApplication/entitys/player.cpp.i
@@ -382,7 +382,7 @@ MyApplication/entitys/player.i: MyApplication/entitys/player.cpp.i
 
 # target to preprocess a source file
 MyApplication/entitys/player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/player.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/player.cpp.i
 .PHONY : MyApplication/entitys/player.cpp.i
 
 MyApplication/entitys/player.s: MyApplication/entitys/player.cpp.s
@@ -390,7 +390,7 @@ MyApplication/entitys/player.s: MyApplication/entitys/player.cpp.s
 
 # target to generate assembly for a file
 MyApplication/entitys/player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/player.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/player.cpp.s
 .PHONY : MyApplication/entitys/player.cpp.s
 
 MyApplication/entitys/properties/hitbox.o: MyApplication/entitys/properties/hitbox.cpp.o
@@ -398,7 +398,7 @@ MyApplication/entitys/properties/hitbox.o: MyApplication/entitys/properties/hitb
 
 # target to build an object file
 MyApplication/entitys/properties/hitbox.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/hitbox.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/hitbox.cpp.o
 .PHONY : MyApplication/entitys/properties/hitbox.cpp.o
 
 MyApplication/entitys/properties/hitbox.i: MyApplication/entitys/properties/hitbox.cpp.i
@@ -406,7 +406,7 @@ MyApplication/entitys/properties/hitbox.i: MyApplication/entitys/properties/hitb
 
 # target to preprocess a source file
 MyApplication/entitys/properties/hitbox.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/hitbox.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/hitbox.cpp.i
 .PHONY : MyApplication/entitys/properties/hitbox.cpp.i
 
 MyApplication/entitys/properties/hitbox.s: MyApplication/entitys/properties/hitbox.cpp.s
@@ -414,7 +414,7 @@ MyApplication/entitys/properties/hitbox.s: MyApplication/entitys/properties/hitb
 
 # target to generate assembly for a file
 MyApplication/entitys/properties/hitbox.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/hitbox.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/hitbox.cpp.s
 .PHONY : MyApplication/entitys/properties/hitbox.cpp.s
 
 MyApplication/entitys/properties/movement.o: MyApplication/entitys/properties/movement.cpp.o
@@ -422,7 +422,7 @@ MyApplication/entitys/properties/movement.o: MyApplication/entitys/properties/mo
 
 # target to build an object file
 MyApplication/entitys/properties/movement.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/movement.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/movement.cpp.o
 .PHONY : MyApplication/entitys/properties/movement.cpp.o
 
 MyApplication/entitys/properties/movement.i: MyApplication/entitys/properties/movement.cpp.i
@@ -430,7 +430,7 @@ MyApplication/entitys/properties/movement.i: MyApplication/entitys/properties/mo
 
 # target to preprocess a source file
 MyApplication/entitys/properties/movement.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/movement.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/movement.cpp.i
 .PHONY : MyApplication/entitys/properties/movement.cpp.i
 
 MyApplication/entitys/properties/movement.s: MyApplication/entitys/properties/movement.cpp.s
@@ -438,7 +438,7 @@ MyApplication/entitys/properties/movement.s: MyApplication/entitys/properties/mo
 
 # target to generate assembly for a file
 MyApplication/entitys/properties/movement.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/entitys/properties/movement.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/entitys/properties/movement.cpp.s
 .PHONY : MyApplication/entitys/properties/movement.cpp.s
 
 MyApplication/main.o: MyApplication/main.cpp.o
@@ -446,7 +446,7 @@ MyApplication/main.o: MyApplication/main.cpp.o
 
 # target to build an object file
 MyApplication/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/main.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/main.cpp.o
 .PHONY : MyApplication/main.cpp.o
 
 MyApplication/main.i: MyApplication/main.cpp.i
@@ -454,7 +454,7 @@ MyApplication/main.i: MyApplication/main.cpp.i
 
 # target to preprocess a source file
 MyApplication/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/main.cpp.i
 .PHONY : MyApplication/main.cpp.i
 
 MyApplication/main.s: MyApplication/main.cpp.s
@@ -462,7 +462,7 @@ MyApplication/main.s: MyApplication/main.cpp.s
 
 # target to generate assembly for a file
 MyApplication/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/main.cpp.s
 .PHONY : MyApplication/main.cpp.s
 
 MyApplication/math/ProcessGenerationNoice.o: MyApplication/math/ProcessGenerationNoice.cpp.o
@@ -470,7 +470,7 @@ MyApplication/math/ProcessGenerationNoice.o: MyApplication/math/ProcessGeneratio
 
 # target to build an object file
 MyApplication/math/ProcessGenerationNoice.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/ProcessGenerationNoice.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/ProcessGenerationNoice.cpp.o
 .PHONY : MyApplication/math/ProcessGenerationNoice.cpp.o
 
 MyApplication/math/ProcessGenerationNoice.i: MyApplication/math/ProcessGenerationNoice.cpp.i
@@ -478,7 +478,7 @@ MyApplication/math/ProcessGenerationNoice.i: MyApplication/math/ProcessGeneratio
 
 # target to preprocess a source file
 MyApplication/math/ProcessGenerationNoice.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/ProcessGenerationNoice.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/ProcessGenerationNoice.cpp.i
 .PHONY : MyApplication/math/ProcessGenerationNoice.cpp.i
 
 MyApplication/math/ProcessGenerationNoice.s: MyApplication/math/ProcessGenerationNoice.cpp.s
@@ -486,7 +486,7 @@ MyApplication/math/ProcessGenerationNoice.s: MyApplication/math/ProcessGeneratio
 
 # target to generate assembly for a file
 MyApplication/math/ProcessGenerationNoice.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/ProcessGenerationNoice.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/ProcessGenerationNoice.cpp.s
 .PHONY : MyApplication/math/ProcessGenerationNoice.cpp.s
 
 MyApplication/math/mymath.o: MyApplication/math/mymath.cpp.o
@@ -494,7 +494,7 @@ MyApplication/math/mymath.o: MyApplication/math/mymath.cpp.o
 
 # target to build an object file
 MyApplication/math/mymath.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/mymath.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/mymath.cpp.o
 .PHONY : MyApplication/math/mymath.cpp.o
 
 MyApplication/math/mymath.i: MyApplication/math/mymath.cpp.i
@@ -502,7 +502,7 @@ MyApplication/math/mymath.i: MyApplication/math/mymath.cpp.i
 
 # target to preprocess a source file
 MyApplication/math/mymath.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/mymath.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/mymath.cpp.i
 .PHONY : MyApplication/math/mymath.cpp.i
 
 MyApplication/math/mymath.s: MyApplication/math/mymath.cpp.s
@@ -510,7 +510,7 @@ MyApplication/math/mymath.s: MyApplication/math/mymath.cpp.s
 
 # target to generate assembly for a file
 MyApplication/math/mymath.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/math/mymath.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/math/mymath.cpp.s
 .PHONY : MyApplication/math/mymath.cpp.s
 
 MyApplication/states/MainMenu.o: MyApplication/states/MainMenu.cpp.o
@@ -518,7 +518,7 @@ MyApplication/states/MainMenu.o: MyApplication/states/MainMenu.cpp.o
 
 # target to build an object file
 MyApplication/states/MainMenu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/MainMenu.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/MainMenu.cpp.o
 .PHONY : MyApplication/states/MainMenu.cpp.o
 
 MyApplication/states/MainMenu.i: MyApplication/states/MainMenu.cpp.i
@@ -526,7 +526,7 @@ MyApplication/states/MainMenu.i: MyApplication/states/MainMenu.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/MainMenu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/MainMenu.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/MainMenu.cpp.i
 .PHONY : MyApplication/states/MainMenu.cpp.i
 
 MyApplication/states/MainMenu.s: MyApplication/states/MainMenu.cpp.s
@@ -534,7 +534,7 @@ MyApplication/states/MainMenu.s: MyApplication/states/MainMenu.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/MainMenu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/MainMenu.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/MainMenu.cpp.s
 .PHONY : MyApplication/states/MainMenu.cpp.s
 
 MyApplication/states/NoiceView.o: MyApplication/states/NoiceView.cpp.o
@@ -542,7 +542,7 @@ MyApplication/states/NoiceView.o: MyApplication/states/NoiceView.cpp.o
 
 # target to build an object file
 MyApplication/states/NoiceView.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/NoiceView.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/NoiceView.cpp.o
 .PHONY : MyApplication/states/NoiceView.cpp.o
 
 MyApplication/states/NoiceView.i: MyApplication/states/NoiceView.cpp.i
@@ -550,7 +550,7 @@ MyApplication/states/NoiceView.i: MyApplication/states/NoiceView.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/NoiceView.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/NoiceView.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/NoiceView.cpp.i
 .PHONY : MyApplication/states/NoiceView.cpp.i
 
 MyApplication/states/NoiceView.s: MyApplication/states/NoiceView.cpp.s
@@ -558,7 +558,7 @@ MyApplication/states/NoiceView.s: MyApplication/states/NoiceView.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/NoiceView.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/NoiceView.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/NoiceView.cpp.s
 .PHONY : MyApplication/states/NoiceView.cpp.s
 
 MyApplication/states/PauseMenu.o: MyApplication/states/PauseMenu.cpp.o
@@ -566,7 +566,7 @@ MyApplication/states/PauseMenu.o: MyApplication/states/PauseMenu.cpp.o
 
 # target to build an object file
 MyApplication/states/PauseMenu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/PauseMenu.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/PauseMenu.cpp.o
 .PHONY : MyApplication/states/PauseMenu.cpp.o
 
 MyApplication/states/PauseMenu.i: MyApplication/states/PauseMenu.cpp.i
@@ -574,7 +574,7 @@ MyApplication/states/PauseMenu.i: MyApplication/states/PauseMenu.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/PauseMenu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/PauseMenu.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/PauseMenu.cpp.i
 .PHONY : MyApplication/states/PauseMenu.cpp.i
 
 MyApplication/states/PauseMenu.s: MyApplication/states/PauseMenu.cpp.s
@@ -582,7 +582,7 @@ MyApplication/states/PauseMenu.s: MyApplication/states/PauseMenu.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/PauseMenu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/PauseMenu.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/PauseMenu.cpp.s
 .PHONY : MyApplication/states/PauseMenu.cpp.s
 
 MyApplication/states/Process.o: MyApplication/states/Process.cpp.o
@@ -590,7 +590,7 @@ MyApplication/states/Process.o: MyApplication/states/Process.cpp.o
 
 # target to build an object file
 MyApplication/states/Process.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/Process.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/Process.cpp.o
 .PHONY : MyApplication/states/Process.cpp.o
 
 MyApplication/states/Process.i: MyApplication/states/Process.cpp.i
@@ -598,7 +598,7 @@ MyApplication/states/Process.i: MyApplication/states/Process.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/Process.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/Process.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/Process.cpp.i
 .PHONY : MyApplication/states/Process.cpp.i
 
 MyApplication/states/Process.s: MyApplication/states/Process.cpp.s
@@ -606,7 +606,7 @@ MyApplication/states/Process.s: MyApplication/states/Process.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/Process.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/Process.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/Process.cpp.s
 .PHONY : MyApplication/states/Process.cpp.s
 
 MyApplication/states/State.o: MyApplication/states/State.cpp.o
@@ -614,7 +614,7 @@ MyApplication/states/State.o: MyApplication/states/State.cpp.o
 
 # target to build an object file
 MyApplication/states/State.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/State.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/State.cpp.o
 .PHONY : MyApplication/states/State.cpp.o
 
 MyApplication/states/State.i: MyApplication/states/State.cpp.i
@@ -622,7 +622,7 @@ MyApplication/states/State.i: MyApplication/states/State.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/State.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/State.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/State.cpp.i
 .PHONY : MyApplication/states/State.cpp.i
 
 MyApplication/states/State.s: MyApplication/states/State.cpp.s
@@ -630,7 +630,7 @@ MyApplication/states/State.s: MyApplication/states/State.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/State.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/State.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/State.cpp.s
 .PHONY : MyApplication/states/State.cpp.s
 
 MyApplication/states/gfx.o: MyApplication/states/gfx.cpp.o
@@ -638,7 +638,7 @@ MyApplication/states/gfx.o: MyApplication/states/gfx.cpp.o
 
 # target to build an object file
 MyApplication/states/gfx.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/gfx.cpp.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/gfx.cpp.o
 .PHONY : MyApplication/states/gfx.cpp.o
 
 MyApplication/states/gfx.i: MyApplication/states/gfx.cpp.i
@@ -646,7 +646,7 @@ MyApplication/states/gfx.i: MyApplication/states/gfx.cpp.i
 
 # target to preprocess a source file
 MyApplication/states/gfx.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/gfx.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/gfx.cpp.i
 .PHONY : MyApplication/states/gfx.cpp.i
 
 MyApplication/states/gfx.s: MyApplication/states/gfx.cpp.s
@@ -654,7 +654,7 @@ MyApplication/states/gfx.s: MyApplication/states/gfx.cpp.s
 
 # target to generate assembly for a file
 MyApplication/states/gfx.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/MyApplication/states/gfx.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/MyApplication/states/gfx.cpp.s
 .PHONY : MyApplication/states/gfx.cpp.s
 
 # Help Target
@@ -665,7 +665,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Project_MAC"
+	@echo "... Binary-system"
 	@echo "... MyApplication/Content/Map/TileMap.o"
 	@echo "... MyApplication/Content/Map/TileMap.i"
 	@echo "... MyApplication/Content/Map/TileMap.s"

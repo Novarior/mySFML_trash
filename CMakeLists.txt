@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.5.0)
 
-project(My_Project_MAC VERSION 0.0.3)
+project(TRYSQUARE VERSION 0.0.3)
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 
@@ -37,6 +37,14 @@ configure_file(${Template_ver}
 ${CMAKE_CURRENT_BINARY_DIR}/../MyApplication/cmakever.h
 )
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
+message("CMAKE_ARCHIVE_OUTPUT_DIRECTORY = ${CMAKE_BINARY_DIR}")
+
+
+
+
 set(SFML_DIR  "/usr/local/lib/cmake/SFML" )
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
@@ -45,16 +53,25 @@ find_package(SFML 2.5 COMPONENTS window REQUIRED)
 
 if(APPLE)
 
-add_executable(Project_MAC ${RESOURCE_FILES})
-set_target_properties(Project_MAC PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
-target_include_directories(Project_MAC PRIVATE ${Template_ver})
-target_link_libraries(Project_MAC sfml-graphics sfml-system sfml-window)
+add_executable(Binary-system ${RESOURCE_FILES})
+set_target_properties(Binary-system PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_include_directories(Binary-system PRIVATE ${Template_ver})
+target_link_libraries(Binary-system sfml-graphics sfml-system sfml-window)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
 endif()
-
 
 if(WIN32)  
 set(CMAKE_SYSTEM_NAME Windows)
-add_executable(My_Project_WIN64 ${RESOURCE_FILES})
-target_link_libraries(My_Project_WIN64 sfml-graphics sfml-system sfml-window)
-set_target_properties(My_Project_WIN64 PROPERTIESCXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+add_executable(Binary-system ${RESOURCE_FILES})
+target_link_libraries(Binary-system sfml-graphics sfml-system sfml-window)
+set_target_properties(Binary-system PROPERTIESCXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 endif()
+
+set_target_properties(Binary-system
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin/2"
+)
+
+message("RUNTIME_OUTPUT_DIRECTORY = ${CMAKE_SOURCE_DIR}")

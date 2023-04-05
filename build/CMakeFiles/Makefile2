@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/Project_MAC.dir/all
+all: CMakeFiles/Binary-system.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/Project_MAC.dir/clean
+clean: CMakeFiles/Binary-system.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/Project_MAC.dir
+# Target rules for target CMakeFiles/Binary-system.dir
 
 # All Build rule for target.
-CMakeFiles/Project_MAC.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Built target Project_MAC"
-.PHONY : CMakeFiles/Project_MAC.dir/all
+CMakeFiles/Binary-system.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Built target Binary-system"
+.PHONY : CMakeFiles/Binary-system.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/Project_MAC.dir/rule: cmake_check_build_system
+CMakeFiles/Binary-system.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 23
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Project_MAC.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Binary-system.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
-.PHONY : CMakeFiles/Project_MAC.dir/rule
+.PHONY : CMakeFiles/Binary-system.dir/rule
 
 # Convenience name for target.
-Project_MAC: CMakeFiles/Project_MAC.dir/rule
-.PHONY : Project_MAC
+Binary-system: CMakeFiles/Binary-system.dir/rule
+.PHONY : Binary-system
 
 # clean rule for target.
-CMakeFiles/Project_MAC.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_MAC.dir/build.make CMakeFiles/Project_MAC.dir/clean
-.PHONY : CMakeFiles/Project_MAC.dir/clean
+CMakeFiles/Binary-system.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Binary-system.dir/build.make CMakeFiles/Binary-system.dir/clean
+.PHONY : CMakeFiles/Binary-system.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

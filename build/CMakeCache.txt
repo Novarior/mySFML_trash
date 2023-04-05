@@ -145,7 +145,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=My_Project_MAC
+CMAKE_PROJECT_NAME:STATIC=TRYSQUARE
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=0.0.3
@@ -225,6 +225,15 @@ CMAKE_STRIP:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+MY_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
+
+//Value Computed by CMake
+MY_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+MY_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
+
+//Value Computed by CMake
 My_Project_MAC_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
 
 //Value Computed by CMake
@@ -235,6 +244,42 @@ My_Project_MAC_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
 
 //Path to a file.
 SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
+
+//Value Computed by CMake
+TRYSQUARE_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
+
+//Value Computed by CMake
+TRYSQUARE_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+TRYSQUARE_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
+
+//Value Computed by CMake
+TRYS_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
+
+//Value Computed by CMake
+TRYS_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+TRYS_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
+
+//Value Computed by CMake
+TR_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
+
+//Value Computed by CMake
+TR_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+TR_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
+
+//Value Computed by CMake
+VERSION_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
+
+//Value Computed by CMake
+VERSION_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+VERSION_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
 
 
 ########################

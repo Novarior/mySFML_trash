@@ -85,7 +85,8 @@
         "ranges": "cpp",
         "span": "cpp",
         "valarray": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "iterator": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

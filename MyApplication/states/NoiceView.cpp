@@ -126,7 +126,7 @@ void NoiceView::update(const float& delta_time) {
             << "\n\trock: " << this->m_BlocksCounter.rock
             << "\n\tsand: " << this->m_BlocksCounter.sand
             << "\n\tother " << this->m_BlocksCounter.other
-            << "Pause:\t" << this->Ipaused;
+            << "\nPause:\t" << this->Ipaused;
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

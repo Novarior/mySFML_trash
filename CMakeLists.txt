@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.0.0)
 
-project(MyFirstApp VERSION 0.1.2)
+project(My_Project_MAC VERSION 0.0.3)
+message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
+
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_BINARY_DIR MyFirstApp/result)
-
-set(RES_FILES
+set(RESOURCE_FILES
     MyApplication/main.cpp 
     MyApplication/Core.cpp 
     MyApplication/states/State.cpp 
@@ -29,21 +29,32 @@ set(RES_FILES
     MyApplication/entitys/properties/movement.cpp 
     MyApplication/Content/rotationCircle.cpp 
     MyApplication/Content/Map/block.cpp 
-    MyApplication/Content/Map/TileMap.cpp 
+    MyApplication/Content/Map/TileMap.cpp
 )
-set(CMAKE_SYSTEM_NAME Windows)
 
-
-if(WIN32)
-
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /SUBSYSTEM:WINDOWS")
-endif()
+set(Template_ver MyApplication/cmakever.h.in )
+configure_file(${Template_ver}
+${CMAKE_CURRENT_BINARY_DIR}/../MyApplication/cmakever.h
+)
 
 set(SFML_DIR  "/usr/local/lib/cmake/SFML" )
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
 find_package(SFML 2.5 COMPONENTS window REQUIRED)
 
-add_executable(MyApplic ${RES_FILES})
-target_link_libraries(MyApplic sfml-graphics sfml-system sfml-window)
+
+if(APPLE)
+
+add_executable(Project_MAC ${RESOURCE_FILES})
+set_target_properties(Project_MAC PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_include_directories(Project_MAC PRIVATE ${Template_ver})
+target_link_libraries(Project_MAC sfml-graphics sfml-system sfml-window)
+endif()
+
+
+if(WIN32)  
+set(CMAKE_SYSTEM_NAME Windows)
+add_executable(My_Project_WIN64 ${RESOURCE_FILES})
+target_link_libraries(My_Project_WIN64 sfml-graphics sfml-system sfml-window)
+set_target_properties(My_Project_WIN64 PROPERTIESCXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+endif()

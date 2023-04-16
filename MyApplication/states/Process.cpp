@@ -9,8 +9,8 @@ const bool Process::loadGameData() {
         ifs >> this->noicedata.octaves;
         ifs >> this->noicedata.gridSize;
         ifs >> this->noicedata.frequency;
-        ifs >> this->noicedata.mapSize.x >> this->noicedata.mapSize.y;
-        ifs >> this->noicedata.RenderWindow.x >> this->noicedata.RenderWindow.y;
+        ifs >> this->noicedata.mapSizeX >> this->noicedata.mapSizeY;
+        ifs >> this->noicedata.RenderWindowX >> this->noicedata.RenderWindowY;
 
         ifs >> this->noicedata.persistence;
         ifs >> playerBuffPos.x >> playerBuffPos.y;
@@ -32,8 +32,8 @@ const bool Process::saveGameData() {
         ofs << this->noicedata.octaves << '\n';
         ofs << this->noicedata.gridSize << '\n';
         ofs << this->noicedata.frequency << '\n';
-        ofs << this->noicedata.mapSize.x << ' ' << this->noicedata.mapSize.y << '\n';
-        ofs << this->noicedata.RenderWindow.x << ' ' << this->noicedata.RenderWindow.y << '\n';
+        ofs << this->noicedata.mapSizeX << ' ' << this->noicedata.mapSizeY << '\n';
+        ofs << this->noicedata.RenderWindowX << ' ' << this->noicedata.RenderWindowY << '\n';
         ofs << this->noicedata.persistence << '\n';
         ofs << this->player->e_getPosition().x << ' ' << this->player->e_getPosition().y << '\n';
     }
@@ -128,10 +128,10 @@ void Process::initTileMapData() {
         this->noicedata.gridSize = this->IstateData->grid_size;
         this->noicedata.octaves = 8;
         this->noicedata.frequency = 8;
-        this->noicedata.RenderWindow = sf::Vector2f(
-            this->IstateData->gfxSettings->resolution.width,
-            this->IstateData->gfxSettings->resolution.height);
-        this->noicedata.mapSize = sf::Vector2u(620, 430);
+        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
+        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+        this->noicedata.mapSizeX = 620;
+        this->noicedata.mapSizeY = 430;
         this->noicedata.persistence = 0.6f;
     }
 }

@@ -42,11 +42,11 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     double writebuff;
 
     this->m_dnoice = datanoice;
-    this->maxSizeWorldGrid = this->m_dnoice.mapSize;
-    this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSize.x * datanoice.gridSize, this->m_dnoice.mapSize.y * datanoice.gridSize);
+    this->maxSizeWorldGrid = sf::Vector2u(this->m_dnoice.mapSizeX, this->m_dnoice.mapSizeY);
+    this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSizeX * datanoice.gridSize, this->m_dnoice.mapSizeY * datanoice.gridSize);
 
-    this->m_Area.offsetX = (datanoice.RenderWindow.x / datanoice.gridSize / 4) + 4;
-    this->m_Area.offsetY = (datanoice.RenderWindow.y / datanoice.gridSize / 4) + 4;
+    this->m_Area.offsetX = (datanoice.RenderWindowX / datanoice.gridSize / 4) + 4;
+    this->m_Area.offsetY = (datanoice.RenderWindowY / datanoice.gridSize / 4) + 4;
     this->m_Area.fromX = 0;
     this->m_Area.fromY = 0;
     this->m_Area.toX = 0;
@@ -61,10 +61,10 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
 
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<BrickBlock*>>());
 
-    for (int x = 0; x < this->m_dnoice.mapSize.x; x++) {
+    for (int x = 0; x < this->m_dnoice.mapSizeX; x++) {
         this->tilemap[x].resize(this->maxSizeWorldGrid.y, std::vector<BrickBlock*>());
 
-        for (int y = 0; y < this->m_dnoice.mapSize.y; y++) {
+        for (int y = 0; y < this->m_dnoice.mapSizeX; y++) {
             writebuff = noice->getNoice(x, y);
             writebuff *= 255;
             writebuff = static_cast<int>(writebuff) % 255;
@@ -313,6 +313,7 @@ void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition,
             if (renrect.contains(it.getPosition()))
                 target->draw(it);
 
-    if(debug)
-    {}
+    if (debug)
+    {
+    }
 }

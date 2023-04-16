@@ -225,6 +225,15 @@ CMAKE_STRIP:FILEPATH=/Library/Developer/CommandLineTools/usr/bin/strip
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+Libbary_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+Libbary_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Libbary_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Value Computed by CMake
 MY_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
 
 //Value Computed by CMake
@@ -244,6 +253,18 @@ My_Project_MAC_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
 
 //Path to a file.
 SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
+
+//Value Computed by CMake
+Statel_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/states
+
+//Value Computed by CMake
+Statel_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+Statel_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/states
+
+//Dependencies for the target
+States_LIB_DEPENDS:STATIC=general;sfml-graphics;general;sfml-system;general;sfml-window;general;Math;
 
 //Value Computed by CMake
 TRYSQUARE_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build
@@ -280,6 +301,54 @@ VERSION_IS_TOP_LEVEL:STATIC=ON
 
 //Value Computed by CMake
 VERSION_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try
+
+//Value Computed by CMake
+mathlib_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+mathlib_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+mathlib_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Value Computed by CMake
+myMath_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+myMath_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+myMath_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Value Computed by CMake
+my_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+my_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+my_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Value Computed by CMake
+s_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+s_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+s_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Value Computed by CMake
+ss_BINARY_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math
+
+//Value Computed by CMake
+ss_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+ss_SOURCE_DIR:STATIC=/Users/dmitrijsusenko/Desktop/try/MyApplication/math
+
+//Dependencies for the target
+syslib_LIB_DEPENDS:STATIC=general;sfml-graphics;general;sfml-system;general;sfml-window;
 
 
 ########################
@@ -378,7 +447,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

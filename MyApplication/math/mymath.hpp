@@ -1,7 +1,10 @@
 #ifndef CPP_MATH_GENERATION_PSEUDO_RANDOM_NUMBER_HPP
 #define CPP_MATH_GENERATION_PSEUDO_RANDOM_NUMBER_HPP
 
-#include "../header.h"
+#include <ctime>
+#include <stdlib.h>
+#include <math.h>
+
 
 enum colorMode { RED_GRADIENT, GREEN_GRADIENT, BLURE_GRADIENT, GRAY_GRADIENT };
 

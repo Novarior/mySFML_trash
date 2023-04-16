@@ -1,3 +1,6 @@
-/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/Binary-system.dir
+/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/GameProto.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/edit_cache.dir
 /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles/rebuild_cache.dir
+/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math/CMakeFiles/Math.dir
+/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math/CMakeFiles/edit_cache.dir
+/Users/dmitrijsusenko/Desktop/try/build/MyApplication/math/CMakeFiles/rebuild_cache.dir

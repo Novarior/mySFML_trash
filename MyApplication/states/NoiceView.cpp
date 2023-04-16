@@ -67,20 +67,20 @@ NoiceView::NoiceView(StateData* statedata):State(statedata) {
     this->noicedata.octaves = 8;
     this->noicedata.seed = 1;
     this->noicedata.frequency = 8;
-    this->noicedata.RenderWindow = sf::Vector2f(
-        this->IstateData->gfxSettings->resolution.width,
-        this->IstateData->gfxSettings->resolution.height);
-    this->noicedata.mapSize = sf::Vector2u(this->noicedata.RenderWindow);
+    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
+    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+    this->noicedata.mapSizeX = this->IstateData->gfxSettings->resolution.width;
+    this->noicedata.mapSizeY = this->IstateData->gfxSettings->resolution.height;
     this->noicedata.persistence = 0.6f;
 
-    this->image.create(this->noicedata.RenderWindow.x, this->noicedata.RenderWindow.y);
-    this->shape.setSize(this->noicedata.RenderWindow);
-    this->texture.create(this->noicedata.RenderWindow.x, this->noicedata.RenderWindow.y);
+    this->image.create(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY);
+    this->shape.setSize(sf::Vector2f(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY));
+    this->texture.create(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY);
     this->myGN = new ProcessGenerationNoice(this->noicedata);
     this->isGeneratorClosed = false;
     this->tick = 0;
-    this->gridSizeX = this->noicedata.RenderWindow.x / 10;
-    this->gridSizeY = this->noicedata.RenderWindow.y / 10;
+    this->gridSizeX = this->noicedata.RenderWindowX / 10;
+    this->gridSizeY = this->noicedata.RenderWindowY / 10;
     this->closeGrid = sf::Vector2f();
 }
 

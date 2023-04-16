@@ -9,6 +9,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/Users/dmitrijsusenko/Desktop/try/CMakeLists.txt"
   "/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in"
+  "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/CMakeLists.txt"
   "CMakeFiles/3.26.2/CMakeCCompiler.cmake"
   "CMakeFiles/3.26.2/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.26.2/CMakeSystem.cmake"
@@ -50,9 +51,11 @@ set(CMAKE_MAKEFILE_OUTPUTS
 set(CMAKE_MAKEFILE_PRODUCTS
   "/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "MyApplication/math/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Binary-system.dir/DependInfo.cmake"
+  "CMakeFiles/GameProto.dir/DependInfo.cmake"
+  "MyApplication/math/CMakeFiles/Math.dir/DependInfo.cmake"
   )

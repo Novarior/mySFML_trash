@@ -1,17 +1,20 @@
 #ifndef CPP_MATH_PSEDO_GENERATION_NOICE_HPP
 #define CPP_MATH_PSEDO_GENERATION_NOICE_HPP
-#include "../header.h"
 
+
+#include "mymath.hpp"
 
 struct noiceData
 {
-    sf::Vector2u mapSize;
+    unsigned int mapSizeX;
+    unsigned int mapSizeY;
     float gridSize;
     long seed;
     unsigned octaves;
     double frequency;
     float persistence;
-    sf::Vector2f RenderWindow;
+    unsigned int RenderWindowX;
+    unsigned int RenderWindowY;
 };
 
 

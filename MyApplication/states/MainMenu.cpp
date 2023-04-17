@@ -124,6 +124,7 @@ MainMenu::MainMenu(StateData* statedata):State(statedata) {
     this->initButtons();
     this->initBlocks();
     this->initStartProcces();
+    printf("\nMAIN BUILD success");
 }
 
 MainMenu::~MainMenu() {

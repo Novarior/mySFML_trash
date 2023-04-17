@@ -4,13 +4,13 @@
 #include "Coins.hpp"
 class Item
 {
-private:
+    private:
     sf::RectangleShape m_shape;
     bool stacable;
     int quantity;
-public:
+    public:
     int price;
-    Item(){};
-    virtual ~Item(){};
+    Item();
+    virtual ~Item();
 };
 #endif

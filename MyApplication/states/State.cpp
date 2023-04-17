@@ -26,6 +26,8 @@ State::State(StateData* state_data)
 	this->dText.setOutlineThickness(3);
 	this->dText.setOutlineColor(sf::Color::Black);
 	this->dText.setFont(this->IstateData->debugFont);
+	printf("\nSTATE BUILD success");
+
 }
 
 State::~State() { }

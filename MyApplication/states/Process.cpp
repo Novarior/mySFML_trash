@@ -151,6 +151,8 @@ Process::Process(StateData* state_data, const bool defaultLoad):State(state_data
     this->initTileMapData();
     this->initTileMap();
     this->initPlayer();
+    printf("\nPROCESS BUILD success");
+
 }
 
 Process::~Process() {

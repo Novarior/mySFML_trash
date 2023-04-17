@@ -129,19 +129,6 @@ GameProto/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/build
 .PHONY : GameProto/fast
 
-#=============================================================================
-# Target rules for targets named Math
-
-# Build rule for target.
-Math: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Math
-.PHONY : Math
-
-# fast build rule for target.
-Math/fast:
-	$(MAKE) $(MAKESILENT) -f MyApplication/math/CMakeFiles/Math.dir/build.make MyApplication/math/CMakeFiles/Math.dir/build
-.PHONY : Math/fast
-
 MyApplication/Content/ItemsStuff/Coins.o: MyApplication/Content/ItemsStuff/Coins.cpp.o
 .PHONY : MyApplication/Content/ItemsStuff/Coins.o
 
@@ -751,7 +738,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... GameProto"
-	@echo "... Math"
 	@echo "... MyApplication/Content/ItemsStuff/Coins.o"
 	@echo "... MyApplication/Content/ItemsStuff/Coins.i"
 	@echo "... MyApplication/Content/ItemsStuff/Coins.s"

@@ -55,16 +55,10 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
 find_package(SFML 2.5 COMPONENTS window REQUIRED)
 
-#GTFF GO to fuking file
-add_subdirectory(${CMAKE_SOURCE_DIR}/MyApplication/math)
-
-message("SUBDIRECT" ${CMAKE_SOURCE_DIR})
-
-
-
 ##build
-if(APPLE) #NEW
+if(APPLE)
 add_executable(GameProto ${RESOURCE_FILES})
+
 set_target_properties(GameProto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file

@@ -82,6 +82,8 @@ NoiceView::NoiceView(StateData* statedata):State(statedata) {
     this->gridSizeX = this->noicedata.RenderWindowX / 10;
     this->gridSizeY = this->noicedata.RenderWindowY / 10;
     this->closeGrid = sf::Vector2f();
+    printf("\nNOICE BUILD success");
+
 }
 
 NoiceView::~NoiceView() {

@@ -25,7 +25,7 @@ void RotarionCircle::update(const float& delta_time) {
         x++;
     }
     // move on XY >> pos
-    this->bgd.pos.x += 1.0 * delta_time;
+    this->bgd.pos.x += 1.0f * delta_time;
     this->bgd.pos.y += 1.0f * delta_time;
 
     // rotarion

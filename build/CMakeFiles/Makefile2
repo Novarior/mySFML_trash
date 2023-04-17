@@ -64,32 +64,15 @@ CMAKE_BINARY_DIR = /Users/dmitrijsusenko/Desktop/try/build
 
 # The main recursive "all" target.
 all: CMakeFiles/GameProto.dir/all
-all: MyApplication/math/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall: MyApplication/math/preinstall
+preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/GameProto.dir/clean
-clean: MyApplication/math/clean
 .PHONY : clean
-
-#=============================================================================
-# Directory level rules for directory MyApplication/math
-
-# Recursive "all" directory target.
-MyApplication/math/all: MyApplication/math/CMakeFiles/Math.dir/all
-.PHONY : MyApplication/math/all
-
-# Recursive "preinstall" directory target.
-MyApplication/math/preinstall:
-.PHONY : MyApplication/math/preinstall
-
-# Recursive "clean" directory target.
-MyApplication/math/clean: MyApplication/math/CMakeFiles/Math.dir/clean
-.PHONY : MyApplication/math/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/GameProto.dir
@@ -116,32 +99,6 @@ GameProto: CMakeFiles/GameProto.dir/rule
 CMakeFiles/GameProto.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/clean
 .PHONY : CMakeFiles/GameProto.dir/clean
-
-#=============================================================================
-# Target rules for target MyApplication/math/CMakeFiles/Math.dir
-
-# All Build rule for target.
-MyApplication/math/CMakeFiles/Math.dir/all:
-	$(MAKE) $(MAKESILENT) -f MyApplication/math/CMakeFiles/Math.dir/build.make MyApplication/math/CMakeFiles/Math.dir/depend
-	$(MAKE) $(MAKESILENT) -f MyApplication/math/CMakeFiles/Math.dir/build.make MyApplication/math/CMakeFiles/Math.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/Users/dmitrijsusenko/Desktop/try/build/CMakeFiles --progress-num=27,28,29 "Built target Math"
-.PHONY : MyApplication/math/CMakeFiles/Math.dir/all
-
-# Build rule for subdir invocation for target.
-MyApplication/math/CMakeFiles/Math.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 3
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 MyApplication/math/CMakeFiles/Math.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /Users/dmitrijsusenko/Desktop/try/build/CMakeFiles 0
-.PHONY : MyApplication/math/CMakeFiles/Math.dir/rule
-
-# Convenience name for target.
-Math: MyApplication/math/CMakeFiles/Math.dir/rule
-.PHONY : Math
-
-# clean rule for target.
-MyApplication/math/CMakeFiles/Math.dir/clean:
-	$(MAKE) $(MAKESILENT) -f MyApplication/math/CMakeFiles/Math.dir/build.make MyApplication/math/CMakeFiles/Math.dir/clean
-.PHONY : MyApplication/math/CMakeFiles/Math.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

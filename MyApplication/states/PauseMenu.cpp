@@ -23,6 +23,8 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
 		this->container.getPosition().y + gui::p2pY(4.f, vm)
 	);
+	printf("\nPAUSE BUILD success");
+
 }
 
 PauseMenu::~PauseMenu()

@@ -2,7 +2,7 @@
 
 Coins::Coins() {}
 Coins::Coins(int gold_coins, int silver_coins, int copper_coins):
-    goldCount(gold_coins), silverCount(silver_coins), copperCount(copperCount) { }
+    goldCount(gold_coins), silverCount(silver_coins), copperCount(copper_coins) { }
 Coins::~Coins() {}
 
 void Coins::set_GoldCoinCouns(const int value)

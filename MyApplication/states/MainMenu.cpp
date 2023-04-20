@@ -124,7 +124,6 @@ MainMenu::MainMenu(StateData* statedata):State(statedata) {
     this->initButtons();
     this->initBlocks();
     this->initStartProcces();
-    printf("\nMAIN BUILD success");
 }
 
 MainMenu::~MainMenu() {
@@ -170,7 +169,7 @@ void MainMenu::updateButtons() {
         this->endState();
 
     if (this->buttons["START_BTN"]->isPressed() && this->getKeytime())
-        this->isstatred = true;
+        this->Istates->push(new Process(this->IstateData, false));
 
     if (this->buttons["CONT_BTN"]->isPressed() && this->getKeytime()) {
         this->Istates->push(new Process(this->IstateData, true));

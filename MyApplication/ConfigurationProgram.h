@@ -13,7 +13,7 @@ const char OperationSystem[] = "Windows OS";
 const char OperationSystem[] = "MacOSX";
 
 #else
-
+const char OperationSystem[] = "UNDEFINED";
 #error This operating system is not supported this program
 
 #endif

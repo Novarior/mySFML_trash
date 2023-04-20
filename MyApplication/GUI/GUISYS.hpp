@@ -6,10 +6,6 @@ enum button_states { BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE };
 
 namespace gui
 {
-	const float p2pX(const float perc, const sf::VideoMode& vm);
-	const float p2pY(const float perc, const sf::VideoMode& vm);
-	const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
-
 	class Button
 	{
 		private:
@@ -36,27 +32,29 @@ namespace gui
 		/**
 		 * @brief Construct a new Button object
 		 *
-		 * @param pos set position 
-		 * @param size
-		 * @param font
-		 * @param text
-		 * @param character_size
-		 * @param text_idle_color
-		 * @param text_hover_color
-		 * @param text_active_color
-		 * @param idle_color
-		 * @param hover_color
-		 * @param active_color
-		 * @param outline_idle_color
-		 * @param outline_hover_color
-		 * @param outline_active_color
-		 * @param id
+		 * @param pos					set position
+		 * @param size					of a shape on xy
+		 * @param font					referens on font
+		 * @param text					text button
+		 * @param character_size		size letter
+		 * @param text_idle_color		color text
+		 * @param text_hover_color		color text
+		 * @param text_active_color		color text
+		 * @param idle_color			color button
+		 * @param hover_color			color button
+		 * @param active_color			color button
+		 * @param outline_idle_color	outline color shape button
+		 * @param outline_hover_color	outline color shape button
+		 * @param outline_active_color	outline color shape button
+		 * @param id					unic ID button
 		 */
 		Button(sf::Vector2f pos, sf::Vector2f size,
 			sf::Font& font, std::string text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-			sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent, sf::Color outline_active_color = sf::Color::Transparent,
+			sf::Color outline_idle_color = sf::Color::Transparent,
+			sf::Color outline_hover_color = sf::Color::Transparent,
+			sf::Color outline_active_color = sf::Color::Transparent,
 			short unsigned id = 0);
 		~Button();
 

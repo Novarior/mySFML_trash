@@ -1,5 +1,5 @@
-#ifndef COINS_H
-#define COINS_H
+#ifndef ITEMSTUFF_COINS_H
+#define ITEMSTUFF_COINS_H
 
 class Coins
 {

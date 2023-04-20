@@ -1,28 +1,5 @@
 #include "GUISYS.hpp"
 
-const float gui::p2pX(const float perc, const sf::VideoMode& vm) {
-	//  Converts a percentage value to pixels relative to the current resolution in the x-axis.
-	//  @param		float perc				The percentage value.
-	//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-	//  @return		float					The calculated pixel value.
-	return floor(static_cast<float>(vm.width) * (perc / 100.f));
-}
-
-const float gui::p2pY(const float perc, const sf::VideoMode& vm) {
-	//  Converts a percentage value to pixels relative to the current resolution in the y-axis.
-	//  @param		float perc				The percentage value.
-	//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-	//	@return		float					The calculated pixel value.
-	return floor(static_cast<float>(vm.height) * (perc / 100.f));
-}
-
-const unsigned gui::calcCharSize(const sf::VideoMode& vm, const unsigned modifier) {
-	//  Calculates the character size for text using the current resolution and a constant.
-	//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-	//  @param		unsigned modifier		Used to modify the character size in a more custom way.
-	//  @return		unsigned				The calculated character size value.
-	return static_cast<unsigned>((vm.width + vm.height) * modifier);
-}
 
 gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::string text, unsigned character_size,
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
@@ -324,10 +301,10 @@ void gui::TextureSelector::render(sf::RenderTarget* target) {
 
 gui::ProgressBar::ProgressBar(float _x, float _y, float _width, float _height, sf::Color inner_color,
 	unsigned character_size, sf::VideoMode& vm, sf::Font* font) {
-	float width = gui::p2pX(_width, vm);
-	float height = gui::p2pY(_height, vm);
-	float x = gui::p2pX(_x, vm);
-	float y = gui::p2pY(_y, vm);
+	float width = mmath::p2pX(_width, vm);
+	float height = mmath::p2pY(_height, vm);
+	float x = mmath::p2pX(_x, vm);
+	float y = mmath::p2pY(_y, vm);
 
 	this->maxWidth = width;
 
@@ -341,10 +318,10 @@ gui::ProgressBar::ProgressBar(float _x, float _y, float _width, float _height, s
 
 	if (font) {
 		this->text.setFont(*font);
-		this->text.setCharacterSize(gui::calcCharSize(vm, character_size));
+		this->text.setCharacterSize(mmath::calcCharSize(vm, character_size));
 		this->text.setPosition(
-			this->inner.getPosition().x + gui::p2pX(0.53f, vm),
-			this->inner.getPosition().y + gui::p2pY(0.5f, vm));
+			this->inner.getPosition().x + mmath::p2pX(0.53f, vm),
+			this->inner.getPosition().y + mmath::p2pY(0.5f, vm));
 	}
 }
 

@@ -8,14 +8,14 @@
             "name": "(lldb) Подключить",
             "type": "cppdbg",
             "request": "attach",
-            "program": "${workspaceFolder}/main.app",
+            "program": "${workspaceFolder}/MyApplication_ARM64.app",
             "MIMode": "gbd"
         },
         {
             "name": "(lldb) Запустить",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main.app",
+            "program": "${workspaceFolder}/MyApplication_ARM64.app",
             "stopAtEntry": true,
             "cwd": "${fileDirname}",
             "args": [

@@ -22,11 +22,7 @@
             "includePath": [
                 "${workspaceFolder}/**"
             ],
-            "defines": [
-                "_WIN32=1",
-                "_ONETWO=1",
-                "_ONETWO = 1"
-            ],
+            "defines": [],
             "windowsSdkVersion": "10.0.17134.0",
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c17",

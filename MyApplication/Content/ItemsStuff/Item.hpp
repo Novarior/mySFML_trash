@@ -1,7 +1,7 @@
-#ifndef ITEM_H
-#define ITEM_H
+#ifndef ITEMSTUFF_ITEM_H
+#define ITEMSTUFF_ITEM_H
 #include "../../header.h"
-#include "Coins.hpp"
+
 class Item
 {
     private:

@@ -22,12 +22,10 @@ State::State(StateData* state_data)
 	this->debugMode = true;
 
 	this->dText.setFillColor(sf::Color::White);
-	this->dText.setCharacterSize(35);
+	this->dText.setCharacterSize(25);
 	this->dText.setOutlineThickness(3);
 	this->dText.setOutlineColor(sf::Color::Black);
 	this->dText.setFont(this->IstateData->debugFont);
-	printf("\nSTATE BUILD success");
-
 }
 
 State::~State() { }

@@ -10,6 +10,7 @@
 #include "../GUI/tabMenu.hpp"
 #include "../entitys/player.hpp"
 #include "../Content/Map/TileMap.hpp"
+#include "../Content/ItemsStuff/Inventory.hpp"
 
 struct Gamedata
 {
@@ -35,6 +36,7 @@ class Process:public State
     Gamedata m_gamedata;
     Player* player;
     sf::Texture playerTextureSHIT;
+    Inventory* t_inventory;
 
     //init data who dont use loaded dates
     void initKeybinds();

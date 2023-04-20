@@ -8,7 +8,6 @@ class Core
     private:
     float deltaTime;
     sf::Clock deltaClock;
-    void createWindow();
 
     sf::RenderWindow* mWindow;
     StateData mStatedata;

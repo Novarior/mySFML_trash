@@ -2,8 +2,6 @@
 #define CPP_CUSTOMHEADER_H
 
 
-#include "ConfigurationProgram.h"
-
 //including stl lib
 #include <stdio.h>
 #include <iostream>
@@ -25,7 +23,8 @@
 #include <SFML/System.hpp>
 
 //include in program files
-#include "states/ConstFoldersFlow.h"
 #include "math/mymath.hpp"
+#include "DataLoader.hpp"
+#include "ConfigurationProgram.h"
 
 #endif

@@ -77,7 +77,7 @@ void Process::initTabMenu() {
 void Process::initPauseMenu() {
     const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
     this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
-    this->pausemenu->addButton("EXIT_BUTTON", gui::p2pY(74.f, vm), gui::p2pX(13.f, vm), gui::p2pY(6.f, vm), gui::calcCharSize(vm), "Quit");
+    this->pausemenu->addButton("EXIT_BUTTON", mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::p2pY(6.f, vm), mmath::calcCharSize(vm), "Quit");
 }
 
 void Process::initTileMap() {
@@ -115,25 +115,25 @@ void Process::initView() {
 
 void Process::initPlayer() {
     if (!this->playerTextureSHIT.loadFromFile(texture_GRASS))
-        std::cout << "\n FAILLOADL";
-
-
+    {
+    }
     this->player = new Player(100, 100, this->playerTextureSHIT);
+
+    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f);
 }
 
 //Defauld Init Data
-void Process::initTileMapData() {
-    if (!this->loaded) {
-        this->noicedata.seed = 1;
-        this->noicedata.gridSize = this->IstateData->grid_size;
-        this->noicedata.octaves = 8;
-        this->noicedata.frequency = 8;
-        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
-        this->noicedata.mapSizeX = 620;
-        this->noicedata.mapSizeY = 430;
-        this->noicedata.persistence = 0.6f;
-    }
+void Process::initTileMapData()
+{
+    this->noicedata.seed = 1;
+    this->noicedata.gridSize = this->IstateData->grid_size;
+    this->noicedata.octaves = 8;
+    this->noicedata.frequency = 8;
+    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
+    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+    this->noicedata.mapSizeX = 620;
+    this->noicedata.mapSizeY = 430;
+    this->noicedata.persistence = 0.6f;
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad):State(state_data) {
@@ -151,8 +151,6 @@ Process::Process(StateData* state_data, const bool defaultLoad):State(state_data
     this->initTileMapData();
     this->initTileMap();
     this->initPlayer();
-    printf("\nPROCESS BUILD success");
-
 }
 
 Process::~Process() {
@@ -163,6 +161,7 @@ Process::~Process() {
     delete this->tabmenu;
     delete this->pausemenu;
     delete this->player;
+    delete this->t_inventory;
 }
 
 void Process::updateInput(const float& delta_time) {
@@ -215,7 +214,10 @@ void Process::update(const float& delta_time) {
         this->updateButtons();
 
         if (this->tabmenu->isOpen())
+        {
+            this->t_inventory->update(delta_time);
             this->tabmenu->update(delta_time, this->mousePosWindow);
+        }
     }
 
     if (this->debugMode) {//update debug information
@@ -260,8 +262,10 @@ void Process::render(sf::RenderWindow* target) {
     this->renderTexture.setView(this->renderTexture.getDefaultView());
 
     //render other elements
-    if (this->tabmenu->isOpen())
+    if (this->tabmenu->isOpen()) {
         this->tabmenu->render(&this->renderTexture);
+        this->t_inventory->render(&this->renderTexture);
+    }
 
     if (this->debugMode)
         this->renderTexture.draw(this->dText);

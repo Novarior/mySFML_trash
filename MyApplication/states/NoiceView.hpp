@@ -1,10 +1,10 @@
 #ifndef CPP_STATE_NOICEVIEW_HPP
 #define CPP_STATE_NOICEVIEW_HPP
+
 #include "State.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "../GUI/GUISYS.hpp"
-#define DB_PERLIN_IMPL
-#include "../math/noice.hpp"
+
 class NoiceView: public State
 {
     private:

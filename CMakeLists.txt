@@ -11,7 +11,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(RESOURCE_FILES
     MyApplication/main.cpp 
     MyApplication/Core.cpp 
-    MyApplication/math/noice.hpp
     MyApplication/math/mymath.cpp
     MyApplication/math/ProcessGenerationNoice.cpp
     MyApplication/states/ConstFoldersFlow.h

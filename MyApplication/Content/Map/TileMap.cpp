@@ -18,11 +18,51 @@ void TileMap::Clear() {
 
 void TileMap::loadTextuteMap() {
 
-    if (!this->m_TexturesList["GRASS"].loadFromFile(texture_DIRT)) {};
-    if (!this->m_TexturesList["STONE"].loadFromFile(texture_STONE)) {};
-    if (!this->m_TexturesList["OCEAN"].loadFromFile(texture_OCEAN)) {};
-    if (!this->m_TexturesList["SAND"].loadFromFile(texture_SAND)) {};
-    if (!this->m_TexturesList["DIRT"].loadFromFile(texture_DIRT)) {};
+    if (!this->m_TexturesList["GRASS"].loadFromFile(texture_DIRT))
+    {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0;x < img.getSize().x;x++)
+            for (int y = 0;y < img.getSize().y;y++)
+                img.setPixel(x, y, sf::Color(20, 200, 20));
+        this->m_TexturesList["GRASS"].loadFromImage(img);
+    };
+    if (!this->m_TexturesList["STONE"].loadFromFile(texture_STONE))
+    {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0;x < img.getSize().x;x++)
+            for (int y = 0;y < img.getSize().y;y++)
+                img.setPixel(x, y, sf::Color(50, 55, 45));
+        this->m_TexturesList["STONE"].loadFromImage(img);
+    };
+    if (!this->m_TexturesList["OCEAN"].loadFromFile(texture_OCEAN))
+    {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0;x < img.getSize().x;x++)
+            for (int y = 0;y < img.getSize().y;y++)
+                img.setPixel(x, y, sf::Color(0, 25, 240));
+        this->m_TexturesList["OCEAN"].loadFromImage(img);
+    };
+    if (!this->m_TexturesList["SAND"].loadFromFile(texture_SAND))
+    {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0;x < img.getSize().x;x++)
+            for (int y = 0;y < img.getSize().y;y++)
+                img.setPixel(x, y, sf::Color(180, 180, 20));
+        this->m_TexturesList["SAND"].loadFromImage(img);
+    };
+    if (!this->m_TexturesList["DIRT"].loadFromFile(texture_DIRT))
+    {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0;x < img.getSize().x;x++)
+            for (int y = 0;y < img.getSize().y;y++)
+                img.setPixel(x, y, sf::Color(49, 40, 31));
+        this->m_TexturesList["DIRT"].loadFromImage(img);
+    };
 }
 
 void TileMap::pushTree(int x, int y, int seed)
@@ -64,7 +104,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice) {
     for (int x = 0; x < this->m_dnoice.mapSizeX; x++) {
         this->tilemap[x].resize(this->maxSizeWorldGrid.y, std::vector<BrickBlock*>());
 
-        for (int y = 0; y < this->m_dnoice.mapSizeX; y++) {
+        for (int y = 0; y < this->m_dnoice.mapSizeY; y++) {
             writebuff = noice->getNoice(x, y);
             writebuff *= 255;
             writebuff = static_cast<int>(writebuff) % 255;

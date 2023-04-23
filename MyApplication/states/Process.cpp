@@ -119,7 +119,7 @@ void Process::initPlayer() {
     }
     this->player = new Player(100, 100, this->playerTextureSHIT);
 
-    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f);
+    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, 40);
 }
 
 //Defauld Init Data
@@ -215,7 +215,7 @@ void Process::update(const float& delta_time) {
 
         if (this->tabmenu->isOpen())
         {
-            this->t_inventory->update(delta_time);
+            this->t_inventory->update(this->mousePosWindow);
             this->tabmenu->update(delta_time, this->mousePosWindow);
         }
     }
@@ -264,7 +264,7 @@ void Process::render(sf::RenderWindow* target) {
     //render other elements
     if (this->tabmenu->isOpen()) {
         this->tabmenu->render(&this->renderTexture);
-        this->t_inventory->render(&this->renderTexture);
+        this->t_inventory->render(this->renderTexture);
     }
 
     if (this->debugMode)

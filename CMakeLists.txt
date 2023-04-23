@@ -13,7 +13,6 @@ set(RESOURCE_FILES
     MyApplication/Core.cpp 
     MyApplication/math/mymath.cpp
     MyApplication/math/ProcessGenerationNoice.cpp
-    MyApplication/states/ConstFoldersFlow.h
     MyApplication/states/gfx.cpp
     MyApplication/states/MainMenu.cpp
     MyApplication/states/NoiceView.cpp

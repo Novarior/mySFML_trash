@@ -5,33 +5,45 @@
 class Coins: public sf::Drawable
 {
     private:
-    int goldCount;
-    int silverCount;
-    int copperCount;
-
     sf::Font& m_font;
-    sf::Text m_Text_gold;
-    sf::Text m_Text_silver;
-    sf::Text m_Text_copper;
     std::stringstream m_StringStream;
 
-    sf::RectangleShape m_back;
-    sf::RectangleShape m_GoldShape;
-    sf::RectangleShape m_SilverShape;
-    sf::RectangleShape m_CopperShape;
+    struct CoinCount {
+        int goldCount = 0;
+        int silverCount = 0;
+        int copperCount = 0;
+    } m_coin_count;
 
-    sf::Texture m_TextureGold;
-    sf::Texture m_TextureCopper;
-    sf::Texture m_TextureSilver;
+    struct CoinText {
+        sf::Text m_Text_gold;
+        sf::Text m_Text_silver;
+        sf::Text m_Text_copper;
+    } m_coin_text;
+
+    struct CoinShape {
+        sf::RectangleShape m_back;
+        sf::RectangleShape m_GoldShape;
+        sf::RectangleShape m_SilverShape;
+        sf::RectangleShape m_CopperShape;
+    } m_coin_shape;
+
+    struct CoinTexture {
+        sf::Texture m_TextureGold;
+        sf::Texture m_TextureCopper;
+        sf::Texture m_TextureSilver;
+    } m_coin_texture;
 
 
-    inline virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        target.draw(m_GoldShape);
-        target.draw(m_SilverShape);
-        target.draw(m_CopperShape);
-        target.draw(m_Text_gold);
-        target.draw(m_Text_silver);
-        target.draw(m_Text_copper);
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        //Draw Texture shapes with image
+        target.draw(m_coin_shape.m_back);
+        target.draw(m_coin_shape.m_GoldShape);
+        target.draw(m_coin_shape.m_SilverShape);
+        target.draw(m_coin_shape.m_CopperShape);
+
+        target.draw(m_coin_text.m_Text_gold);
+        target.draw(m_coin_text.m_Text_silver);
+        target.draw(m_coin_text.m_Text_copper);
     }
 
     public:

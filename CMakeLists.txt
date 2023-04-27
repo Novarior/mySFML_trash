@@ -6,7 +6,6 @@ message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 #set miniimum c++ standart 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 #include all files for build project
 set(RESOURCE_FILES
     MyApplication/main.cpp 
@@ -65,6 +64,10 @@ target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #inclu
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
 message("GameProto" ${CMAKE_BINARY_DIR}/debug)
+
+add_test(TEST 
+GameProto)
+
 endif()
 
 

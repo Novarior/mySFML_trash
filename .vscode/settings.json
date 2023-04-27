@@ -86,7 +86,9 @@
         "span": "cpp",
         "valarray": "cpp",
         "thread": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "utility": "cpp",
+        "*.modulemap": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

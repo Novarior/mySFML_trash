@@ -29,7 +29,7 @@ class Cell: public sf::Drawable
     sf::Texture& m_texture;
     sf::RectangleShape m_shape;
 
-    inline virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
+     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
         target.draw((m_shape));
     }
 };

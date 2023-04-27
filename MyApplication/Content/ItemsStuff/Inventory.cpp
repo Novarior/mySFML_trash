@@ -40,7 +40,6 @@ Inventory::~Inventory() {
 
 }
 void Inventory::update(sf::Vector2i& mouse_pos) {
-
     if (!this->CellsInventory.empty())
         for (auto& i : this->CellsInventory)
             i.update(mouse_pos);

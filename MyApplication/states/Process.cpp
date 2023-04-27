@@ -224,6 +224,7 @@ void Process::update(const float& delta_time) {
         double fps = 1.0f / delta_time;
         this->dString_Stream
             << "FPS:\t" << fps
+            << "\nResolution:\t" << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
             << "\nPlayer:"
             << "\nComponents: "
             << "\n\tvelX: " << this->player->e_getVelocity().x

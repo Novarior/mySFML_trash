@@ -14,15 +14,11 @@ void RotarionCircle::update(const float& delta_time) {
     // push on front 
     this->phantoms.push_front(this->shape);
     // itteration on massive and change Alpha channel
-
-    float x = 0;
-    float boff = 0;
     for (auto& it : this->phantoms) {
         sf::Color color = it.getFillColor();
-        boff = 255 * sin(0.27 - (x / bgd.countPhantomBlocks) / M_PI);
-        color.a = boff;
+        color.a = color.a * sin((255 / bgd.countPhantomBlocks) * 180 * M_PI);
         it.setFillColor(color);
-        x++;
+
     }
     // move on XY >> pos
     this->bgd.pos.x += 1.0f * delta_time;

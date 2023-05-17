@@ -3,6 +3,9 @@
 
 #include "../header.h"
 #include "gfx.hpp"
+#include "../GUI/GUISYS.hpp"
+#include "../math/mymath.hpp"
+
 class State;
 
 class StateData
@@ -66,6 +69,6 @@ class State
 	virtual void updateKeytime(const float& delta_time);
 	virtual void updateInput(const float& delta_time) = 0;
 	virtual void update(const float& delta_time) = 0;
-	virtual void render(sf::RenderWindow* target = NULL) = 0;
+	virtual void render(sf::RenderWindow& target) = 0;
 };
 #endif 

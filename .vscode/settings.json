@@ -1,5 +1,5 @@
 {
-    "C_Cpp.errorSquiggles": "Enabled",
+    "C_Cpp.errorSquiggles": "disabled",
     "C_Cpp.configurationWarnings": "Disabled",
     "files.associations": {
         "iostream": "cpp",
@@ -88,7 +88,8 @@
         "thread": "cpp",
         "iterator": "cpp",
         "utility": "cpp",
-        "*.modulemap": "cpp"
+        "*.modulemap": "cpp",
+        "*.json": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

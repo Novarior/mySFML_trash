@@ -54,26 +54,6 @@ void Process::initKeybinds() {
     this->Ikeybinds["KEY_C"] = this->IsupportedKeys->at("C");
 }
 
-void Process::initTabMenu() {
-    this->tabmenu = new gui::TabMenu(this->IstateData->sWindow->getSize());
-
-    this->tabmenu->addButton("TTT_BUTTON", new gui::Button(
-        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 115),
-        sf::Vector2f(160, 90),
-        this->IstateData->font, "ttt", 20,
-        sf::Color::White,
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
-
-    this->tabmenu->addButton("REBUILD_BUTTON", new gui::Button(
-        sf::Vector2f(this->IstateData->sWindow->getSize().x - 185, 25),
-        sf::Vector2f(160, 90),
-        this->IstateData->font, "reBuild", 20,
-        sf::Color::White,
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90)));
-}
-
 void Process::initPauseMenu() {
     const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
     this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
@@ -136,7 +116,7 @@ void Process::initTileMapData()
     this->noicedata.persistence = 0.6f;
 }
 
-Process::Process(StateData* state_data, const bool defaultLoad):State(state_data) {
+Process::Process(StateData* state_data, const bool defaultLoad) :State(state_data) {
     if (defaultLoad) {
         if (this->loadGameData())
             this->loaded = true;
@@ -147,7 +127,7 @@ Process::Process(StateData* state_data, const bool defaultLoad):State(state_data
     this->initKeybinds();
     this->initView();
     this->initPauseMenu();
-    this->initTabMenu();
+
     this->initTileMapData();
     this->initTileMap();
     this->initPlayer();
@@ -158,15 +138,14 @@ Process::~Process() {
 
     delete this->myGN;
     delete this->mapTiles;
-    delete this->tabmenu;
+
     delete this->pausemenu;
     delete this->player;
     delete this->t_inventory;
 }
 
 void Process::updateInput(const float& delta_time) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime())
-        this->tabmenu->toggleSwitch();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime()) {}
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
@@ -183,10 +162,6 @@ void Process::updatePlayerInputs(const float& delta_time) {
         this->player->e_move(0.f, 1.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
         this->player->e_move(0.f, -1.f, delta_time);
-}
-
-void Process::updateButtons() {
-    if (this->tabmenu->isPressed("REBUILD_BUTTON") && this->getKeytime()) {}
 }
 
 void Process::updateTileMap(const float& delta_time) {
@@ -211,13 +186,6 @@ void Process::update(const float& delta_time) {
         this->updateTileMap(delta_time);
         this->player->e_update(delta_time, this->mousePosView, this->playerView);
 
-        this->updateButtons();
-
-        if (this->tabmenu->isOpen())
-        {
-            this->t_inventory->update(this->mousePosWindow);
-            this->tabmenu->update(delta_time, this->mousePosWindow);
-        }
     }
 
     if (this->debugMode) {//update debug information
@@ -232,6 +200,7 @@ void Process::update(const float& delta_time) {
             << "\nPosition:"
             << "\n\tx: " << this->player->e_getPosition().x
             << "\n\ty: " << this->player->e_getPosition().y
+            << "\n\tSecected Cell ID: " << this->t_inventory->getCurrentCellID(this->mousePosWindow)
             << "\n\tgrid x: " << this->player->e_getGridPositionFloat(this->IgridSize).x
             << "\n\tgrid y: " << this->player->e_getGridPositionFloat(this->IgridSize).y
             << "\nMap Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y
@@ -247,9 +216,8 @@ void Process::update(const float& delta_time) {
     }
 }
 
-void Process::render(sf::RenderWindow* target) {
-    if (!target)
-        target = this->Iwindow;
+void Process::render(sf::RenderWindow& target) {
+
     //CLEAR pre rendered texture
     this->renderTexture.clear();
     this->renderTexture.setView(this->playerView);
@@ -263,18 +231,13 @@ void Process::render(sf::RenderWindow* target) {
     this->renderTexture.setView(this->renderTexture.getDefaultView());
 
     //render other elements
-    if (this->tabmenu->isOpen()) {
-        this->tabmenu->render(&this->renderTexture);
-        this->t_inventory->render(this->renderTexture);
-    }
-
     if (this->debugMode)
         this->renderTexture.draw(this->dText);
 
     if (this->Ipaused) //Pause menu render
-        this->pausemenu->render(&this->renderTexture);
+        this->pausemenu->render(this->renderTexture);
 
     //final render
     this->renderTexture.display();
-    target->draw(this->renderSprite);
+    target.draw(this->renderSprite);
 }

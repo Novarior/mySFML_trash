@@ -1,17 +1,17 @@
 #include "Coins.hpp"
 
-Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::Font& font, unsigned int character_size):m_font(font) {
+Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::Font& font, unsigned int character_size) :m_font(font) {
 
     this->m_coin_shape.m_back.setSize(size);
     this->m_coin_shape.m_back.setPosition(pos);
 
+    this->m_coin_shape.m_GoldShape.setPosition(sf::Vector2f(pos.x + size.y / 4, pos.y + (size.y / 4)));
     this->m_coin_shape.m_GoldShape.setSize(image_size);
-    this->m_coin_shape.m_GoldShape.setPosition(pos);
 
-    this->m_coin_shape.m_SilverShape.setPosition(sf::Vector2f(this->m_coin_shape.m_GoldShape.getSize().x * 2 + pos.x, pos.y));
+    this->m_coin_shape.m_SilverShape.setPosition(sf::Vector2f(pos.x + (size.x / 4), pos.y + (size.y / 4)));
     this->m_coin_shape.m_SilverShape.setSize(image_size);
 
-    this->m_coin_shape.m_CopperShape.setPosition(sf::Vector2f(this->m_coin_shape.m_SilverShape.getSize().x * 2 + this->m_coin_shape.m_SilverShape.getPosition().x, pos.y));
+    this->m_coin_shape.m_CopperShape.setPosition(sf::Vector2f(pos.x + (size.x / 4) * 2, pos.y + (size.y / 4)));
     this->m_coin_shape.m_CopperShape.setSize(image_size);
 
     this->m_coin_texture.m_TextureGold.loadFromFile(item_img_gold_nugget);

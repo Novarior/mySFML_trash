@@ -116,7 +116,7 @@ void MainMenu::resetView() {
         static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
 }
 
-MainMenu::MainMenu(StateData* statedata):State(statedata) {
+MainMenu::MainMenu(StateData* statedata) :State(statedata) {
     this->initRenderDefines();
     this->initKeybinds();
     this->initView();
@@ -178,21 +178,19 @@ void MainMenu::updateButtons() {
 
 
     if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new NoiceView(this->IstateData));
+        this->Istates->push(new NoiceView(this->IstateData, false));
 }
 
-void MainMenu::render(sf::RenderWindow* target) {
-    if (!target)
-        target = this->Iwindow;
+void MainMenu::render(sf::RenderWindow& target) {
     this->renderTexture.clear();
     this->renderTexture.setView(this->view);
 
     renderTexture.draw(this->background);
 
-    this->rotationCyrcleShape->render(&renderTexture);
+    this->rotationCyrcleShape->render(renderTexture);
 
     for (auto& it : this->buttons)
-        it.second->render(&renderTexture);
+        it.second->render(renderTexture);
 
     this->renderTexture.setView(this->renderTexture.getDefaultView());
 
@@ -203,5 +201,5 @@ void MainMenu::render(sf::RenderWindow* target) {
         this->renderTexture.draw(this->dText);
 
     this->renderTexture.display();
-    target->draw(this->renderSprite);
+    target.draw(this->renderSprite);
 }

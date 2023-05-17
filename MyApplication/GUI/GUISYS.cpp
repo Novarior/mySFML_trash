@@ -104,9 +104,9 @@ void gui::Button::update(const sf::Vector2i& mousePosWindow) {
 	}
 }
 
-void gui::Button::render(sf::RenderTarget* target) {
-	target->draw(this->shape);
-	target->draw(this->text);
+void gui::Button::render(sf::RenderTarget& target) {
+	target.draw(this->shape);
+	target.draw(this->text);
 }
 
 //DROP DOWN LIST =============================================
@@ -180,7 +180,7 @@ void gui::DropDownList::update(const sf::Vector2i& mousePosWindow, const float& 
 		}
 }
 
-void gui::DropDownList::render(sf::RenderTarget* target) {
+void gui::DropDownList::render(sf::RenderTarget& target) {
 	this->activeElement->render(target);
 
 	if (this->showList)
@@ -286,13 +286,13 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
 	}
 }
 
-void gui::TextureSelector::render(sf::RenderTarget* target) {
+void gui::TextureSelector::render(sf::RenderTarget& target) {
 	if (!this->hidden) {
-		target->draw(this->bounds);
-		target->draw(this->sheet);
+		target.draw(this->bounds);
+		target.draw(this->sheet);
 
 		if (this->active)
-			target->draw(this->selector);
+			target.draw(this->selector);
 	}
 	this->hide_btn->render(target);
 }
@@ -337,8 +337,8 @@ void gui::ProgressBar::update(const int current_value, const int max_value) {
 	this->text.setString(this->barString);
 }
 
-void gui::ProgressBar::render(sf::RenderTarget* target) {
-	target->draw(this->back);
-	target->draw(this->inner);
-	target->draw(this->text);
+void gui::ProgressBar::render(sf::RenderTarget& target) {
+	target.draw(this->back);
+	target.draw(this->inner);
+	target.draw(this->text);
 }

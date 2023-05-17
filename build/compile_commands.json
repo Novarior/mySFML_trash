@@ -67,12 +67,6 @@
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/GUI/tabMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/tabMenu.cpp",
-  "output": "CMakeFiles/GameProto.dir/MyApplication/GUI/tabMenu.cpp.o"
-},
-{
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/entity.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/entity.cpp.o"

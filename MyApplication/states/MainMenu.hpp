@@ -43,7 +43,7 @@ class MainMenu: public State
     void updateInput(const float& delta_time);
     void updateButtons();
     void update(const float& delta_time);
-    void render(sf::RenderWindow* target);
+    void render(sf::RenderWindow& target);
 
 };
 #endif

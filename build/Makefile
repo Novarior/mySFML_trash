@@ -321,30 +321,6 @@ MyApplication/GUI/GUISYS.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.s
 .PHONY : MyApplication/GUI/GUISYS.cpp.s
 
-MyApplication/GUI/tabMenu.o: MyApplication/GUI/tabMenu.cpp.o
-.PHONY : MyApplication/GUI/tabMenu.o
-
-# target to build an object file
-MyApplication/GUI/tabMenu.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/tabMenu.cpp.o
-.PHONY : MyApplication/GUI/tabMenu.cpp.o
-
-MyApplication/GUI/tabMenu.i: MyApplication/GUI/tabMenu.cpp.i
-.PHONY : MyApplication/GUI/tabMenu.i
-
-# target to preprocess a source file
-MyApplication/GUI/tabMenu.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/tabMenu.cpp.i
-.PHONY : MyApplication/GUI/tabMenu.cpp.i
-
-MyApplication/GUI/tabMenu.s: MyApplication/GUI/tabMenu.cpp.s
-.PHONY : MyApplication/GUI/tabMenu.s
-
-# target to generate assembly for a file
-MyApplication/GUI/tabMenu.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/tabMenu.cpp.s
-.PHONY : MyApplication/GUI/tabMenu.cpp.s
-
 MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp.o
 .PHONY : MyApplication/entitys/AI/AIComponent.o
 
@@ -762,9 +738,6 @@ help:
 	@echo "... MyApplication/GUI/GUISYS.o"
 	@echo "... MyApplication/GUI/GUISYS.i"
 	@echo "... MyApplication/GUI/GUISYS.s"
-	@echo "... MyApplication/GUI/tabMenu.o"
-	@echo "... MyApplication/GUI/tabMenu.i"
-	@echo "... MyApplication/GUI/tabMenu.s"
 	@echo "... MyApplication/entitys/AI/AIComponent.o"
 	@echo "... MyApplication/entitys/AI/AIComponent.i"
 	@echo "... MyApplication/entitys/AI/AIComponent.s"

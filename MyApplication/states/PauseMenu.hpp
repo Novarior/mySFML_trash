@@ -35,7 +35,7 @@ class PauseMenu
 		std::string text);
 
 	void update(const sf::Vector2i& mousePosWindow);
-	void render(sf::RenderTarget* target);
+	void render(sf::RenderTarget& target);
 
 };
 #endif

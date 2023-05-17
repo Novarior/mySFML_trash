@@ -69,7 +69,7 @@ namespace gui
 
 		//Functions
 		void update(const sf::Vector2i& mousePosWindow);
-		void render(sf::RenderTarget* target);
+		void render(sf::RenderTarget& target);
 	};
 
 	class DropDownList
@@ -96,7 +96,7 @@ namespace gui
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2i& mousePosWindow, const float& dt);
-		void render(sf::RenderTarget* target);
+		void render(sf::RenderTarget& target);
 	};
 
 	class TextureSelector
@@ -128,7 +128,7 @@ namespace gui
 		const bool getKeytime();
 		void updateKeytime(const float& dt);
 		void update(const sf::Vector2i& mousePosWindow, const float& dt);
-		void render(sf::RenderTarget* target);
+		void render(sf::RenderTarget& target);
 	};
 
 	class ProgressBar
@@ -152,7 +152,7 @@ namespace gui
 
 		//Functions
 		void update(const int current_value, const int max_value);
-		void render(sf::RenderTarget* target);
+		void render(sf::RenderTarget& target);
 	};
 }
 

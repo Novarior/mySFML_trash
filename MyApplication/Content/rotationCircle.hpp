@@ -29,6 +29,6 @@ class RotarionCircle
 
     void update(const float& delta_time);
     void setShape(sf::CircleShape shape);
-    void render(sf::RenderTarget* target);
+    void render(sf::RenderTarget& target);
 };
 #endif 

@@ -7,7 +7,6 @@
 #include "../GUI/GUISYS.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
-#include "../GUI/tabMenu.hpp"
 #include "../entitys/player.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../Content/ItemsStuff/Inventory.hpp"
@@ -19,7 +18,7 @@ struct Gamedata
 
 };
 
-class Process:public State
+class Process :public State
 {
     private:
     bool loaded;
@@ -27,7 +26,7 @@ class Process:public State
     sf::View view;
     sf::View playerView;
     TileMap* mapTiles;
-    gui::TabMenu* tabmenu;
+
     noiceData noicedata;
     ProcessGenerationNoice* myGN;
     PauseMenu* pausemenu;
@@ -41,7 +40,6 @@ class Process:public State
     //init data who dont use loaded dates
     void initKeybinds();
     void initPauseMenu();
-    void initTabMenu();
     void initView();
     void initTileMap();
     void initTileMapData();
@@ -58,9 +56,8 @@ class Process:public State
 
 
     void updateInput(const float& delta_time);
-    void updateButtons();
     void updatePlayerInputs(const float& delta_time);
     void update(const float& delta_time);
-    void render(sf::RenderWindow* target);
+    void render(sf::RenderWindow& target);
 };
 #endif

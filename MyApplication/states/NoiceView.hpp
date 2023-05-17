@@ -5,7 +5,7 @@
 #include "../math/ProcessGenerationNoice.hpp"
 #include "../GUI/GUISYS.hpp"
 
-class NoiceView: public State
+class NoiceView : public State
 {
     private:
     struct {
@@ -36,12 +36,12 @@ class NoiceView: public State
 
     void createStepByStep(sf::Vector2f pos);
     public:
-    NoiceView(StateData* statedata);
+    NoiceView(StateData* statedata, bool quick);
     virtual ~NoiceView();
 
 
     void updateInput(const float& delta_time);
     void update(const float& delta_time);
-    void render(sf::RenderWindow* target);
+    void render(sf::RenderWindow& target);
 };
 #endif

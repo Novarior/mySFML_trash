@@ -19,7 +19,6 @@ set(RESOURCE_FILES
     MyApplication/states/Process.cpp
     MyApplication/states/State.cpp
     MyApplication/GUI/GUISYS.cpp 
-    MyApplication/GUI/tabMenu.cpp 
     MyApplication/entitys/entity.cpp 
     MyApplication/entitys/player.cpp 
     MyApplication/entitys/Enemys/test.cpp 

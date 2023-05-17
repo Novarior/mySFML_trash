@@ -60,12 +60,12 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
     this->shape.setTexture(&this->texture);
 }
 
-NoiceView::NoiceView(StateData* statedata):State(statedata) {
+NoiceView::NoiceView(StateData* statedata, bool quick) :State(statedata) {
     this->initKeybinds();
 
     this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.octaves = 8;
-    this->noicedata.seed = 1;
+    this->noicedata.seed = std::rand();
     this->noicedata.frequency = 8;
     this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
     this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
@@ -134,9 +134,9 @@ void NoiceView::update(const float& delta_time) {
     this->tick++;
 }
 
-void NoiceView::render(sf::RenderWindow* target) {
-    target->draw(this->shape);
+void NoiceView::render(sf::RenderWindow& target) {
+    target.draw(this->shape);
 
     if (this->debugMode)
-        target->draw(this->dText);
+        target.draw(this->dText);
 }

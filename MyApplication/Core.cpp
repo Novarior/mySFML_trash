@@ -103,7 +103,7 @@ void Core::render() {
     this->mWindow->clear();
 
     if (!this->mState.empty())
-        this->mState.top()->render(this->mWindow);
+        this->mState.top()->render(*this->mWindow);
 
     this->mWindow->display();
 }

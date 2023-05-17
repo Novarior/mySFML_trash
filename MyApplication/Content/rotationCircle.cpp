@@ -41,8 +41,8 @@ void RotarionCircle::setShape(sf::CircleShape shape) {
     this->shape = shape;
 }
 
-void RotarionCircle::render(sf::RenderTarget* target) {
+void RotarionCircle::render(sf::RenderTarget& target) {
     for (auto it : this->phantoms)
-        target->draw(it);
-    target->draw(this->shape);
+        target.draw(it);
+    target.draw(this->shape);
 }

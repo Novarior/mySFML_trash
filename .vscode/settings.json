@@ -89,7 +89,9 @@
         "iterator": "cpp",
         "utility": "cpp",
         "*.modulemap": "cpp",
-        "*.json": "cpp"
+        "*.json": "cpp",
+        "future": "cpp",
+        "random": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

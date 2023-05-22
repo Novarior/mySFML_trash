@@ -6,6 +6,8 @@ const unsigned int Cell::getID(sf::Vector2i mouse_pos) {
 
 Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, unsigned int character_size) :m_font(font)
 {
+    this->isOpened = false;
+
     this->m_BackShape.setSize(sf::Vector2f(screen_size / 2.f));
     this->m_BackShape.setPosition(sf::Vector2f(screen_size / 4.f));
     this->m_BackShape.setFillColor(sf::Color(40, 40, 40, 225));
@@ -56,12 +58,58 @@ Inventory::~Inventory() {
 
 }
 
+void Inventory::addItem(Item* item) {
+    //made a check if the item is already in the inventory
+    if (item != nullptr)
+        for (auto& i : this->m_ItemVector)
+            if (i != nullptr && i == item) {
+                if (i->getStackable())
+                    i->addQuantity(item->getQuantity());
+                else
+                    continue;;
+            } // if current item slot is not null
+            else if (i == nullptr) {
+                this->m_ItemVector.push_back(item);
+            else
+                return;
+            }
+}
+void Inventory::removeItem(Item* item) {
+    if (item != nullptr)
+        for (int i = 0; i < this->m_ItemVector.size(); i++)
+            if (this->m_ItemVector[i] == item)
+            {
+                this->m_ItemVector.erase(std::remove(this->m_ItemVector.begin(), this->m_ItemVector.end(), item), this->m_ItemVector.end());
+                this->m_ItemVector[i] = nullptr;
+                return;
+            }
+
+}
+void Inventory::removeItem(unsigned int ID) {
+    this->m_ItemVector.erase(std::remove(this->m_ItemVector.begin(), this->m_ItemVector.end(), this->m_ItemVector[ID]), this->m_ItemVector.end());
+}
+void Inventory::clear() {
+    this->m_ItemVector.clear();
+}
+void Inventory::openInventory() {
+    this->isOpened = true;
+}
+void Inventory::closeInventory() {
+    this->isOpened = false;
+}
+
 const unsigned int Inventory::getCurrentCellID(sf::Vector2i mousePos) {
     if (!this->CellsInventory.empty())
         for (auto& i : this->CellsInventory)
             if (i.getGlobalBounds(mousePos))
                 return i.getID(mousePos);
     return 0;
+}
+
+std::string Inventory::getInfoItem(unsigned int ID) {
+    if (this->m_ItemVector[ID] != nullptr)
+        return this->m_ItemVector[ID]->getInfo();
+    return "";
 }
 
 void Inventory::update(sf::Vector2i mouse_pos) {

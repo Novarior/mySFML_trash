@@ -79,9 +79,9 @@
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/test.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/test.cpp",
-  "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/test.cpp.o"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/Slime.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/Slime.cpp",
+  "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
@@ -106,6 +106,12 @@
   "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/movement.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
   "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/properties/movement.cpp.o"
+},
+{
+  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/attributes.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/attributes.cpp",
+  "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o"
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",

@@ -25,7 +25,7 @@
 					"MyApplication/GUI/GUISYS.cpp",
 					"MyApplication/entitys/entity.cpp",
 					"MyApplication/entitys/player.cpp",
-					"MyApplication/entitys/Enemys/test.cpp",
+					"MyApplication/entitys/Enemys/Slime.cpp",
 					"MyApplication/entitys/AI/AIFollow.cpp",
 					"MyApplication/entitys/AI/AIComponent.cpp",
 					"MyApplication/entitys/properties/hitbox.cpp",

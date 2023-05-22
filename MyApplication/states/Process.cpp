@@ -25,7 +25,7 @@ const bool Process::loadGameData() {
 }
 
 const bool Process::saveGameData() {
-
+    //save player pos and other data
     std::ofstream ofs("gameconfig.cfg");
     if (ofs.is_open()) {
         ofs << this->noicedata.seed << '\n';
@@ -37,9 +37,44 @@ const bool Process::saveGameData() {
         ofs << this->noicedata.persistence << '\n';
         ofs << this->player->e_getPosition().x << ' ' << this->player->e_getPosition().y << '\n';
     }
-    else
+    else {
+        printf("ERROR::GAMECONFIG.CFG::COULD_NOT_SAVE\n");
+        ofs.close();
         return false;
+    }
     ofs.close();
+
+    //save player inventory
+    std::ofstream ofs2("playerinventory.cfg");
+    if (ofs2.is_open()) {
+        for (size_t i = 0; i < this->t_inventory->getSizeInventory(); i++)
+            ofs2 << this->t_inventory->getInfoItem(i) << '\n';
+
+        ofs << this->t_inventory->getCoins()->get_GoldCointCount() << '\n'
+            << this->t_inventory->getCoins()->get_SilverCointCount() << '\n'
+            << this->t_inventory->getCoins()->get_CopperCointCount() << '\n';
+    }
+    else {
+        printf("ERROR::PLAYERINVENTORY.CFG::COULD_NOT_SAVE\n");
+        ofs2.close();
+        return false;
+    }
+    ofs2.close();
+
+    //save entitys pos and other data
+    std::ofstream ofs3("entitysdata.cfg");
+    if (ofs3.is_open()) {
+        ofs3 << "Count Entitys: " << this->entitys.size() << '\n';
+        for (auto& i : this->entitys) {
+            ofs3 << i->e_getPosition().x << ' ' << i->e_getPosition().y << '\n';
+        }
+    }
+    else {
+        printf("ERROR::ENTITYSDATA.CFG::COULD_NOT_SAVE\n");
+        ofs3.close();
+        return false;
+    }
+
     return true;
 }
 
@@ -116,6 +151,18 @@ void Process::initTileMapData()
     this->noicedata.persistence = 0.6f;
 }
 
+void Process::initEntitys() {
+    float posx = 0;
+    float posy = 0;
+
+    for (size_t i = 0; i < 128; i++) {
+        //call function to get random position 
+        posx = rand() % 1000;
+        posy = rand() % 1000;
+        this->entitys.push_back(new Slime(posx, posy, this->playerTextureSHIT, *this->player));
+    }
+}
+
 Process::Process(StateData* state_data, const bool defaultLoad) :State(state_data) {
     if (defaultLoad) {
         if (this->loadGameData())
@@ -123,14 +170,13 @@ Process::Process(StateData* state_data, const bool defaultLoad) :State(state_dat
         else
             this->loaded = false;
     }
-
     this->initKeybinds();
     this->initView();
     this->initPauseMenu();
-
     this->initTileMapData();
     this->initTileMap();
     this->initPlayer();
+    this->initEntitys();
 }
 
 Process::~Process() {
@@ -138,14 +184,19 @@ Process::~Process() {
 
     delete this->myGN;
     delete this->mapTiles;
-
     delete this->pausemenu;
     delete this->player;
     delete this->t_inventory;
+    //clear vector entitys
+    for (size_t i = 0; i < this->entitys.size(); i++)
+    {
+        delete this->entitys[i];
+    }
 }
 
 void Process::updateInput(const float& delta_time) {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime()) {}
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB"))) && this->getKeytime())
+        this->t_inventory->toggleSwitch();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
@@ -168,6 +219,19 @@ void Process::updateTileMap(const float& delta_time) {
     this->mapTiles->updateWorldBoundsCollision(this->player);
     this->mapTiles->updateTileCollision(this->player, delta_time);
     this->mapTiles->update(this->player, delta_time);
+
+    //update entitys collision
+    for (size_t i = 0; i < this->entitys.size(); i++)
+    {
+        this->mapTiles->updateWorldBoundsCollision(this->entitys[i]);
+        this->mapTiles->updateTileCollision(this->entitys[i], delta_time);
+    }
+}
+
+void Process::updateEntitys(const float& delta_time) {
+    //update entitys
+    for (size_t i = 0; i < this->entitys.size(); i++)
+        this->entitys[i]->e_update(delta_time);
 }
 
 void Process::update(const float& delta_time) {
@@ -182,9 +246,13 @@ void Process::update(const float& delta_time) {
             this->endState();
     }
     else { //update game
+        this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
         this->updateTileMap(delta_time);
-        this->player->e_update(delta_time, this->mousePosView, this->playerView);
+        this->player->e_update(delta_time);
+
+        if (this->t_inventory->getIsOpened())
+            this->t_inventory->update(this->mousePosWindow);
 
     }
 
@@ -216,27 +284,46 @@ void Process::update(const float& delta_time) {
     }
 }
 
-void Process::render(sf::RenderWindow& target) {
+//sub render functions
+void Process::renderPlayer(sf::RenderTarget& target) {
+    this->playerView.setCenter(this->player->e_getPosition());
+    this->player->e_render(target, this->debugMode);
+}
 
+void Process::renderGUI(sf::RenderTarget& target) {
+    if (this->t_inventory->getIsOpened()) //inventory  menu render
+        this->t_inventory->render(target);
+
+    if (this->debugMode) //debuging text render
+        target.draw(this->dText);
+
+    if (this->Ipaused) //Pause menu render
+        this->pausemenu->render(target);
+}
+
+void Process::renderTileMap(sf::RenderTarget& target) {
+    this->mapTiles->render(&target, this->player->e_getGridPositionInt(this->IgridSize), this->debugMode);
+}
+
+void Process::renderEntities(sf::RenderTarget& target) {
+    for (auto* enemy : this->entitys)
+        enemy->e_render(target, this->debugMode);
+}
+
+
+//main render function
+void Process::render(sf::RenderWindow& target) {
     //CLEAR pre rendered texture
     this->renderTexture.clear();
     this->renderTexture.setView(this->playerView);
-
     // render scne in custom view
-    this->mapTiles->render(&this->renderTexture, this->player->e_getGridPositionInt(this->IgridSize), this->debugMode);
-    this->playerView.setCenter(this->player->e_getPosition());
-    this->player->e_render(this->renderTexture, true);
-
+    this->renderTileMap(this->renderTexture);
+    this->renderEntities(this->renderTexture);
+    this->renderPlayer(this->renderTexture);
     // reset view
     this->renderTexture.setView(this->renderTexture.getDefaultView());
-
-    //render other elements
-    if (this->debugMode)
-        this->renderTexture.draw(this->dText);
-
-    if (this->Ipaused) //Pause menu render
-        this->pausemenu->render(this->renderTexture);
-
+    //render GUI elements
+    this->renderGUI(this->renderTexture);
     //final render
     this->renderTexture.display();
     target.draw(this->renderSprite);

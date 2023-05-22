@@ -369,29 +369,29 @@ MyApplication/entitys/AI/AIFollow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIFollow.cpp.s
 .PHONY : MyApplication/entitys/AI/AIFollow.cpp.s
 
-MyApplication/entitys/Enemys/test.o: MyApplication/entitys/Enemys/test.cpp.o
-.PHONY : MyApplication/entitys/Enemys/test.o
+MyApplication/entitys/Enemys/Slime.o: MyApplication/entitys/Enemys/Slime.cpp.o
+.PHONY : MyApplication/entitys/Enemys/Slime.o
 
 # target to build an object file
-MyApplication/entitys/Enemys/test.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/test.cpp.o
-.PHONY : MyApplication/entitys/Enemys/test.cpp.o
+MyApplication/entitys/Enemys/Slime.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o
+.PHONY : MyApplication/entitys/Enemys/Slime.cpp.o
 
-MyApplication/entitys/Enemys/test.i: MyApplication/entitys/Enemys/test.cpp.i
-.PHONY : MyApplication/entitys/Enemys/test.i
+MyApplication/entitys/Enemys/Slime.i: MyApplication/entitys/Enemys/Slime.cpp.i
+.PHONY : MyApplication/entitys/Enemys/Slime.i
 
 # target to preprocess a source file
-MyApplication/entitys/Enemys/test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/test.cpp.i
-.PHONY : MyApplication/entitys/Enemys/test.cpp.i
+MyApplication/entitys/Enemys/Slime.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.i
+.PHONY : MyApplication/entitys/Enemys/Slime.cpp.i
 
-MyApplication/entitys/Enemys/test.s: MyApplication/entitys/Enemys/test.cpp.s
-.PHONY : MyApplication/entitys/Enemys/test.s
+MyApplication/entitys/Enemys/Slime.s: MyApplication/entitys/Enemys/Slime.cpp.s
+.PHONY : MyApplication/entitys/Enemys/Slime.s
 
 # target to generate assembly for a file
-MyApplication/entitys/Enemys/test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/test.cpp.s
-.PHONY : MyApplication/entitys/Enemys/test.cpp.s
+MyApplication/entitys/Enemys/Slime.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.s
+.PHONY : MyApplication/entitys/Enemys/Slime.cpp.s
 
 MyApplication/entitys/entity.o: MyApplication/entitys/entity.cpp.o
 .PHONY : MyApplication/entitys/entity.o
@@ -440,6 +440,30 @@ MyApplication/entitys/player.s: MyApplication/entitys/player.cpp.s
 MyApplication/entitys/player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/player.cpp.s
 .PHONY : MyApplication/entitys/player.cpp.s
+
+MyApplication/entitys/properties/attributes.o: MyApplication/entitys/properties/attributes.cpp.o
+.PHONY : MyApplication/entitys/properties/attributes.o
+
+# target to build an object file
+MyApplication/entitys/properties/attributes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o
+.PHONY : MyApplication/entitys/properties/attributes.cpp.o
+
+MyApplication/entitys/properties/attributes.i: MyApplication/entitys/properties/attributes.cpp.i
+.PHONY : MyApplication/entitys/properties/attributes.i
+
+# target to preprocess a source file
+MyApplication/entitys/properties/attributes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.i
+.PHONY : MyApplication/entitys/properties/attributes.cpp.i
+
+MyApplication/entitys/properties/attributes.s: MyApplication/entitys/properties/attributes.cpp.s
+.PHONY : MyApplication/entitys/properties/attributes.s
+
+# target to generate assembly for a file
+MyApplication/entitys/properties/attributes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.s
+.PHONY : MyApplication/entitys/properties/attributes.cpp.s
 
 MyApplication/entitys/properties/hitbox.o: MyApplication/entitys/properties/hitbox.cpp.o
 .PHONY : MyApplication/entitys/properties/hitbox.o
@@ -744,15 +768,18 @@ help:
 	@echo "... MyApplication/entitys/AI/AIFollow.o"
 	@echo "... MyApplication/entitys/AI/AIFollow.i"
 	@echo "... MyApplication/entitys/AI/AIFollow.s"
-	@echo "... MyApplication/entitys/Enemys/test.o"
-	@echo "... MyApplication/entitys/Enemys/test.i"
-	@echo "... MyApplication/entitys/Enemys/test.s"
+	@echo "... MyApplication/entitys/Enemys/Slime.o"
+	@echo "... MyApplication/entitys/Enemys/Slime.i"
+	@echo "... MyApplication/entitys/Enemys/Slime.s"
 	@echo "... MyApplication/entitys/entity.o"
 	@echo "... MyApplication/entitys/entity.i"
 	@echo "... MyApplication/entitys/entity.s"
 	@echo "... MyApplication/entitys/player.o"
 	@echo "... MyApplication/entitys/player.i"
 	@echo "... MyApplication/entitys/player.s"
+	@echo "... MyApplication/entitys/properties/attributes.o"
+	@echo "... MyApplication/entitys/properties/attributes.i"
+	@echo "... MyApplication/entitys/properties/attributes.s"
 	@echo "... MyApplication/entitys/properties/hitbox.o"
 	@echo "... MyApplication/entitys/properties/hitbox.i"
 	@echo "... MyApplication/entitys/properties/hitbox.s"

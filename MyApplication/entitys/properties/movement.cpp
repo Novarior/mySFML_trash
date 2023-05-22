@@ -1,10 +1,10 @@
 #include "movement.hpp"
 
-MovementComponent::MovementComponent(sf::Sprite& sprite, float accel, float decel, float maxVel):
+MovementComponent::MovementComponent(sf::Sprite& sprite, const float acceleration, const float deceleration, const float maxVelocity) :
 	sprite(sprite) {
-	this->acceleration = accel;
-	this->deceleration = decel;
-	this->maxVelocity = maxVel;
+	this->acceleration = acceleration;
+	this->deceleration = deceleration;
+	this->maxVelocity = maxVelocity;
 }
 
 MovementComponent::~MovementComponent() {  }

@@ -4,6 +4,7 @@
 #include "../header.h"
 #include "properties/movement.hpp"
 #include "properties/hitbox.hpp"
+#include "properties/attributes.hpp"
 
 enum movementState { IDLE = 0, WALK, JUMP, DUCK };
 
@@ -14,18 +15,17 @@ class Entity
     sf::Sprite m_sprite;
     MovementComponent* e_movement;
     HitboxComponent* e_hitbox;
+    Attributes* e_attributes;
 
     bool isCollision;
     bool isAlive;
-    bool isDuck;
-    bool isFall;
-    bool isJump;
     float gridSizeF;
 
     movementState mState;
 
     void createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
-    void createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration);
+    void createMovementComponent(const float acceleration, const float deceleration, const float maxVelocity);
+    void createAttributesComponent();
 
     public:
     Entity();
@@ -33,6 +33,7 @@ class Entity
 
     HitboxComponent* getHitbox();
     MovementComponent* getMovement();
+    Attributes* getAttributes();
 
     virtual void setTexture(sf::Texture& texture);
 
@@ -51,7 +52,7 @@ class Entity
     virtual void e_setPosition(const sf::Vector2f pos);
     virtual void e_setPosition(const float pos_x, const float pos_y);
 
-    virtual void e_update(const float& dt, sf::Vector2f& mouse_pos_view, const sf::View& view) = 0;
+    virtual void e_update(const float& dt) = 0;
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
 };
 #endif 

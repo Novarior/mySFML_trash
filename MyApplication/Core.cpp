@@ -18,16 +18,15 @@ void Core::initStateData() {
 }
 
 void Core::initKeyBinds() {
-    this->supportedKeys["A"] = 0;
-    this->supportedKeys["C"] = 2;
-    this->supportedKeys["D"] = 3;
-    this->supportedKeys["L"] = 11;
-    this->supportedKeys["S"] = 18;
-    this->supportedKeys["W"] = 22;
-    this->supportedKeys["X"] = 23;
-    this->supportedKeys["Z"] = 25;
-    this->supportedKeys["Escape"] = 36;
-    this->supportedKeys["Tab"] = 60;
+    //load supported keys from file to map
+    std::ifstream ifs("Config/supported_keys.ini");
+    if (ifs.is_open()) {
+        std::string key = "";
+        int key_value = 0;
+        while (ifs >> key >> key_value) {
+            this->supportedKeys[key] = key_value;
+        }
+    }
 }
 
 void Core::initState() {
@@ -65,21 +64,23 @@ Core::~Core() {
     delete this->mWindow;
 }
 
-const bool Core::run() {
+void Core::run() {
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();
         this->update();
         this->render();
     }
-    return true;
 }
 
 void Core::update() {
     this->updateEventsWindow();
-    if (!this->mState.empty()) {
-        if (this->mWindow->hasFocus()) {
+    if (!this->mState.empty())
+    {
+        if (this->mWindow->hasFocus())
+        {
             this->mState.top()->update(this->deltaTime);
-            if (this->mState.top()->getQuit()) {
+            if (this->mState.top()->getQuit())
+            {
                 this->mState.top()->endState();
                 delete this->mState.top();
                 this->mState.pop();

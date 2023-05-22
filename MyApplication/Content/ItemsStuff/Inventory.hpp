@@ -49,8 +49,29 @@ class Inventory
     void update(sf::Vector2i mouse_pos);
     void render(sf::RenderTarget& target);
 
+    //funcrions for manipulating with items
+    void addItem(Item* item);
+    void removeItem(Item* item);
+    void removeItem(unsigned int ID);
+    void clear();
+
+    //functions for manipulating with inventory
+    void openInventory();
+    void closeInventory();
+    void toggleSwitch() { this->isOpened = !this->isOpened; }
+    const bool getIsOpened() const { return this->isOpened; }
+    const int getSizeInventory() { return this->CellsInventory.size(); }
+
+    //functions for manipulating with saving and loading inventory
+    std::string getInfoItem(unsigned int ID);
+
+    //functions for manipulating with coins
+    Coins* getCoins() { return this->m_Coins; }
+
+
+
     private:
-    void initVectorItems();
+    bool isOpened;
 
     sf::Font& m_font;
     sf::Text m_Text;

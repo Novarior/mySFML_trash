@@ -8,6 +8,7 @@ class Item
     bool stacable;
     bool pickable;
     int quantity;
+    std::string name;
     public:
     sf::RectangleShape m_shape;
     int price;
@@ -25,6 +26,9 @@ class Item
     const bool getPrice() const { return this->price; }
     const bool getStacable() const { return this->stacable; }
     const bool getQuantity() const { return this->quantity; }
+
+
+    std::string getInfo();
 
     void update(sf::Vector2i mouse_pos) { }
     virtual void render(sf::RenderTarget& target) = 0;

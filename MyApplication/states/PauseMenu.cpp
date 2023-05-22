@@ -1,6 +1,6 @@
 #include "PauseMenu.hpp"
 
-PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
+PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font) :font(font)
 {
 	//Init background
 	this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
@@ -21,10 +21,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font):font(font)
 	this->menuText.setString("PAUSED");
 	this->menuText.setPosition(
 		this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
-		this->container.getPosition().y + mmath::p2pY(4.f, vm)
-	);
-	printf("\nPAUSE BUILD success");
-
+		this->container.getPosition().y + mmath::p2pY(4.f, vm));
 }
 
 PauseMenu::~PauseMenu()

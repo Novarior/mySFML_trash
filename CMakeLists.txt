@@ -21,11 +21,12 @@ set(RESOURCE_FILES
     MyApplication/GUI/GUISYS.cpp 
     MyApplication/entitys/entity.cpp 
     MyApplication/entitys/player.cpp 
-    MyApplication/entitys/Enemys/test.cpp 
+    MyApplication/entitys/Enemys/Slime.cpp 
     MyApplication/entitys/AI/AIFollow.cpp 
     MyApplication/entitys/AI/AIComponent.cpp 
     MyApplication/entitys/properties/hitbox.cpp 
     MyApplication/entitys/properties/movement.cpp 
+    MyApplication/entitys/properties/attributes.cpp
     MyApplication/Content/rotationCircle.cpp 
     MyApplication/Content/Map/block.cpp 
     MyApplication/Content/Map/TileMap.cpp

@@ -3,8 +3,11 @@
 void Entity::createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height) {
     this->e_hitbox = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
-void Entity::createMovementComponent(const float maxVelocity, const float acceleration, const float deceleration) {
+void Entity::createMovementComponent(const float acceleration, const float deceleration, const float maxVelocity) {
     this->e_movement = new MovementComponent(this->m_sprite, acceleration, deceleration, maxVelocity);
+}
+void Entity::createAttributesComponent() {
+    this->e_attributes = new Attributes();
 }
 
 Entity::Entity() {
@@ -15,6 +18,7 @@ Entity::Entity() {
 Entity::~Entity() {
     delete this->e_hitbox;
     delete this->e_movement;
+    delete this->e_attributes;
 }
 
 HitboxComponent* Entity::getHitbox() {
@@ -23,6 +27,10 @@ HitboxComponent* Entity::getHitbox() {
 
 MovementComponent* Entity::getMovement() {
     return this->e_movement;
+}
+
+Attributes* Entity::getAttributes() {
+    return this->e_attributes;
 }
 
 void Entity::setTexture(sf::Texture& texture) {
@@ -58,14 +66,7 @@ void Entity::e_setPosition(const float pos_x, const float pos_y) {
     this->m_sprite.setPosition(sf::Vector2f(pos_x, pos_y));
 }
 
-void Entity::e_updateAnimation(std::string keyNameAnimation, const float& delta_time) {
-    if (this->isDuck) {
-        this->m_sprite.setScale(sf::Vector2f(1.f, 0.5f));
-    }
-    else {
-        this->m_sprite.setScale(sf::Vector2f(1.f, 1.f));
-    }
-}
+void Entity::e_updateAnimation(std::string keyNameAnimation, const float& delta_time) {}
 
 void Entity::e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision) {
     this->e_hitbox->update();

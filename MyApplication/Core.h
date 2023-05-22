@@ -27,8 +27,8 @@ class Core
     public:
     Core();
     virtual ~Core();
+    void run();
 
-    const bool run();
     void updateEventsWindow();
     void updateDeltaTime();
     void update();

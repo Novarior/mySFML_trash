@@ -1,73 +1,74 @@
 {
 	"version": "2.0.0",
-		"tasks" : [
-	{
-		"type": "cppbuild",
-			"label" : "C/C++: сборка ARM_x64.app файла",
-			"command" : "/usr/bin/clang++",
-			"args" : [
+	"tasks": [
+		{
+			"type": "cppbuild",
+			"label": "C/C++: сборка ARM_x64.app файла",
+			"command": "/usr/bin/clang++",
+			"args": [
 				"-std=c++17",
-					"-g ",
-					"-arch arm64",
-					"-ferror-limit=10",
-					"-fcolor-diagnostics",
-					"-fansi-escape-codes",
-					"MyApplication/main.cpp",
-					"MyApplication/Core.cpp",
-					"MyApplication/states/State.cpp",
-					"MyApplication/states/MainMenu.cpp",
-					"MyApplication/states/PauseMenu.cpp",
-					"MyApplication/states/Process.cpp",
-					"MyApplication/states/gfx.cpp",
-					"MyApplication/states/NoiceView.cpp",
-					"MyApplication/math/mymath.cpp",
-					"MyApplication/math/ProcessGenerationNoice.cpp",
-					"MyApplication/GUI/GUISYS.cpp",
-					"MyApplication/entitys/entity.cpp",
-					"MyApplication/entitys/player.cpp",
-					"MyApplication/entitys/Enemys/Slime.cpp",
-					"MyApplication/entitys/AI/AIFollow.cpp",
-					"MyApplication/entitys/AI/AIComponent.cpp",
-					"MyApplication/entitys/properties/hitbox.cpp",
-					"MyApplication/entitys/properties/movement.cpp",
-					"MyApplication/Content/rotationCircle.cpp",
-					"MyApplication/Content/ItemsStuff/Coins.cpp",
-					"MyApplication/Content/ItemsStuff/Inventory.cpp",
-					"MyApplication/Content/ItemsStuff/Item.cpp",
-					"MyApplication/Content/Map/block.cpp",
-					"MyApplication/Content/Map/TileMap.cpp",
-					"-Isource/include/",
-					"-o",
-					"${workspaceFolder}/MyApplication_ARM64.app",
-					"-Lsource/lib",
-					"-lsfml-graphics",
-					"-lsfml-window",
-					"-lsfml-system",
-					"-w"
+				"-g ",
+				"-arch arm64",
+				"-ferror-limit=10",
+				"-fcolor-diagnostics",
+				"-fansi-escape-codes",
+				"MyApplication/main.cpp",
+				"MyApplication/Core.cpp",
+				"MyApplication/states/State.cpp",
+				"MyApplication/states/MainMenu.cpp",
+				"MyApplication/states/PauseMenu.cpp",
+				"MyApplication/states/Process.cpp",
+				"MyApplication/states/gfx.cpp",
+				"MyApplication/states/NoiceView.cpp",
+				"MyApplication/math/mymath.cpp",
+				"MyApplication/math/ProcessGenerationNoice.cpp",
+				"MyApplication/GUI/GUISYS.cpp",
+				"MyApplication/entitys/entity.cpp",
+				"MyApplication/entitys/player.cpp",
+				"MyApplication/entitys/Enemys/Slime.cpp",
+				"MyApplication/entitys/AI/AIFollow.cpp",
+				"MyApplication/entitys/AI/AIComponent.cpp",
+				"MyApplication/entitys/properties/hitbox.cpp",
+				"MyApplication/entitys/properties/movement.cpp",
+				"MyApplication/Content/rotationCircle.cpp",
+				"MyApplication/Content/ItemsStuff/Coins.cpp",
+				"MyApplication/Content/ItemsStuff/Inventory.cpp",
+				"MyApplication/Content/ItemsStuff/Item.hpp",
+				"MyApplication/Content/Map/block.cpp",
+				"MyApplication/Content/Map/TileMap.cpp",
+				"MyApplication/source/mypars/parsJSON.cpp",
+				"-Isource/include/",
+				"-o",
+				"${workspaceFolder}/MyApplication_ARM64.app",
+				"-Lsource/lib",
+				"-lsfml-graphics",
+				"-lsfml-window",
+				"-lsfml-system",
+				"-w"
 			],
 			"options": {
-			"cwd": "${workspaceFolder}"
-		},
-			"problemMatcher" : {
-			"owner": "cpp",
-				"fileLocation" : [
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": {
+				"owner": "cpp",
+				"fileLocation": [
 					"relative",
-						"${workspaceRoot}"
-				] ,
-				"pattern" : {
-				"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
-					"file" : 1,
-					"line" : 2,
-					"column" : 3,
-					"severity" : 4,
-					"message" : 5
-			}
-		},
+					"${workspaceRoot}"
+				],
+				"pattern": {
+					"regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
+				}
+			},
 			"group": {
-			"kind": "build",
-				"isDefault" : true
-		},
-			"detail" : "компилятор: /usr/bin/clang++"
-	}
-		]
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "компилятор: /usr/bin/clang++"
+		}
+	]
 }

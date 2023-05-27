@@ -1,6 +1,8 @@
 #include "Process.hpp"
 
 const bool Process::loadGameData() {
+
+    //load game config
     std::ifstream ifs("gameconfig.cfg");
     if (ifs.is_open()) {
         sf::Vector2f playerBuffPos;
@@ -13,19 +15,36 @@ const bool Process::loadGameData() {
         ifs >> this->noicedata.RenderWindowX >> this->noicedata.RenderWindowY;
 
         ifs >> this->noicedata.persistence;
-        ifs >> playerBuffPos.x >> playerBuffPos.y;
-
-        this->m_gamedata.currentPlayerPos = playerBuffPos;
     }
     else
         return false;
-
     ifs.close();
+
+    //load player
+    std::ifstream ifs1("playerdata.cfg");
+    if (ifs1.is_open()) {
+        //buffer for player position and attributes
+        sf::Vector2f playerBuffPos;
+        Atri buffer;
+        //load player position to buffer
+        ifs1 >> playerBuffPos.x >> playerBuffPos.y;
+        //load player attributes to buffer
+        ifs1 >> buffer.health >> buffer.max_health >> buffer.experience >> buffer.experience_for_level >> buffer.level >> buffer.some_points;
+        //set player position
+        this->player->e_setPosition(playerBuffPos);
+        //set attributes to player
+        this->player->getAttributes()->setAttributes(buffer);
+    }
+    else
+        printf("ERROR::PLAYERDATA.CFG::COULD_NOT_LOAD\n");
+    ifs1.close();
+
+
     return true;
 }
 
 const bool Process::saveGameData() {
-    //save player pos and other data
+    //save game config
     std::ofstream ofs("gameconfig.cfg");
     if (ofs.is_open()) {
         ofs << this->noicedata.seed << '\n';
@@ -35,7 +54,6 @@ const bool Process::saveGameData() {
         ofs << this->noicedata.mapSizeX << ' ' << this->noicedata.mapSizeY << '\n';
         ofs << this->noicedata.RenderWindowX << ' ' << this->noicedata.RenderWindowY << '\n';
         ofs << this->noicedata.persistence << '\n';
-        ofs << this->player->e_getPosition().x << ' ' << this->player->e_getPosition().y << '\n';
     }
     else {
         printf("ERROR::GAMECONFIG.CFG::COULD_NOT_SAVE\n");
@@ -44,39 +62,19 @@ const bool Process::saveGameData() {
     }
     ofs.close();
 
-    //save player inventory
-    std::ofstream ofs2("playerinventory.cfg");
-    if (ofs2.is_open()) {
-        for (size_t i = 0; i < this->t_inventory->getSizeInventory(); i++)
-            ofs2 << this->t_inventory->getInfoItem(i) << '\n';
-
-        ofs << this->t_inventory->getCoins()->get_GoldCointCount() << '\n'
-            << this->t_inventory->getCoins()->get_SilverCointCount() << '\n'
-            << this->t_inventory->getCoins()->get_CopperCointCount() << '\n';
-    }
-    else {
-        printf("ERROR::PLAYERINVENTORY.CFG::COULD_NOT_SAVE\n");
-        ofs2.close();
-        return false;
-    }
-    ofs2.close();
-
+    //save player to JSON file
+    if (!this->Iparser->savePlayer("playerdata.json", this->player))
+        printf("ERROR::PLAYERDATA.JSON::COULD_NOT_SAVE\n");
+    //save inventory to JSON file
+    if (!this->Iparser->saveInventory("inventorydata.json", this->t_inventory))
+        printf("ERROR::INVENTORYDATA.JSON::COULD_NOT_SAVE\n");
     //save entitys pos and other data
-    std::ofstream ofs3("entitysdata.cfg");
-    if (ofs3.is_open()) {
-        ofs3 << "Count Entitys: " << this->entitys.size() << '\n';
-        for (auto& i : this->entitys) {
-            ofs3 << i->e_getPosition().x << ' ' << i->e_getPosition().y << '\n';
-        }
-    }
-    else {
-        printf("ERROR::ENTITYSDATA.CFG::COULD_NOT_SAVE\n");
-        ofs3.close();
-        return false;
-    }
+    if (!this->Iparser->saveEntitys("entitysdata.json", this->entitys))
+        printf("ERROR::ENTITYSDATA.JSON::COULD_NOT_SAVE\n");
 
     return true;
 }
+
 
 //init data who dont use loaded dates
 void Process::initKeybinds() {
@@ -135,6 +133,9 @@ void Process::initPlayer() {
     this->player = new Player(100, 100, this->playerTextureSHIT);
 
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, 40);
+
+    this->playerHPBar = new gui::ProgressBar(sf::Vector2f(200.f, 20.f), sf::Vector2f(300, 120), sf::Color::Red, 40,
+        sf::Vector2f(this->IstateData->sWindow->getSize()), this->IstateData->font);
 }
 
 //Defauld Init Data
@@ -155,7 +156,7 @@ void Process::initEntitys() {
     float posx = 0;
     float posy = 0;
 
-    for (size_t i = 0; i < 128; i++) {
+    for (size_t i = 0; i < 32; i++) {
         //call function to get random position 
         posx = rand() % 1000;
         posy = rand() % 1000;
@@ -164,6 +165,7 @@ void Process::initEntitys() {
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad) :State(state_data) {
+    //init Parser
     if (defaultLoad) {
         if (this->loadGameData())
             this->loaded = true;
@@ -187,6 +189,9 @@ Process::~Process() {
     delete this->pausemenu;
     delete this->player;
     delete this->t_inventory;
+    delete this->playerHPBar;
+
+
     //clear vector entitys
     for (size_t i = 0; i < this->entitys.size(); i++)
     {
@@ -250,6 +255,7 @@ void Process::update(const float& delta_time) {
         this->updatePlayerInputs(delta_time);
         this->updateTileMap(delta_time);
         this->player->e_update(delta_time);
+        this->playerHPBar->update(this->player->getAttributes()->getCurrentHealth(), this->player->getAttributes()->getMaxHealth());
 
         if (this->t_inventory->getIsOpened())
             this->t_inventory->update(this->mousePosWindow);
@@ -277,7 +283,17 @@ void Process::update(const float& delta_time) {
             << this->mapTiles->getRenderArea().fromY << ' '
             << this->mapTiles->getRenderArea().toX << ' '
             << this->mapTiles->getRenderArea().toY << '\n'
-            << "Pause:\t" << this->Ipaused;
+            << "Pause:\t" << this->Ipaused
+            << "\nMemory Usage: "
+            //get memory usage enemys on bytes
+            << "\n\tPlayer: " << sizeof(Player) << " = " << sizeof(Player) << " bytes"
+            << "\n\tEnemy: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
+            << "\n\tTileMap: " << sizeof(TileMap) << " = " << sizeof(TileMap) << " bytes"
+            << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
+            << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
+            << "\n\tPlayerHPBar: " << sizeof(*this->playerHPBar) << " bytes"
+            << "\n\tTotal usage: " << sizeof(Player) + this->entitys.size() * sizeof(Entity) + sizeof(TileMap) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) + sizeof(*this->playerHPBar) << " bytes";
+
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
@@ -291,14 +307,17 @@ void Process::renderPlayer(sf::RenderTarget& target) {
 }
 
 void Process::renderGUI(sf::RenderTarget& target) {
-    if (this->t_inventory->getIsOpened()) //inventory  menu render
-        this->t_inventory->render(target);
+
+    this->playerHPBar->render(target);
 
     if (this->debugMode) //debuging text render
         target.draw(this->dText);
 
     if (this->Ipaused) //Pause menu render
         this->pausemenu->render(target);
+
+    if (this->t_inventory->getIsOpened() && !this->Ipaused) //inventory  menu render
+        this->t_inventory->render(target);
 }
 
 void Process::renderTileMap(sf::RenderTarget& target) {

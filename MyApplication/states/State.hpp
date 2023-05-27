@@ -5,6 +5,8 @@
 #include "gfx.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../math/mymath.hpp"
+//include parser
+#include "../source/mypars/parsJSON.hpp"
 
 class State;
 
@@ -19,6 +21,7 @@ class StateData
 	sf::Font font;
 	sf::Font debugFont;
 	GraphicsSettings* gfxSettings;
+	mypars::parsJSON* parser;
 	std::stack<State*>* sStates;
 	std::map<std::string, int>* supportedKeys;
 };
@@ -31,6 +34,8 @@ class State
 	sf::RenderWindow* Iwindow;
 	std::map<std::string, int>* IsupportedKeys;
 	std::map<std::string, int> Ikeybinds;
+	mypars::parsJSON* Iparser;
+
 
 	bool Iquit;
 	bool Ipaused;

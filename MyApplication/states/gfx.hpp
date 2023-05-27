@@ -18,8 +18,8 @@ class GraphicsSettings
 	float gridSize;
 
 	//Functions
-	void saveToFile(const std::string path);
-	void loadFromFile(const std::string path);
+	const bool saveToFile(const std::string path);
+	const bool loadFromFile(const std::string path);
 };
 
 #endif 

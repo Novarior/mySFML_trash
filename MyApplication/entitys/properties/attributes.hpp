@@ -1,44 +1,50 @@
 #ifndef ATTRIBUTES_HPP
 #define ATTRIBUTES_HPP
 #include "../../header.h"
+struct Atri
+{
+    float health;
+    float max_health;
+    float regen;
+
+    int experience_for_level;
+    int experience;
+    int level;
+
+    int some_points;
+
+};
 
 class Attributes
 {
     private:
-    struct Atri
-    {
-        float health;
-        float max_health;
-        float regen;
-
-        int experience_for_level;
-        int experience;
-        int level;
-
-        int some_points;
-
-    } m_attributes;
+    Atri m_attributes;
 
     public:
     Attributes();
     virtual ~Attributes();
 
+    //functions for save and load attributes
+    std::string saveAttributesAsString();
+    void loadAttributesFromString(const std::string attributes_string);
+
     //functions for get and set attributes
-    float getHealth();
-    void setHealth(float health);
+    float getMaxHealth() { return this->m_attributes.max_health; }
+    void setMaxHealth(float health) { this->m_attributes.max_health = health; }
+    float getCurrentHealth() { return this->m_attributes.health; }
+    void setCurrentHealth(float health) { this->m_attributes.health = health; }
 
-    //chek if experience_for_level bigger than experience, if true level up and set experience to 0, after level up set experience_for_level to 1.5 * experience_for_level
+
+    //chek if experience_for_level 
     void chekForLevel(int experience);
-
-    //add experience to experience
-    void addExperience(int experience);
+    void addExperience(int experience) { this->m_attributes.experience += experience; }
 
     //get and set experience
-    int getExperience();
-    void setExperience(int experience);
+    int getExperience() { return this->m_attributes.experience; }
+    void setExperience(int experience) { this->m_attributes.experience = experience; }
 
-    Atri* getAttributes();
-    void setAttributes(Atri attributes);
+    Atri* getAttributes() { return &this->m_attributes; }
+    void setAttributes(Atri attributes) { this->m_attributes = attributes; }
 
     void update(const float& delta_time);
 };

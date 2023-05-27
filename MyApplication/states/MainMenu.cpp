@@ -59,6 +59,11 @@ void MainMenu::initButtons() {
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
+    this->buttons["SETTINGS_BTN"] = new gui::Button(
+        sf::Vector2f(offsetX - 275, offsetY - 525), sf::Vector2f(250, 100),
+        this->IstateData->font, "Settings", 20,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
 
 void MainMenu::initBlocks() {
@@ -159,6 +164,7 @@ void MainMenu::update(const float& delta_time) {
 }
 
 void MainMenu::updateInput(const float& delta_time) {
+
 }
 
 void MainMenu::updateButtons() {
@@ -175,7 +181,8 @@ void MainMenu::updateButtons() {
         this->Istates->push(new Process(this->IstateData, true));
         this->resetView();
     }
-
+    if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
+        this->Istates->push(new Settings(this->IstateData, false);
 
     if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
         this->Istates->push(new NoiceView(this->IstateData, false));

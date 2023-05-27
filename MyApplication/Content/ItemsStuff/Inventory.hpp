@@ -55,15 +55,17 @@ class Inventory
     void removeItem(unsigned int ID);
     void clear();
 
+    Item* getItem(unsigned int ID);
+    Item* getItemFromNumSlot(unsigned int num_slot);
+
+
+
     //functions for manipulating with inventory
     void openInventory();
     void closeInventory();
     void toggleSwitch() { this->isOpened = !this->isOpened; }
     const bool getIsOpened() const { return this->isOpened; }
     const int getSizeInventory() { return this->CellsInventory.size(); }
-
-    //functions for manipulating with saving and loading inventory
-    std::string getInfoItem(unsigned int ID);
 
     //functions for manipulating with coins
     Coins* getCoins() { return this->m_Coins; }
@@ -77,7 +79,7 @@ class Inventory
     sf::Text m_Text;
     std::stringstream m_StringStream;
     std::vector<Cell> CellsInventory;
-    std::vector<Item*> m_ItemVector;
+    std::map<unsigned int, Item*> m_InventoryMap;
     sf::RectangleShape m_CellInvenrotyShape;
     sf::Texture m_CellInvTex;
     sf::RectangleShape m_BackShape;

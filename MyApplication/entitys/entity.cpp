@@ -13,6 +13,7 @@ void Entity::createAttributesComponent() {
 Entity::Entity() {
     this->e_movement = NULL;
     this->e_hitbox = NULL;
+    this->e_attributes = NULL;
 }
 
 Entity::~Entity() {

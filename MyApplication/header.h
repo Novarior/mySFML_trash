@@ -3,7 +3,6 @@
 
 //including stl lib
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -11,6 +10,7 @@
 #include <fstream>
 #include <ostream>
 #include <vector>
+#include <string>
 #include <sstream>
 #include <cmath>
 #include <list>
@@ -28,5 +28,6 @@
 #include "math/mymath.hpp"
 #include "DataLoader.hpp"
 #include "ConfigurationProgram.h"
+
 
 #endif

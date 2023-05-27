@@ -22,23 +22,29 @@ struct Gamedata
 class Process :public State
 {
     private:
+    //flag for load data
     bool loaded;
-    sf::Clock gameClock;
+    Gamedata m_gamedata;
+    //view and window
     sf::View view;
     sf::View playerView;
-    TileMap* mapTiles;
-
-    noiceData noicedata;
-    ProcessGenerationNoice* myGN;
     PauseMenu* pausemenu;
-    sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
-    Gamedata m_gamedata;
+    sf::RenderTexture renderTexture;
+    //game elements
+    Inventory* t_inventory;
     Player* player;
     sf::Texture playerTextureSHIT;
-    Inventory* t_inventory;
-
+    TileMap* mapTiles;
+    noiceData noicedata;
     std::vector<Entity*> entitys;
+    ProcessGenerationNoice* myGN;
+    //GUI
+    gui::ProgressBar* playerHPBar;
+
+
+
+
 
     //init data who dont use loaded dates
     void initKeybinds();

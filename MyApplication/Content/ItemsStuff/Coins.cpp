@@ -109,3 +109,19 @@ void Coins::getText()
     this->m_coin_text.m_Text_copper.setString(this->m_StringStream.str());
     this->m_StringStream.str("");
 }
+
+void Coins::updateCoins()
+{
+    //check if the copper count is greater or equal than 100 then add 1 to silver and minus 100 from copper
+    if (this->m_coin_count.copperCount >= 100)
+    {
+        this->m_coin_count.silverCount += 1;
+        this->m_coin_count.copperCount -= 100;
+    }
+    //check if the silver count is greater or equal than 100 then add 1 to gold and minus 100 from silver
+    if (this->m_coin_count.silverCount >= 100)
+    {
+        this->m_coin_count.goldCount += 1;
+        this->m_coin_count.silverCount -= 100;
+    }
+}

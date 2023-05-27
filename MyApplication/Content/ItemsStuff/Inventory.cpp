@@ -24,7 +24,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, 
     this->m_Text.setPosition(m_BackShape.getPosition().x + character_size,
         m_BackShape.getPosition().y + m_BackShape.getSize().y - mmath::p2pX(5, this->m_BackShape.getSize().y) - character_size);
 
-
+    //init GUI inventory
     for (int x = 0; x < 10; x++)
         for (int y = 0; y < 4; y++)
             this->CellsInventory.push_back(
@@ -33,6 +33,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, 
                 this->m_BackShape.getPosition().y + size * y),
                 size, this->m_CellInvTex, x + (y * 10)));
 
+    //init Coins GUI
     this->m_Coins = new Coins(sf::Vector2f(
         m_BackShape.getPosition().x,
         m_BackShape.getPosition().y + m_BackShape.getSize().y - size / 2), //pos
@@ -40,56 +41,75 @@ Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, 
         sf::Vector2f(size / 2, size / 2), this->m_font, character_size);
 
 
-    //inttialisation items vector with 40 stones inside
-    //try aslo to make it with a NULLPTR items
-    for (int x = 0; x < 10; x++)
-        for (int y = 0; y < 4; y++)
-        {
-            this->m_ItemVector.push_back(new Stone(sf::Vector2f(
-                this->m_BackShape.getPosition().x + size * x,
-                this->m_BackShape.getPosition().y + size * y),
-                sf::Vector2f(size, size), this->m_CellInvTex, false, 1, 1, false));
-        }
+    //inttialisation inventory with 40 stone inside
+    for (int x = 0; x < 40; x++)
+    {
+        this->m_InventoryMap[x] = new Stone(sf::Vector2f(
+            this->m_BackShape.getPosition().x + size * x,
+            this->m_BackShape.getPosition().y + size * x),
+            sf::Vector2f(size, size), item_img_someore, false, 1, 1, false);
+
+    }
 }
 
 Inventory::~Inventory() {
+    //clearing the inventory
+    for (auto& i : this->m_InventoryMap)
+        delete i.second;
+    //clearing the GUI inventory
+    this->CellsInventory.clear();
+    //clearing the GUI coins
     delete this->m_Coins;
-    CellsInventory.clear();
-
 }
 
 void Inventory::addItem(Item* item) {
     //made a check if the item is already in the inventory
     if (item != nullptr)
-        for (auto& i : this->m_ItemVector)
-            if (i != nullptr && i == item) {
-                if (i->getStackable())
-                    i->addQuantity(item->getQuantity());
+        for (auto& i : this->m_InventoryMap) {
+            //if current item slot is not null and the item is the same as the one we want to add
+            if (i.second != nullptr && i.second == item) {
+                if (i.second->getStackable()) {
+                    i.second->addQuantity(item->getQuantity());
+                    return;
+                }
                 else
-                    continue;;
-            } // if current item slot is not null
-            else if (i == nullptr) {
-                this->m_ItemVector.push_back(item);
-            else
+                    continue;
+            } // if current item slot is null and the item is the same as the one we want to add
+            else if (i.second == nullptr) {
+                i.second = item;
                 return;
             }
+            else
+                return;
+        }
 }
 void Inventory::removeItem(Item* item) {
     if (item != nullptr)
-        for (int i = 0; i < this->m_ItemVector.size(); i++)
-            if (this->m_ItemVector[i] == item)
+        for (auto& i : this->m_InventoryMap) {
+            if (i.second == item)
             {
-                this->m_ItemVector.erase(std::remove(this->m_ItemVector.begin(), this->m_ItemVector.end(), item), this->m_ItemVector.end());
-                this->m_ItemVector[i] = nullptr;
+                delete i.second;
+                i.second = nullptr;
                 return;
             }
 
+        }
 }
 void Inventory::removeItem(unsigned int ID) {
-    this->m_ItemVector.erase(std::remove(this->m_ItemVector.begin(), this->m_ItemVector.end(), this->m_ItemVector[ID]), this->m_ItemVector.end());
+    //find item by using ID, if found delete it and set it to nullptr
+    for (auto& i : this->m_InventoryMap) {
+        if (i.second->getUnicID() == ID)
+        {
+            delete i.second;
+            i.second = nullptr;
+            return;
+        }
+    }
 }
 void Inventory::clear() {
-    this->m_ItemVector.clear();
+    //clearing the inventory
+    for (auto& i : this->m_InventoryMap)
+        delete i.second;
 }
 void Inventory::openInventory() {
     this->isOpened = true;
@@ -106,10 +126,21 @@ const unsigned int Inventory::getCurrentCellID(sf::Vector2i mousePos) {
     return 0;
 }
 
-std::string Inventory::getInfoItem(unsigned int ID) {
-    if (this->m_ItemVector[ID] != nullptr)
-        return this->m_ItemVector[ID]->getInfo();
-    return "";
+//get item from the inventory by using ID item
+Item* Inventory::getItem(unsigned int ID) {
+    //get the item by using ID, else not found return nullptr
+    for (auto& i : this->m_InventoryMap)
+        if (i.second->getUnicID() == ID)
+            return i.second;
+    return nullptr;
+
+}
+
+Item* Inventory::getItemFromNumSlot(unsigned int num_slot) {
+    //return the item from the num slot, else return nullptr
+    if (this->m_InventoryMap[num_slot] != nullptr)
+        return this->m_InventoryMap[num_slot];
+    return nullptr;
 }
 
 void Inventory::update(sf::Vector2i mouse_pos) {
@@ -128,16 +159,22 @@ void Inventory::update(sf::Vector2i mouse_pos) {
 }
 
 void Inventory::render(sf::RenderTarget& target) {
+    //rendering the inventory
+
+    //draw background layout
     target.draw(this->m_BackShape);
 
+    //draw cells inventory
     if (!this->CellsInventory.empty())
         for (auto& i : this->CellsInventory)
             target.draw(i);
 
-    if (!this->m_ItemVector.empty())
-        for (auto& i : this->m_ItemVector)
-            if (i != nullptr)
-                i->render(target);
+    //draw items in inventory, if not empty and not null draw it, else continue
+    if (!this->m_InventoryMap.empty())
+        for (auto& i : this->m_InventoryMap)
+            if (i.second != nullptr)
+                i.second->render(target);
 
+    //draw coins
     target.draw(*this->m_Coins);
 }

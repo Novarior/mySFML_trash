@@ -6,12 +6,17 @@
 class Stone : public Item
 {
     public:
-    Stone(sf::Vector2f pos, sf::Vector2f size, sf::Texture& texture, bool stacable, int quantity, int price, bool picked_up) :
-        Item(pos, size, texture, stacable, quantity, price, picked_up)
+    Stone(sf::Vector2f pos, sf::Vector2f size, std::string texture_path, bool stacable, int quantity, int price, bool picked_up)
     {
+        this->name = "Stone";
         this->m_shape.setPosition(pos);
         this->m_shape.setSize(size);
-        this->m_shape.setTexture(&texture);
+        this->m_texture.loadFromFile(texture_path);
+        this->m_shape.setTexture(&this->m_texture);
+        this->stacable = stacable;
+        this->quantity = quantity;
+        this->price = price;
+        this->pickable = picked_up;
     }
     virtual ~Stone() {}
 

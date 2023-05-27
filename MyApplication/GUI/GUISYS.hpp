@@ -32,23 +32,23 @@ namespace gui
 		/**
 		 * @brief Construct a new Button object
 		 *
-		 * @param pos					set position
-		 * @param size					of a shape on xy
-		 * @param font					referens on font
-		 * @param text					text button
-		 * @param character_size		size letter
-		 * @param text_idle_color		color text
-		 * @param text_hover_color		color text
-		 * @param text_active_color		color text
-		 * @param idle_color			color button
-		 * @param hover_color			color button
-		 * @param active_color			color button
-		 * @param outline_idle_color	outline color shape button
-		 * @param outline_hover_color	outline color shape button
-		 * @param outline_active_color	outline color shape button
-		 * @param id					unic ID button
+		 * @param position - position of button
+		 * @param size - size of button
+		 * @param font - font of button
+		 * @param text - text of button
+		 * @param character_size - size of text
+		 * @param text_idle_color - color of text when idle
+		 * @param text_hover_color - color of text when hover
+		 * @param text_active_color - color of text when active
+		 * @param idle_color - color of button when idle
+		 * @param hover_color	- color of button when hover
+		 * @param active_color	- color of button when active
+		 * @param outline_idle_color - color of outline when idle
+		 * @param outline_hover_color	- color of outline when hover
+		 * @param outline_active_color - color of outline when active
+		 * @param id - id of button
 		 */
-		Button(sf::Vector2f pos, sf::Vector2f size,
+		Button(sf::Vector2f position, sf::Vector2f size,
 			sf::Font& font, std::string text, unsigned character_size,
 			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
@@ -141,9 +141,9 @@ namespace gui
 		sf::RectangleShape inner;
 
 		public:
-		ProgressBar(float x, float y, float width, float height,
+		ProgressBar(sf::Vector2f pos, sf::Vector2f size,
 			sf::Color inner_color, unsigned character_size,
-			sf::VideoMode& vm, sf::Font* font = NULL);
+			sf::Vector2f resolution, sf::Font& font);
 		~ProgressBar();
 
 		//Accessors

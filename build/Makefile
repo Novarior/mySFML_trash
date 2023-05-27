@@ -177,30 +177,6 @@ MyApplication/Content/ItemsStuff/Inventory.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Inventory.cpp.s
 .PHONY : MyApplication/Content/ItemsStuff/Inventory.cpp.s
 
-MyApplication/Content/ItemsStuff/Item.o: MyApplication/Content/ItemsStuff/Item.cpp.o
-.PHONY : MyApplication/Content/ItemsStuff/Item.o
-
-# target to build an object file
-MyApplication/Content/ItemsStuff/Item.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Item.cpp.o
-.PHONY : MyApplication/Content/ItemsStuff/Item.cpp.o
-
-MyApplication/Content/ItemsStuff/Item.i: MyApplication/Content/ItemsStuff/Item.cpp.i
-.PHONY : MyApplication/Content/ItemsStuff/Item.i
-
-# target to preprocess a source file
-MyApplication/Content/ItemsStuff/Item.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Item.cpp.i
-.PHONY : MyApplication/Content/ItemsStuff/Item.cpp.i
-
-MyApplication/Content/ItemsStuff/Item.s: MyApplication/Content/ItemsStuff/Item.cpp.s
-.PHONY : MyApplication/Content/ItemsStuff/Item.s
-
-# target to generate assembly for a file
-MyApplication/Content/ItemsStuff/Item.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Item.cpp.s
-.PHONY : MyApplication/Content/ItemsStuff/Item.cpp.s
-
 MyApplication/Content/Map/TileMap.o: MyApplication/Content/Map/TileMap.cpp.o
 .PHONY : MyApplication/Content/Map/TileMap.o
 
@@ -585,6 +561,30 @@ MyApplication/math/mymath.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/mymath.cpp.s
 .PHONY : MyApplication/math/mymath.cpp.s
 
+MyApplication/source/mypars/parsJSON.o: MyApplication/source/mypars/parsJSON.cpp.o
+.PHONY : MyApplication/source/mypars/parsJSON.o
+
+# target to build an object file
+MyApplication/source/mypars/parsJSON.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o
+.PHONY : MyApplication/source/mypars/parsJSON.cpp.o
+
+MyApplication/source/mypars/parsJSON.i: MyApplication/source/mypars/parsJSON.cpp.i
+.PHONY : MyApplication/source/mypars/parsJSON.i
+
+# target to preprocess a source file
+MyApplication/source/mypars/parsJSON.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.i
+.PHONY : MyApplication/source/mypars/parsJSON.cpp.i
+
+MyApplication/source/mypars/parsJSON.s: MyApplication/source/mypars/parsJSON.cpp.s
+.PHONY : MyApplication/source/mypars/parsJSON.s
+
+# target to generate assembly for a file
+MyApplication/source/mypars/parsJSON.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.s
+.PHONY : MyApplication/source/mypars/parsJSON.cpp.s
+
 MyApplication/states/MainMenu.o: MyApplication/states/MainMenu.cpp.o
 .PHONY : MyApplication/states/MainMenu.o
 
@@ -744,9 +744,6 @@ help:
 	@echo "... MyApplication/Content/ItemsStuff/Inventory.o"
 	@echo "... MyApplication/Content/ItemsStuff/Inventory.i"
 	@echo "... MyApplication/Content/ItemsStuff/Inventory.s"
-	@echo "... MyApplication/Content/ItemsStuff/Item.o"
-	@echo "... MyApplication/Content/ItemsStuff/Item.i"
-	@echo "... MyApplication/Content/ItemsStuff/Item.s"
 	@echo "... MyApplication/Content/Map/TileMap.o"
 	@echo "... MyApplication/Content/Map/TileMap.i"
 	@echo "... MyApplication/Content/Map/TileMap.s"
@@ -795,6 +792,9 @@ help:
 	@echo "... MyApplication/math/mymath.o"
 	@echo "... MyApplication/math/mymath.i"
 	@echo "... MyApplication/math/mymath.s"
+	@echo "... MyApplication/source/mypars/parsJSON.o"
+	@echo "... MyApplication/source/mypars/parsJSON.i"
+	@echo "... MyApplication/source/mypars/parsJSON.s"
 	@echo "... MyApplication/states/MainMenu.o"
 	@echo "... MyApplication/states/MainMenu.i"
 	@echo "... MyApplication/states/MainMenu.s"

@@ -24,5 +24,6 @@ namespace mmath
 
     const float p2pY(const float perc, const sf::VideoMode& vm);
     const unsigned calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
+    const unsigned calcCharSize(const sf::Vector2f resolution, const unsigned modifier = 60);
 };
 #endif

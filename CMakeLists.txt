@@ -32,7 +32,8 @@ set(RESOURCE_FILES
     MyApplication/Content/Map/TileMap.cpp
     MyApplication/Content/ItemsStuff/Coins.cpp
     MyApplication/Content/ItemsStuff/Inventory.cpp
-    MyApplication/Content/ItemsStuff/Item.cpp
+    MyApplication/Content/ItemsStuff/Item.hpp
+    MyApplication/source/mypars/parsJSON.cpp
 )
 
 #set outputs directorry

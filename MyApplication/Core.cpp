@@ -4,7 +4,8 @@
 void Core::initVar() {
     this->mWindow = NULL;
     srand(std::time(NULL));
-    this->gfxSettings.loadFromFile("Config.cfg");
+    if (!this->gfxSettings.loadFromFile("Config.json"))
+        this->gfxSettings.saveToFile("Config.json");
 }
 
 void Core::initStateData() {
@@ -15,19 +16,33 @@ void Core::initStateData() {
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
+    this->mStatedata.parser = this->parsJSON;
 }
 
 void Core::initKeyBinds() {
-    //load supported keys from file to map
-    std::ifstream ifs("Config/supported_keys.ini");
-    if (ifs.is_open()) {
-        std::string key = "";
-        int key_value = 0;
-        while (ifs >> key >> key_value) {
-            this->supportedKeys[key] = key_value;
-        }
+    //load supported keys from JSON file to map supportedKeys, check if file exist, create if not
+    if (!this->parsJSON->loadKeyBinds("Config/supported_keys.json", this->supportedKeys)) {
+        //print error
+        std::cout << "ERROR::CORE::INITKEYBINDS::FAILED TO LOAD SUPPORTED KEYS FROM JSON FILE" << std::endl;
+        //init default keys "W A S D SPACE ESC E Q R F TAB"
+        this->supportedKeys["Escape"] = sf::Keyboard::Escape;
+        this->supportedKeys["A"] = sf::Keyboard::A;
+        this->supportedKeys["D"] = sf::Keyboard::D;
+        this->supportedKeys["S"] = sf::Keyboard::S;
+        this->supportedKeys["W"] = sf::Keyboard::W;
+        this->supportedKeys["Space"] = sf::Keyboard::Space;
+        this->supportedKeys["E"] = sf::Keyboard::E;
+        this->supportedKeys["Q"] = sf::Keyboard::Q;
+        this->supportedKeys["R"] = sf::Keyboard::R;
+        this->supportedKeys["F"] = sf::Keyboard::F;
+        this->supportedKeys["Tab"] = sf::Keyboard::Tab;
+        //save default keys to file
+        this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
     }
+    //else do nothing
 }
+
+
 
 void Core::initState() {
     this->mState.push(new MainMenu(&this->mStatedata));
@@ -53,6 +68,8 @@ void Core::initWindow() {
 }
 
 Core::Core() {
+    this->parsJSON = new mypars::parsJSON();
+
     this->initKeyBinds();
     this->initVar();
     this->initWindow();
@@ -61,6 +78,13 @@ Core::Core() {
 }
 
 Core::~Core() {
+    this->gfxSettings.saveToFile("Config.json");
+    delete this->parsJSON;
+
+    while (!this->mState.empty()) {
+        delete this->mState.top();
+        this->mState.pop();
+    }
     delete this->mWindow;
 }
 

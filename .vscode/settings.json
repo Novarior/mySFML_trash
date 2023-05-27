@@ -89,7 +89,7 @@
         "iterator": "cpp",
         "utility": "cpp",
         "*.modulemap": "cpp",
-        "*.json": "cpp",
+        "*.json": "json",
         "future": "cpp",
         "random": "cpp"
     },

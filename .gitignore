@@ -1,8 +1,5 @@
-/.DS_Store
-/Build
-/MyApplication_x86-64.app
-/MyApplication_ARM64.app
-/bin
-/MyApplication_ARM64.app.dSYM
-/CMakeFiles
-/Contents
+.vscode
+bin
+Build
+CMakeFiles
+Contents

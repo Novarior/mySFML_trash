@@ -13,13 +13,21 @@ Attributes::Attributes() {
 }
 Attributes:: ~Attributes() {}
 
-//functions for get and set attributes
-float Attributes::getHealth() {
-    return this->m_attributes.health;
+//functions for save and load attributes
+std::string Attributes::saveAttributesAsString() {
+    std::stringstream ss;
+    ss << this->m_attributes.health << " " << this->m_attributes.max_health << " " << this->m_attributes.regen << " "
+        << this->m_attributes.experience_for_level << " " << this->m_attributes.experience << " "
+        << this->m_attributes.level << " " << this->m_attributes.some_points;
+
+    return ss.str();
 }
 
-void Attributes::setHealth(float health) {
-    this->m_attributes.health = health;
+void Attributes::loadAttributesFromString(const std::string attributes_string) {
+    std::stringstream ss(attributes_string);
+    ss >> this->m_attributes.health >> this->m_attributes.max_health >> this->m_attributes.regen
+        >> this->m_attributes.experience_for_level >> this->m_attributes.experience
+        >> this->m_attributes.level >> this->m_attributes.some_points;
 }
 
 //chek if experience_for_level bigger than experience, if true level up and set experience to 0, after level up set experience_for_level to 1.5 * experience_for_level
@@ -37,28 +45,6 @@ void Attributes::chekForLevel(int experience) {
         //calculate new regen using max health and level
         this->m_attributes.regen = 1 + (this->m_attributes.level * 0.8 - 5) * 0.2;
     }
-}
-
-//add experience to experience
-void Attributes::addExperience(int experience) {
-    this->m_attributes.experience += experience;
-    this->chekForLevel(experience);
-}
-
-//get and set experience
-int Attributes::getExperience() {
-    return this->m_attributes.experience;
-}
-void Attributes::setExperience(int experience) {
-    this->m_attributes.experience = experience;
-}
-
-Attributes::Atri* Attributes::getAttributes() {
-    return &this->m_attributes;
-}
-
-void Attributes::setAttributes(Atri attributes) {
-    this->m_attributes = attributes;
 }
 
 void Attributes::update(const float& delta_time) {

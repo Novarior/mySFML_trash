@@ -50,3 +50,11 @@ const unsigned mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modif
     //  @return		unsigned				The calculated character size value.
     return static_cast<unsigned>((vm.width + vm.height) * modifier);
 }
+
+const unsigned mmath::calcCharSize(const sf::Vector2f resolution, const unsigned modifier) {
+    //  Calculates the character size for text using the current resolution and a constant.
+    //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
+    //  @param		unsigned modifier		Used to modify the character size in a more custom way.
+    //  @return		unsigned				The calculated character size value.
+    return static_cast<unsigned>((resolution.x + resolution.y) * modifier);
+}

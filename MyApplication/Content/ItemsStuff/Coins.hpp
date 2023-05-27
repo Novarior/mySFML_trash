@@ -69,6 +69,10 @@ class Coins: public sf::Drawable
     const int get_SilverCointCount();
     const int get_CopperCointCount();
 
+    //Update coins
+    void updateCoins();
+    
+
     void getText();
 
 };

@@ -19,6 +19,7 @@ const char texture_TREE[] = "Resourses/Textures/Sprites/treee.png";
 const char item_img_gold_nugget[] = "Resourses/Textures/Textures/gold_nugget.png";
 const char item_img_copper_nuggen[] = "Resourses/Textures/Textures/copper_nugget.png";
 const char item_img_silver_nuggen[] = "Resourses/Textures/Textures/iron_nugget.png";
+const char item_img_someore[] = "Resourses/Textures/Textures/some_ore.png";
 
 
 #endif

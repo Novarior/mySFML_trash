@@ -5,7 +5,7 @@ gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::st
 	sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
 	sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
 	sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
-	short unsigned id):b_font(font) {
+	short unsigned id) :b_font(font) {
 	this->buttonState = BTN_IDLE;
 	this->id = id;
 
@@ -299,30 +299,25 @@ void gui::TextureSelector::render(sf::RenderTarget& target) {
 
 // PROGRESSBAR ============================================================================= PROGRESSBAR
 
-gui::ProgressBar::ProgressBar(float _x, float _y, float _width, float _height, sf::Color inner_color,
-	unsigned character_size, sf::VideoMode& vm, sf::Font* font) {
-	float width = mmath::p2pX(_width, vm);
-	float height = mmath::p2pY(_height, vm);
-	float x = mmath::p2pX(_x, vm);
-	float y = mmath::p2pY(_y, vm);
+gui::ProgressBar::ProgressBar(sf::Vector2f pos, sf::Vector2f size,
+	sf::Color inner_color, unsigned character_size,
+	sf::Vector2f resolution, sf::Font& font) {
 
-	this->maxWidth = width;
-
-	this->back.setSize(sf::Vector2f(width, height));
+	this->back.setSize(size);
 	this->back.setFillColor(sf::Color(50, 50, 50, 200));
-	this->back.setPosition(x, y);
+	this->back.setPosition(pos);
 
-	this->inner.setSize(sf::Vector2f(width, height));
+	this->inner.setSize(size);
 	this->inner.setFillColor(inner_color);
 	this->inner.setPosition(this->back.getPosition());
 
-	if (font) {
-		this->text.setFont(*font);
-		this->text.setCharacterSize(mmath::calcCharSize(vm, character_size));
-		this->text.setPosition(
-			this->inner.getPosition().x + mmath::p2pX(0.53f, vm),
-			this->inner.getPosition().y + mmath::p2pY(0.5f, vm));
-	}
+
+	this->text.setFont(font);
+	this->text.setCharacterSize(character_size);
+	this->text.setPosition(
+		this->inner.getPosition().x + resolution.x * 0.53,
+		this->inner.getPosition().y + resolution.y * 0.5);
+
 }
 
 gui::ProgressBar::~ProgressBar() { }

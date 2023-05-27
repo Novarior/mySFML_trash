@@ -145,8 +145,8 @@
 },
 {
   "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Item.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Item.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Item.cpp",
-  "output": "CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Item.cpp.o"
+  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/source/mypars/parsJSON.cpp",
+  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/source/mypars/parsJSON.cpp",
+  "output": "CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o"
 }
 ]

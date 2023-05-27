@@ -3,9 +3,12 @@
 
 #include "states/MainMenu.hpp"
 #include "states/gfx.hpp"
+#include "source/mypars/parsJSON.hpp"
+
 class Core
 {
     private:
+    mypars::parsJSON* parsJSON;
     float deltaTime;
     sf::Clock deltaClock;
 

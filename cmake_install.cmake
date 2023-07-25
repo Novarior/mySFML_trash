@@ -1,4 +1,4 @@
-# Install script for directory: /Users/dmitrijsusenko/Desktop/try
+# Install script for directory: /Users/nova/Documents/c++ repo/testSfml
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/dmitrijsusenko/Desktop/try/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/nova/Documents/c++ repo/testSfml/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

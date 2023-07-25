@@ -30,7 +30,7 @@ class SettingsState : public State
     void updateGui(const float& dt);
     void update(const float& dt);
     void renderGui(sf::RenderTarget& target);
-    void render(sf::RenderTarget* target = nullptr);
+    void render(sf::RenderWindow& target );
 };
 
 #endif //CPP_SETTINGS_STATE_HPP

@@ -24,9 +24,16 @@ void SettingsState::resetGui() {
 }
 
 
-SettingsState::SettingsState(StateData* state_data) {
+SettingsState::SettingsState(StateData* state_data):State(state_data){
+    this->initVariables();
+    this->initBackground();
+    this->initFonts();
+    this->initGui();
+    this->initKeybinds();
 }
-SettingsState:: ~SettingsState() {
+
+SettingsState::~SettingsState() {
+    
 }
 
 //Functions
@@ -42,6 +49,6 @@ void SettingsState::update(const float& dt) {
 void SettingsState::renderGui(sf::RenderTarget& target) {
 
 }
-void SettingsState::render(sf::RenderTarget* target = nullptr) {
+void SettingsState::render(sf::RenderTarget& target) {
 
 }

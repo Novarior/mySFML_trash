@@ -4,6 +4,7 @@
 #include "State.hpp"
 #include "Process.hpp"
 #include "NoiceView.hpp"
+#include "settings.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../Content/rotationCircle.hpp"
 

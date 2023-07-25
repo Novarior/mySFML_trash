@@ -1,152 +1,152 @@
 [
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/main.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/main.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/main.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/main.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/main.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/main.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Core.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Core.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Core.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Core.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Core.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Core.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/math/mymath.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/mymath.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/math/mymath.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/math/mymath.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/math/mymath.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/math/mymath.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/math/ProcessGenerationNoice.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/math/ProcessGenerationNoice.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/math/ProcessGenerationNoice.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/math/ProcessGenerationNoice.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/math/ProcessGenerationNoice.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/math/ProcessGenerationNoice.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/gfx.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/gfx.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/gfx.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/gfx.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/gfx.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/gfx.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/MainMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/MainMenu.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/MainMenu.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/MainMenu.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/MainMenu.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/MainMenu.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/NoiceView.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/NoiceView.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/NoiceView.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/NoiceView.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/NoiceView.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/NoiceView.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/PauseMenu.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/PauseMenu.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/PauseMenu.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/PauseMenu.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/PauseMenu.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/PauseMenu.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/Process.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/Process.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/Process.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/Process.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/Process.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/Process.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/states/State.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/states/State.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/State.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/State.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/State.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/State.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/GUI/GUISYS.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/GUISYS.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/GUISYS.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/entity.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/entity.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/entity.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/entity.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/entity.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/entity.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/player.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/player.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/player.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/player.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/player.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/player.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/Slime.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/Enemys/Slime.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/Enemys/Slime.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/Enemys/Slime.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/Enemys/Slime.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIFollow.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIFollow.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIFollow.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/AI/AIFollow.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/AI/AIFollow.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIFollow.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIComponent.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/AI/AIComponent.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIComponent.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/AI/AIComponent.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/AI/AIComponent.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/AI/AIComponent.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/hitbox.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/hitbox.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/hitbox.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/hitbox.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/hitbox.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/properties/hitbox.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/movement.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/movement.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/movement.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/movement.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/movement.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/properties/movement.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/attributes.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/entitys/properties/attributes.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/attributes.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/entitys/properties/attributes.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/entitys/properties/attributes.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/rotationCircle.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/rotationCircle.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Content/rotationCircle.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/rotationCircle.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/rotationCircle.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Content/rotationCircle.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/Map/block.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/block.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Content/Map/block.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/Map/block.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/Map/block.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Content/Map/block.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/Map/TileMap.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/Map/TileMap.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Content/Map/TileMap.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/Map/TileMap.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/Map/TileMap.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Content/Map/TileMap.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Coins.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Coins.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Coins.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Coins.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/ItemsStuff/Coins.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/ItemsStuff/Coins.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Coins.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Inventory.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Inventory.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/Content/ItemsStuff/Inventory.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Inventory.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/ItemsStuff/Inventory.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/Content/ItemsStuff/Inventory.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/Content/ItemsStuff/Inventory.cpp.o"
 },
 {
-  "directory": "/Users/dmitrijsusenko/Desktop/try/build",
-  "command": "/Library/Developer/CommandLineTools/usr/bin/c++  -I/Users/dmitrijsusenko/Desktop/try/MyApplication/cmakever.h.in -I/Users/dmitrijsusenko/Desktop/try -isystem /usr/local/include -O3 -DNDEBUG -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.1.sdk -o CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o -c /Users/dmitrijsusenko/Desktop/try/MyApplication/source/mypars/parsJSON.cpp",
-  "file": "/Users/dmitrijsusenko/Desktop/try/MyApplication/source/mypars/parsJSON.cpp",
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/source/mypars/parsJSON.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/source/mypars/parsJSON.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/source/mypars/parsJSON.cpp.o"
 }
 ]

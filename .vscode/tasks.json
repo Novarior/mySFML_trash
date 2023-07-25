@@ -20,6 +20,7 @@
 				"MyApplication/states/Process.cpp",
 				"MyApplication/states/gfx.cpp",
 				"MyApplication/states/NoiceView.cpp",
+				"MyApplication/states/settings.cpp",
 				"MyApplication/math/mymath.cpp",
 				"MyApplication/math/ProcessGenerationNoice.cpp",
 				"MyApplication/GUI/GUISYS.cpp",
@@ -38,13 +39,14 @@
 				"MyApplication/Content/Map/TileMap.cpp",
 				"MyApplication/source/mypars/parsJSON.cpp",
 				"-Isource/include/",
-				"-o",
-				"${workspaceFolder}/MyApplication_ARM64.app",
 				"-Lsource/lib",
 				"-lsfml-graphics",
 				"-lsfml-window",
 				"-lsfml-system",
-				"-w"
+				"-w",
+				"-o",
+				"${workspaceFolder}/MyApplication_ARM64.app",
+				"-v"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

@@ -19,6 +19,7 @@ void SettingsState::initKeybinds(){
 
 }
 void SettingsState::initGui() {
+
 }
 void SettingsState::resetGui() {
 }
@@ -33,7 +34,7 @@ SettingsState::SettingsState(StateData* state_data):State(state_data){
 }
 
 SettingsState::~SettingsState() {
-    
+
 }
 
 //Functions
@@ -49,6 +50,6 @@ void SettingsState::update(const float& dt) {
 void SettingsState::renderGui(sf::RenderTarget& target) {
 
 }
-void SettingsState::render(sf::RenderTarget& target) {
+void SettingsState::render(sf::RenderWindow& target) {
 
 }

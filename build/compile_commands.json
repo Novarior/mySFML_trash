@@ -49,6 +49,12 @@
 },
 {
   "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
+  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/settings.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/settings.cpp\"",
+  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/settings.cpp",
+  "output": "CMakeFiles/GameProto.dir/MyApplication/states/settings.cpp.o"
+},
+{
+  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
   "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/states/Process.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/Process.cpp\"",
   "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/states/Process.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/states/Process.cpp.o"

@@ -45,8 +45,7 @@
 				"-lsfml-system",
 				"-w",
 				"-o",
-				"${workspaceFolder}/MyApplication_ARM64.app",
-				"-v"
+				"${workspaceFolder}/MyApplication_ARM64.app"
 			],
 			"options": {
 				"cwd": "${workspaceFolder}"

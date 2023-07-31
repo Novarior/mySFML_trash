@@ -1,14 +1,8 @@
 #include "parsJSON.hpp"
 using namespace mypars;
 
-parsJSON::parsJSON() {
-    std::cout << "parsJSON::parsJSON()" << std::endl;
-}
-
-parsJSON::~parsJSON() {
-    std::cout << "parsJSON::~parsJSON()" << std::endl;
-}
-
+parsJSON::parsJSON() {}
+parsJSON::~parsJSON() {}
 
 const bool parsJSON::loadKeyBinds(const std::string& filename, std::map<std::string, int>& keyBinds) {
     //load key binds from json file
@@ -62,8 +56,8 @@ const bool parsJSON::saveKeyBinds(const std::string& filename, std::map<std::str
     //check open file
     if (!ofs.is_open()) {
         printf("ERROR::PARSER::JSON::KEYBINDS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
-        return false;
     }
+    
     //save to json file
     ofs << "{\n";
     ofs << "\t\"key_binds\": [\n";

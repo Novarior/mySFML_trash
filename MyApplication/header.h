@@ -17,6 +17,7 @@
 #include <stack>
 #include <map>
 #include <algorithm>
+#include <filesystem>
 
 
 //include SFML libary
@@ -26,8 +27,9 @@
 
 //include in program files
 #include "math/mymath.hpp"
-#include "DataLoader.hpp"
+
 #include "ConfigurationProgram.h"
+#include "myConst.h"
 
 
 #endif

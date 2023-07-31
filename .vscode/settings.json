@@ -1,6 +1,6 @@
 {
     "C_Cpp.errorSquiggles": "disabled",
-    "C_Cpp.configurationWarnings": "Disabled",
+    "C_Cpp.configurationWarnings": "enabled",
     "files.associations": {
         "iostream": "cpp",
         "__hash_table": "cpp",
@@ -91,10 +91,14 @@
         "*.modulemap": "cpp",
         "*.json": "json",
         "future": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "__verbose_abort": "cpp",
+        "bit": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
+    "editor.formatOnSave": true,
+    "clang-format.executable": "/absolute/path/to/clang-format",
     "editor.fontLigatures": false,
     "editor.fontSize": 14,
     "editor.formatOnPaste": true,

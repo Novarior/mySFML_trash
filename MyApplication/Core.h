@@ -19,7 +19,8 @@ class Core
     sf::Event mEvents;
     std::map<std::string, int> supportedKeys;
 
-    //inits
+    //initilization functions
+    void initDirectories();
     void initKeyBinds();
     void initVar();
     void initStateData();

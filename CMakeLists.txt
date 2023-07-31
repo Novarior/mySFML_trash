@@ -16,6 +16,7 @@ set(RESOURCE_FILES
     MyApplication/states/MainMenu.cpp
     MyApplication/states/NoiceView.cpp
     MyApplication/states/PauseMenu.cpp
+    MyApplication/states/settings.cpp
     MyApplication/states/Process.cpp
     MyApplication/states/State.cpp
     MyApplication/GUI/GUISYS.cpp 

@@ -127,7 +127,7 @@ void Process::initView() {
 }
 
 void Process::initPlayer() {
-    if (!this->playerTextureSHIT.loadFromFile(texture_GRASS))
+    if (!this->playerTextureSHIT.loadFromFile(myConst::texture_GRASS))
     {
     }
     this->player = new Player(100, 100, this->playerTextureSHIT);

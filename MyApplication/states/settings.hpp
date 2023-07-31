@@ -12,6 +12,7 @@ class SettingsState : public State
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
     std::map<std::string, gui::DropDownList*> dropDownLists;
+    std::vector<sf::VideoMode> video_modes;
 
     //Functions
     void initVariables();
@@ -26,9 +27,9 @@ class SettingsState : public State
     virtual ~SettingsState();
 
     //Functions
-    void updateInput(const float& dt);
-    void updateGui(const float& dt);
-    void update(const float& dt);
+    void updateInput(const float& delta_time);
+    void updateGui(const float& delta_time);
+     void update(const float& delta_time);
     void renderGui(sf::RenderTarget& target);
     void render(sf::RenderWindow& target );
 };

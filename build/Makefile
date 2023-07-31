@@ -729,6 +729,30 @@ MyApplication/states/gfx.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/states/gfx.cpp.s
 .PHONY : MyApplication/states/gfx.cpp.s
 
+MyApplication/states/settings.o: MyApplication/states/settings.cpp.o
+.PHONY : MyApplication/states/settings.o
+
+# target to build an object file
+MyApplication/states/settings.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/states/settings.cpp.o
+.PHONY : MyApplication/states/settings.cpp.o
+
+MyApplication/states/settings.i: MyApplication/states/settings.cpp.i
+.PHONY : MyApplication/states/settings.i
+
+# target to preprocess a source file
+MyApplication/states/settings.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/states/settings.cpp.i
+.PHONY : MyApplication/states/settings.cpp.i
+
+MyApplication/states/settings.s: MyApplication/states/settings.cpp.s
+.PHONY : MyApplication/states/settings.s
+
+# target to generate assembly for a file
+MyApplication/states/settings.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/states/settings.cpp.s
+.PHONY : MyApplication/states/settings.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -813,6 +837,9 @@ help:
 	@echo "... MyApplication/states/gfx.o"
 	@echo "... MyApplication/states/gfx.i"
 	@echo "... MyApplication/states/gfx.s"
+	@echo "... MyApplication/states/settings.o"
+	@echo "... MyApplication/states/settings.i"
+	@echo "... MyApplication/states/settings.s"
 .PHONY : help
 
 

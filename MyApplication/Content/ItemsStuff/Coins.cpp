@@ -14,9 +14,9 @@ Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::F
     this->m_coin_shape.m_CopperShape.setPosition(sf::Vector2f(pos.x + (size.x / 4) * 2, pos.y + (size.y / 4)));
     this->m_coin_shape.m_CopperShape.setSize(image_size);
 
-    this->m_coin_texture.m_TextureGold.loadFromFile(item_img_gold_nugget);
-    this->m_coin_texture.m_TextureCopper.loadFromFile(item_img_copper_nuggen);
-    this->m_coin_texture.m_TextureSilver.loadFromFile(item_img_silver_nuggen);
+    this->m_coin_texture.m_TextureGold.loadFromFile(myConst::item_img_gold_nugget);
+    this->m_coin_texture.m_TextureCopper.loadFromFile(myConst::item_img_copper_nuggen);
+    this->m_coin_texture.m_TextureSilver.loadFromFile(myConst::item_img_silver_nuggen);
     this->m_coin_shape.m_GoldShape.setTexture(&this->m_coin_texture.m_TextureGold);
     this->m_coin_shape.m_SilverShape.setTexture(&this->m_coin_texture.m_TextureSilver);
     this->m_coin_shape.m_CopperShape.setTexture(&this->m_coin_texture.m_TextureCopper);

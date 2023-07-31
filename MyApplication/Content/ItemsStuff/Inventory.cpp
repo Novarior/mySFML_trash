@@ -19,7 +19,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, 
     this->m_Text.setFillColor(sf::Color::White);
     this->m_Text.setOutlineColor(sf::Color::Black);
     this->m_Text.setOutlineThickness(2.0f);
-    this->m_CellInvTex.loadFromFile(texture_CellInventory_path);
+    this->m_CellInvTex.loadFromFile(myConst::texture_CellInventory_path);
     this->m_StringStream.str("");
     this->m_Text.setPosition(m_BackShape.getPosition().x + character_size,
         m_BackShape.getPosition().y + m_BackShape.getSize().y - mmath::p2pX(5, this->m_BackShape.getSize().y) - character_size);
@@ -47,7 +47,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float cell_size, sf::Font& font, 
         this->m_InventoryMap[x] = new Stone(sf::Vector2f(
             this->m_BackShape.getPosition().x + size * x,
             this->m_BackShape.getPosition().y + size * x),
-            sf::Vector2f(size, size), item_img_someore, false, 1, 1, false);
+            sf::Vector2f(size, size), myConst::item_img_someore, false, 1, 1, false);
 
     }
 }

@@ -1,18 +1,59 @@
 #include "Core.h"
 
+//build folders for app
+/*
+            -ROOT
+            -Myapp.app
+            -Config/
+                -KeyBinds.json
+                -Config.json
+            -resourses/
+                -textures
+                -sprites
+                -sounds
+
+*/
+void Core::initDirectories()  {
+    //directory Config and resourses
+
+    //make confing, resourses folder
+    std::filesystem::create_directory("config");
+    std::filesystem::create_directory("resourses");
+    //print error if not created    
+    if (!std::filesystem::exists("config")) 
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE CONFIG FOLDER" << std::endl;
+    if (!std::filesystem::exists("resourses")) 
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE resourses FOLDER" << std::endl;
+    //make resourses , textures, sprites, sounds, fonts, folder
+    std::filesystem::create_directory("resourses/textures");
+    std::filesystem::create_directory("resourses/sprites");
+    std::filesystem::create_directory("resourses/sounds");
+    std::filesystem::create_directory("resourses/fonts");
+    //print error if not created
+    if (!std::filesystem::exists("resourses/textures")) 
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE TEXTURES FOLDER" << std::endl;
+    if (!std::filesystem::exists("resourses/sprites")) 
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SPRITES FOLDER" << std::endl;
+    if (!std::filesystem::exists("resourses/sounds")) 
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SOUNDS FOLDER" << std::endl;
+    if (!std::filesystem::exists("resourses/fonts"))
+        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE FONTS FOLDER" << std::endl;
+
+}
+
 //initialisations root data and build first frame app
 void Core::initVar() {
     this->mWindow = NULL;
     srand(std::time(NULL));
-    if (!this->gfxSettings.loadFromFile("Config.json"))
-        this->gfxSettings.saveToFile("Config.json");
+    if (!this->gfxSettings.loadFromFile("Config/window.json"))
+        this->gfxSettings.saveToFile("Config/window.json");
 }
 
 void Core::initStateData() {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(data_gameproces_font_path)) {}
-    if (!this->mStatedata.debugFont.loadFromFile(data_gameproces_font_path)) {}
+    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path)) {}
+    if (!this->mStatedata.debugFont.loadFromFile(myConst::data_gameproces_font_path)) {}
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
@@ -21,7 +62,7 @@ void Core::initStateData() {
 
 void Core::initKeyBinds() {
     //load supported keys from JSON file to map supportedKeys, check if file exist, create if not
-    if (!this->parsJSON->loadKeyBinds("Config/supported_keys.json", this->supportedKeys)) {
+    if (!this->parsJSON->loadKeyBinds("config/supported_keys.json", this->supportedKeys)) {
         //print error
         std::cout << "ERROR::CORE::INITKEYBINDS::FAILED TO LOAD SUPPORTED KEYS FROM JSON FILE" << std::endl;
         //init default keys "W A S D SPACE ESC E Q R F TAB"
@@ -38,11 +79,10 @@ void Core::initKeyBinds() {
         this->supportedKeys["Tab"] = sf::Keyboard::Tab;
         //save default keys to file
         this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
+                
     }
     //else do nothing
 }
-
-
 
 void Core::initState() {
     this->mState.push(new MainMenu(&this->mStatedata));
@@ -69,7 +109,7 @@ void Core::initWindow() {
 
 Core::Core() {
     this->parsJSON = new mypars::parsJSON();
-
+    this->initDirectories();
     this->initKeyBinds();
     this->initVar();
     this->initWindow();

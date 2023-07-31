@@ -182,7 +182,7 @@ void MainMenu::updateButtons() {
         this->resetView();
     }
     if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new SettingsState(this->IstateData));
+       this->Istates->push(new SettingsState(this->IstateData));
 
     if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
         this->Istates->push(new NoiceView(this->IstateData, false));

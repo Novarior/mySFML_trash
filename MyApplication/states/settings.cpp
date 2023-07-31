@@ -2,12 +2,12 @@
 
 void SettingsState::initVariables() {
     this->Iparser = this->IstateData->parser;
-    this->modes = sf::VideoMode::getFullscreenModes();
+    this->video_modes = sf::VideoMode::getFullscreenModes();
 }
 void SettingsState::initBackground() {
     this->background.setSize(sf::Vector2f(
-        static_cast<float>(this->window->getSize().x),
-        static_cast<float>(this->window->getSize().y)));
+        static_cast<float>(this->Iwindow->getSize().x),
+        static_cast<float>(this->Iwindow->getSize().y)));
     //darkest blue color
     this->background.setFillColor(sf::Color(3, 3, 30, 100));
 
@@ -51,5 +51,6 @@ void SettingsState::renderGui(sf::RenderTarget& target) {
 
 }
 void SettingsState::render(sf::RenderWindow& target) {
+    target.draw(this->background);
 
 }

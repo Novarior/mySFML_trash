@@ -98,10 +98,8 @@
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
     "editor.formatOnSave": true,
-    "clang-format.executable": "/absolute/path/to/clang-format",
     "editor.fontLigatures": false,
     "editor.fontSize": 14,
-    "editor.formatOnPaste": true,
     "editor.minimap.autohide": true,
     "editor.minimap.scale": 1,
     "editor.minimap.enabled": false,
@@ -129,5 +127,8 @@
             "binaryPath": "/Users/dmitrijsusenko/Desktop/try/myapp",
             "binaryArgs": []
         }
-    ]
+    ],
+    "editor.formatOnPaste": true,
+    "editor.formatOnType": true,
+    "clang-format.executable": "clang-format"
 }

@@ -11,6 +11,7 @@ const char config_keybinds []="config/keybinds.json";
 
 const char data_debugfont_path[] = "resourses/fonts/Muli-Regular.ttf";
 const char data_gameproces_font_path[] = "resourses/fonts/endor.ttf";
+const char data_gameproces_font_path_2[] = "resourses/fonts/Alamak.ttf"; 
 
 const char texture_CellInventory_path[] = "resourses/Textures/Textures/CellOutLine.png";
 

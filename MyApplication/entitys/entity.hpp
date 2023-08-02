@@ -2,16 +2,18 @@
 #define CPP_ENTITYCLASS_HPP
 
 #include "../header.h"
-#include "properties/movement.hpp"
-#include "properties/hitbox.hpp"
 #include "properties/attributes.hpp"
+#include "properties/hitbox.hpp"
+#include "properties/movement.hpp"
 
-enum movementState { IDLE = 0, WALK, JUMP, DUCK };
+enum movementState { IDLE = 0,
+    WALK,
+    JUMP,
+    DUCK };
 
-class Entity
-{
-    private:
-    protected:
+class Entity {
+private:
+protected:
     sf::Sprite m_sprite;
     MovementComponent* e_movement;
     HitboxComponent* e_hitbox;
@@ -27,32 +29,38 @@ class Entity
     void createMovementComponent(const float acceleration, const float deceleration, const float maxVelocity);
     void createAttributesComponent();
 
-    public:
+public:
     Entity();
     virtual ~Entity();
 
-    HitboxComponent* getHitbox();
-    MovementComponent* getMovement();
-    Attributes* getAttributes();
+    inline HitboxComponent* getHitbox() { return this->e_hitbox; }
+    inline MovementComponent* getMovement() { return this->e_movement; }
+    inline Attributes* getAttributes() { return this->e_attributes; }
 
-    virtual void setTexture(sf::Texture& texture);
+    inline virtual const float& getGridSizeFloat() const { return this->gridSizeF; }
+    inline virtual const sf::Vector2f& e_getVelocity() { return this->e_movement->getVelocity(); }
+    inline virtual const sf::Vector2f& e_getPosition() { return this->m_sprite.getPosition(); }
+
+    inline virtual void e_setTexture(sf::Texture& texture) { this->m_sprite.setTexture(texture); }
+    inline virtual void e_setPosition(const sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
+    inline virtual void e_setPosition(const float pos_x, const float pos_y) { this->m_sprite.setPosition(sf::Vector2f(pos_x, pos_y)); }
 
     virtual void e_move(const float& dir_x, const float& dir_y, const float& delta_time);
-    virtual void e_updateAnimation(std::string keyNameAnimation, const float& delta_time);
-    virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision);
-    virtual void e_updateMovement(const float& delta_time);
+    inline virtual void e_updateAnimation(std::string keyNameAnimation, const float& delta_time) { }
+    virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision) { this->e_hitbox->update(); }
+    inline virtual void e_updateMovement(const float& delta_time) { this->e_movement->update(delta_time); }
 
-    virtual const float& getGridSizeFloat() const;
+    // getters functions
+
     virtual const sf::FloatRect getGlobalBounds();
+
     virtual const sf::FloatRect getNextPositionBounds(const float& delta_time);
-    virtual const sf::Vector2f& e_getVelocity();
-    virtual const sf::Vector2f& e_getPosition();
     virtual const sf::Vector2f e_getGridPositionFloat(const float& gridsize);
     virtual const sf::Vector2i e_getGridPositionInt(const unsigned int& grisSize);
-    virtual void e_setPosition(const sf::Vector2f pos);
-    virtual void e_setPosition(const float pos_x, const float pos_y);
+
+    // set functions
 
     virtual void e_update(const float& dt) = 0;
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
 };
-#endif 
+#endif

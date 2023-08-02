@@ -1,4 +1,7 @@
 .vscode
-bin
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+bin/GameProto
 Build
 CMakeFiles

@@ -3,10 +3,12 @@
 
 #include "State.hpp"
 
-class SettingsState : public State
-{
-    private:
-    //Variables
+/// @brief  Class for the settings state
+/// @note   Inherited from the State class
+/// @retval None
+class SettingsState : public State {
+private:
+    // Variables
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Font font;
@@ -14,24 +16,25 @@ class SettingsState : public State
     std::map<std::string, gui::DropDownList*> dropDownLists;
     std::vector<sf::VideoMode> video_modes;
 
-    //Functions
+    // Initializer functions
     void initVariables();
-    void initBackground();
     void initFonts();
     void initKeybinds();
     void initGui();
     void resetGui();
 
-    public:
+public:
+    /// @brief Constructor for SettingsState
+    /// @param state_data
     SettingsState(StateData* state_data);
     virtual ~SettingsState();
 
-    //Functions
+    // Functions
     void updateInput(const float& delta_time);
     void updateGui(const float& delta_time);
-     void update(const float& delta_time);
+    void update(const float& delta_time);
     void renderGui(sf::RenderTarget& target);
-    void render(sf::RenderWindow& target );
+    void render(sf::RenderWindow& target);
 };
 
-#endif //CPP_SETTINGS_STATE_HPP
+#endif // CPP_SETTINGS_STATE_HPP

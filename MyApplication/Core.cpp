@@ -1,6 +1,6 @@
 #include "Core.h"
 
-//build folders for app
+// build folders for app
 /*
             -ROOT
             -Myapp.app
@@ -13,82 +13,90 @@
                 -sounds
 
 */
-void Core::initDirectories()  {
-    //directory Config and resourses
+void Core::initDirectories()
+{
+    // directory Config and resourses
 
-    //make confing, resourses folder
+    // make confing, resourses folder
     std::filesystem::create_directory("config");
     std::filesystem::create_directory("resourses");
-    //print error if not created    
-    if (!std::filesystem::exists("config")) 
+    // print error if not created
+    if (!std::filesystem::exists("config"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE CONFIG FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses")) 
+    if (!std::filesystem::exists("resourses"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE resourses FOLDER" << std::endl;
-    //make resourses , textures, sprites, sounds, fonts, folder
+    // make resourses , textures, sprites, sounds, fonts, folder
     std::filesystem::create_directory("resourses/textures");
     std::filesystem::create_directory("resourses/sprites");
     std::filesystem::create_directory("resourses/sounds");
     std::filesystem::create_directory("resourses/fonts");
-    //print error if not created
-    if (!std::filesystem::exists("resourses/textures")) 
+    // print error if not created
+    if (!std::filesystem::exists("resourses/textures"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE TEXTURES FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses/sprites")) 
+    if (!std::filesystem::exists("resourses/sprites"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SPRITES FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses/sounds")) 
+    if (!std::filesystem::exists("resourses/sounds"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SOUNDS FOLDER" << std::endl;
     if (!std::filesystem::exists("resourses/fonts"))
         std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE FONTS FOLDER" << std::endl;
-
 }
 
-//initialisations root data and build first frame app
-void Core::initVar() {
+// initialisations root data and build first frame app
+void Core::initVar()
+{
     this->mWindow = NULL;
     srand(std::time(NULL));
     if (!this->gfxSettings.loadFromFile("Config/window.json"))
         this->gfxSettings.saveToFile("Config/window.json");
 }
 
-void Core::initStateData() {
+void Core::initStateData()
+{
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path)) {}
-    if (!this->mStatedata.debugFont.loadFromFile(myConst::data_gameproces_font_path)) {}
+    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path_2)) { }
+    if (!this->mStatedata.debugFont.loadFromFile(myConst::data_debugfont_path)) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
     this->mStatedata.parser = this->parsJSON;
+    this->mStatedata.flag_from_stateData = false;
 }
 
-void Core::initKeyBinds() {
-    //load supported keys from JSON file to map supportedKeys, check if file exist, create if not
+void Core::initKeyBinds()
+{
+    // load supported keys from JSON file to map supportedKeys, check if file exist, create if not
     if (!this->parsJSON->loadKeyBinds("config/supported_keys.json", this->supportedKeys)) {
-        //print error
+        // print error
         std::cout << "ERROR::CORE::INITKEYBINDS::FAILED TO LOAD SUPPORTED KEYS FROM JSON FILE" << std::endl;
-        //init default keys "W A S D SPACE ESC E Q R F TAB"
+        // init default keys
         this->supportedKeys["Escape"] = sf::Keyboard::Escape;
         this->supportedKeys["A"] = sf::Keyboard::A;
+        this->supportedKeys["C"] = sf::Keyboard::C;
         this->supportedKeys["D"] = sf::Keyboard::D;
-        this->supportedKeys["S"] = sf::Keyboard::S;
-        this->supportedKeys["W"] = sf::Keyboard::W;
-        this->supportedKeys["Space"] = sf::Keyboard::Space;
         this->supportedKeys["E"] = sf::Keyboard::E;
+        this->supportedKeys["F"] = sf::Keyboard::F;
         this->supportedKeys["Q"] = sf::Keyboard::Q;
         this->supportedKeys["R"] = sf::Keyboard::R;
-        this->supportedKeys["F"] = sf::Keyboard::F;
+        this->supportedKeys["S"] = sf::Keyboard::S;
+        this->supportedKeys["W"] = sf::Keyboard::W;
+        this->supportedKeys["X"] = sf::Keyboard::X;
+        this->supportedKeys["Z"] = sf::Keyboard::Z;
+        this->supportedKeys["Space"] = sf::Keyboard::Space;
         this->supportedKeys["Tab"] = sf::Keyboard::Tab;
-        //save default keys to file
+        // save default keys to file
         this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
-                
     }
-    //else do nothing
+    // else do nothing
 }
 
-void Core::initState() {
+void Core::initState()
+{
     this->mState.push(new MainMenu(&this->mStatedata));
 }
 
-void Core::initWindow() {
+void Core::initWindow()
+{
     if (this->gfxSettings.fullscreen)
         this->mWindow = new sf::RenderWindow(
             this->gfxSettings.resolution,
@@ -104,10 +112,10 @@ void Core::initWindow() {
 
     this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
     this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
-
 }
 
-Core::Core() {
+Core::Core()
+{
     this->parsJSON = new mypars::parsJSON();
     this->initDirectories();
     this->initKeyBinds();
@@ -117,8 +125,9 @@ Core::Core() {
     this->initState();
 }
 
-Core::~Core() {
-    this->gfxSettings.saveToFile("Config.json");
+Core::~Core()
+{
+    this->gfxSettings.saveToFile(myConst::config_window);
     delete this->parsJSON;
 
     while (!this->mState.empty()) {
@@ -128,7 +137,8 @@ Core::~Core() {
     delete this->mWindow;
 }
 
-void Core::run() {
+void Core::run()
+{
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();
         this->update();
@@ -136,35 +146,36 @@ void Core::run() {
     }
 }
 
-void Core::update() {
+void Core::update()
+{
     this->updateEventsWindow();
-    if (!this->mState.empty())
-    {
-        if (this->mWindow->hasFocus())
-        {
+
+    if (!this->mState.empty()) {
+        if (this->mWindow->hasFocus()) {
             this->mState.top()->update(this->deltaTime);
-            if (this->mState.top()->getQuit())
-            {
+
+            if (this->mState.top()->getQuit()) {
                 this->mState.top()->endState();
                 delete this->mState.top();
                 this->mState.pop();
             }
         }
     }
-    //Application end
+    // Application end
     else {
         this->mWindow->close();
     }
 }
 
-void Core::updateEventsWindow() {
+void Core::updateEventsWindow()
+{
     while (this->mWindow->pollEvent(this->mEvents))
         if (this->mEvents.type == sf::Event::Closed)
             this->mWindow->close();
-
 }
 
-void Core::render() {
+void Core::render()
+{
     this->mWindow->clear();
 
     if (!this->mState.empty())
@@ -173,7 +184,8 @@ void Core::render() {
     this->mWindow->display();
 }
 
-void Core::updateDeltaTime() {
+void Core::updateDeltaTime()
+{
     this->deltaTime = 0;
     this->deltaTime = this->deltaClock.restart().asSeconds();
 }

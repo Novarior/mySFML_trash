@@ -1,0 +1,16 @@
+{
+	"player": {
+		"position": {
+			"x": 100,
+			"y": 100
+		},
+		"attributes": {
+			"hp": 100,
+			"max_hp": 100,
+			"current_exp": 0,
+			"exp_for_level": 100,
+			"level": 1,
+			"some_points": 0
+		}
+	}
+}

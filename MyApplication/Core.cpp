@@ -60,7 +60,8 @@ void Core::initStateData()
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
     this->mStatedata.parser = this->parsJSON;
-    this->mStatedata.flag_from_stateData = false;
+    this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
+    this->mStatedata.characterSize_game = mmath::calcCharSize(this->mWindow->getSize(), 70);
 }
 
 void Core::initKeyBinds()
@@ -148,6 +149,7 @@ void Core::run()
 
 void Core::update()
 {
+    // state update
     this->updateEventsWindow();
 
     if (!this->mState.empty()) {

@@ -2,158 +2,170 @@
 #define GUI_H
 #include "../header.h"
 
-enum button_states { BTN_IDLE = 0, BTN_HOVER, BTN_ACTIVE };
+enum button_states { BTN_IDLE = 0,
+    BTN_HOVER,
+    BTN_ACTIVE };
 
-namespace gui
-{
-	class Button
-	{
-		private:
-		short unsigned buttonState;
-		short unsigned id;
+namespace gui {
+class Button {
+private:
+    short unsigned buttonState;
+    short unsigned id;
 
-		sf::RectangleShape shape;
-		sf::Text text;
-		sf::Font& b_font;
+    sf::RectangleShape shape;
+    sf::Text text;
+    sf::Font& b_font;
 
-		sf::Color textIdleColor;
-		sf::Color textHoverColor;
-		sf::Color textActiveColor;
+    sf::Color textIdleColor;
+    sf::Color textHoverColor;
+    sf::Color textActiveColor;
 
-		sf::Color idleColor;
-		sf::Color hoverColor;
-		sf::Color activeColor;
+    sf::Color idleColor;
+    sf::Color hoverColor;
+    sf::Color activeColor;
 
-		sf::Color outlineIdleColor;
-		sf::Color outlineHoverColor;
-		sf::Color outlineActiveColor;
+    sf::Color outlineIdleColor;
+    sf::Color outlineHoverColor;
+    sf::Color outlineActiveColor;
 
-		public:
-		/**
-		 * @brief Construct a new Button object
-		 *
-		 * @param position - position of button
-		 * @param size - size of button
-		 * @param font - font of button
-		 * @param text - text of button
-		 * @param character_size - size of text
-		 * @param text_idle_color - color of text when idle
-		 * @param text_hover_color - color of text when hover
-		 * @param text_active_color - color of text when active
-		 * @param idle_color - color of button when idle
-		 * @param hover_color	- color of button when hover
-		 * @param active_color	- color of button when active
-		 * @param outline_idle_color - color of outline when idle
-		 * @param outline_hover_color	- color of outline when hover
-		 * @param outline_active_color - color of outline when active
-		 * @param id - id of button
-		 */
-		Button(sf::Vector2f position, sf::Vector2f size,
-			sf::Font& font, std::string text, unsigned character_size,
-			sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
-			sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
-			sf::Color outline_idle_color = sf::Color::Transparent,
-			sf::Color outline_hover_color = sf::Color::Transparent,
-			sf::Color outline_active_color = sf::Color::Transparent,
-			short unsigned id = 0);
-		~Button();
+public:
+    /**
+     * @brief Construct a new Button object
+     *
+     * @param position - position of button
+     * @param size - size of button
+     * @param font - font of button
+     * @param text - text of button
+     * @param character_size - size of text
+     * @param text_idle_color - color of text when idle
+     * @param text_hover_color - color of text when hover
+     * @param text_active_color - color of text when active
+     * @param idle_color - color of button when idle
+     * @param hover_color	- color of button when hover
+     * @param active_color	- color of button when active
+     * @param outline_idle_color - color of outline when idle
+     * @param outline_hover_color	- color of outline when hover
+     * @param outline_active_color - color of outline when active
+     * @param id - id of button
+     */
+    Button(sf::Vector2f position, sf::Vector2f size,
+        sf::Font& font, std::string text, unsigned character_size,
+        sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,
+        sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
+        sf::Color outline_idle_color = sf::Color::Transparent,
+        sf::Color outline_hover_color = sf::Color::Transparent,
+        sf::Color outline_active_color = sf::Color::Transparent,
+        short unsigned id = 0);
+    ~Button();
 
-		//Accessors
-		const bool isPressed() const;
-		const std::string getText() const;
-		const short unsigned& getId() const;
+    // Accessors
+    const bool isPressed() const;
+    const std::string getText() const;
+    const short unsigned& getId() const;
 
-		//Modifiers
-		void setText(const std::string text);
-		void setId(const short unsigned id);
+    // Modifiers
+    void setText(const std::string text);
+    void setId(const short unsigned id);
 
-		//Functions
-		void update(const sf::Vector2i& mousePosWindow);
-		void render(sf::RenderTarget& target);
-	};
+    // Functions
+    void update(const sf::Vector2i& mousePosWindow);
+    void render(sf::RenderTarget& target);
+};
 
-	class DropDownList
-	{
-		private:
-		float keytime;
-		float keytimeMax;
+/// @brief A class for creating and handling a drop down list
+///	@note In this class we use a std::vector<gui::Button*> for the list of buttons
+///	@note We use a bool for showing the list
+///	@note We use a gui::Button* for the active element
+class DropDownList {
+private:
+    float keytime;
+    float keytimeMax;
 
-		sf::Font font;
-		gui::Button* activeElement;
-		std::vector<gui::Button*> list;
-		bool showList;
+    sf::Font font;
+    gui::Button* activeElement;
+    std::vector<gui::Button*> list;
+    bool showList;
 
-		public:
-		DropDownList(float x, float y, float width, float height,
-			sf::Font& font, std::string list[],
-			unsigned nrOfElements, unsigned default_index = 0);
-		~DropDownList();
+public:
+    /// @brief Construct a new Drop Down List object
+    /// @param x position on screen
+    /// @param y position on screen
+    /// @param width size of list
+    /// @param height size of list
+    /// @param font font of list
+    /// @param char_size size of text
+    /// @param list pushed elements in list
+    /// @param nrOfElements size of list (string data)
+    /// @param default_index default index of list (default = 0)
 
-		//Accessors
-		const unsigned short& getActiveElementId() const;
+    DropDownList(float x, float y, float width, float height,
+        sf::Font& font, unsigned char_size, std::string list[],
+        unsigned nrOfElements, unsigned default_index = 0);
+    ~DropDownList();
 
-		//Functions
-		const bool getKeytime();
-		void updateKeytime(const float& dt);
-		void update(const sf::Vector2i& mousePosWindow, const float& dt);
-		void render(sf::RenderTarget& target);
-	};
+    // Accessors
+    const unsigned short& getActiveElementId() const;
 
-	class TextureSelector
-	{
-		private:
-		float keytime;
-		const float keytimeMax;
-		float gridSize;
-		bool active;
-		bool hidden;
-		gui::Button* hide_btn;
-		sf::RectangleShape bounds;
-		sf::Sprite sheet;
-		sf::RectangleShape selector;
-		sf::Vector2u mousePosGrid;
-		sf::IntRect textureRect;
+    // Functions
+    const bool getKeytime();
+    void updateKeytime(const float& dt);
+    void update(const sf::Vector2i& mousePosWindow, const float& dt);
+    void render(sf::RenderTarget& target);
+};
 
-		public:
-		TextureSelector(float x, float y, float width, float height,
-			float gridSize, const sf::Texture* texture_sheet,
-			sf::Font& font, std::string text);
-		~TextureSelector();
+class TextureSelector {
+private:
+    float keytime;
+    const float keytimeMax;
+    float gridSize;
+    bool active;
+    bool hidden;
+    gui::Button* hide_btn;
+    sf::RectangleShape bounds;
+    sf::Sprite sheet;
+    sf::RectangleShape selector;
+    sf::Vector2u mousePosGrid;
+    sf::IntRect textureRect;
 
-		//Accessors
-		const bool& getActive() const;
-		const sf::IntRect& getTextureRect() const;
+public:
+    TextureSelector(float x, float y, float width, float height,
+        float gridSize, const sf::Texture* texture_sheet,
+        sf::Font& font, std::string text);
+    ~TextureSelector();
 
-		//Functions
-		const bool getKeytime();
-		void updateKeytime(const float& dt);
-		void update(const sf::Vector2i& mousePosWindow, const float& dt);
-		void render(sf::RenderTarget& target);
-	};
+    // Accessors
+    const bool& getActive() const;
+    const sf::IntRect& getTextureRect() const;
 
-	class ProgressBar
-	{
-		private:
-		std::string barString;
-		sf::Text text;
-		float maxWidth;
-		sf::RectangleShape back;
-		sf::RectangleShape inner;
+    // Functions
+    const bool getKeytime();
+    void updateKeytime(const float& dt);
+    void update(const sf::Vector2i& mousePosWindow, const float& dt);
+    void render(sf::RenderTarget& target);
+};
 
-		public:
-		ProgressBar(sf::Vector2f pos, sf::Vector2f size,
-			sf::Color inner_color, unsigned character_size,
-			sf::Vector2f resolution, sf::Font& font);
-		~ProgressBar();
+class ProgressBar {
+private:
+    std::string barString;
+    sf::Text text;
+    float maxWidth;
+    sf::RectangleShape back;
+    sf::RectangleShape inner;
 
-		//Accessors
+public:
+    ProgressBar(sf::Vector2f pos, sf::Vector2f size,
+        sf::Color inner_color, unsigned character_size,
+        sf::Vector2f resolution, sf::Font& font);
+    ~ProgressBar();
 
-		//Modifiers
+    // Accessors
 
-		//Functions
-		void update(const int current_value, const int max_value);
-		void render(sf::RenderTarget& target);
-	};
+    // Modifiers
+
+    // Functions
+    void update(const int current_value, const int max_value);
+    void render(sf::RenderTarget& target);
+};
 }
 
 #endif

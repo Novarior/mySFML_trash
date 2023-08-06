@@ -71,7 +71,7 @@ public:
     /// \return Time elapsed
     ///
     ////////////////////////////////////////////////////////////
-    Time restart();
+    Time  restart();
 
 private:
 

@@ -8,18 +8,19 @@
             "name": "(lldb) Подключить",
             "type": "cppdbg",
             "request": "attach",
-            "program": "${workspaceFolder}/MyApplication_ARM64.app",
-            "MIMode": "gbd"
+            "program": "${workspaceFolder}/bin/GameProto",
+            "MIMode": "lldb"
         },
         {
             "name": "(lldb) Запустить",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/MyApplication_ARM64.app",
-            "stopAtEntry": true,
-            "cwd": "${fileDirname}",
+            "program": "${workspaceFolder}/bin/GameProto",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
             "args": [
-                "-exec"
+                "-exec",
+                "gui"
             ],
             "environment": [
                 {
@@ -29,7 +30,7 @@
             ],
             "externalConsole": true,
             "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
-            "MIMode": "lldb"
+            "MIMode": "lldb",
         }
     ]
 }

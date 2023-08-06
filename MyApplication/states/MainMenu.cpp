@@ -42,31 +42,31 @@ void MainMenu::initButtons()
 
     this->buttons["EXIT_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 125), sf::Vector2f(250, 100),
-        this->IstateData->font, "Exit", 20,
+        this->IstateData->font, "Exit", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["START_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 225), sf::Vector2f(250, 100),
-        this->IstateData->font, "Play", 20,
+        this->IstateData->font, "Play", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["PERLIN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 325), sf::Vector2f(250, 100),
-        this->IstateData->font, "Noice", 20,
+        this->IstateData->font, "Noice", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["CONT_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 425), sf::Vector2f(250, 100),
-        this->IstateData->font, "Continue", 20,
+        this->IstateData->font, "Continue", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["SETTINGS_BTN"] = new gui::Button(
         sf::Vector2f(offsetX - 275, offsetY - 525), sf::Vector2f(250, 100),
-        this->IstateData->font, "Settings", 20,
+        this->IstateData->font, "Settings", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
@@ -166,10 +166,11 @@ void MainMenu::update(const float& delta_time)
 
     if (this->debugMode) {
         this->dString_Stream
-            << "FPS:\t" << 1 / delta_time
-            << "\nVersion: " << versionApp
-            << "\nOS: " << OperationSystem
-            << "\ndebug flag: " << this->flag_from_state;
+            << "\nver:\t" << versionApp
+            << "\nFPS:\t" << 1 / delta_time
+            << "\nDelta Time:\t" << delta_time
+            << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
+            << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y;
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }

@@ -14,7 +14,11 @@ private:
     sf::Font font;
     std::map<std::string, gui::Button*> buttons;
     std::map<std::string, gui::DropDownList*> dropDownLists;
+    // Resouses
     std::vector<sf::VideoMode> video_modes;
+    std::vector<int> framerates_list;
+    std::vector<sf::Text> settings_list;
+    std::vector<sf::RectangleShape> text_shapes;
 
     // Initializer functions
     void initVariables();

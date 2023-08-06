@@ -14,7 +14,7 @@ State::State(StateData* state_data)
     this->Iquit = false;
     this->Ipaused = false;
     this->Ikeytime = 0.f;
-    this->IkeytimeMax = 10.f;
+    this->IkeytimeMax = 1.f;
     this->IgridSize = state_data->grid_size;
     this->IsupportedKeys = state_data->supportedKeys;
 
@@ -22,8 +22,8 @@ State::State(StateData* state_data)
     this->debugMode = true;
 
     this->dText.setFillColor(sf::Color::White);
-    this->dText.setCharacterSize(25);
-    this->dText.setOutlineThickness(3);
+    this->dText.setCharacterSize(this->IstateData->characterSize_debug);
+    this->dText.setOutlineThickness(1);
     this->dText.setOutlineColor(sf::Color::Black);
     this->dText.setFont(this->IstateData->debugFont);
 }
@@ -40,6 +40,18 @@ const bool State::getKeytime()
     return false;
 }
 
+void State::updateKeytime(const float& delta_time)
+{
+    if (this->Ikeytime < this->IkeytimeMax)
+        this->Ikeytime += delta_time;
+}
+
+void State::reCaclulateCharacterSize()
+{
+    this->IstateData->characterSize_debug = mmath::calcCharSize(this->Iwindow->getSize(), 150);
+    this->IstateData->characterSize_game = mmath::calcCharSize(this->Iwindow->getSize(), 70);
+}
+
 void State::updateMousePositions(sf::View* view)
 {
     this->mousePosScreen = sf::Mouse::getPosition();
@@ -54,10 +66,4 @@ void State::updateMousePositions(sf::View* view)
         static_cast<int>(this->mousePosView.y) / static_cast<int>(this->IgridSize));
 
     this->Iwindow->setView(this->Iwindow->getDefaultView());
-}
-
-void State::updateKeytime(const float& delta_time)
-{
-    if (this->Ikeytime < this->IkeytimeMax)
-        this->Ikeytime += 100.f * delta_time;
 }

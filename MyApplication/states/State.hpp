@@ -23,12 +23,15 @@ public:
     mypars::parsJSON* parser;
     std::stack<State*>* sStates;
     std::map<std::string, int>* supportedKeys;
+    unsigned int characterSize_debug;
+    unsigned int characterSize_game;
 };
 
 /// @brief Abstract class for game states
 class State {
 private:
 protected:
+    // Variables
     StateData* IstateData;
     std::stack<State*>* Istates;
     sf::RenderWindow* Iwindow;
@@ -36,6 +39,7 @@ protected:
     std::map<std::string, int> Ikeybinds;
     mypars::parsJSON* Iparser;
 
+    // Resources
     bool Iquit;
     bool Ipaused;
     float Ikeytime;
@@ -50,11 +54,11 @@ protected:
     std::stringstream dString_Stream;
     sf::Text dText;
     bool debugMode;
-    // Resources
     std::map<std::string, sf::Texture> textures;
 
     // Functions
     virtual void initKeybinds() = 0;
+    void reCaclulateCharacterSize();
 
 public:
     State(StateData* state_data);

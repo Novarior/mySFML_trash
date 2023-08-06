@@ -258,6 +258,7 @@ void Process::update(const float& delta_time)
         if (this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
     } else { // update game
+
         this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
         this->updateTileMap(delta_time);
@@ -292,13 +293,12 @@ void Process::update(const float& delta_time)
             << "Pause:\t" << this->Ipaused
             << "\nMemory Usage: "
             // get memory usage enemys on bytes
-            << "\n\tPlayer: " << sizeof(Player) << " = " << sizeof(Player) << " bytes"
+            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
             << "\n\tEnemy: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
-            << "\n\tTileMap: " << sizeof(TileMap) << " = " << sizeof(TileMap) << " bytes"
+            << "\n\tTileMap: " << sizeof(this->mapTiles) << " bytes"
             << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
             << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
-            << "\n\tPlayerHPBar: " << sizeof(*this->playerHPBar) << " bytes"
-            << "\n\tTotal usage: " << sizeof(Player) + this->entitys.size() * sizeof(Entity) + sizeof(TileMap) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) + sizeof(*this->playerHPBar) << " bytes";
+            << "\n\tTotal usage: " << sizeof(*this->player) + this->entitys.size() * sizeof(Entity) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes";
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

@@ -1,4 +1,4 @@
-# testySFMF
+# some thing with c++ and SFML
 nothing not have with a usefull code 
 lmao
 

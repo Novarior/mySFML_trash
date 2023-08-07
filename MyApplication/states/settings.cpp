@@ -12,6 +12,18 @@ void SettingsState::initVariables()
     this->framerates_list.push_back(60);
     this->framerates_list.push_back(90);
     this->framerates_list.push_back(120);
+    // init antialiasing list
+    this->antialiasing_list.push_back(0);
+    this->antialiasing_list.push_back(2);
+    this->antialiasing_list.push_back(4);
+    this->antialiasing_list.push_back(8);
+    this->antialiasing_list.push_back(16);
+    // init vsync list
+    this->vsync_list.push_back(0);
+    this->vsync_list.push_back(1);
+    // init fullcreen list
+    this->fullscreen_list.push_back(0);
+    this->fullscreen_list.push_back(1);
 }
 
 void SettingsState::initFonts()
@@ -46,6 +58,7 @@ void SettingsState::initGui()
         sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250), sf::Color(60, 60, 60, 50),
         sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
         sf::Color(0, 255, 0, 200), sf::Color(0, 255, 0, 250), sf::Color(0, 255, 0, 50), 1);
+
     //=====================================================================================================
     //=====================================   RESOLUTION    ===============================================
     //=====================================================================================================
@@ -66,16 +79,64 @@ void SettingsState::initGui()
     //=========================================   FPS    ==================================================
     //=====================================================================================================
 
-    // int drop down list with fps limit
+    // int vector with fps limit
     std::vector<std::string> fps_limits;
     for (auto& x : this->framerates_list)
         fps_limits.push_back(std::to_string(x));
 
     // init selector resolution
-    this->selector_resolutions = new gui::Selector(
-        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(10, this->Iwindow->getSize().y)),
+    this->selector_framerates = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(30, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size());
+        font, this->IstateData->characterSize_game, fps_limits.data(), fps_limits.size());
+
+    //=====================================================================================================
+    //===================================   ANTIALIASING     ==============================================
+    //=====================================================================================================
+
+    // init antialiasing list
+    std::vector<std::string> antialiasing_list;
+    antialiasing_list.push_back("OFF");
+    antialiasing_list.push_back("x2");
+    antialiasing_list.push_back("x4");
+    antialiasing_list.push_back("x8");
+    antialiasing_list.push_back("x16");
+
+    // init selector antialiasing
+    this->selector_antialiasing = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(25, this->Iwindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
+        font, this->IstateData->characterSize_game, antialiasing_list.data(), antialiasing_list.size());
+
+    //=====================================================================================================
+    //=======================================   VSYNC    ==================================================
+    //=====================================================================================================
+
+    // init vsync list
+    std::vector<std::string> vsync_list;
+    vsync_list.push_back("OFF");
+    vsync_list.push_back("ON");
+
+    // init selector vsync
+    this->selector_vsync = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(20, this->Iwindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
+        font, this->IstateData->characterSize_game, vsync_list.data(), vsync_list.size());
+
+    //=====================================================================================================
+    //===================================   FULLSCREEN    =================================================
+    //=====================================================================================================
+
+    // init fullscreen list
+    std::vector<std::string> fullscreen_list;
+    fullscreen_list.push_back("Windowed");
+    fullscreen_list.push_back("Fullscreen");
+
+    // init selector fullscreen
+    this->selector_fullscreen = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(15, this->Iwindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
+        font, this->IstateData->characterSize_game, fullscreen_list.data(), fullscreen_list.size());
 
     //=====================================================================================================
     //=======================================   TEXT    ===================================================
@@ -85,7 +146,7 @@ void SettingsState::initGui()
     for (int i = 0; i < 5; i++) {
         this->text_shapes.push_back(sf::RectangleShape());
         this->text_shapes[i].setFillColor(sf::Color::Transparent);
-        this->text_shapes[i].setOutlineColor(sf::Color::White);
+        this->text_shapes[i].setOutlineColor(sf::Color::Transparent);
         this->text_shapes[i].setOutlineThickness(-1);
         this->text_shapes[i].setPosition(sf::Vector2f(
             mmath::p2pX(5, this->Iwindow->getSize().x),
@@ -116,11 +177,18 @@ void SettingsState::initGui()
 void SettingsState::resetGui()
 {
     // reser to new resolution and save it to file
-    this->IstateData->gfxSettings->saveToFile(myConst::config_window);
     // reset gui
     this->IstateData->gfxSettings->resolution = this->video_modes[this->selector_resolutions->getActiveElementID()];
     this->IstateData->gfxSettings->frameRateLimit = this->framerates_list[this->selector_framerates->getActiveElementID()];
-    this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Titlebar | sf::Style::Close);
+    this->IstateData->gfxSettings->contextSettings.antialiasingLevel = this->antialiasing_list[this->selector_antialiasing->getActiveElementID()];
+    this->IstateData->gfxSettings->fullscreen = this->fullscreen_list[this->selector_fullscreen->getActiveElementID()];
+    this->IstateData->gfxSettings->verticalSync = this->vsync_list[this->selector_vsync->getActiveElementID()];
+
+    // reset window
+    if (this->IstateData->gfxSettings->fullscreen)
+        this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Fullscreen, this->IstateData->gfxSettings->contextSettings);
+    else
+        this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Titlebar | sf::Style::Close, this->IstateData->gfxSettings->contextSettings);
     this->Iwindow->setFramerateLimit(this->framerates_list[this->selector_framerates->getActiveElementID()]);
 
     // clear buttons
@@ -129,9 +197,14 @@ void SettingsState::resetGui()
         delete it->second;
     this->buttons.clear();
 
-    // clear selector
-    delete this->selector_resolutions;
+    // delete selector
+    delete this->selector_vsync;
     delete this->selector_framerates;
+    delete this->selector_fullscreen;
+    delete this->selector_resolutions;
+    delete this->selector_antialiasing;
+
+    this->IstateData->gfxSettings->saveToFile(myConst::config_window);
 
     this->reCaclulateCharacterSize();
 
@@ -156,8 +229,11 @@ SettingsState::~SettingsState()
     this->buttons.clear();
 
     // delete selector
-    delete this->selector_resolutions;
+    delete this->selector_vsync;
     delete this->selector_framerates;
+    delete this->selector_fullscreen;
+    delete this->selector_resolutions;
+    delete this->selector_antialiasing;
 }
 
 // Functions
@@ -180,13 +256,20 @@ void SettingsState::updateGui(const float& delta_time)
     if (this->buttons["APPLY_BTN"]->isPressed() && this->getKeytime())
         this->resetGui();
     // update selector
+    this->selector_vsync->update(delta_time, this->mousePosWindow);
+    this->selector_framerates->update(delta_time, this->mousePosWindow);
+    this->selector_fullscreen->update(delta_time, this->mousePosWindow);
     this->selector_resolutions->update(delta_time, this->mousePosWindow);
+    this->selector_antialiasing->update(delta_time, this->mousePosWindow);
 
     if (this->debugMode) {
         this->dString_Stream
             << "Ver: " << versionApp
             << "\nFPS:\t" << 1 / delta_time
             << "\nResolution: " << this->IstateData->sWindow->getSize().x << "x" << this->IstateData->sWindow->getSize().y
+            << "\nAntialiasing: " << this->IstateData->gfxSettings->contextSettings.antialiasingLevel
+            << "\nvSync: " << this->IstateData->gfxSettings->verticalSync
+            << "\nFullscreen: " << this->IstateData->gfxSettings->fullscreen
             << "\nSize of state: " << sizeof(*this) << " bytes"
             << "\nkeytime: " << this->Ikeytime
             << "\nMouse pos: " << this->mousePosWindow.x << " " << this->mousePosWindow.y;
@@ -214,6 +297,9 @@ void SettingsState::renderGui(sf::RenderTarget& target)
     // draw selector
     this->selector_resolutions->render(target);
     this->selector_framerates->render(target);
+    this->selector_antialiasing->render(target);
+    this->selector_vsync->render(target);
+    this->selector_fullscreen->render(target);
     // debug
     // draw this->text_shapes
     for (auto& ts : this->text_shapes)

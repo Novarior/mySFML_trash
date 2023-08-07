@@ -199,9 +199,11 @@ void MainMenu::update(const float& delta_time)
         this->dString_Stream
             << "\nver:\t" << versionApp
             << "\nFPS:\t" << 1 / delta_time
-            << "\nDelta Time:\t" << delta_time
             << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
-            << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y;
+            << "\nDelta Time:\t" << delta_time
+            << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y
+            << "\nAntialiasing:\t" << this->IstateData->gfxSettings->contextSettings.antialiasingLevel
+            << "\nvSync:\t" << this->IstateData->gfxSettings->verticalSync;
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }

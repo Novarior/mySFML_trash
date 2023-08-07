@@ -18,7 +18,7 @@ public:
     ~ProgressBar();
 
     // Accessors
-
+    
     // Modifiers
 
     // Functions

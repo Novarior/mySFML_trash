@@ -32,7 +32,7 @@ void SettingsState::initGui()
         static_cast<float>(this->Iwindow->getSize().y)));
     // darkest blue color
     this->background.setFillColor(sf::Color(3, 3, 30, 100));
-
+    //=====================================================================================================
     // exit gui button
     this->buttons["BACK_BTN"] = new gui::Button(sf::Vector2f(this->Iwindow->getSize().x - 120, 0.f),
         sf::Vector2f(120.f, 50.f), this->IstateData->font, "Back", this->IstateData->characterSize_game,
@@ -46,30 +46,40 @@ void SettingsState::initGui()
         sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250), sf::Color(60, 60, 60, 50),
         sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
         sf::Color(0, 255, 0, 200), sf::Color(0, 255, 0, 250), sf::Color(0, 255, 0, 50), 1);
+    //=====================================================================================================
+    //=====================================   RESOLUTION    ===============================================
+    //=====================================================================================================
 
     // init dropdown list with video modes
     std::vector<std::string> modes_str;
     for (auto& i : this->video_modes) {
         modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
     }
-    this->dropDownLists["RESOLUTION"] = new gui::DropDownList(
-        mmath::p2pX(2.5, this->Iwindow->getSize().x), // pos screen/5/2/4
-        mmath::p2pX(33, this->Iwindow->getSize().y), // pos
-        mmath::p2pX(15, this->Iwindow->getSize().x), // size
-        mmath::p2pX(6, this->Iwindow->getSize().y), // size
+
+    // init selector with video modes
+    this->selector_resolutions = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(10, this->Iwindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
         font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size());
+
+    //=====================================================================================================
+    //=========================================   FPS    ==================================================
+    //=====================================================================================================
 
     // int drop down list with fps limit
     std::vector<std::string> fps_limits;
     for (auto& x : this->framerates_list)
         fps_limits.push_back(std::to_string(x));
 
-    this->dropDownLists["FPS_LIMIT"] = new gui::DropDownList(
-        mmath::p2pX(82.5, this->Iwindow->getSize().x),
-        mmath::p2pX(33, this->Iwindow->getSize().y),
-        mmath::p2pX(15, this->Iwindow->getSize().x),
-        mmath::p2pX(6, this->Iwindow->getSize().y),
-        font, this->IstateData->characterSize_game, fps_limits.data(), fps_limits.size());
+    // init selector resolution
+    this->selector_resolutions = new gui::Selector(
+        sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(10, this->Iwindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
+        font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size());
+
+    //=====================================================================================================
+    //=======================================   TEXT    ===================================================
+    //=====================================================================================================
 
     // init shapes for textbox
     for (int i = 0; i < 5; i++) {
@@ -78,17 +88,14 @@ void SettingsState::initGui()
         this->text_shapes[i].setOutlineColor(sf::Color::White);
         this->text_shapes[i].setOutlineThickness(-1);
         this->text_shapes[i].setPosition(sf::Vector2f(
-            mmath::p2pX(20 * i, this->Iwindow->getSize().x),
-            mmath::p2pX(33, this->Iwindow->getSize().y) - mmath::p2pX(5, this->Iwindow->getSize().y)));
-        this->text_shapes[i].setSize(sf::Vector2f(
-            mmath::p2pX(20, this->Iwindow->getSize().x),
-            mmath::p2pX(5, this->Iwindow->getSize().y)));
+            mmath::p2pX(5, this->Iwindow->getSize().x),
+            mmath::p2pX(5 + (i * 5), this->Iwindow->getSize().y) + mmath::p2pX(5, this->Iwindow->getSize().y)));
+        this->text_shapes[i].setSize(sf::Vector2f(mmath::p2pX(20, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)));
     }
 
     // init text for settings
-    for (int x = 0; x < 5; x++) {
+    for (int x = 0; x < 5; x++)
         this->settings_list.push_back(sf::Text());
-    }
 
     this->settings_list[0].setString("Resolution");
     this->settings_list[1].setString("Fullscreen");
@@ -111,10 +118,10 @@ void SettingsState::resetGui()
     // reser to new resolution and save it to file
     this->IstateData->gfxSettings->saveToFile(myConst::config_window);
     // reset gui
-    this->IstateData->gfxSettings->resolution = this->video_modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
-    this->IstateData->gfxSettings->frameRateLimit = this->framerates_list[this->dropDownLists["FPS_LIMIT"]->getActiveElementId()];
+    this->IstateData->gfxSettings->resolution = this->video_modes[this->selector_resolutions->getActiveElementID()];
+    this->IstateData->gfxSettings->frameRateLimit = this->framerates_list[this->selector_framerates->getActiveElementID()];
     this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Titlebar | sf::Style::Close);
-    this->Iwindow->setFramerateLimit(this->framerates_list[this->dropDownLists["FPS_LIMIT"]->getActiveElementId()]);
+    this->Iwindow->setFramerateLimit(this->framerates_list[this->selector_framerates->getActiveElementID()]);
 
     // clear buttons
     auto it = this->buttons.begin();
@@ -122,17 +129,9 @@ void SettingsState::resetGui()
         delete it->second;
     this->buttons.clear();
 
-    // clear drop down lists with video modes
-    auto it2 = this->dropDownLists.begin();
-    for (it2 = this->dropDownLists.begin(); it2 != this->dropDownLists.end(); ++it2)
-        delete it2->second;
-    this->dropDownLists.clear();
-
-    // clear drop down list with fps limit
-    auto it3 = this->dropDownLists.begin();
-    for (it3 = this->dropDownLists.begin(); it3 != this->dropDownLists.end(); ++it3)
-        delete it3->second;
-    this->dropDownLists.clear();
+    // clear selector
+    delete this->selector_resolutions;
+    delete this->selector_framerates;
 
     this->reCaclulateCharacterSize();
 
@@ -156,11 +155,9 @@ SettingsState::~SettingsState()
         delete it->second;
     this->buttons.clear();
 
-    // clear drop down lists
-    auto it2 = this->dropDownLists.begin();
-    for (it2 = this->dropDownLists.begin(); it2 != this->dropDownLists.end(); ++it2)
-        delete it2->second;
-    this->dropDownLists.clear();
+    // delete selector
+    delete this->selector_resolutions;
+    delete this->selector_framerates;
 }
 
 // Functions
@@ -176,15 +173,14 @@ void SettingsState::updateGui(const float& delta_time)
     // update all gui in the state and handle functionality
     for (auto& it : this->buttons)
         it.second->update(this->mousePosWindow);
-    // update drop down list and handle functionality
-    for (auto& it : this->dropDownLists)
-        it.second->update(this->mousePosWindow, delta_time);
     // quit the game
     if (this->buttons["BACK_BTN"]->isPressed() && this->getKeytime())
         this->endState();
     // apply settings
     if (this->buttons["APPLY_BTN"]->isPressed() && this->getKeytime())
         this->resetGui();
+    // update selector
+    this->selector_resolutions->update(delta_time, this->mousePosWindow);
 
     if (this->debugMode) {
         this->dString_Stream
@@ -212,13 +208,12 @@ void SettingsState::renderGui(sf::RenderTarget& target)
     // render all gui in the state
     for (auto& bt : this->buttons)
         bt.second->render(target);
-    // render drop down list
-    for (auto& dl : this->dropDownLists)
-        dl.second->render(target);
     // draw text
     for (auto& t : this->settings_list)
         target.draw(t);
-
+    // draw selector
+    this->selector_resolutions->render(target);
+    this->selector_framerates->render(target);
     // debug
     // draw this->text_shapes
     for (auto& ts : this->text_shapes)

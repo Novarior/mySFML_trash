@@ -393,30 +393,6 @@ MyApplication/GUI/components/textureSelector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textureSelector.cpp.s
 .PHONY : MyApplication/GUI/components/textureSelector.cpp.s
 
-MyApplication/GUI/gamegui.o: MyApplication/GUI/gamegui.cpp.o
-.PHONY : MyApplication/GUI/gamegui.o
-
-# target to build an object file
-MyApplication/GUI/gamegui.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.o
-.PHONY : MyApplication/GUI/gamegui.cpp.o
-
-MyApplication/GUI/gamegui.i: MyApplication/GUI/gamegui.cpp.i
-.PHONY : MyApplication/GUI/gamegui.i
-
-# target to preprocess a source file
-MyApplication/GUI/gamegui.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.i
-.PHONY : MyApplication/GUI/gamegui.cpp.i
-
-MyApplication/GUI/gamegui.s: MyApplication/GUI/gamegui.cpp.s
-.PHONY : MyApplication/GUI/gamegui.s
-
-# target to generate assembly for a file
-MyApplication/GUI/gamegui.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.s
-.PHONY : MyApplication/GUI/gamegui.cpp.s
-
 MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp.o
 .PHONY : MyApplication/entitys/AI/AIComponent.o
 
@@ -915,9 +891,6 @@ help:
 	@echo "... MyApplication/GUI/components/textureSelector.o"
 	@echo "... MyApplication/GUI/components/textureSelector.i"
 	@echo "... MyApplication/GUI/components/textureSelector.s"
-	@echo "... MyApplication/GUI/gamegui.o"
-	@echo "... MyApplication/GUI/gamegui.i"
-	@echo "... MyApplication/GUI/gamegui.s"
 	@echo "... MyApplication/entitys/AI/AIComponent.o"
 	@echo "... MyApplication/entitys/AI/AIComponent.i"
 	@echo "... MyApplication/entitys/AI/AIComponent.s"

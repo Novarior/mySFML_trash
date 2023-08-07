@@ -1,17 +1,14 @@
 #ifndef myConst_h
 #define myConst_h
 
-namespace myConst
-{
-//path constants
-const char config_window []="config/window.json";
-const char config_keybinds []="config/keybinds.json";
-
-
+namespace myConst {
+// path constants
+const char config_window[] = "config/window.json";
+const char config_keybinds[] = "config/keybinds.json";
 
 const char data_debugfont_path[] = "resourses/fonts/Muli-Regular.ttf";
-const char data_gameproces_font_path[] = "resourses/fonts/endor.ttf";
-const char data_gameproces_font_path_2[] = "resourses/fonts/Alamak.ttf"; 
+const char data_gameproces_font_path[] = "resourses/fonts/Blackwood Castle.ttf";
+const char data_gameproces_font_path_2[] = "resourses/fonts/Alamak.ttf";
 
 const char texture_CellInventory_path[] = "resourses/Textures/Textures/CellOutLine.png";
 

@@ -73,12 +73,6 @@
 },
 {
   "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
-  "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/gamegui.cpp\"",
-  "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/gamegui.cpp",
-  "output": "CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.o"
-},
-{
-  "directory": "/Users/nova/Documents/c++ repo/testSfml/build",
   "command": "/usr/bin/clang++  -I\"/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in\" -I\"/Users/nova/Documents/c++ repo/testSfml\" -isystem /opt/homebrew/include -g -std=gnu++17 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX13.3.sdk -mmacosx-version-min=13.2 -o CMakeFiles/GameProto.dir/MyApplication/GUI/components/button.cpp.o -c \"/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/components/button.cpp\"",
   "file": "/Users/nova/Documents/c++ repo/testSfml/MyApplication/GUI/components/button.cpp",
   "output": "CMakeFiles/GameProto.dir/MyApplication/GUI/components/button.cpp.o"

@@ -23,7 +23,6 @@ set(RESOURCE_FILES
     MyApplication/states/NoiceView.cpp
     MyApplication/states/PauseMenu.cpp
     #gui includes
-    MyApplication/GUI/gamegui.cpp
     MyApplication/GUI/components/button.cpp
     MyApplication/GUI/components/selector.cpp
     MyApplication/GUI/components/ProgressBar.cpp

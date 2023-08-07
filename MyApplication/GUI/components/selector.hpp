@@ -15,11 +15,13 @@ private:
     float keytimeMax;
 
 public:
-    Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::string list[], unsigned nrOfElements);
+    Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font,
+        unsigned int character_size, std::string list[], unsigned nrOfElements);
     virtual ~Selector();
 
     // accessors
     unsigned getActiveElementID() const;
+    std::string getActiveElement() const;
     void update(const float& delta_time, const sf::Vector2i& mousePos);
     void updateKeyTime(const float& delta_time);
     const bool getKeytime();

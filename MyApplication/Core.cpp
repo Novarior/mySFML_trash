@@ -54,7 +54,7 @@ void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path_2)) { }
+    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path)) { }
     if (!this->mStatedata.debugFont.loadFromFile(myConst::data_debugfont_path)) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;

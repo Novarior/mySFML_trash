@@ -7,8 +7,8 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/Users/nova/Documents/c++ repo/testSfml/CMakeLists.txt"
-  "/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h.in"
+  "/Users/nova/Documents/c++ repo/mySFML_trash/CMakeLists.txt"
+  "/Users/nova/Documents/c++ repo/mySFML_trash/MyApplication/cmakever.h.in"
   "CMakeFiles/3.27.0/CMakeCCompiler.cmake"
   "CMakeFiles/3.27.0/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.27.0/CMakeSystem.cmake"
@@ -48,7 +48,7 @@ set(CMAKE_MAKEFILE_OUTPUTS
 
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
-  "/Users/nova/Documents/c++ repo/testSfml/MyApplication/cmakever.h"
+  "/Users/nova/Documents/c++ repo/mySFML_trash/MyApplication/cmakever.h"
   "CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 

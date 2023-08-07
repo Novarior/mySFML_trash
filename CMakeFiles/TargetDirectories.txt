@@ -1,3 +1,0 @@
-/Users/nova/Documents/c++ repo/testSfml/CMakeFiles/GameProto.dir
-/Users/nova/Documents/c++ repo/testSfml/CMakeFiles/edit_cache.dir
-/Users/nova/Documents/c++ repo/testSfml/CMakeFiles/rebuild_cache.dir

@@ -76,7 +76,6 @@ const bool Process::saveGameData()
 // init data who dont use loaded dates
 void Process::initKeybinds()
 {
-
     this->Ikeybinds["KEY_CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["KEY_TAB"] = this->IsupportedKeys->at("Tab");
     this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");

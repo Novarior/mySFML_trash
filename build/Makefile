@@ -273,29 +273,149 @@ MyApplication/Core.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/Core.cpp.s
 .PHONY : MyApplication/Core.cpp.s
 
-MyApplication/GUI/GUISYS.o: MyApplication/GUI/GUISYS.cpp.o
-.PHONY : MyApplication/GUI/GUISYS.o
+MyApplication/GUI/components/ProgressBar.o: MyApplication/GUI/components/ProgressBar.cpp.o
+.PHONY : MyApplication/GUI/components/ProgressBar.o
 
 # target to build an object file
-MyApplication/GUI/GUISYS.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.o
-.PHONY : MyApplication/GUI/GUISYS.cpp.o
+MyApplication/GUI/components/ProgressBar.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/ProgressBar.cpp.o
+.PHONY : MyApplication/GUI/components/ProgressBar.cpp.o
 
-MyApplication/GUI/GUISYS.i: MyApplication/GUI/GUISYS.cpp.i
-.PHONY : MyApplication/GUI/GUISYS.i
+MyApplication/GUI/components/ProgressBar.i: MyApplication/GUI/components/ProgressBar.cpp.i
+.PHONY : MyApplication/GUI/components/ProgressBar.i
 
 # target to preprocess a source file
-MyApplication/GUI/GUISYS.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.i
-.PHONY : MyApplication/GUI/GUISYS.cpp.i
+MyApplication/GUI/components/ProgressBar.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/ProgressBar.cpp.i
+.PHONY : MyApplication/GUI/components/ProgressBar.cpp.i
 
-MyApplication/GUI/GUISYS.s: MyApplication/GUI/GUISYS.cpp.s
-.PHONY : MyApplication/GUI/GUISYS.s
+MyApplication/GUI/components/ProgressBar.s: MyApplication/GUI/components/ProgressBar.cpp.s
+.PHONY : MyApplication/GUI/components/ProgressBar.s
 
 # target to generate assembly for a file
-MyApplication/GUI/GUISYS.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/GUISYS.cpp.s
-.PHONY : MyApplication/GUI/GUISYS.cpp.s
+MyApplication/GUI/components/ProgressBar.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/ProgressBar.cpp.s
+.PHONY : MyApplication/GUI/components/ProgressBar.cpp.s
+
+MyApplication/GUI/components/button.o: MyApplication/GUI/components/button.cpp.o
+.PHONY : MyApplication/GUI/components/button.o
+
+# target to build an object file
+MyApplication/GUI/components/button.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/button.cpp.o
+.PHONY : MyApplication/GUI/components/button.cpp.o
+
+MyApplication/GUI/components/button.i: MyApplication/GUI/components/button.cpp.i
+.PHONY : MyApplication/GUI/components/button.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/button.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/button.cpp.i
+.PHONY : MyApplication/GUI/components/button.cpp.i
+
+MyApplication/GUI/components/button.s: MyApplication/GUI/components/button.cpp.s
+.PHONY : MyApplication/GUI/components/button.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/button.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/button.cpp.s
+.PHONY : MyApplication/GUI/components/button.cpp.s
+
+MyApplication/GUI/components/dropDownList.o: MyApplication/GUI/components/dropDownList.cpp.o
+.PHONY : MyApplication/GUI/components/dropDownList.o
+
+# target to build an object file
+MyApplication/GUI/components/dropDownList.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/dropDownList.cpp.o
+.PHONY : MyApplication/GUI/components/dropDownList.cpp.o
+
+MyApplication/GUI/components/dropDownList.i: MyApplication/GUI/components/dropDownList.cpp.i
+.PHONY : MyApplication/GUI/components/dropDownList.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/dropDownList.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/dropDownList.cpp.i
+.PHONY : MyApplication/GUI/components/dropDownList.cpp.i
+
+MyApplication/GUI/components/dropDownList.s: MyApplication/GUI/components/dropDownList.cpp.s
+.PHONY : MyApplication/GUI/components/dropDownList.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/dropDownList.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/dropDownList.cpp.s
+.PHONY : MyApplication/GUI/components/dropDownList.cpp.s
+
+MyApplication/GUI/components/selector.o: MyApplication/GUI/components/selector.cpp.o
+.PHONY : MyApplication/GUI/components/selector.o
+
+# target to build an object file
+MyApplication/GUI/components/selector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/selector.cpp.o
+.PHONY : MyApplication/GUI/components/selector.cpp.o
+
+MyApplication/GUI/components/selector.i: MyApplication/GUI/components/selector.cpp.i
+.PHONY : MyApplication/GUI/components/selector.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/selector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/selector.cpp.i
+.PHONY : MyApplication/GUI/components/selector.cpp.i
+
+MyApplication/GUI/components/selector.s: MyApplication/GUI/components/selector.cpp.s
+.PHONY : MyApplication/GUI/components/selector.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/selector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/selector.cpp.s
+.PHONY : MyApplication/GUI/components/selector.cpp.s
+
+MyApplication/GUI/components/textureSelector.o: MyApplication/GUI/components/textureSelector.cpp.o
+.PHONY : MyApplication/GUI/components/textureSelector.o
+
+# target to build an object file
+MyApplication/GUI/components/textureSelector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textureSelector.cpp.o
+.PHONY : MyApplication/GUI/components/textureSelector.cpp.o
+
+MyApplication/GUI/components/textureSelector.i: MyApplication/GUI/components/textureSelector.cpp.i
+.PHONY : MyApplication/GUI/components/textureSelector.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/textureSelector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textureSelector.cpp.i
+.PHONY : MyApplication/GUI/components/textureSelector.cpp.i
+
+MyApplication/GUI/components/textureSelector.s: MyApplication/GUI/components/textureSelector.cpp.s
+.PHONY : MyApplication/GUI/components/textureSelector.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/textureSelector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textureSelector.cpp.s
+.PHONY : MyApplication/GUI/components/textureSelector.cpp.s
+
+MyApplication/GUI/gamegui.o: MyApplication/GUI/gamegui.cpp.o
+.PHONY : MyApplication/GUI/gamegui.o
+
+# target to build an object file
+MyApplication/GUI/gamegui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.o
+.PHONY : MyApplication/GUI/gamegui.cpp.o
+
+MyApplication/GUI/gamegui.i: MyApplication/GUI/gamegui.cpp.i
+.PHONY : MyApplication/GUI/gamegui.i
+
+# target to preprocess a source file
+MyApplication/GUI/gamegui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.i
+.PHONY : MyApplication/GUI/gamegui.cpp.i
+
+MyApplication/GUI/gamegui.s: MyApplication/GUI/gamegui.cpp.s
+.PHONY : MyApplication/GUI/gamegui.s
+
+# target to generate assembly for a file
+MyApplication/GUI/gamegui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/gamegui.cpp.s
+.PHONY : MyApplication/GUI/gamegui.cpp.s
 
 MyApplication/entitys/AI/AIComponent.o: MyApplication/entitys/AI/AIComponent.cpp.o
 .PHONY : MyApplication/entitys/AI/AIComponent.o
@@ -780,9 +900,24 @@ help:
 	@echo "... MyApplication/Core.o"
 	@echo "... MyApplication/Core.i"
 	@echo "... MyApplication/Core.s"
-	@echo "... MyApplication/GUI/GUISYS.o"
-	@echo "... MyApplication/GUI/GUISYS.i"
-	@echo "... MyApplication/GUI/GUISYS.s"
+	@echo "... MyApplication/GUI/components/ProgressBar.o"
+	@echo "... MyApplication/GUI/components/ProgressBar.i"
+	@echo "... MyApplication/GUI/components/ProgressBar.s"
+	@echo "... MyApplication/GUI/components/button.o"
+	@echo "... MyApplication/GUI/components/button.i"
+	@echo "... MyApplication/GUI/components/button.s"
+	@echo "... MyApplication/GUI/components/dropDownList.o"
+	@echo "... MyApplication/GUI/components/dropDownList.i"
+	@echo "... MyApplication/GUI/components/dropDownList.s"
+	@echo "... MyApplication/GUI/components/selector.o"
+	@echo "... MyApplication/GUI/components/selector.i"
+	@echo "... MyApplication/GUI/components/selector.s"
+	@echo "... MyApplication/GUI/components/textureSelector.o"
+	@echo "... MyApplication/GUI/components/textureSelector.i"
+	@echo "... MyApplication/GUI/components/textureSelector.s"
+	@echo "... MyApplication/GUI/gamegui.o"
+	@echo "... MyApplication/GUI/gamegui.i"
+	@echo "... MyApplication/GUI/gamegui.s"
 	@echo "... MyApplication/entitys/AI/AIComponent.o"
 	@echo "... MyApplication/entitys/AI/AIComponent.i"
 	@echo "... MyApplication/entitys/AI/AIComponent.s"

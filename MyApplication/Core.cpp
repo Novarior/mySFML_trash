@@ -157,7 +157,6 @@ void Core::update()
             this->mState.top()->update(this->deltaTime);
 
             if (this->mState.top()->getQuit()) {
-                this->mState.top()->endState();
                 delete this->mState.top();
                 this->mState.pop();
             }

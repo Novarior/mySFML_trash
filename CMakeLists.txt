@@ -8,33 +8,47 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #include all files for build project
 set(RESOURCE_FILES
+#core includes
     MyApplication/main.cpp 
     MyApplication/Core.cpp 
-    MyApplication/math/mymath.cpp
-    MyApplication/math/ProcessGenerationNoice.cpp
     MyApplication/states/gfx.cpp
+    MyApplication/math/mymath.cpp
+    MyApplication/source/mypars/parsJSON.cpp
+    MyApplication/math/ProcessGenerationNoice.cpp
+    #include states
+    MyApplication/states/State.cpp
+    MyApplication/states/Process.cpp
     MyApplication/states/MainMenu.cpp
+    MyApplication/states/settings.cpp
     MyApplication/states/NoiceView.cpp
     MyApplication/states/PauseMenu.cpp
-    MyApplication/states/settings.cpp
-    MyApplication/states/Process.cpp
-    MyApplication/states/State.cpp
-    MyApplication/GUI/GUISYS.cpp 
+    #gui includes
+    MyApplication/GUI/gamegui.cpp
+    MyApplication/GUI/components/button.cpp
+    MyApplication/GUI/components/selector.cpp
+    MyApplication/GUI/components/ProgressBar.cpp
+    MyApplication/GUI/components/dropDownList.cpp
+    MyApplication/GUI/components/textureSelector.cpp
+    #entitys includes
     MyApplication/entitys/entity.cpp 
     MyApplication/entitys/player.cpp 
     MyApplication/entitys/Enemys/Slime.cpp 
+    #AI includes
     MyApplication/entitys/AI/AIFollow.cpp 
     MyApplication/entitys/AI/AIComponent.cpp 
+    #properties includes
     MyApplication/entitys/properties/hitbox.cpp 
     MyApplication/entitys/properties/movement.cpp 
     MyApplication/entitys/properties/attributes.cpp
-    MyApplication/Content/rotationCircle.cpp 
+    #map includes
     MyApplication/Content/Map/block.cpp 
     MyApplication/Content/Map/TileMap.cpp
+    #items includes
+    MyApplication/Content/ItemsStuff/Item.hpp
     MyApplication/Content/ItemsStuff/Coins.cpp
     MyApplication/Content/ItemsStuff/Inventory.cpp
-    MyApplication/Content/ItemsStuff/Item.hpp
-    MyApplication/source/mypars/parsJSON.cpp
+    #ect includes
+    MyApplication/Content/rotationCircle.cpp 
 )
 
 #set outputs directorry

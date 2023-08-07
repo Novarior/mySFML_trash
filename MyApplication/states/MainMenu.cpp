@@ -37,36 +37,41 @@ void MainMenu::initBackground()
 
 void MainMenu::initButtons()
 {
-    int offsetX = this->IstateData->sWindow->getSize().x;
-    int offsetY = this->IstateData->sWindow->getSize().y;
-
-    this->buttons["EXIT_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX - 275, offsetY - 125), sf::Vector2f(250, 100),
-        this->IstateData->font, "Exit", this->IstateData->characterSize_game,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
-    this->buttons["START_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX - 275, offsetY - 225), sf::Vector2f(250, 100),
-        this->IstateData->font, "Play", this->IstateData->characterSize_game,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
-    this->buttons["PERLIN"] = new gui::Button(
-        sf::Vector2f(offsetX - 275, offsetY - 325), sf::Vector2f(250, 100),
-        this->IstateData->font, "Noice", this->IstateData->characterSize_game,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+    int offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
+    int offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
 
     this->buttons["CONT_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX - 275, offsetY - 425), sf::Vector2f(250, 100),
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(60, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
         this->IstateData->font, "Continue", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
+    this->buttons["START_BTN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(70, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Play", this->IstateData->characterSize_game,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
     this->buttons["SETTINGS_BTN"] = new gui::Button(
-        sf::Vector2f(offsetX - 275, offsetY - 525), sf::Vector2f(250, 100),
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(80, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
         this->IstateData->font, "Settings", this->IstateData->characterSize_game,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
+    this->buttons["EXIT_BTN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(90, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Exit", this->IstateData->characterSize_game,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
+    this->buttons["PERLIN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(10, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Noice", this->IstateData->characterSize_game,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
@@ -90,6 +95,31 @@ void MainMenu::initBlocks()
     shape.setOutlineColor(sf::Color::Transparent);
     shape.setOutlineThickness(0.f);
     this->rotationCyrcleShape->setShape(shape);
+}
+
+void MainMenu::initGUI()
+{
+    // debug moment
+
+    int offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
+    int offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
+
+    for (int i = 0; i < 5; i++) {
+        this->debug_shapes.push_back(sf::RectangleShape());
+        this->debug_shapes[i].setPosition(sf::Vector2f(
+            mmath::p2pX(15, this->Iwindow->getSize().x) - offsetX,
+            mmath::p2pX(90 - (i * 10), this->Iwindow->getSize().y) - offsetY));
+        this->debug_shapes[i].setSize(sf::Vector2f(
+            mmath::p2pX(15, this->Iwindow->getSize().x),
+            mmath::p2pX(7, this->Iwindow->getSize().y)));
+        this->debug_shapes[i].setFillColor(sf::Color::Transparent);
+        this->debug_shapes[i].setOutlineColor(sf::Color::White);
+        this->debug_shapes[i].setOutlineThickness(-1);
+    }
+}
+
+void MainMenu::resetGUI()
+{
 }
 
 void MainMenu::initStartProcces()
@@ -133,6 +163,7 @@ void MainMenu::resetView()
 MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
+    this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();
     this->initView();
@@ -182,24 +213,26 @@ void MainMenu::updateInput(const float& delta_time)
 
 void MainMenu::updateButtons()
 {
-    for (auto& it : this->buttons)
-        it.second->update(this->mousePosWindow);
+    if (!this->buttons.empty()) {
+        for (auto& it : this->buttons)
+            it.second->update(this->mousePosWindow);
 
-    if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime())
-        this->endState();
+        if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime())
+            this->endState();
 
-    if (this->buttons["START_BTN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new Process(this->IstateData, false));
+        if (this->buttons["START_BTN"]->isPressed() && this->getKeytime())
+            this->Istates->push(new Process(this->IstateData, false));
 
-    if (this->buttons["CONT_BTN"]->isPressed() && this->getKeytime()) {
-        this->Istates->push(new Process(this->IstateData, true));
-        this->resetView();
+        if (this->buttons["CONT_BTN"]->isPressed() && this->getKeytime()) {
+            this->Istates->push(new Process(this->IstateData, true));
+            this->resetView();
+        }
+        if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
+            this->Istates->push(new SettingsState(this->IstateData));
+
+        if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
+            this->Istates->push(new NoiceView(this->IstateData, false));
     }
-    if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new SettingsState(this->IstateData));
-
-    if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-        this->Istates->push(new NoiceView(this->IstateData, false));
 }
 
 void MainMenu::render(sf::RenderWindow& target)
@@ -207,20 +240,28 @@ void MainMenu::render(sf::RenderWindow& target)
     this->renderTexture.clear();
     this->renderTexture.setView(this->view);
 
+    // render background
     renderTexture.draw(this->background);
-
+    // render circle
     this->rotationCyrcleShape->render(renderTexture);
-
-    for (auto& it : this->buttons)
-        it.second->render(renderTexture);
-
-    this->renderTexture.setView(this->renderTexture.getDefaultView());
-
+    // render GUI
+    if (!this->buttons.empty())
+        for (auto& it : this->buttons)
+            it.second->render(renderTexture);
+    // fadeout fx
     if (this->isstatred)
         renderTexture.draw(this->fadeShape);
 
+    // debug
+    // debug shapes
+    // if (!this->debug_shapes.empty())
+    //     for (auto& it : this->debug_shapes)
+    //         this->renderTexture.draw(it);
+    // debug text
     if (this->debugMode)
         this->renderTexture.draw(this->dText);
+
+    this->renderTexture.setView(this->renderTexture.getDefaultView());
 
     this->renderTexture.display();
     target.draw(this->renderSprite);

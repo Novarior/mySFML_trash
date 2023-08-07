@@ -5,7 +5,7 @@
 		"height": "960"
 	},
 	"fullscreen": "0",
-	"frameRateLimit": "30",
+	"frameRateLimit": "120",
 	"verticalSync": "0",
 	"antialiasingLevel": "0",
 	"gridSize": "32"

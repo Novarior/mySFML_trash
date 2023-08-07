@@ -1,5 +1,4 @@
 .vscode
-bin/GameProto
 build
-CMakeFiles
-CMakeCache.txt
+bin
+bin/GameProto

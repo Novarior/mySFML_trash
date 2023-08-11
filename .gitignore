@@ -1,4 +1,6 @@
-.vscode
+.vscode/
 build/
+CMakeFiles/
 bin
 bin/GameProto
+.DS_Store

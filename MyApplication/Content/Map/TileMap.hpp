@@ -1,15 +1,14 @@
 #ifndef CPP_MAP_TILEMAP_HPP
 #define CPP_MAP_TILEMAP_HPP
-#include "block.hpp"
 #include "TreeList.h"
+#include "block.hpp"
 
-#include "../../math/ProcessGenerationNoice.hpp"
 #include "../../entitys/entity.hpp"
+#include "../../math/ProcessGenerationNoice.hpp"
 
 class Entity;
 
-struct renderArea
-{
+struct renderArea {
     int fromX;
     int fromY;
     int toX;
@@ -19,18 +18,18 @@ struct renderArea
     int offsetY;
 };
 
-class TileMap
-{
-    private:
+class TileMap {
+private:
     renderArea m_Area;
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldFloat;
     noiceData m_dnoice;
-    std::vector<std::vector<std::vector<BrickBlock* >  > > tilemap;
+    std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
     std::map<std::string, sf::Texture> m_TexturesList;
     std::vector<sf::Sprite> m_TreeArray;
     sf::Texture m_TreeTexture;
     sf::Sprite m_TreeSprite;
+    sf::RectangleShape bariere_box;
 
     int fromX = 0;
     int fromY = 0;
@@ -41,7 +40,7 @@ class TileMap
     void loadTextuteMap();
     void pushTree(int x, int y, int seed);
 
-    public:
+public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);
     virtual ~TileMap();
 

@@ -3,8 +3,7 @@
 
 #include "../header.h"
 
-struct BlocksGenData
-{
+struct BlocksGenData {
     sf::Vector2u windowSize;
     sf::Vector2f offset;
     sf::Vector2f pos;
@@ -13,17 +12,15 @@ struct BlocksGenData
     float frequency;
 };
 
-class RotarionCircle
-{
-    private:
+class RotarionCircle {
+private:
     sf::CircleShape shape;
-    std::list<sf::CircleShape> phantoms;
+    std::vector<sf::CircleShape> phantoms;
     float i;
     BlocksGenData bgd;
     bool fastRm;
 
-
-    public:
+public:
     RotarionCircle(BlocksGenData gendata);
     virtual ~RotarionCircle();
 
@@ -31,4 +28,4 @@ class RotarionCircle
     void setShape(sf::CircleShape shape);
     void render(sf::RenderTarget& target);
 };
-#endif 
+#endif

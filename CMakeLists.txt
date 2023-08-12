@@ -4,7 +4,7 @@ project(TRYSQUARE VERSION 0.0.4)
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 #set miniimum c++ standart 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #include all files for build project
 set(RESOURCE_FILES
@@ -55,11 +55,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-
 #make a cmakever.h from template file and include on build
 set(Template_ver MyApplication/cmakever.h.in )
 configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../MyApplication/cmakever.h)
-
 
 #include SFML library on priject
 set(SFML_DIR  "/usr/local/lib/cmake/SFML" )
@@ -76,21 +74,22 @@ target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
 target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
 
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
 message("GameProto" ${CMAKE_BINARY_DIR}/debug)
-
-add_test(TEST 
-GameProto)
-
 endif()
 
 
 if(WIN32)  
 set(CMAKE_SYSTEM_NAME Windows)
 add_executable(GameProto ${RESOURCE_FILES})
+
+set_target_properties(GameProto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
-set_target_properties(GameProto PROPERTIESCXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
+target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
+message("GameProto" ${CMAKE_BINARY_DIR}/debug)
 endif()
 
 

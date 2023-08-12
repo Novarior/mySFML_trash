@@ -6,12 +6,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <algorithm>
+
 #include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <list>
 #include <map>
 #include <ostream>
 #include <sstream>

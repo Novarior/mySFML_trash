@@ -80,7 +80,7 @@ void MainMenu::initBlocks()
 {
     BlocksGenData bgd;
     bgd.amplifire = 500;
-    bgd.countPhantomBlocks = 200;
+    bgd.countPhantomBlocks = 255;
     bgd.offset = sf::Vector2f(
         this->IstateData->sWindow->getSize().x / 2,
         this->IstateData->sWindow->getSize().y / 2);

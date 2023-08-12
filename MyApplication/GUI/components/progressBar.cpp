@@ -1,41 +1,54 @@
 #include "progressBar.hpp"
 
 gui::ProgressBar::ProgressBar(sf::Vector2f pos, sf::Vector2f size,
-    sf::Color inner_color, unsigned character_size,
-    sf::Vector2f resolution, sf::Font& font)
+    sf::Color inner_color, unsigned character_size, sf::Font& font)
 {
 
-    this->back.setSize(size);
-    this->back.setFillColor(sf::Color(50, 50, 50, 200));
-    this->back.setPosition(pos);
+    this->background.setSize(size);
+    this->background.setFillColor(sf::Color(50, 50, 50, 200));
+    this->background.setPosition(pos);
 
     this->inner.setSize(size);
     this->inner.setFillColor(inner_color);
-    this->inner.setPosition(this->back.getPosition());
+    this->inner.setPosition(this->background.getPosition());
 
     this->text.setFont(font);
     this->text.setCharacterSize(character_size);
+    this->text.setOutlineColor(sf::Color::Black);
+    this->text.setOutlineThickness(1.f);
     this->text.setPosition(
-        this->inner.getPosition().x + resolution.x * 0.53,
-        this->inner.getPosition().y + resolution.y * 0.5);
+        this->background.getPosition().x + (this->background.getSize().x * 0.5f) - (this->text.getGlobalBounds().width * 0.5f),
+        this->background.getPosition().y + (this->background.getSize().y * 0.5f) - (this->text.getGlobalBounds().height * 0.5f));
 }
 
 gui::ProgressBar::~ProgressBar() { }
 
 // Functions
-void gui::ProgressBar::update(const int current_value, const int max_value)
+void gui::ProgressBar::update(const float current_value, const float max_value)
 {
-    float percent = static_cast<float>(current_value) / static_cast<float>(max_value);
+    // calculate percentage and update inner bar
+    float percent = (current_value / max_value);
+    this->inner.setSize(sf::Vector2f(
+        static_cast<float>(std::floor(this->background.getSize().x * percent)),
+        this->inner.getSize().y));
 
-    this->inner.setSize(sf::Vector2f(static_cast<float>(floor(max_value * percent)), this->inner.getSize().y));
+    // update text string
+    // cut to 1 decimal places from current_value and max_value
+    std::string current_value_str = std::to_string(current_value);
+    std::string max_value_str = std::to_string(max_value);
+    current_value_str = current_value_str.substr(0, current_value_str.find(".") + 2);
+    max_value_str = max_value_str.substr(0, max_value_str.find(".") + 2);
 
-    this->barString = std::to_string(current_value) + " / " + std::to_string(max_value);
+    this->barString = current_value_str + " / " + max_value_str;
     this->text.setString(this->barString);
+    this->text.setPosition(
+        this->background.getPosition().x + (this->background.getSize().x * 0.5f) - (this->text.getGlobalBounds().width * 0.5f),
+        this->background.getPosition().y + (this->background.getSize().y * 0.5f) - (this->text.getGlobalBounds().height) + mmath::p2pX(20, this->background.getSize().y));
 }
 
 void gui::ProgressBar::render(sf::RenderTarget& target)
 {
-    target.draw(this->back);
+    target.draw(this->background);
     target.draw(this->inner);
     target.draw(this->text);
 }

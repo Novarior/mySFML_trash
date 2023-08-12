@@ -137,8 +137,11 @@ void Process::initPlayer()
 
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
 
-    this->playerHPBar = new gui::ProgressBar(sf::Vector2f(200.f, 20.f), sf::Vector2f(300, 120), sf::Color::Red, this->IstateData->characterSize_game_small,
-        sf::Vector2f(this->IstateData->sWindow->getSize()), this->IstateData->font);
+    // init player HP bar on top right on screen math position using mmath::p2pX/X
+    this->playerHPBar = new gui::ProgressBar(
+        sf::Vector2f(mmath::p2pX(66, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Color::Red, this->IstateData->characterSize_game_small, this->IstateData->font);
 }
 
 // Defauld Init Data
@@ -226,7 +229,7 @@ void Process::updatePlayerInputs(const float& delta_time)
 }
 
 void Process::updateTileMap(const float& delta_time)
-{
+{ // update tilemap
     this->mapTiles->updateWorldBoundsCollision(this->player);
     this->mapTiles->updateTileCollision(this->player, delta_time);
     this->mapTiles->update(this->player, delta_time);
@@ -239,8 +242,7 @@ void Process::updateTileMap(const float& delta_time)
 }
 
 void Process::updateEntitys(const float& delta_time)
-{
-    // update entitys
+{ // update entitys
     for (size_t i = 0; i < this->entitys.size(); i++)
         this->entitys[i]->e_update(delta_time);
 }
@@ -257,14 +259,13 @@ void Process::update(const float& delta_time)
         if (this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
     } else { // update game
-
         this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
         this->updateTileMap(delta_time);
         this->player->e_update(delta_time);
         this->playerHPBar->update(this->player->getAttributes()->getCurrentHealth(), this->player->getAttributes()->getMaxHealth());
 
-        if (this->t_inventory->getIsOpened())
+        if (this->t_inventory->getIsOpened() && !this->Ipaused) // inventory  menu update
             this->t_inventory->update(this->mousePosWindow);
     }
 
@@ -272,7 +273,7 @@ void Process::update(const float& delta_time)
         double fps = 1.0f / delta_time;
         this->dString_Stream
             << "FPS:\t" << fps
-            << "\nResolution:\t" << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
+            << "\nResolution: " << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
             << "\nPlayer:"
             << "\nComponents: "
             << "\n\tvelX: " << this->player->e_getVelocity().x
@@ -292,12 +293,12 @@ void Process::update(const float& delta_time)
             << "Pause:\t" << this->Ipaused
             << "\nMemory Usage: "
             // get memory usage enemys on bytes
-            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << '/' << sizeof(this->player) << " bytes"
-            << "\n\tEntitys: " << sizeof(this->entitys) << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(this->entitys) << " bytes"
+            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
+            << "\n\tEntitys: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
             << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
             << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
             << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
-            << "\n\tTotal usage: " << sizeof(*this->player) + this->entitys.size() * sizeof(Entity) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes";
+            << "\n\tTotal usage: " << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes";
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
@@ -307,8 +308,8 @@ void Process::update(const float& delta_time)
 // sub render functions
 void Process::renderPlayer(sf::RenderTarget& target)
 {
-    this->playerView.setCenter(this->player->e_getPosition());
     this->player->e_render(target, this->debugMode);
+    this->playerView.setCenter(this->player->e_getPosition());
 }
 
 void Process::renderGUI(sf::RenderTarget& target)

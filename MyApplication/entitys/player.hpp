@@ -1,11 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "entity.hpp"
-class Player :public Entity
-{
-    private:
-
-    public:
+class Player : public Entity {
+private:
+public:
     Player(float x, float y, sf::Texture& texture_sheet);
     virtual ~Player();
 

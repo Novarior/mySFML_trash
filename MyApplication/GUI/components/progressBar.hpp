@@ -8,21 +8,20 @@ private:
     std::string barString;
     sf::Text text;
     float maxWidth;
-    sf::RectangleShape back;
+    sf::RectangleShape background;
     sf::RectangleShape inner;
 
 public:
     ProgressBar(sf::Vector2f pos, sf::Vector2f size,
-        sf::Color inner_color, unsigned character_size,
-        sf::Vector2f resolution, sf::Font& font);
+        sf::Color inner_color, unsigned character_size, sf::Font& font);
     ~ProgressBar();
 
     // Accessors
-    
+
     // Modifiers
 
     // Functions
-    void update(const int current_value, const int max_value);
+    void update(const float current_value, const float max_value);
     void render(sf::RenderTarget& target);
 };
 } // namespace gui

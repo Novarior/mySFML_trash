@@ -1,12 +1,12 @@
 {
 	"title": "DEFAULT",
 	"resolution": {
-		"width": "2048",
-		"height": "1536"
+		"width": "1680",
+		"height": "1050"
 	},
 	"fullscreen": "1",
 	"frameRateLimit": "120",
-	"verticalSync": "1",
-	"antialiasingLevel": "16",
+	"verticalSync": "0",
+	"antialiasingLevel": "0",
 	"gridSize": "32"
 }

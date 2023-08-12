@@ -197,7 +197,7 @@ void MainMenu::update(const float& delta_time)
 
     if (this->debugMode) {
         this->dString_Stream
-            << "\nver:\t" << versionApp
+            << "\nver:\t" << CMAKE_PROJECT_VERSION
             << "\nFPS:\t" << 1 / delta_time
             << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
             << "\nDelta Time:\t" << delta_time

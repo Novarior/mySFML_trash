@@ -3,9 +3,6 @@
 #include "cmakever.h"
 
 //here the behavior of the program is implemented at the preprocessor level
-const char versionApp = char(CMAKE_PROJECT_VERSION_PATCH);
-
-
 #if defined(_WIN32)
 const char OperationSystem[] = "Windows OS";
 

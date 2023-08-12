@@ -2,18 +2,23 @@
 #define CPP_CONTENT_BLOCKS_HPP
 #include "../../header.h"
 
-enum BLOCKTYPE { NAN_DEF = 0, BLOCK_GRASS, BLOCK_SAND, BLOCK_OCEAN, BLOCK_STONE, BLOCK_DIRT, BLOCK_MUD };
+enum BLOCKTYPE { NAN_DEF = 0,
+    BLOCK_GRASS,
+    BLOCK_SAND,
+    BLOCK_OCEAN,
+    BLOCK_STONE,
+    BLOCK_DIRT,
+    BLOCK_MUD };
 
-class BrickBlock
-{
-    private:
+class BrickBlock {
+private:
     sf::RectangleShape m_Shape;
     sf::RectangleShape m_Hitbox;
     sf::Texture& m_Texture;
     bool m_collision;
     const unsigned short m_type;
 
-    public:
+public:
     BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type);
     virtual ~BrickBlock();
 

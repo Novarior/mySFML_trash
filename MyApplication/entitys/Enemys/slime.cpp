@@ -9,6 +9,7 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, sf::Texture& texture, Entity&
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);
     this->m_AIFollow = new AIFollow(*this, targer_follow);
+    this->ID_entity = this->count_entitys;
 }
 
 Slime::~Slime()

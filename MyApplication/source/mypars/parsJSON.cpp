@@ -115,6 +115,7 @@ const bool parsJSON::savePlayer(const std::string& filename, Player* player)
     // save to json file
     ofs << "{\n";
     ofs << "\t\"player\": {\n";
+    ofs << "\t\t\"entity_uid\":" << player->e_getID() << ",\n";
     ofs << "\t\t\"position\": {\n";
     ofs << "\t\t\t\"x\": " << player->e_getPosition().x << ",\n";
     ofs << "\t\t\t\"y\": " << player->e_getPosition().y << "\n";
@@ -162,7 +163,7 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
         ofs << "\t\t\t\t\"count\": " << inventory->getItemFromNumSlot(i)->getQuantity() << ",\n";
         ofs << "\t\t\t\t\"price\": " << inventory->getItemFromNumSlot(i)->getPrice() << ",\n";
         ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->getStackable() << ",\n";
-        ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getUnicID() << "\n";
+        ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getID() << "\n";
         ofs << "\t\t\t}";
         if (i != inventory->getSizeInventory() - 1) {
             ofs << ",";
@@ -204,7 +205,8 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
             continue;
         }
         ofs << "\t\t{\n";
-        ofs << "\t\t\t\"ID\": \"" << i << "\",\n";
+        ofs << "\t\t\t\"ID_record\": " << i << ",\n";
+        ofs << "\t\t\t\"entity_uid\":" << entitys[i]->e_getID() << ",\n";
         ofs << "\t\t\t\"position\": {\n";
         ofs << "\t\t\t\t\"x\": " << entitys[i]->e_getPosition().x << ",\n";
         ofs << "\t\t\t\t\"y\": " << entitys[i]->e_getPosition().y << "\n";
@@ -212,7 +214,7 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
         ofs << "\t\t\t\"attributes\": {\n";
         ofs << "\t\t\t\t\"hp\": " << entitys[i]->getAttributes()->getAttributes()->health << ",\n";
         ofs << "\t\t\t\t\"max_hp\": " << entitys[i]->getAttributes()->getAttributes()->max_health << ",\n";
-        ofs << "\t\t\t\t\"level\": " << entitys[i]->getAttributes()->getAttributes()->level << ",\n";
+        ofs << "\t\t\t\t\"level\": " << entitys[i]->getAttributes()->getAttributes()->level << "\n";
         ofs << "\t\t\t}\n";
         ofs << "\t\t}";
         if (i != entitys.size() - 1) {

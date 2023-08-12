@@ -19,7 +19,6 @@ const int randIntFromToNum(int Min_val, int Max_val);
 /// @return float
 const float p2pX(const float perc, const sf::VideoMode& vm);
 const float p2pY(const float perc, const sf::VideoMode& vm);
-const float p2pX(const float perc, const sf::Vector2f& vec);
 const float p2pX(const float perc, const float& i);
 const float p2pX(const float perc, const unsigned int& i);
 

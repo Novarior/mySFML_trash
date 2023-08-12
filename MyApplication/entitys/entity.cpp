@@ -16,6 +16,7 @@ void Entity::createAttributesComponent()
 
 Entity::Entity()
 {
+    this->count_entitys++;
     this->e_movement = NULL;
     this->e_hitbox = NULL;
     this->e_attributes = NULL;

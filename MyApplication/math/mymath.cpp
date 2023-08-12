@@ -13,17 +13,14 @@ const double mmath::randZeroToOne()
 {
     return rand() / (RAND_MAX + 1.);
 }
+// precent to X and Y
 const float mmath::p2pX(const float perc, const sf::VideoMode& vm)
 {
-    //  Converts a percentage value to pixels relative to the current resolution in the x-axis.
-    //  @param		float perc				The percentage value.
-    //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-    //  @return		float					The calculated pixel value.
     return floor(static_cast<float>(vm.width) * (perc / 100.f));
 }
-const float mmath::p2pX(const float perc, const sf::Vector2f& vec)
+const float mmath::p2pY(const float perc, const sf::VideoMode& vm)
 {
-    return floor(static_cast<float>(vec.x) * (perc / 100.f));
+    return floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 const float mmath::p2pX(const float perc, const unsigned int& i)
 {
@@ -32,10 +29,6 @@ const float mmath::p2pX(const float perc, const unsigned int& i)
 const float mmath::p2pX(const float perc, const float& i)
 {
     return floor(static_cast<float>(i) * (perc / 100.f));
-}
-const float mmath::p2pY(const float perc, const sf::VideoMode& vm)
-{
-    return floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 
 const unsigned int mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)

@@ -2,44 +2,53 @@
 #define ITEMSTUFF_ITEM_H
 #include "../../header.h"
 
-class Item
-{
-    public:
-    Item() {}
-    virtual ~Item() {}
+class Item {
+private:
+public:
+    static unsigned int count_items;
 
-    void dropItem() { this->~Item(); }
+    Item() { this->count_items++; }
+    virtual ~Item() { }
 
-    //functions get
-    const bool getPrice() const { return this->price; }
-    const std::string getName() const { return this->name; }
-    const bool getQuantity() const { return this->quantity; }
-    const bool getStackable() const { return this->stacable; }
-    const unsigned int getUnicID() const { return this->item_ID; }
+    inline void dropItem() { this->~Item(); }
 
-    //functions set
-    void setPrice(int price) { this->price = price; }
-    void setName(std::string name) { this->name = name; }
-    void setQuantity(int quantity) { this->quantity = quantity; }
-    void setStackable(bool stacable) { this->stacable = stacable; }
+    // modificators
 
+    const bool pickedUp() const { return this->m_pickable; }
 
-    //modificators
-    void addQuantity(int quantity) { this->quantity += quantity; }
+    // set from
+    inline void setItemPositionOnInventory(sf::Vector2f position) { this->m_shape.setPosition(position); }
 
-    const bool pickedUp() const { return this->pickable; }
+    // modifiers functions
+    inline void addQuantity(int quantity) { this->m_quantity += quantity; }
+    inline void removeQuantity(int quantity) { this->m_quantity -= quantity; }
 
-    void update(sf::Vector2i mouse_pos) { }
+    // inline functions get
+    inline const bool getPrice() const { return this->m_price; }
+    inline const std::string getName() const { return this->m_name; }
+    inline const bool getQuantity() const { return this->m_quantity; }
+    inline const bool getStackable() const { return this->m_stacable; }
+    inline const unsigned int getID() const { return this->item_ID; }
+
+    // inline functions set
+    inline void setPrice(int price) { this->m_price = price; }
+    inline void setName(std::string name) { this->m_name = name; }
+    inline void setQuantity(int quantity) { this->m_quantity = quantity; }
+    inline void setStackable(bool stacable) { this->m_stacable = stacable; }
+    inline void setPickable(bool pickable) { this->m_pickable = pickable; }
+    inline void setID(unsigned int ID) { this->item_ID = ID; }
+
+    virtual void update(const float& delta_time, sf::Vector2i mouse_pos) = 0;
     virtual void render(sf::RenderTarget& target) = 0;
 
-    protected:
+protected:
     unsigned int item_ID;
-    bool stacable;
-    bool pickable;
-    int quantity;
-    std::string name;
+    bool m_stacable;
+    bool m_pickable;
+    int m_quantity;
+    std::string m_name;
     sf::Texture m_texture;
     sf::RectangleShape m_shape;
-    int price;
+    int m_price;
 };
 #endif

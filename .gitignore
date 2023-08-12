@@ -1,6 +1,6 @@
-.vscode/
+**/.vscode
 build/
-CMakeFiles/
+**/CMakeFiles/
 bin
 bin/GameProto
-.DS_Store
+**/.DS_Store

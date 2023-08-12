@@ -2,26 +2,25 @@
 #define item_stone_hpp
 #include "../Item.hpp"
 
-
-class Stone : public Item
-{
-    public:
-    Stone(sf::Vector2f pos, sf::Vector2f size, std::string texture_path, bool stacable, int quantity, int price, bool picked_up)
+class Stone : public Item {
+public:
+    Stone(unsigned int gridSizeI, std::string texture_path, bool stacable, int quantity, int price, bool picked_up)
     {
-        this->name = "Stone";
-        this->m_shape.setPosition(pos);
-        this->m_shape.setSize(size);
-        this->m_texture.loadFromFile(texture_path);
-        this->m_shape.setTexture(&this->m_texture);
-        this->stacable = stacable;
-        this->quantity = quantity;
-        this->price = price;
-        this->pickable = picked_up;
-    }
-    virtual ~Stone() {}
+        this->m_name = "Stone";
+        this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
 
-    void update(sf::Vector2i mouse_pos) {}
-    void render(sf::RenderTarget& target)
+        if (this->m_texture.loadFromFile(texture_path))
+            this->m_shape.setTexture(&this->m_texture);
+
+        this->m_stacable = stacable;
+        this->m_quantity = quantity;
+        this->m_price = price;
+        this->m_pickable = picked_up;
+    }
+    virtual ~Stone() { }
+
+    void update(const float& delta_time, sf::Vector2i mouse_pos) override { }
+    void render(sf::RenderTarget& target) override
     {
         target.draw(this->m_shape);
     }

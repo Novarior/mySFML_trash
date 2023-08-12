@@ -292,9 +292,9 @@ void Process::update(const float& delta_time)
             << "Pause:\t" << this->Ipaused
             << "\nMemory Usage: "
             // get memory usage enemys on bytes
-            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
-            << "\n\tEnemy: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
-            << "\n\tTileMap: " << sizeof(this->mapTiles) << " bytes"
+            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << '/' << sizeof(this->player) << " bytes"
+            << "\n\tEntitys: " << sizeof(this->entitys) << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(this->entitys) << " bytes"
+            << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
             << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
             << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
             << "\n\tTotal usage: " << sizeof(*this->player) + this->entitys.size() * sizeof(Entity) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes";

@@ -69,7 +69,7 @@ public:
     const int getSizeInventory() { return this->CellsInventory.size(); }
 
     // functions for manipulating with coins
-    Coins* getCoins() { return this->m_Coins; }
+    Coins* getCoins();
 
 private:
     bool isOpened;

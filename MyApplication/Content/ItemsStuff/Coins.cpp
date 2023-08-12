@@ -52,6 +52,7 @@ Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::F
 
 Coins::~Coins() {}
 
+
 void Coins::set_GoldCoinCouns(const int value)
 {
     this->m_coin_count.goldCount = value;

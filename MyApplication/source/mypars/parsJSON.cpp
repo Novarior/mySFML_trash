@@ -154,22 +154,35 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
     for (size_t i = 0; i < inventory->getSizeInventory(); i++) {
         ofs << "\t\t\t{\n";
         // check item if null
-        if (inventory->getItemFromNumSlot(i) == nullptr) {
-            // write "slot i is empty
+        if (inventory->getItemFromNumSlot(i) != nullptr) {
+            // write "slot if is not empty
             ofs << "\t\t\t\t\"slot\": " << i << ",\n";
-            continue;
+            ofs << "\t\t\t\t\"name\": \"" << inventory->getItemFromNumSlot(i)->getName() << "\",\n";
+            ofs << "\t\t\t\t\"count\": " << inventory->getItemFromNumSlot(i)->getQuantity() << ",\n";
+            ofs << "\t\t\t\t\"price\": " << inventory->getItemFromNumSlot(i)->getPrice() << ",\n";
+            ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->getStackable() << ",\n";
+            ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getID() << "\n";
+
+            if (i != inventory->getSizeInventory() - 1)
+                ofs << "\t\t\t},\n";
+            else
+                ofs << "\t\t\t}\n";
+        } else {
+            // write "slot" if is empty
+            ofs << "\t\t\t\t\"slot\": " << i << ",\n";
+            ofs << "\t\t\t\t\"name\": null,\n";
+            ofs << "\t\t\t\t\"count\": null,\n";
+            ofs << "\t\t\t\t\"price\": null,\n";
+            ofs << "\t\t\t\t\"stackable\": null,\n";
+            ofs << "\t\t\t\t\"unic ID\": null\n";
+
+            if (i != inventory->getSizeInventory() - 1)
+                ofs << "\t\t\t},\n";
+            else
+                ofs << "\t\t\t}\n";
         }
-        ofs << "\t\t\t\t\"name\": \"" << inventory->getItemFromNumSlot(i)->getName() << "\",\n";
-        ofs << "\t\t\t\t\"count\": " << inventory->getItemFromNumSlot(i)->getQuantity() << ",\n";
-        ofs << "\t\t\t\t\"price\": " << inventory->getItemFromNumSlot(i)->getPrice() << ",\n";
-        ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->getStackable() << ",\n";
-        ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getID() << "\n";
-        ofs << "\t\t\t}";
-        if (i != inventory->getSizeInventory() - 1) {
-            ofs << ",";
-        }
-        ofs << "\n";
     }
+
     ofs << "\t\t],\n";
     ofs << "\t\t\"coins\": {\n";
     ofs << "\t\t\t\"gold\": " << inventory->getCoins()->get_GoldCointCount() << ",\n";

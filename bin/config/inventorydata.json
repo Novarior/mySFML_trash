@@ -3,284 +3,324 @@
 		"size": 40,
 		"items": [
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 0,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 1,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 2,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 3,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 4,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 5,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 6,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 7,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 8,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 9,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 10,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 11,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 12,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 13,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 14,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 15,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 16,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 17,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 18,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 19,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 20,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 21,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 22,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 23,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 24,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 25,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 26,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 27,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 28,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 29,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 30,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 31,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 32,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 33,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 34,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 35,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 36,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 37,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 38,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			},
 			{
-				"name": "Stone",
-				"count": 1,
-				"price": 1,
-				"stackable": 0,
-				"unic ID": 0
+				"slot": 39,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
 			}
 		],
 		"coins": {

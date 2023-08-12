@@ -1,6 +1,6 @@
 #set minimun cmake version for build 
 cmake_minimum_required(VERSION 3.5.0)
-project(TRYSQUARE VERSION 0.0.3)
+project(TRYSQUARE VERSION 0.0.4)
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 #set miniimum c++ standart 

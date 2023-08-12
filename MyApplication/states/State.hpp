@@ -24,7 +24,9 @@ public:
     std::stack<State*>* sStates;
     std::map<std::string, int>* supportedKeys;
     unsigned int characterSize_debug;
-    unsigned int characterSize_game;
+    unsigned int characterSize_game_big;
+    unsigned int characterSize_game_medium;
+    unsigned int characterSize_game_small;
 };
 
 /// @brief Abstract class for game states

@@ -47,14 +47,14 @@ void SettingsState::initGui()
     //=====================================================================================================
     // exit gui button
     this->buttons["BACK_BTN"] = new gui::Button(sf::Vector2f(this->Iwindow->getSize().x - 120, 0.f),
-        sf::Vector2f(120.f, 50.f), this->IstateData->font, "Back", this->IstateData->characterSize_game,
+        sf::Vector2f(120.f, 50.f), this->IstateData->font, "Back", this->IstateData->characterSize_game_medium,
         sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250), sf::Color(60, 60, 60, 50),
         sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
         sf::Color(255, 0, 0, 200), sf::Color(255, 0, 0, 250), sf::Color(255, 0, 0, 50), 0);
     // apply gui button
     // set "apply" button position litle bit left from "back" button
     this->buttons["APPLY_BTN"] = new gui::Button(sf::Vector2f(this->Iwindow->getSize().x - 240, 0.f),
-        sf::Vector2f(120.f, 50.f), this->IstateData->font, "Apply", this->IstateData->characterSize_game,
+        sf::Vector2f(120.f, 50.f), this->IstateData->font, "Apply", this->IstateData->characterSize_game_medium,
         sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250), sf::Color(60, 60, 60, 50),
         sf::Color(70, 70, 70, 200), sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
         sf::Color(0, 255, 0, 200), sf::Color(0, 255, 0, 250), sf::Color(0, 255, 0, 50), 1);
@@ -81,7 +81,7 @@ void SettingsState::initGui()
     this->selector_resolutions = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(10, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size(), id);
+        font, this->IstateData->characterSize_game_medium, modes_str.data(), modes_str.size(), id);
 
     //=====================================================================================================
     //=========================================   FPS    ==================================================
@@ -104,7 +104,7 @@ void SettingsState::initGui()
     this->selector_framerates = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(30, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, fps_limits.data(), fps_limits.size(), fpls);
+        font, this->IstateData->characterSize_game_medium, fps_limits.data(), fps_limits.size(), fpls);
 
     //=====================================================================================================
     //===================================   ANTIALIASING     ==============================================
@@ -130,7 +130,7 @@ void SettingsState::initGui()
     this->selector_antialiasing = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(25, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, antialiasing_list.data(), antialiasing_list.size(), AAS);
+        font, this->IstateData->characterSize_game_medium, antialiasing_list.data(), antialiasing_list.size(), AAS);
 
     //=====================================================================================================
     //=======================================   VSYNC    ==================================================
@@ -153,7 +153,7 @@ void SettingsState::initGui()
     this->selector_vsync = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(20, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, vsync_list.data(), vsync_list.size(), vs);
+        font, this->IstateData->characterSize_game_medium, vsync_list.data(), vsync_list.size(), vs);
 
     //=====================================================================================================
     //===================================   FULLSCREEN    =================================================
@@ -176,7 +176,7 @@ void SettingsState::initGui()
     this->selector_fullscreen = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(15, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, fullscreen_list.data(), fullscreen_list.size(), fs);
+        font, this->IstateData->characterSize_game_medium, fullscreen_list.data(), fullscreen_list.size(), fs);
 
     //=====================================================================================================
     //=======================================   TEXT    ===================================================
@@ -207,7 +207,7 @@ void SettingsState::initGui()
     for (int x = 0; x < 5; x++) {
         this->settings_list[x].setFillColor(sf::Color::White);
         this->settings_list[x].setFont(this->font);
-        this->settings_list[x].setCharacterSize(this->IstateData->characterSize_game);
+        this->settings_list[x].setCharacterSize(this->IstateData->characterSize_game_medium);
         this->settings_list[x].setPosition(sf::Vector2f(
             this->text_shapes[x].getPosition().x + (this->text_shapes[x].getGlobalBounds().width / 2) - (this->settings_list[x].getGlobalBounds().width / 2),
             this->text_shapes[x].getPosition().y + (this->text_shapes[x].getGlobalBounds().height / 2) - (this->settings_list[x].getGlobalBounds().height / 2)));

@@ -43,35 +43,35 @@ void MainMenu::initButtons()
     this->buttons["CONT_BTN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(60, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-        this->IstateData->font, "Continue", this->IstateData->characterSize_game,
+        this->IstateData->font, "Continue", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["START_BTN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(70, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-        this->IstateData->font, "Play", this->IstateData->characterSize_game,
+        this->IstateData->font, "Play", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["SETTINGS_BTN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(80, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-        this->IstateData->font, "Settings", this->IstateData->characterSize_game,
+        this->IstateData->font, "Settings", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["EXIT_BTN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(90, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-        this->IstateData->font, "Exit", this->IstateData->characterSize_game,
+        this->IstateData->font, "Exit", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["PERLIN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(10, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-        this->IstateData->font, "Noice", this->IstateData->characterSize_game,
+        this->IstateData->font, "Noice", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }

@@ -12,7 +12,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& fo
     // init background layout
     sf::Vector2f screen_2to3(mmath::p2pX(66, screen_size.x), mmath::p2pX(66, screen_size.y));
     sf::Vector2f screen_1to6(mmath::p2pX(16, screen_size.x), mmath::p2pX(16, screen_size.y));
-    float size_1t10 = mmath::p2pX(10, m_background_inventory.getSize().x);
+    sf::Vector2f screen_1t10(mmath::p2pX(10, screen_size.x), mmath::p2pX(10, screen_size.y));
 
     this->m_background_inventory.setSize(screen_2to3);
     this->m_background_inventory.setPosition(screen_1to6);
@@ -32,20 +32,20 @@ Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& fo
     // init cells inventory layout
 
     for (int x = 0; x < 10; x++)
-        for (int y = 0; y < 4; y++)
+        for (int y = 0; y < 5; y++)
             this->CellsInventory.push_back(
                 Cell(sf::Vector2f(
-                         this->m_background_inventory.getPosition().x + gridSize_cell * x,
-                         this->m_background_inventory.getPosition().y + gridSize_cell * y),
-                    size_1t10, this->m_CellInvTex, x + (y * 10)));
+                         this->m_background_inventory.getPosition().x + (screen_2to3.x / 10) * x,
+                         this->m_background_inventory.getPosition().y + (screen_2to3.x / 10) * y),
+                    screen_2to3.x / 10, this->m_CellInvTex, x + (y * 10)));
 
     // init Coins GUI
     this->m_Coins = new Coins(
         sf::Vector2f(
-            m_background_inventory.getPosition().x + this->m_background_inventory.getSize().x - size_1t10,
-            m_background_inventory.getPosition().y + this->m_background_inventory.getSize().y - size_1t10),
-        sf::Vector2f(screen_1to6.x, screen_2to3.y - size_1t10),
-        sf::Vector2f(size_1t10, size_1t10), this->m_font, character_size);
+            m_background_inventory.getPosition().x,
+            m_background_inventory.getPosition().y + this->m_background_inventory.getSize().y - screen_1t10.y * 2 / 3),
+        sf::Vector2f(screen_2to3.x, screen_1t10.y * 2 / 3),
+        sf::Vector2f(gridSize_cell, gridSize_cell), this->m_font, character_size);
 
     // initializing the inventory map (empty)
     size_t inv_size = this->CellsInventory.size();

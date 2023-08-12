@@ -9,7 +9,7 @@ void NoiceView::initButton()
 {
     this->buttons["EXIT_BTN"] = new gui::Button(
         sf::Vector2f(), sf::Vector2f(250, 100),
-        this->IstateData->font, "Exit", 20,
+        this->IstateData->font, "Exit", this->IstateData->characterSize_game_small,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }

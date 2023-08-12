@@ -135,9 +135,9 @@ void Process::initPlayer()
     }
     this->player = new Player(100, 100, this->playerTextureSHIT);
 
-    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, 40);
+    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
 
-    this->playerHPBar = new gui::ProgressBar(sf::Vector2f(200.f, 20.f), sf::Vector2f(300, 120), sf::Color::Red, 40,
+    this->playerHPBar = new gui::ProgressBar(sf::Vector2f(200.f, 20.f), sf::Vector2f(300, 120), sf::Color::Red, this->IstateData->characterSize_game_small,
         sf::Vector2f(this->IstateData->sWindow->getSize()), this->IstateData->font);
 }
 

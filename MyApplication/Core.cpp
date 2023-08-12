@@ -61,7 +61,9 @@ void Core::initStateData()
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
     this->mStatedata.parser = this->parsJSON;
     this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
-    this->mStatedata.characterSize_game = mmath::calcCharSize(this->mWindow->getSize(), 70);
+    this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
+    this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
+    this->mStatedata.characterSize_game_small = mmath::calcCharSize(this->mWindow->getSize(), 100);
 }
 
 void Core::initKeyBinds()

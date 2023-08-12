@@ -49,7 +49,9 @@ void State::updateKeytime(const float& delta_time)
 void State::reCaclulateCharacterSize()
 {
     this->IstateData->characterSize_debug = mmath::calcCharSize(this->Iwindow->getSize(), 150);
-    this->IstateData->characterSize_game = mmath::calcCharSize(this->Iwindow->getSize(), 70);
+    this->IstateData->characterSize_game_big = mmath::calcCharSize(this->Iwindow->getSize(), 75);
+    this->IstateData->characterSize_game_medium = mmath::calcCharSize(this->Iwindow->getSize(), 85);
+    this->IstateData->characterSize_game_small = mmath::calcCharSize(this->Iwindow->getSize(), 95);
 }
 
 void State::updateMousePositions(sf::View* view)

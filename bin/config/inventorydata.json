@@ -1,6 +1,6 @@
 {
 	"inventory": {
-		"size": 40,
+		"size": 50,
 		"items": [
 			{
 				"slot": 0,
@@ -316,6 +316,86 @@
 			},
 			{
 				"slot": 39,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 40,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 41,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 42,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 43,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 44,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 45,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 46,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 47,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 48,
+				"name": null,
+				"count": null,
+				"price": null,
+				"stackable": null,
+				"unic ID": null
+			},
+			{
+				"slot": 49,
 				"name": null,
 				"count": null,
 				"price": null,

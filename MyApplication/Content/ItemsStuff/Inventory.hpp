@@ -8,11 +8,14 @@ class Cell : public sf::Drawable {
 public:
     Cell(sf::Vector2f pos, float cell_size, sf::Texture& texture, unsigned int ID = 0)
         : m_texture(texture)
+        , m_ID(ID)
     {
         m_shape.setPosition(pos);
         m_shape.setSize(sf::Vector2f(cell_size, cell_size));
         m_shape.setTexture(&m_texture);
-        m_shape.setOutlineThickness((-cell_size) * 1 / 16);
+        m_shape.setFillColor(sf::Color(40, 40, 40, 127));
+        m_shape.setOutlineThickness(-1.f);
+        m_shape.setOutlineColor(sf::Color::Green);
     }
     virtual ~Cell() { }
 
@@ -25,9 +28,9 @@ public:
 
     inline void update(sf::Vector2i mouse_pos)
     {
-        m_shape.setOutlineColor(sf::Color::Transparent);
+        m_shape.setOutlineColor(sf::Color(80, 70, 40, 127));
         if (m_shape.getGlobalBounds().contains(sf::Vector2f(mouse_pos))) {
-            m_shape.setOutlineColor(sf::Color(255, 255, 255, 120));
+            m_shape.setOutlineColor(sf::Color::Green);
         }
     }
 

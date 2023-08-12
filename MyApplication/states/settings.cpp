@@ -69,11 +69,19 @@ void SettingsState::initGui()
         modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
     }
 
+    // chek current resolution and set it to selector like active element
+    int id = 0;
+    for (int i = 0; i < modes_str.size(); i++)
+        if (modes_str[i] == std::to_string(this->IstateData->gfxSettings->resolution.width) + 'x' + std::to_string(this->IstateData->gfxSettings->resolution.height)) {
+            id = i;
+            break;
+        }
+
     // init selector with video modes
     this->selector_resolutions = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(10, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size());
+        font, this->IstateData->characterSize_game, modes_str.data(), modes_str.size(), id);
 
     //=====================================================================================================
     //=========================================   FPS    ==================================================
@@ -84,11 +92,19 @@ void SettingsState::initGui()
     for (auto& x : this->framerates_list)
         fps_limits.push_back(std::to_string(x));
 
+    // check current fps limit and set it to selector like active element
+    int fpls = 0;
+    for (int i = 0; i < fps_limits.size(); i++)
+        if (fps_limits[i] == std::to_string(this->IstateData->gfxSettings->frameRateLimit)) {
+            fpls = i;
+            break;
+        }
+
     // init selector resolution
     this->selector_framerates = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(30, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, fps_limits.data(), fps_limits.size());
+        font, this->IstateData->characterSize_game, fps_limits.data(), fps_limits.size(), fpls);
 
     //=====================================================================================================
     //===================================   ANTIALIASING     ==============================================
@@ -102,11 +118,19 @@ void SettingsState::initGui()
     antialiasing_list.push_back("x8");
     antialiasing_list.push_back("x16");
 
+    // check current antialiasing and set it to selector like active element
+    unsigned AAS = 0;
+    for (int i = 0; i < antialiasing_list.size(); i++)
+        if (antialiasing_list[i] == "x" + std::to_string(this->IstateData->gfxSettings->contextSettings.antialiasingLevel)) {
+            AAS = i;
+            break;
+        }
+
     // init selector antialiasing
     this->selector_antialiasing = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(25, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, antialiasing_list.data(), antialiasing_list.size());
+        font, this->IstateData->characterSize_game, antialiasing_list.data(), antialiasing_list.size(), AAS);
 
     //=====================================================================================================
     //=======================================   VSYNC    ==================================================
@@ -117,11 +141,19 @@ void SettingsState::initGui()
     vsync_list.push_back("OFF");
     vsync_list.push_back("ON");
 
+    // check current vsync and set it to selector like active element
+    unsigned vs = 0;
+    for (int i = 0; i < vsync_list.size(); i++)
+        if (vsync_list[i] == (this->IstateData->gfxSettings->verticalSync ? "ON" : "OFF")) {
+            vs = i;
+            break;
+        }
+
     // init selector vsync
     this->selector_vsync = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(20, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, vsync_list.data(), vsync_list.size());
+        font, this->IstateData->characterSize_game, vsync_list.data(), vsync_list.size(), vs);
 
     //=====================================================================================================
     //===================================   FULLSCREEN    =================================================
@@ -132,11 +164,19 @@ void SettingsState::initGui()
     fullscreen_list.push_back("Windowed");
     fullscreen_list.push_back("Fullscreen");
 
+    // check current fullscreen and set it to selector like active element
+    unsigned fs = 0;
+    for (int i = 0; i < fullscreen_list.size(); i++)
+        if (fullscreen_list[i] == (this->IstateData->gfxSettings->fullscreen ? "Fullscreen" : "Windowed")) {
+            fs = i;
+            break;
+        }
+
     // init selector fullscreen
     this->selector_fullscreen = new gui::Selector(
         sf::Vector2f(mmath::p2pX(30, this->Iwindow->getSize().x), mmath::p2pX(15, this->Iwindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(5, this->Iwindow->getSize().y)),
-        font, this->IstateData->characterSize_game, fullscreen_list.data(), fullscreen_list.size());
+        font, this->IstateData->characterSize_game, fullscreen_list.data(), fullscreen_list.size(), fs);
 
     //=====================================================================================================
     //=======================================   TEXT    ===================================================
@@ -264,7 +304,7 @@ void SettingsState::updateGui(const float& delta_time)
 
     if (this->debugMode) {
         this->dString_Stream
-            << "Ver: " << versionApp
+            << "Ver: " << CMAKE_PROJECT_VERSION
             << "\nFPS:\t" << 1 / delta_time
             << "\nResolution: " << this->IstateData->sWindow->getSize().x << "x" << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing: " << this->IstateData->gfxSettings->contextSettings.antialiasingLevel

@@ -16,7 +16,8 @@ private:
 
 public:
     Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font,
-        unsigned int character_size, std::string list[], unsigned nrOfElements);
+        unsigned int character_size, std::string list[], unsigned nrOfElements, 
+        unsigned default_active_element=0);
     virtual ~Selector();
 
     // accessors

@@ -1,9 +1,9 @@
 #include "selector.hpp"
 namespace gui {
-Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned int character_size, std::string list[], unsigned nrOfElements)
+Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned int character_size, 
+std::string list[], unsigned nrOfElements, unsigned default_active_element)
     : keytime(0.f)
     , keytimeMax(0.3f)
-    , activeElement(0)
 {
     // init box
     this->box.setPosition(pos);
@@ -39,6 +39,10 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned
     // init list
     for (size_t i = 0; i < nrOfElements; i++)
         this->list.push_back(list[i]);
+
+    // init active element
+    this->activeElement = default_active_element;
+    this->text.setString(this->list[this->activeElement]);
 }
 
 Selector::~Selector()

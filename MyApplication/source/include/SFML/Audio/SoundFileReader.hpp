@@ -22,14 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_SOUNDFILEREADER_HPP
+#define SFML_SOUNDFILEREADER_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Audio/Export.hpp>
-
-#include <cstdint>
+#include <string>
 
 
 namespace sf
@@ -43,22 +43,23 @@ class InputStream;
 class SFML_AUDIO_API SoundFileReader
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Structure holding the audio properties of a sound file
     ///
     ////////////////////////////////////////////////////////////
     struct Info
     {
-        std::uint64_t sampleCount{};  //!< Total number of samples in the file
-        unsigned int  channelCount{}; //!< Number of channels of the sound
-        unsigned int  sampleRate{};   //!< Samples rate of the sound, in samples per second
+        Uint64       sampleCount;  //!< Total number of samples in the file
+        unsigned int channelCount; //!< Number of channels of the sound
+        unsigned int sampleRate;   //!< Samples rate of the sound, in samples per second
     };
 
     ////////////////////////////////////////////////////////////
     /// \brief Virtual destructor
     ///
     ////////////////////////////////////////////////////////////
-    virtual ~SoundFileReader() = default;
+    virtual ~SoundFileReader() {}
 
     ////////////////////////////////////////////////////////////
     /// \brief Open a sound file for reading
@@ -73,7 +74,7 @@ public:
     /// \return True if the file was successfully opened
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] virtual bool open(InputStream& stream, Info& info) = 0;
+    virtual bool open(InputStream& stream, Info& info) = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Change the current read position to the given sample offset
@@ -88,7 +89,7 @@ public:
     /// \param sampleOffset Index of the sample to jump to, relative to the beginning
     ///
     ////////////////////////////////////////////////////////////
-    virtual void seek(std::uint64_t sampleOffset) = 0;
+    virtual void seek(Uint64 sampleOffset) = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Read audio samples from the open file
@@ -99,10 +100,13 @@ public:
     /// \return Number of samples actually read (may be less than \a maxCount)
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] virtual std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount) = 0;
+    virtual Uint64 read(Int16* samples, Uint64 maxCount) = 0;
 };
 
 } // namespace sf
+
+
+#endif // SFML_SOUNDFILEREADER_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -126,26 +130,25 @@ public:
 /// {
 /// public:
 ///
-///     [[nodiscard]] static bool check(sf::InputStream& stream)
+///     static bool check(sf::InputStream& stream)
 ///     {
 ///         // typically, read the first few header bytes and check fields that identify the format
 ///         // return true if the reader can handle the format
 ///     }
 ///
-///     [[nodiscard]] bool open(sf::InputStream& stream, Info& info) override
+///     virtual bool open(sf::InputStream& stream, Info& info)
 ///     {
 ///         // read the sound file header and fill the sound attributes
 ///         // (channel count, sample count and sample rate)
 ///         // return true on success
 ///     }
 ///
-///     void seek(std::uint64_t sampleOffset) override
+///     virtual void seek(sf::Uint64 sampleOffset)
 ///     {
-///         // advance to the sampleOffset-th sample from the beginning of the
-///         sound
+///         // advance to the sampleOffset-th sample from the beginning of the sound
 ///     }
 ///
-///     std::uint64_t read(std::int16_t* samples, std::uint64_t maxCount) override
+///     virtual sf::Uint64 read(sf::Int16* samples, sf::Uint64 maxCount)
 ///     {
 ///         // read up to 'maxCount' samples into the 'samples' array,
 ///         // convert them (for example from normalized float) if they are not stored

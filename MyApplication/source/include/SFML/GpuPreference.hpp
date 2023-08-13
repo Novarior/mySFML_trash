@@ -22,7 +22,8 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_GPUPREFERENCE_HPP
+#define SFML_GPUPREFERENCE_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -59,12 +60,15 @@
 ////////////////////////////////////////////////////////////
 #if defined(SFML_SYSTEM_WINDOWS)
 
-#define SFML_DEFINE_DISCRETE_GPU_PREFERENCE                                                  \
-    extern "C" __declspec(dllexport) unsigned long NvOptimusEnablement                  = 1; \
-    extern "C" __declspec(dllexport) unsigned long AmdPowerXpressRequestHighPerformance = 1;
+    #define SFML_DEFINE_DISCRETE_GPU_PREFERENCE \
+                extern "C" __declspec(dllexport) unsigned long NvOptimusEnablement = 1; \
+                extern "C" __declspec(dllexport) unsigned long AmdPowerXpressRequestHighPerformance = 1;
 
 #else
 
-#define SFML_DEFINE_DISCRETE_GPU_PREFERENCE
+    #define SFML_DEFINE_DISCRETE_GPU_PREFERENCE
 
 #endif
+
+
+#endif // SFML_GPUPREFERENCE_HPP

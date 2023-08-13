@@ -22,13 +22,13 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_TOUCH_HPP
+#define SFML_TOUCH_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/Export.hpp>
-
 #include <SFML/System/Vector2.hpp>
 
 
@@ -40,57 +40,63 @@ class WindowBase;
 /// \brief Give access to the real-time state of the touches
 ///
 ////////////////////////////////////////////////////////////
-namespace Touch
+class SFML_WINDOW_API Touch
 {
-////////////////////////////////////////////////////////////
-/// \brief Check if a touch event is currently down
-///
-/// \param finger Finger index
-///
-/// \return True if \a finger is currently touching the screen, false otherwise
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool isDown(unsigned int finger);
+public:
 
-////////////////////////////////////////////////////////////
-/// \brief Get the current position of a touch in desktop coordinates
-///
-/// This function returns the current touch position
-/// in global (desktop) coordinates.
-///
-/// \param finger Finger index
-///
-/// \return Current position of \a finger, or undefined if it's not down
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API Vector2i getPosition(unsigned int finger);
+    ////////////////////////////////////////////////////////////
+    /// \brief Check if a touch event is currently down
+    ///
+    /// \param finger Finger index
+    ///
+    /// \return True if \a finger is currently touching the screen, false otherwise
+    ///
+    ////////////////////////////////////////////////////////////
+    static bool isDown(unsigned int finger);
 
-////////////////////////////////////////////////////////////
-/// \brief Get the current position of a touch in window coordinates
-///
-/// This function returns the current touch position
-/// relative to the given window.
-///
-/// \param finger Finger index
-/// \param relativeTo Reference window
-///
-/// \return Current position of \a finger, or undefined if it's not down
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API Vector2i getPosition(unsigned int finger, const WindowBase& relativeTo);
-} // namespace Touch
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the current position of a touch in desktop coordinates
+    ///
+    /// This function returns the current touch position
+    /// in global (desktop) coordinates.
+    ///
+    /// \param finger Finger index
+    ///
+    /// \return Current position of \a finger, or undefined if it's not down
+    ///
+    ////////////////////////////////////////////////////////////
+    static Vector2i getPosition(unsigned int finger);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the current position of a touch in window coordinates
+    ///
+    /// This function returns the current touch position
+    /// relative to the given window.
+    ///
+    /// \param finger Finger index
+    /// \param relativeTo Reference window
+    ///
+    /// \return Current position of \a finger, or undefined if it's not down
+    ///
+    ////////////////////////////////////////////////////////////
+    static Vector2i getPosition(unsigned int finger, const WindowBase& relativeTo);
+};
 
 } // namespace sf
 
 
+#endif // SFML_TOUCH_HPP
+
+
 ////////////////////////////////////////////////////////////
-/// \namespace sf::Touch
+/// \class sf::Touch
 /// \ingroup window
 ///
 /// sf::Touch provides an interface to the state of the
-/// touches.
+/// touches. It only contains static functions, so it's not
+/// meant to be instantiated.
 ///
-/// This namespace allows users to query the touches state at any
+/// This class allows users to query the touches state at any
 /// time and directly, without having to deal with a window and
 /// its events. Compared to the TouchBegan, TouchMoved
 /// and TouchEnded events, sf::Touch can retrieve the

@@ -15,8 +15,9 @@ const char texture_CellInventory_path[] = "resourses/Textures/Textures/CellOutLi
 const char texture_GRASS[] = "resourses/Textures/Tiles/grass.png";
 const char texture_STONE[] = "resourses/Textures/Tiles/stone.png";
 const char texture_OCEAN[] = "resourses/Textures/Tiles/ocean.png";
+const char texture_OCEAN_ANIM[] = "resourses/Textures/Tiles/water_still.png";
 const char texture_SAND[] = "resourses/Textures/Tiles/sand.png";
-const char texture_DIRT[] = "resourses/Textures/Tiles/dirt.png";
+const char texture_DIRT[] = "resourses/Textures/Tiles/coarse_dirt.png";
 
 const char texture_TREE[] = "resourses/Textures/Sprites/treee.png";
 

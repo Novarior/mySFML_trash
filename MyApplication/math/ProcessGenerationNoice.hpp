@@ -1,11 +1,9 @@
 #ifndef CPP_MATH_PSEDO_GENERATION_NOICE_HPP
 #define CPP_MATH_PSEDO_GENERATION_NOICE_HPP
 
-
 #include "mymath.hpp"
 
-struct noiceData
-{
+struct noiceData {
     unsigned int mapSizeX;
     unsigned int mapSizeY;
     float gridSize;
@@ -17,18 +15,15 @@ struct noiceData
     unsigned int RenderWindowY;
 };
 
-
-class ProcessGenerationNoice
-{
-    private:
+class ProcessGenerationNoice {
+private:
     noiceData m_data;
 
-    public:
+public:
     double InterpolatedNoise(int i, double x, double y);
     double Interpolate(double a, double b, double x);
     double SmoothedNoise(int i, int x, int y);
     double Noise(int i, int x, int y);
-
 
     ProcessGenerationNoice(noiceData data);
     virtual ~ProcessGenerationNoice();
@@ -36,6 +31,5 @@ class ProcessGenerationNoice
     void setSeed(double seed);
     double getSeed();
     double getNoice(double x, double y);
-
 };
 #endif

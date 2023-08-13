@@ -1,7 +1,7 @@
 #include "block.hpp"
 
 BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collision,
-    sf::Texture& texture, unsigned short type)
+    sf::Texture& texture, unsigned short type, bool isAnim)
     : m_Texture(texture)
     , m_type(type)
 {
@@ -9,6 +9,12 @@ BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color
     this->m_Shape.setPosition(position);
     this->m_Shape.setFillColor(color);
     this->m_Shape.setTexture(&this->m_Texture);
+
+    if (isAnim) {
+        this->currentFrame = 0;
+        this->framesCounter = this->m_Texture.getSize().y / size.y;
+        this->m_isAnim = isAnim;
+    }
 
     this->m_collision = collision;
 
@@ -50,6 +56,13 @@ const bool BrickBlock::intersects(sf::FloatRect rect)
 
 void BrickBlock::update()
 {
+    if (this->m_isAnim) {
+        if (this->currentFrame >= this->framesCounter)
+            this->currentFrame = 0;
+
+        this->m_Shape.setTextureRect(sf::IntRect(0, this->currentFrame * this->m_Shape.getSize().y, this->m_Shape.getSize().x, this->m_Shape.getSize().y));
+        this->currentFrame++;
+    }
 }
 
 void BrickBlock::render(sf::RenderTarget* target, const bool draw_collision)

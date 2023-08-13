@@ -22,13 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_VERTEX_HPP
+#define SFML_VERTEX_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
+#include <SFML/Graphics/Export.hpp>
 #include <SFML/Graphics/Color.hpp>
-
 #include <SFML/System/Vector2.hpp>
 
 
@@ -38,14 +39,15 @@ namespace sf
 /// \brief Define a point with color and texture coordinates
 ///
 ////////////////////////////////////////////////////////////
-class Vertex
+class SFML_GRAPHICS_API Vertex
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
-    constexpr Vertex();
+    Vertex();
 
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex from its position
@@ -55,7 +57,7 @@ public:
     /// \param thePosition Vertex position
     ///
     ////////////////////////////////////////////////////////////
-    constexpr Vertex(const Vector2f& thePosition);
+    Vertex(const Vector2f& thePosition);
 
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex from its position and color
@@ -66,7 +68,7 @@ public:
     /// \param theColor    Vertex color
     ///
     ////////////////////////////////////////////////////////////
-    constexpr Vertex(const Vector2f& thePosition, const Color& theColor);
+    Vertex(const Vector2f& thePosition, const Color& theColor);
 
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex from its position and texture coordinates
@@ -77,7 +79,7 @@ public:
     /// \param theTexCoords Vertex texture coordinates
     ///
     ////////////////////////////////////////////////////////////
-    constexpr Vertex(const Vector2f& thePosition, const Vector2f& theTexCoords);
+    Vertex(const Vector2f& thePosition, const Vector2f& theTexCoords);
 
     ////////////////////////////////////////////////////////////
     /// \brief Construct the vertex from its position, color and texture coordinates
@@ -87,19 +89,20 @@ public:
     /// \param theTexCoords Vertex texture coordinates
     ///
     ////////////////////////////////////////////////////////////
-    constexpr Vertex(const Vector2f& thePosition, const Color& theColor, const Vector2f& theTexCoords);
+    Vertex(const Vector2f& thePosition, const Color& theColor, const Vector2f& theTexCoords);
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Vector2f position;            //!< 2D position of the vertex
-    Color    color{Color::White}; //!< Color of the vertex
-    Vector2f texCoords;           //!< Coordinates of the texture's pixel to map to the vertex
+    Vector2f  position;  //!< 2D position of the vertex
+    Color     color;     //!< Color of the vertex
+    Vector2f  texCoords; //!< Coordinates of the texture's pixel to map to the vertex
 };
 
-#include <SFML/Graphics/Vertex.inl>
-
 } // namespace sf
+
+
+#endif // SFML_VERTEX_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -112,7 +115,7 @@ public:
 ///
 /// The vertex is the building block of drawing. Everything which
 /// is visible on screen is made of vertices. They are grouped
-/// as 2D primitives (lines, triangles, ...), and these primitives
+/// as 2D primitives (triangles, quads, ...), and these primitives
 /// are grouped to create even more complex 2D entities such as
 /// sprites, texts, etc.
 ///
@@ -129,13 +132,11 @@ public:
 ///     sf::Vertex(sf::Vector2f(  0,   0), sf::Color::Red, sf::Vector2f( 0,  0)),
 ///     sf::Vertex(sf::Vector2f(  0, 100), sf::Color::Red, sf::Vector2f( 0, 10)),
 ///     sf::Vertex(sf::Vector2f(100, 100), sf::Color::Red, sf::Vector2f(10, 10)),
-///     sf::Vertex(sf::Vector2f(  0,   0), sf::Color::Red, sf::Vector2f( 0,  0)),
-///     sf::Vertex(sf::Vector2f(100, 100), sf::Color::Red, sf::Vector2f(10, 10)),
 ///     sf::Vertex(sf::Vector2f(100,   0), sf::Color::Red, sf::Vector2f(10,  0))
 /// };
 ///
 /// // draw it
-/// window.draw(vertices, 6, sf::Triangles);
+/// window.draw(vertices, 4, sf::Quads);
 /// \endcode
 ///
 /// Note: although texture coordinates are supposed to be an integer

@@ -22,18 +22,15 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_PACKET_HPP
+#define SFML_PACKET_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Network/Export.hpp>
-
 #include <string>
 #include <vector>
-
-#include <cstddef>
-#include <cstdint>
 
 
 namespace sf
@@ -49,7 +46,11 @@ class UdpSocket;
 ////////////////////////////////////////////////////////////
 class SFML_NETWORK_API Packet
 {
+    // A bool-like type that cannot be converted to integer or pointer types
+    typedef bool (Packet::*BoolType)(std::size_t);
+
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -63,30 +64,6 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     virtual ~Packet();
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Copy constructor
-    ///
-    ////////////////////////////////////////////////////////////
-    Packet(const Packet&);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Copy assignment
-    ///
-    ////////////////////////////////////////////////////////////
-    Packet& operator=(const Packet&);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Move constructor
-    ///
-    ////////////////////////////////////////////////////////////
-    Packet(Packet&&) noexcept;
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Move assignment
-    ///
-    ////////////////////////////////////////////////////////////
-    Packet& operator=(Packet&&) noexcept;
 
     ////////////////////////////////////////////////////////////
     /// \brief Append data to the end of the packet
@@ -128,7 +105,7 @@ public:
     /// Warning: the returned pointer may become invalid after
     /// you append data to the packet, therefore it should never
     /// be stored.
-    /// The return pointer is a null pointer if the packet is empty.
+    /// The return pointer is NULL if the packet is empty.
     ///
     /// \return Pointer to the data
     ///
@@ -163,6 +140,8 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     bool endOfPacket() const;
+
+public:
 
     ////////////////////////////////////////////////////////////
     /// \brief Test the validity of the packet, for reading
@@ -202,171 +181,172 @@ public:
     /// \see endOfPacket
     ///
     ////////////////////////////////////////////////////////////
-    explicit operator bool() const;
+    operator BoolType() const;
 
     ////////////////////////////////////////////////////////////
     /// Overload of operator >> to read data from the packet
     ///
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(bool& data);
+    Packet& operator >>(bool&         data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::int8_t& data);
+    Packet& operator >>(Int8&         data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::uint8_t& data);
+    Packet& operator >>(Uint8&        data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::int16_t& data);
+    Packet& operator >>(Int16&        data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::uint16_t& data);
+    Packet& operator >>(Uint16&       data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::int32_t& data);
+    Packet& operator >>(Int32&        data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::uint32_t& data);
+    Packet& operator >>(Uint32&       data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::int64_t& data);
+    Packet& operator >>(Int64&        data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::uint64_t& data);
+    Packet& operator >>(Uint64&       data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(float& data);
+    Packet& operator >>(float&        data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(double& data);
+    Packet& operator >>(double&       data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(char* data);
+    Packet& operator >>(char*         data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::string& data);
+    Packet& operator >>(std::string&  data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(wchar_t* data);
+    Packet& operator >>(wchar_t*      data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(std::wstring& data);
+    Packet& operator >>(std::wstring& data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator>>(String& data);
+    Packet& operator >>(String&       data);
 
     ////////////////////////////////////////////////////////////
     /// Overload of operator << to write data into the packet
     ///
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(bool data);
+    Packet& operator <<(bool                data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::int8_t data);
+    Packet& operator <<(Int8                data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::uint8_t data);
+    Packet& operator <<(Uint8               data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::int16_t data);
+    Packet& operator <<(Int16               data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::uint16_t data);
+    Packet& operator <<(Uint16              data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::int32_t data);
+    Packet& operator <<(Int32               data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::uint32_t data);
+    Packet& operator <<(Uint32              data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::int64_t data);
+    Packet& operator <<(Int64               data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(std::uint64_t data);
+    Packet& operator <<(Uint64              data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(float data);
+    Packet& operator <<(float               data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(double data);
+    Packet& operator <<(double              data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(const char* data);
+    Packet& operator <<(const char*         data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(const std::string& data);
+    Packet& operator <<(const std::string&  data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(const wchar_t* data);
+    Packet& operator <<(const wchar_t*      data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(const std::wstring& data);
+    Packet& operator <<(const std::wstring& data);
 
     ////////////////////////////////////////////////////////////
     /// \overload
     ////////////////////////////////////////////////////////////
-    Packet& operator<<(const String& data);
+    Packet& operator <<(const String&       data);
 
 protected:
+
     friend class TcpSocket;
     friend class UdpSocket;
 
@@ -410,12 +390,13 @@ protected:
     virtual void onReceive(const void* data, std::size_t size);
 
 private:
+
     ////////////////////////////////////////////////////////////
     /// Disallow comparisons between packets
     ///
     ////////////////////////////////////////////////////////////
-    bool operator==(const Packet& right) const;
-    bool operator!=(const Packet& right) const;
+    bool operator ==(const Packet& right) const;
+    bool operator !=(const Packet& right) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Check if the packet can extract a given number of bytes
@@ -432,13 +413,16 @@ private:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    std::vector<std::byte> m_data;          //!< Data stored in the packet
-    std::size_t            m_readPos{};     //!< Current reading position in the packet
-    std::size_t            m_sendPos{};     //!< Current send position in the packet (for handling partial sends)
-    bool                   m_isValid{true}; //!< Reading state of the packet
+    std::vector<char> m_data;    //!< Data stored in the packet
+    std::size_t       m_readPos; //!< Current reading position in the packet
+    std::size_t       m_sendPos; //!< Current send position in the packet (for handling partial sends)
+    bool              m_isValid; //!< Reading state of the packet
 };
 
 } // namespace sf
+
+
+#endif // SFML_PACKET_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -458,14 +442,14 @@ private:
 /// It is designed to follow the behavior of standard C++ streams,
 /// using operators >> and << to extract and insert data.
 ///
-/// It is recommended to use only fixed-size types (like std::int32_t, etc.),
+/// It is recommended to use only fixed-size types (like sf::Int32, etc.),
 /// to avoid possible differences between the sender and the receiver.
 /// Indeed, the native C++ types may have different sizes on two platforms
 /// and your data may be corrupted if that happens.
 ///
 /// Usage example:
 /// \code
-/// std::uint32_t x = 24;
+/// sf::Uint32 x = 24;
 /// std::string s = "hello";
 /// double d = 5.89;
 ///
@@ -483,7 +467,7 @@ private:
 /// socket.receive(packet);
 ///
 /// // Extract the variables contained in the packet
-/// std::uint32_t x;
+/// sf::Uint32 x;
 /// std::string s;
 /// double d;
 /// if (packet >> x >> s >> d)
@@ -495,7 +479,7 @@ private:
 /// Packets have built-in operator >> and << overloads for
 /// standard types:
 /// \li bool
-/// \li fixed-size integer types (int[8|16|32]_t, uint[8|16|32]_t)
+/// \li fixed-size integer types (sf::Int8/16/32, sf::Uint8/16/32)
 /// \li floating point numbers (float, double)
 /// \li string types (char*, wchar_t*, std::string, std::wstring, sf::String)
 ///
@@ -507,7 +491,7 @@ private:
 /// struct MyStruct
 /// {
 ///     float       number;
-///     std::int8_t integer;
+///     sf::Int8    integer;
 ///     std::string str;
 /// };
 ///
@@ -533,7 +517,7 @@ private:
 /// \code
 /// class ZipPacket : public sf::Packet
 /// {
-///     const void* onSend(std::size_t& size) override
+///     virtual const void* onSend(std::size_t& size)
 ///     {
 ///         const void* srcData = getData();
 ///         std::size_t srcSize = getDataSize();
@@ -541,7 +525,7 @@ private:
 ///         return MySuperZipFunction(srcData, srcSize, &size);
 ///     }
 ///
-///     void onReceive(const void* data, std::size_t size) override
+///     virtual void onReceive(const void* data, std::size_t size)
 ///     {
 ///         std::size_t dstSize;
 ///         const void* dstData = MySuperUnzipFunction(data, size, &dstSize);

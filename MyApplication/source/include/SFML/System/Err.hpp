@@ -22,14 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_ERR_HPP
+#define SFML_ERR_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/System/Export.hpp>
-
-#include <iosfwd>
+#include <ostream>
 
 
 namespace sf
@@ -41,6 +41,9 @@ namespace sf
 SFML_SYSTEM_API std::ostream& err();
 
 } // namespace sf
+
+
+#endif // SFML_ERR_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -66,7 +69,7 @@ SFML_SYSTEM_API std::ostream& err();
 /// std::streambuf* previous = sf::err().rdbuf(file.rdbuf());
 ///
 /// // Redirect to nothing
-/// sf::err().rdbuf(nullptr);
+/// sf::err().rdbuf(NULL);
 ///
 /// // Restore the original output
 /// sf::err().rdbuf(previous);

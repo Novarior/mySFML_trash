@@ -22,15 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_SOUNDFILEFACTORY_HPP
+#define SFML_SOUNDFILEFACTORY_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Audio/Export.hpp>
-
-#include <filesystem>
-#include <memory>
+#include <string>
 #include <vector>
 
 
@@ -47,6 +46,7 @@ class SoundFileWriter;
 class SFML_AUDIO_API SoundFileFactory
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Register a new reader
     ///
@@ -86,6 +86,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Instantiate the right reader for the given file on disk
     ///
+    /// It's up to the caller to release the returned reader
+    ///
     /// \param filename Path of the sound file
     ///
     /// \return A new sound file reader that can read the given file, or null if no reader can handle it
@@ -93,10 +95,12 @@ public:
     /// \see createReaderFromMemory, createReaderFromStream
     ///
     ////////////////////////////////////////////////////////////
-    static std::unique_ptr<SoundFileReader> createReaderFromFilename(const std::filesystem::path& filename);
+    static SoundFileReader* createReaderFromFilename(const std::string& filename);
 
     ////////////////////////////////////////////////////////////
     /// \brief Instantiate the right codec for the given file in memory
+    ///
+    /// It's up to the caller to release the returned reader
     ///
     /// \param data        Pointer to the file data in memory
     /// \param sizeInBytes Total size of the file data, in bytes
@@ -106,10 +110,12 @@ public:
     /// \see createReaderFromFilename, createReaderFromStream
     ///
     ////////////////////////////////////////////////////////////
-    static std::unique_ptr<SoundFileReader> createReaderFromMemory(const void* data, std::size_t sizeInBytes);
+    static SoundFileReader* createReaderFromMemory(const void* data, std::size_t sizeInBytes);
 
     ////////////////////////////////////////////////////////////
     /// \brief Instantiate the right codec for the given file in stream
+    ///
+    /// It's up to the caller to release the returned reader
     ///
     /// \param stream Source stream to read from
     ///
@@ -118,48 +124,51 @@ public:
     /// \see createReaderFromFilename, createReaderFromMemory
     ///
     ////////////////////////////////////////////////////////////
-    static std::unique_ptr<SoundFileReader> createReaderFromStream(InputStream& stream);
+    static SoundFileReader* createReaderFromStream(InputStream& stream);
 
     ////////////////////////////////////////////////////////////
     /// \brief Instantiate the right writer for the given file on disk
+    ///
+    /// It's up to the caller to release the returned writer
     ///
     /// \param filename Path of the sound file
     ///
     /// \return A new sound file writer that can write given file, or null if no writer can handle it
     ///
     ////////////////////////////////////////////////////////////
-    static std::unique_ptr<SoundFileWriter> createWriterFromFilename(const std::filesystem::path& filename);
+    static SoundFileWriter* createWriterFromFilename(const std::string& filename);
 
 private:
+
     ////////////////////////////////////////////////////////////
     // Types
     ////////////////////////////////////////////////////////////
     struct ReaderFactory
     {
         bool (*check)(InputStream&);
-        std::unique_ptr<SoundFileReader> (*create)();
+        SoundFileReader* (*create)();
     };
-    using ReaderFactoryArray = std::vector<ReaderFactory>;
+    typedef std::vector<ReaderFactory> ReaderFactoryArray;
 
     struct WriterFactory
     {
-        bool (*check)(const std::filesystem::path&);
-        std::unique_ptr<SoundFileWriter> (*create)();
+        bool (*check)(const std::string&);
+        SoundFileWriter* (*create)();
     };
-    using WriterFactoryArray = std::vector<WriterFactory>;
+    typedef std::vector<WriterFactory> WriterFactoryArray;
 
     ////////////////////////////////////////////////////////////
     // Static member data
     ////////////////////////////////////////////////////////////
-    // NOLINTBEGIN(readability-identifier-naming)
     static ReaderFactoryArray s_readers; //!< List of all registered readers
     static WriterFactoryArray s_writers; //!< List of all registered writers
-    // NOLINTEND(readability-identifier-naming)
 };
 
 } // namespace sf
 
 #include <SFML/Audio/SoundFileFactory.inl>
+
+#endif // SFML_SOUNDFILEFACTORY_HPP
 
 
 ////////////////////////////////////////////////////////////

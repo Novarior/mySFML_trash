@@ -22,17 +22,15 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_VIEW_HPP
+#define SFML_VIEW_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Graphics/Export.hpp>
-
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/Transform.hpp>
-
-#include <SFML/System/Angle.hpp>
 #include <SFML/System/Vector2.hpp>
 
 
@@ -45,6 +43,7 @@ namespace sf
 class SFML_GRAPHICS_API View
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -73,12 +72,34 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Set the center of the view
     ///
+    /// \param x X coordinate of the new center
+    /// \param y Y coordinate of the new center
+    ///
+    /// \see setSize, getCenter
+    ///
+    ////////////////////////////////////////////////////////////
+    void setCenter(float x, float y);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Set the center of the view
+    ///
     /// \param center New center
     ///
     /// \see setSize, getCenter
     ///
     ////////////////////////////////////////////////////////////
     void setCenter(const Vector2f& center);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Set the size of the view
+    ///
+    /// \param width  New width of the view
+    /// \param height New height of the view
+    ///
+    /// \see setCenter, getCenter
+    ///
+    ////////////////////////////////////////////////////////////
+    void setSize(float width, float height);
 
     ////////////////////////////////////////////////////////////
     /// \brief Set the size of the view
@@ -95,12 +116,12 @@ public:
     ///
     /// The default rotation of a view is 0 degree.
     ///
-    /// \param angle New angle
+    /// \param angle New angle, in degrees
     ///
     /// \see getRotation
     ///
     ////////////////////////////////////////////////////////////
-    void setRotation(Angle angle);
+    void setRotation(float angle);
 
     ////////////////////////////////////////////////////////////
     /// \brief Set the target viewport
@@ -109,7 +130,7 @@ public:
     /// view are displayed, expressed as a factor (between 0 and 1)
     /// of the size of the RenderTarget to which the view is applied.
     /// For example, a view which takes the left side of the target would
-    /// be defined with View.setViewport(sf::FloatRect({0.f, 0.f}, {0.5f, 1.f})).
+    /// be defined with View.setViewport(sf::FloatRect(0, 0, 0.5, 1)).
     /// By default, a view has a viewport which covers the entire target.
     ///
     /// \param viewport New viewport rectangle
@@ -154,12 +175,12 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Get the current orientation of the view
     ///
-    /// \return Rotation angle of the view
+    /// \return Rotation angle of the view, in degrees
     ///
     /// \see setRotation
     ///
     ////////////////////////////////////////////////////////////
-    Angle getRotation() const;
+    float getRotation() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the target viewport rectangle of the view
@@ -174,6 +195,17 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Move the view relatively to its current position
     ///
+    /// \param offsetX X coordinate of the move offset
+    /// \param offsetY Y coordinate of the move offset
+    ///
+    /// \see setCenter, rotate, zoom
+    ///
+    ////////////////////////////////////////////////////////////
+    void move(float offsetX, float offsetY);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Move the view relatively to its current position
+    ///
     /// \param offset Move offset
     ///
     /// \see setCenter, rotate, zoom
@@ -184,12 +216,12 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Rotate the view relatively to its current orientation
     ///
-    /// \param angle Angle to rotate
+    /// \param angle Angle to rotate, in degrees
     ///
     /// \see setRotation, move, zoom
     ///
     ////////////////////////////////////////////////////////////
-    void rotate(Angle angle);
+    void rotate(float angle);
 
     ////////////////////////////////////////////////////////////
     /// \brief Resize the view rectangle relatively to its current size
@@ -233,20 +265,24 @@ public:
     const Transform& getInverseTransform() const;
 
 private:
+
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Vector2f  m_center;                     //!< Center of the view, in scene coordinates
-    Vector2f  m_size;                       //!< Size of the view, in scene coordinates
-    Angle     m_rotation;                   //!< Angle of rotation of the view rectangle
-    FloatRect m_viewport{{0, 0}, {1, 1}};   //!< Viewport rectangle, expressed as a factor of the render-target's size
-    mutable Transform m_transform;          //!< Precomputed projection transform corresponding to the view
-    mutable Transform m_inverseTransform;   //!< Precomputed inverse projection transform corresponding to the view
-    mutable bool      m_transformUpdated{}; //!< Internal state telling if the transform needs to be updated
-    mutable bool      m_invTransformUpdated{}; //!< Internal state telling if the inverse transform needs to be updated
+    Vector2f          m_center;              //!< Center of the view, in scene coordinates
+    Vector2f          m_size;                //!< Size of the view, in scene coordinates
+    float             m_rotation;            //!< Angle of rotation of the view rectangle, in degrees
+    FloatRect         m_viewport;            //!< Viewport rectangle, expressed as a factor of the render-target's size
+    mutable Transform m_transform;           //!< Precomputed projection transform corresponding to the view
+    mutable Transform m_inverseTransform;    //!< Precomputed inverse projection transform corresponding to the view
+    mutable bool      m_transformUpdated;    //!< Internal state telling if the transform needs to be updated
+    mutable bool      m_invTransformUpdated; //!< Internal state telling if the inverse transform needs to be updated
 };
 
 } // namespace sf
+
+
+#endif // SFML_VIEW_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -279,13 +315,13 @@ private:
 /// sf::View view;
 ///
 /// // Initialize the view to a rectangle located at (100, 100) and with a size of 400x200
-/// view.reset(sf::FloatRect({100, 100}, {400, 200}));
+/// view.reset(sf::FloatRect(100, 100, 400, 200));
 ///
 /// // Rotate it by 45 degrees
-/// view.rotate(sf::degrees(45));
+/// view.rotate(45);
 ///
 /// // Set its target viewport to be half of the window
-/// view.setViewport(sf::FloatRect({0.f, 0.f}, {0.5f, 1.f}));
+/// view.setViewport(sf::FloatRect(0.f, 0.f, 0.5f, 1.f));
 ///
 /// // Apply it
 /// window.setView(view);

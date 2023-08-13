@@ -6,6 +6,7 @@ enum BLOCKTYPE { NAN_DEF = 0,
     BLOCK_GRASS,
     BLOCK_SAND,
     BLOCK_OCEAN,
+    BLOCK_OCEAN_ANIM,
     BLOCK_STONE,
     BLOCK_DIRT,
     BLOCK_MUD };
@@ -17,9 +18,12 @@ private:
     sf::Texture& m_Texture;
     bool m_collision;
     const unsigned short m_type;
+    bool m_isAnim;
+    unsigned currentFrame;
+    unsigned framesCounter;
 
 public:
-    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type);
+    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false);
     virtual ~BrickBlock();
 
     const sf::FloatRect getGlobalBounds();

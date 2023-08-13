@@ -22,18 +22,15 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_MEMORYINPUTSTREAM_HPP
+#define SFML_MEMORYINPUTSTREAM_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
-
-#include <SFML/System/Export.hpp>
-
 #include <SFML/System/InputStream.hpp>
-
-#include <cstddef>
+#include <SFML/System/Export.hpp>
 #include <cstdlib>
 
 
@@ -46,6 +43,7 @@ namespace sf
 class SFML_SYSTEM_API MemoryInputStream : public InputStream
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -73,7 +71,7 @@ public:
     /// \return The number of bytes actually read, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] std::int64_t read(void* data, std::int64_t size) override;
+    virtual Int64 read(void* data, Int64 size);
 
     ////////////////////////////////////////////////////////////
     /// \brief Change the current reading position
@@ -83,7 +81,7 @@ public:
     /// \return The position actually sought to, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] std::int64_t seek(std::int64_t position) override;
+    virtual Int64 seek(Int64 position);
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the current reading position in the stream
@@ -91,7 +89,7 @@ public:
     /// \return The current position, or -1 on error.
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] std::int64_t tell() override;
+    virtual Int64 tell();
 
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the stream
@@ -99,18 +97,22 @@ public:
     /// \return The total number of bytes available in the stream, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    std::int64_t getSize() override;
+    virtual Int64 getSize();
 
 private:
+
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    const std::byte* m_data{};   //!< Pointer to the data in memory
-    std::int64_t     m_size{};   //!< Total size of the data
-    std::int64_t     m_offset{}; //!< Current reading position
+    const char* m_data;   //!< Pointer to the data in memory
+    Int64       m_size;   //!< Total size of the data
+    Int64       m_offset; //!< Current reading position
 };
 
 } // namespace sf
+
+
+#endif // SFML_MEMORYINPUTSTREAM_HPP
 
 
 ////////////////////////////////////////////////////////////

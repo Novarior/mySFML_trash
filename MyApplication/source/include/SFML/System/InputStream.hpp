@@ -22,16 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_INPUTSTREAM_HPP
+#define SFML_INPUTSTREAM_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Config.hpp>
-
 #include <SFML/System/Export.hpp>
-
-#include <cstdint>
 
 
 namespace sf
@@ -43,11 +41,12 @@ namespace sf
 class SFML_SYSTEM_API InputStream
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Virtual destructor
     ///
     ////////////////////////////////////////////////////////////
-    virtual ~InputStream() = default;
+    virtual ~InputStream() {}
 
     ////////////////////////////////////////////////////////////
     /// \brief Read data from the stream
@@ -61,7 +60,7 @@ public:
     /// \return The number of bytes actually read, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] virtual std::int64_t read(void* data, std::int64_t size) = 0;
+    virtual Int64 read(void* data, Int64 size) = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Change the current reading position
@@ -71,7 +70,7 @@ public:
     /// \return The position actually sought to, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] virtual std::int64_t seek(std::int64_t position) = 0;
+    virtual Int64 seek(Int64 position) = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the current reading position in the stream
@@ -79,7 +78,7 @@ public:
     /// \return The current position, or -1 on error.
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] virtual std::int64_t tell() = 0;
+    virtual Int64 tell() = 0;
 
     ////////////////////////////////////////////////////////////
     /// \brief Return the size of the stream
@@ -87,10 +86,13 @@ public:
     /// \return The total number of bytes available in the stream, or -1 on error
     ///
     ////////////////////////////////////////////////////////////
-    virtual std::int64_t getSize() = 0;
+    virtual Int64 getSize() = 0;
 };
 
 } // namespace sf
+
+
+#endif // SFML_INPUTSTREAM_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -115,17 +117,17 @@ public:
 /// {
 /// public:
 ///
-///     ZipStream(const std::string& archive);
+///     ZipStream(std::string archive);
 ///
-///     [[nodiscard]] bool open(const std::filesystem::path& filename);
+///     bool open(std::string filename);
 ///
-///     [[nodiscard]] std::int64_t read(void* data, std::int64_t size);
+///     Int64 read(void* data, Int64 size);
 ///
-///     [[nodiscard]] std::int64_t seek(std::int64_t position);
+///     Int64 seek(Int64 position);
 ///
-///     [[nodiscard]] std::int64_t tell();
+///     Int64 tell();
 ///
-///     std::int64_t getSize();
+///     Int64 getSize();
 ///
 /// private:
 ///
@@ -135,30 +137,14 @@ public:
 /// // now you can load textures...
 /// sf::Texture texture;
 /// ZipStream stream("resources.zip");
-///
-/// if (!stream.open("images/img.png"))
-/// {
-///     // Handle error...
-/// }
-///
-/// if (!texture.loadFromStream(stream))
-/// {
-///     // Handle error...
-/// }
+/// stream.open("images/img.png");
+/// texture.loadFromStream(stream);
 ///
 /// // musics...
 /// sf::Music music;
 /// ZipStream stream("resources.zip");
-///
-/// if (!stream.open("musics/msc.ogg"))
-/// {
-///     // Handle error...
-/// }
-///
-/// if (!music.openFromStream(stream))
-/// {
-///     // Handle error...
-/// }
+/// stream.open("musics/msc.ogg");
+/// music.openFromStream(stream);
 ///
 /// // etc.
 /// \endcode

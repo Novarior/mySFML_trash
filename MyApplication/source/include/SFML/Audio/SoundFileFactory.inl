@@ -31,17 +31,9 @@ namespace sf
 {
 namespace priv
 {
-template <typename T>
-std::unique_ptr<SoundFileReader> createReader()
-{
-    return std::make_unique<T>();
+    template <typename T> SoundFileReader* createReader() {return new T;}
+    template <typename T> SoundFileWriter* createWriter() {return new T;}
 }
-template <typename T>
-std::unique_ptr<SoundFileWriter> createWriter()
-{
-    return std::make_unique<T>();
-}
-} // namespace priv
 
 ////////////////////////////////////////////////////////////
 template <typename T>
@@ -52,7 +44,7 @@ void SoundFileFactory::registerReader()
 
     // Create a new factory with the functions provided by the class
     ReaderFactory factory;
-    factory.check  = &T::check;
+    factory.check = &T::check;
     factory.create = &priv::createReader<T>;
 
     // Add it
@@ -65,7 +57,7 @@ template <typename T>
 void SoundFileFactory::unregisterReader()
 {
     // Remove the instance(s) of the reader from the array of factories
-    for (auto it = s_readers.begin(); it != s_readers.end(); /* noop */)
+    for (ReaderFactoryArray::iterator it = s_readers.begin(); it != s_readers.end(); )
     {
         if (it->create == &priv::createReader<T>)
             it = s_readers.erase(it);
@@ -83,7 +75,7 @@ void SoundFileFactory::registerWriter()
 
     // Create a new factory with the functions provided by the class
     WriterFactory factory;
-    factory.check  = &T::check;
+    factory.check = &T::check;
     factory.create = &priv::createWriter<T>;
 
     // Add it
@@ -96,7 +88,7 @@ template <typename T>
 void SoundFileFactory::unregisterWriter()
 {
     // Remove the instance(s) of the writer from the array of factories
-    for (auto it = s_writers.begin(); it != s_writers.end(); /* noop */)
+    for (WriterFactoryArray::iterator it = s_writers.begin(); it != s_writers.end(); )
     {
         if (it->create == &priv::createWriter<T>)
             it = s_writers.erase(it);

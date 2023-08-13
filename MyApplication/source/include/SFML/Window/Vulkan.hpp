@@ -22,28 +22,28 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_VULKAN_HPP
+#define SFML_VULKAN_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/Export.hpp>
-
+#include <SFML/Window/WindowHandle.hpp>
 #include <vector>
+#include <cstddef>
+#include <stdint.h>
 
-#include <cstdint>
 
+typedef struct VkInstance_T* VkInstance;
 
-using VkInstance = struct VkInstance_T*;
+#if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__) ) || defined(_M_X64) || defined(__ia64) || defined (_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
 
-#if defined(__LP64__) || defined(_WIN64) || (defined(__x86_64__) && !defined(__ILP32__)) || defined(_M_X64) || \
-    defined(__ia64) || defined(_M_IA64) || defined(__aarch64__) || defined(__powerpc64__)
-
-using VkSurfaceKHR = struct VkSurfaceKHR_T*;
+typedef struct VkSurfaceKHR_T* VkSurfaceKHR;
 
 #else
 
-using VkSurfaceKHR = std::uint64_t;
+typedef uint64_t VkSurfaceKHR;
 
 #endif
 
@@ -53,59 +53,63 @@ struct VkAllocationCallbacks;
 namespace sf
 {
 
-using VulkanFunctionPointer = void (*)();
+typedef void (*VulkanFunctionPointer)();
 
 ////////////////////////////////////////////////////////////
 /// \brief Vulkan helper functions
 ///
 ////////////////////////////////////////////////////////////
-namespace Vulkan
+class SFML_WINDOW_API Vulkan
 {
-////////////////////////////////////////////////////////////
-/// \brief Tell whether or not the system supports Vulkan
-///
-/// This function should always be called before using
-/// the Vulkan features. If it returns false, then
-/// any attempt to use Vulkan will fail.
-///
-/// If only compute is required, set \a requireGraphics
-/// to false to skip checking for the extensions necessary
-/// for graphics rendering.
-///
-/// \param requireGraphics
-///
-/// \return True if Vulkan is supported, false otherwise
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool isAvailable(bool requireGraphics = true);
+public:
 
-////////////////////////////////////////////////////////////
-/// \brief Get the address of a Vulkan function
-///
-/// \param name Name of the function to get the address of
-///
-/// \return Address of the Vulkan function, 0 on failure
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API VulkanFunctionPointer getFunction(const char* name);
+    ////////////////////////////////////////////////////////////
+    /// \brief Tell whether or not the system supports Vulkan
+    ///
+    /// This function should always be called before using
+    /// the Vulkan features. If it returns false, then
+    /// any attempt to use Vulkan will fail.
+    ///
+    /// If only compute is required, set \a requireGraphics
+    /// to false to skip checking for the extensions necessary
+    /// for graphics rendering.
+    ///
+    /// \param requireGraphics
+    ///
+    /// \return True if Vulkan is supported, false otherwise
+    ///
+    ////////////////////////////////////////////////////////////
+    static bool isAvailable(bool requireGraphics = true);
 
-////////////////////////////////////////////////////////////
-/// \brief Get Vulkan instance extensions required for graphics
-///
-/// \return Vulkan instance extensions required for graphics
-///
-////////////////////////////////////////////////////////////
-SFML_WINDOW_API const std::vector<const char*>& getGraphicsRequiredInstanceExtensions();
-} // namespace Vulkan
+    ////////////////////////////////////////////////////////////
+    /// \brief Get the address of a Vulkan function
+    ///
+    /// \param name Name of the function to get the address of
+    ///
+    /// \return Address of the Vulkan function, 0 on failure
+    ///
+    ////////////////////////////////////////////////////////////
+    static VulkanFunctionPointer getFunction(const char* name);
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Get Vulkan instance extensions required for graphics
+    ///
+    /// \return Vulkan instance extensions required for graphics
+    ///
+    ////////////////////////////////////////////////////////////
+    static const std::vector<const char*>& getGraphicsRequiredInstanceExtensions();
+};
 
 } // namespace sf
 
 
+#endif // SFML_VULKAN_HPP
+
+
 ////////////////////////////////////////////////////////////
-/// \namespace sf::Vulkan
+/// \class sf::Vulkan
 /// \ingroup window
 ///
-/// This namespace contains functions to help you use SFML
-/// for windowing and write your own Vulkan code for graphics
+/// 
 ///
 ////////////////////////////////////////////////////////////

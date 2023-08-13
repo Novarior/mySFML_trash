@@ -22,12 +22,14 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_GRAPHICS_HPP
+#define SFML_GRAPHICS_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
+#include <SFML/Window.hpp>
 #include <SFML/Graphics/BlendMode.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Color.hpp>
@@ -55,8 +57,8 @@
 #include <SFML/Graphics/VertexBuffer.hpp>
 #include <SFML/Graphics/View.hpp>
 
-#include <SFML/Window.hpp>
 
+#endif // SFML_GRAPHICS_HPP
 
 ////////////////////////////////////////////////////////////
 /// \defgroup graphics Graphics module

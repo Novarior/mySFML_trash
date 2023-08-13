@@ -113,7 +113,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    true, this->m_TexturesList["OCEAN"], BLOCK_OCEAN));
+                    true, this->m_TexturesList["OCEAN"], BLOCK_OCEAN_ANIM, true));
             } else if (writebuff < 66) { // sand
                 buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
@@ -127,6 +127,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
+                // init Trees
                 if (rand() % 100 < 15)
                     this->pushTree(x, y, this->m_dnoice.seed);
             } else if (writebuff < 165) { // dirt

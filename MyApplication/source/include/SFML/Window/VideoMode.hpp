@@ -22,15 +22,13 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_VIDEOMODE_HPP
+#define SFML_VIDEOMODE_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/Export.hpp>
-
-#include <SFML/System/Vector2.hpp>
-
 #include <vector>
 
 
@@ -43,6 +41,7 @@ namespace sf
 class SFML_WINDOW_API VideoMode
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -54,11 +53,12 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Construct the video mode with its attributes
     ///
-    /// \param modeSize         Width and height in pixels
+    /// \param modeWidth        Width in pixels
+    /// \param modeHeight       Height in pixels
     /// \param modeBitsPerPixel Pixel depths in bits per pixel
     ///
     ////////////////////////////////////////////////////////////
-    explicit VideoMode(const Vector2u& modeSize, unsigned int modeBitsPerPixel = 32);
+    VideoMode(unsigned int modeWidth, unsigned int modeHeight, unsigned int modeBitsPerPixel = 32);
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the current desktop video mode
@@ -99,8 +99,9 @@ public:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Vector2u     size;           //!< Video mode width and height, in pixels
-    unsigned int bitsPerPixel{}; //!< Video mode pixel depth, in bits per pixels
+    unsigned int width;        //!< Video mode width, in pixels
+    unsigned int height;       //!< Video mode height, in pixels
+    unsigned int bitsPerPixel; //!< Video mode pixel depth, in bits per pixels
 };
 
 ////////////////////////////////////////////////////////////
@@ -113,7 +114,7 @@ public:
 /// \return True if modes are equal
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator==(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator ==(const VideoMode& left, const VideoMode& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates VideoMode
@@ -125,7 +126,7 @@ SFML_WINDOW_API bool operator==(const VideoMode& left, const VideoMode& right);
 /// \return True if modes are different
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator!=(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator !=(const VideoMode& left, const VideoMode& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates VideoMode
@@ -137,7 +138,7 @@ SFML_WINDOW_API bool operator!=(const VideoMode& left, const VideoMode& right);
 /// \return True if \a left is lesser than \a right
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator<(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator <(const VideoMode& left, const VideoMode& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates VideoMode
@@ -149,7 +150,7 @@ SFML_WINDOW_API bool operator<(const VideoMode& left, const VideoMode& right);
 /// \return True if \a left is greater than \a right
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator>(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator >(const VideoMode& left, const VideoMode& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates VideoMode
@@ -161,7 +162,7 @@ SFML_WINDOW_API bool operator>(const VideoMode& left, const VideoMode& right);
 /// \return True if \a left is lesser or equal than \a right
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator<=(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator <=(const VideoMode& left, const VideoMode& right);
 
 ////////////////////////////////////////////////////////////
 /// \relates VideoMode
@@ -173,9 +174,12 @@ SFML_WINDOW_API bool operator<=(const VideoMode& left, const VideoMode& right);
 /// \return True if \a left is greater or equal than \a right
 ///
 ////////////////////////////////////////////////////////////
-SFML_WINDOW_API bool operator>=(const VideoMode& left, const VideoMode& right);
+SFML_WINDOW_API bool operator >=(const VideoMode& left, const VideoMode& right);
 
 } // namespace sf
+
+
+#endif // SFML_VIDEOMODE_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -218,7 +222,7 @@ SFML_WINDOW_API bool operator>=(const VideoMode& left, const VideoMode& right);
 ///
 /// // Create a window with the same pixel depth as the desktop
 /// sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
-/// window.create(sf::VideoMode({1024, 768}, desktop.bitsPerPixel), "SFML window");
+/// window.create(sf::VideoMode(1024, 768, desktop.bitsPerPixel), "SFML window");
 /// \endcode
 ///
 ////////////////////////////////////////////////////////////

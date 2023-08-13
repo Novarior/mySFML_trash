@@ -22,40 +22,35 @@
 //
 ////////////////////////////////////////////////////////////
 
-#pragma once
+#ifndef SFML_CONTEXT_HPP
+#define SFML_CONTEXT_HPP
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Window/Export.hpp>
-
 #include <SFML/Window/GlResource.hpp>
-
-#include <SFML/System/Vector2.hpp>
-
-#include <memory>
-
-#include <cstdint>
+#include <SFML/Window/ContextSettings.hpp>
+#include <SFML/System/NonCopyable.hpp>
 
 
 namespace sf
 {
 namespace priv
 {
-class GlContext;
+    class GlContext;
 }
 
-struct ContextSettings;
-
-using GlFunctionPointer = void (*)();
+typedef void (*GlFunctionPointer)();
 
 ////////////////////////////////////////////////////////////
 /// \brief Class holding a valid drawing context
 ///
 ////////////////////////////////////////////////////////////
-class SFML_WINDOW_API Context : GlResource
+class SFML_WINDOW_API Context : GlResource, NonCopyable
 {
 public:
+
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -73,18 +68,6 @@ public:
     ~Context();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Deleted copy constructor
-    ///
-    ////////////////////////////////////////////////////////////
-    Context(const Context&) = delete;
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Deleted copy assignment
-    ///
-    ////////////////////////////////////////////////////////////
-    Context& operator=(const Context&) = delete;
-
-    ////////////////////////////////////////////////////////////
     /// \brief Activate or deactivate explicitly the context
     ///
     /// \param active True to activate, false to deactivate
@@ -92,7 +75,7 @@ public:
     /// \return True on success, false on failure
     ///
     ////////////////////////////////////////////////////////////
-    [[nodiscard]] bool setActive(bool active);
+    bool setActive(bool active);
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the settings of the context
@@ -133,7 +116,7 @@ public:
     /// Contexts created e.g. by RenderTargets or for internal
     /// use will not be returned by this function.
     ///
-    /// \return The currently active context or a null pointer if none is active
+    /// \return The currently active context or NULL if none is active
     ///
     ////////////////////////////////////////////////////////////
     static const Context* getActiveContext();
@@ -147,7 +130,7 @@ public:
     /// \return The active context's ID or 0 if no context is currently active
     ///
     ////////////////////////////////////////////////////////////
-    static std::uint64_t getActiveContextId();
+    static Uint64 getActiveContextId();
 
     ////////////////////////////////////////////////////////////
     /// \brief Construct a in-memory context
@@ -160,17 +143,20 @@ public:
     /// \param height   Back buffer height
     ///
     ////////////////////////////////////////////////////////////
-    Context(const ContextSettings& settings, const Vector2u& size);
+    Context(const ContextSettings& settings, unsigned int width, unsigned int height);
 
 private:
+
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    std::unique_ptr<priv::GlContext> m_context; //!< Internal OpenGL context
+    priv::GlContext* m_context; //!< Internal OpenGL context
 };
 
 } // namespace sf
 
+
+#endif // SFML_CONTEXT_HPP
 
 ////////////////////////////////////////////////////////////
 /// \class sf::Context

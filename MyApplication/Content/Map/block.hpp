@@ -30,7 +30,9 @@ public:
     const bool intersects(sf::FloatRect rect);
     const bool& getCollision();
     sf::RectangleShape& getRectangleShape();
+
     void update();
+    void updateAnimation();
     void render(sf::RenderTarget* target, const bool draw_collision = false);
 };
 #endif

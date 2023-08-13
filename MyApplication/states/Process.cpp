@@ -147,7 +147,7 @@ void Process::initPlayer()
 // Defauld Init Data
 void Process::initTileMapData()
 {
-    this->noicedata.seed = 1;
+    this->noicedata.seed = std::time(nullptr);
     this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.octaves = 8;
     this->noicedata.frequency = 8;
@@ -230,15 +230,13 @@ void Process::updatePlayerInputs(const float& delta_time)
 
 void Process::updateTileMap(const float& delta_time)
 { // update tilemap
-    this->mapTiles->updateWorldBoundsCollision(this->player);
-    this->mapTiles->updateTileCollision(this->player, delta_time);
+    this->mapTiles->updateRenderArea(this->player->e_getGridPositionInt(this->IgridSize));
     this->mapTiles->update(this->player, delta_time);
+    this->mapTiles->updateAnimationTiles(delta_time);
 
     // update entitys collision
-    for (size_t i = 0; i < this->entitys.size(); i++) {
-        this->mapTiles->updateWorldBoundsCollision(this->entitys[i]);
-        this->mapTiles->updateTileCollision(this->entitys[i], delta_time);
-    }
+    for (size_t i = 0; i < this->entitys.size(); i++)
+        this->mapTiles->update(this->entitys[i], delta_time);
 }
 
 void Process::updateEntitys(const float& delta_time)
@@ -329,7 +327,7 @@ void Process::renderGUI(sf::RenderTarget& target)
 
 void Process::renderTileMap(sf::RenderTarget& target)
 {
-    this->mapTiles->render(&target, this->player->e_getGridPositionInt(this->IgridSize), this->debugMode);
+    this->mapTiles->render(&target,  this->debugMode);
 }
 
 void Process::renderEntities(sf::RenderTarget& target)

@@ -43,6 +43,14 @@ void TileMap::loadTextuteMap()
                 img.setPixel(x, y, sf::Color(0, 25, 240));
         this->m_TexturesList["OCEAN"].loadFromImage(img);
     };
+    if (!this->m_TexturesList["OCEAN_ANIM"].loadFromFile(myConst::texture_OCEAN_ANIM)) {
+        sf::Image img;
+        img.create(32, 32);
+        for (int x = 0; x < img.getSize().x; x++)
+            for (int y = 0; y < img.getSize().y; y++)
+                img.setPixel(x, y, sf::Color(0, 25, 240));
+        this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img);
+    };
     if (!this->m_TexturesList["SAND"].loadFromFile(myConst::texture_SAND)) {
         sf::Image img;
         img.create(32, 32);
@@ -72,6 +80,8 @@ void TileMap::pushTree(int x, int y, int seed)
 }
 
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
+    : keyTime(0.f)
+    , keyTimeMax(1.f)
 {
     this->Clear();
     this->loadTextuteMap();
@@ -113,7 +123,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2f(this->m_dnoice.gridSize, this->m_dnoice.gridSize),
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
-                    true, this->m_TexturesList["OCEAN"], BLOCK_OCEAN_ANIM, true));
+                    true, this->m_TexturesList["OCEAN_ANIM"], BLOCK_OCEAN_ANIM, true));
             } else if (writebuff < 66) { // sand
                 buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
@@ -187,6 +197,21 @@ bool TileMap::getCollision(const unsigned int x, const unsigned int y) const
 sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int y) const
 {
     return this->tilemap[x][y][0]->getGlobalBounds();
+}
+
+const bool TileMap::getKeyTime()
+{
+    if (this->keyTime >= this->keyTimeMax) {
+        this->keyTime = 0.f;
+        return true;
+    }
+    return false;
+}
+
+void TileMap::updateKeyTime(const float& delta_time)
+{
+    if (this->keyTime < this->keyTimeMax)
+        this->keyTime += delta_time;
 }
 
 void TileMap::updateWorldBoundsCollision(Entity* entity)
@@ -278,78 +303,58 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
     }
 }
 
-void TileMap::update(Entity* entity, const float& dt)
+void TileMap::updateAnimationTiles(const float& delta_time)
 {
-}
-
-void TileMap::update(sf::Vector2f pos_entity)
-{
-    int fromX = 0,
-        fromY = 0,
-        toX = 0,
-        toY = 0;
-
-    fromX = pos_entity.x / this->m_dnoice.gridSize - 2;
-    if (fromX < 0)
-        fromX = 0;
-    else if (fromX > this->maxSizeWorldGrid.x)
-        fromX = this->maxSizeWorldGrid.x;
-
-    toX = pos_entity.x / this->m_dnoice.gridSize + 3;
-    if (toX < 0)
-        toX = 0;
-    else if (toX > this->maxSizeWorldGrid.x)
-        toX = this->maxSizeWorldGrid.x;
-
-    fromY = pos_entity.y / this->m_dnoice.gridSize - 2;
-    if (fromY < 0)
-        fromY = 0;
-    else if (fromY > this->maxSizeWorldGrid.y)
-        fromY = this->maxSizeWorldGrid.y;
-
-    toY = pos_entity.y / this->m_dnoice.gridSize + 3;
-    if (toY < 0)
-        toY = 0;
-    else if (toY > this->maxSizeWorldGrid.y)
-        toY = this->maxSizeWorldGrid.y;
-
-    for (int x = fromX; x < toX; x++)
-        for (int y = fromY; y < toY; y++)
+    for (int x = this->m_Area.fromX; x < this->m_Area.toX; x++)
+        for (int y = this->m_Area.fromY; y < this->m_Area.toY; y++)
             this->tilemap[x][y][0]->update();
 }
 
-void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug)
-{ // Render tiles
-
-    { // recalc render area
-        this->m_Area.fromX = gridPosition.x - this->m_Area.offsetX;
+void TileMap::updateRenderArea(const sf::Vector2i& playerPosition_grid) // update render area
+{
+    { // update render area
+        this->m_Area.fromX = playerPosition_grid.x - this->m_Area.offsetX;
         if (this->m_Area.fromX < 0)
             this->m_Area.fromX = 0;
         else if (this->m_Area.fromX > this->maxSizeWorldGrid.x)
             this->m_Area.fromX = this->maxSizeWorldGrid.x;
 
-        this->m_Area.toX = gridPosition.x + this->m_Area.offsetX;
+        this->m_Area.toX = playerPosition_grid.x + this->m_Area.offsetX;
         if (this->m_Area.toX < 0)
             this->m_Area.toX = 0;
         else if (this->m_Area.toX > this->maxSizeWorldGrid.x)
             this->m_Area.toX = this->maxSizeWorldGrid.x;
 
-        this->m_Area.fromY = gridPosition.y - this->m_Area.offsetY;
+        this->m_Area.fromY = playerPosition_grid.y - this->m_Area.offsetY;
         if (this->m_Area.fromY < 0)
             this->m_Area.fromY = 0;
         else if (this->m_Area.fromY > this->maxSizeWorldGrid.y)
             this->m_Area.fromY = this->maxSizeWorldGrid.y;
 
-        this->m_Area.toY = gridPosition.y + this->m_Area.offsetY;
+        this->m_Area.toY = playerPosition_grid.y + this->m_Area.offsetY;
         if (this->m_Area.toY < 0)
             this->m_Area.toY = 0;
         else if (this->m_Area.toY > this->maxSizeWorldGrid.y)
             this->m_Area.toY = this->maxSizeWorldGrid.y;
     }
 
-    sf::FloatRect renrect(
+    this->checkreck = sf::Rect(
         this->m_Area.fromX * this->m_dnoice.gridSize, this->m_Area.fromY * this->m_dnoice.gridSize,
         this->m_Area.toX * this->m_dnoice.gridSize, this->m_Area.toY * this->m_dnoice.gridSize);
+}
+
+void TileMap::update(Entity* entity, const float& delta_time)
+{
+    this->updateKeyTime(delta_time);
+    this->updateWorldBoundsCollision(entity);
+    this->updateTileCollision(entity, delta_time);
+
+    if (this->getKeyTime())
+        this->updateAnimationTiles(delta_time);
+}
+
+void TileMap::render(sf::RenderTarget* target, const bool debug)
+{ // Render tiles
 
     for (int x = this->m_Area.fromX; x < this->m_Area.toX; x++)
         for (int y = this->m_Area.fromY; y < this->m_Area.toY; y++)
@@ -357,7 +362,7 @@ void TileMap::render(sf::RenderTarget* target, const sf::Vector2i& gridPosition,
 
     if (!this->m_TreeArray.empty())
         for (auto it : this->m_TreeArray)
-            if (renrect.contains(it.getPosition()))
+            if (this->checkreck.contains(it.getPosition()))
                 target->draw(it);
 
     target->draw(this->bariere_box);

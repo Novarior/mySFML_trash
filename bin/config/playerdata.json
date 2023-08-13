@@ -2,8 +2,8 @@
 	"player": {
 		"entity_uid":1,
 		"position": {
-			"x": 1312,
-			"y": 249.965
+			"x": 800,
+			"y": 9316.4
 		},
 		"attributes": {
 			"hp": 100,

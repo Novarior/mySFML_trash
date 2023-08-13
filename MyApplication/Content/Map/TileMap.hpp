@@ -30,11 +30,17 @@ private:
     sf::Texture m_TreeTexture;
     sf::Sprite m_TreeSprite;
     sf::RectangleShape bariere_box;
+    sf::FloatRect checkreck;
 
     int fromX = 0;
     int fromY = 0;
     int toX = 0;
     int toY = 0;
+
+    float keyTime;
+    float keyTimeMax;
+    void updateKeyTime(const float& delta_time);
+    const bool getKeyTime();
 
     void Clear();
     void loadTextuteMap();
@@ -49,13 +55,14 @@ public:
 
     void updateWorldBoundsCollision(Entity* entity);
     void updateTileCollision(Entity* entity, const float& delta_time);
+    void updateAnimationTiles(const float& delta_time);
+    void updateRenderArea(const sf::Vector2i& playerPosition_grid);
     void update(Entity* entity, const float& delta_time);
-    void update(sf::Vector2f pos_entity);
 
     sf::FloatRect getGlobalBounds(const unsigned int x, const unsigned int Y) const;
     bool getCollision(const unsigned int x, const unsigned int y) const;
 
     renderArea getRenderArea();
-    void render(sf::RenderTarget* target, const sf::Vector2i& gridPosition, const bool debug);
+    void render(sf::RenderTarget* target, const bool debug);
 };
 #endif

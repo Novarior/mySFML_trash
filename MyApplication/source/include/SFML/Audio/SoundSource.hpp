@@ -22,19 +22,21 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SOUNDSOURCE_HPP
-#define SFML_SOUNDSOURCE_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Audio/Export.hpp>
+
 #include <SFML/Audio/AlResource.hpp>
+
 #include <SFML/System/Vector3.hpp>
 
 
 namespace sf
 {
+// NOLINTBEGIN(readability-make-member-function-const)
 ////////////////////////////////////////////////////////////
 /// \brief Base class defining a sound's properties
 ///
@@ -42,7 +44,6 @@ namespace sf
 class SFML_AUDIO_API SoundSource : AlResource
 {
 public:
-
     ////////////////////////////////////////////////////////////
     /// \brief Enumeration of the sound source states
     ///
@@ -96,22 +97,6 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     void setVolume(float volume);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Set the 3D position of the sound in the audio scene
-    ///
-    /// Only sounds with one channel (mono sounds) can be
-    /// spatialized.
-    /// The default position of a sound is (0, 0, 0).
-    ///
-    /// \param x X coordinate of the position of the sound in the scene
-    /// \param y Y coordinate of the position of the sound in the scene
-    /// \param z Z coordinate of the position of the sound in the scene
-    ///
-    /// \see getPosition
-    ///
-    ////////////////////////////////////////////////////////////
-    void setPosition(float x, float y, float z);
 
     ////////////////////////////////////////////////////////////
     /// \brief Set the 3D position of the sound in the audio scene
@@ -248,7 +233,7 @@ public:
     /// \return Reference to self
     ///
     ////////////////////////////////////////////////////////////
-    SoundSource& operator =(const SoundSource& right);
+    SoundSource& operator=(const SoundSource& right);
 
     ////////////////////////////////////////////////////////////
     /// \brief Start or resume playing the sound source
@@ -294,7 +279,6 @@ public:
     virtual Status getStatus() const;
 
 protected:
-
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -309,10 +293,8 @@ protected:
     unsigned int m_source; //!< OpenAL source identifier
 };
 
+// NOLINTEND(readability-make-member-function-const)
 } // namespace sf
-
-
-#endif // SFML_SOUNDSOURCE_HPP
 
 
 ////////////////////////////////////////////////////////////

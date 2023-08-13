@@ -7,6 +7,7 @@ struct BlocksGenData {
     sf::Vector2u windowSize;
     sf::Vector2f offset;
     sf::Vector2f pos;
+    float offsetAngle;
     float amplifire;
     unsigned countPhantomBlocks;
     float frequency;

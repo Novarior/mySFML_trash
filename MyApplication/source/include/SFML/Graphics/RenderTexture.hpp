@@ -22,23 +22,26 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_RENDERTEXTURE_HPP
-#define SFML_RENDERTEXTURE_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Graphics/Export.hpp>
-#include <SFML/Graphics/Texture.hpp>
+
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
 #include <SFML/Window/ContextSettings.hpp>
+
+#include <memory>
 
 
 namespace sf
 {
 namespace priv
 {
-    class RenderTextureImpl;
+class RenderTextureImpl;
 }
 
 ////////////////////////////////////////////////////////////
@@ -48,7 +51,6 @@ namespace priv
 class SFML_GRAPHICS_API RenderTexture : public RenderTarget
 {
 public:
-
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
@@ -64,29 +66,7 @@ public:
     /// \brief Destructor
     ///
     ////////////////////////////////////////////////////////////
-    virtual ~RenderTexture();
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Create the render-texture
-    ///
-    /// Before calling this function, the render-texture is in
-    /// an invalid state, thus it is mandatory to call it before
-    /// doing anything with the render-texture.
-    /// The last parameter, \a depthBuffer, is useful if you want
-    /// to use the render-texture for 3D OpenGL rendering that requires
-    /// a depth buffer. Otherwise it is unnecessary, and you should
-    /// leave this parameter to false (which is its default value).
-    ///
-    /// \param width       Width of the render-texture
-    /// \param height      Height of the render-texture
-    /// \param depthBuffer Do you want this render-texture to have a depth buffer?
-    ///
-    /// \return True if creation has been successful
-    ///
-    /// \deprecated Use create(unsigned int, unsigned int, const ContextSettings&) instead.
-    ///
-    ////////////////////////////////////////////////////////////
-    SFML_DEPRECATED bool create(unsigned int width, unsigned int height, bool depthBuffer);
+    ~RenderTexture() override;
 
     ////////////////////////////////////////////////////////////
     /// \brief Create the render-texture
@@ -99,14 +79,13 @@ public:
     /// requires a depth or stencil buffer. Otherwise it is unnecessary, and
     /// you should leave this parameter at its default value.
     ///
-    /// \param width    Width of the render-texture
-    /// \param height   Height of the render-texture
+    /// \param size     Width and height of the render-texture
     /// \param settings Additional settings for the underlying OpenGL texture and context
     ///
     /// \return True if creation has been successful
     ///
     ////////////////////////////////////////////////////////////
-    bool create(unsigned int width, unsigned int height, const ContextSettings& settings = ContextSettings());
+    [[nodiscard]] bool create(const Vector2u& size, const ContextSettings& settings = ContextSettings());
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the maximum anti-aliasing level supported by the system
@@ -176,7 +155,7 @@ public:
     /// \return True if mipmap generation was successful, false if unsuccessful
     ///
     ////////////////////////////////////////////////////////////
-    bool generateMipmap();
+    [[nodiscard]] bool generateMipmap();
 
     ////////////////////////////////////////////////////////////
     /// \brief Activate or deactivate the render-texture for rendering
@@ -193,7 +172,7 @@ public:
     /// \return True if operation was successful, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    bool setActive(bool active = true);
+    [[nodiscard]] bool setActive(bool active = true) override;
 
     ////////////////////////////////////////////////////////////
     /// \brief Update the contents of the target texture
@@ -215,7 +194,7 @@ public:
     /// \return Size in pixels
     ///
     ////////////////////////////////////////////////////////////
-    virtual Vector2u getSize() const;
+    Vector2u getSize() const override;
 
 
     ////////////////////////////////////////////////////////////
@@ -227,7 +206,7 @@ public:
     /// \return True if the render-texture use sRGB encoding, false otherwise
     ///
     ////////////////////////////////////////////////////////////
-    virtual bool isSrgb() const;
+    bool isSrgb() const override;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get a read-only reference to the target texture
@@ -246,18 +225,14 @@ public:
     const Texture& getTexture() const;
 
 private:
-
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    priv::RenderTextureImpl* m_impl;    //!< Platform/hardware specific implementation
-    Texture                  m_texture; //!< Target texture to draw on
+    std::unique_ptr<priv::RenderTextureImpl> m_impl;    //!< Platform/hardware specific implementation
+    Texture                                  m_texture; //!< Target texture to draw on
 };
 
 } // namespace sf
-
-
-#endif // SFML_RENDERTEXTURE_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -280,11 +255,11 @@ private:
 ///
 /// \code
 /// // Create a new render-window
-/// sf::RenderWindow window(sf::VideoMode(800, 600), "SFML window");
+/// sf::RenderWindow window(sf::VideoMode({800, 600}), "SFML window");
 ///
 /// // Create a new render-texture
 /// sf::RenderTexture texture;
-/// if (!texture.create(500, 500))
+/// if (!texture.create({500, 500}))
 ///     return -1;
 ///
 /// // The main loop

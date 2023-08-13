@@ -22,14 +22,16 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SOCKETSELECTOR_HPP
-#define SFML_SOCKETSELECTOR_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Network/Export.hpp>
+
 #include <SFML/System/Time.hpp>
+
+#include <memory>
 
 
 namespace sf
@@ -43,12 +45,17 @@ class Socket;
 class SFML_NETWORK_API SocketSelector
 {
 public:
-
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
     ////////////////////////////////////////////////////////////
     SocketSelector();
+
+    ////////////////////////////////////////////////////////////
+    /// \brief Destructor
+    ///
+    ////////////////////////////////////////////////////////////
+    ~SocketSelector();
 
     ////////////////////////////////////////////////////////////
     /// \brief Copy constructor
@@ -57,12 +64,6 @@ public:
     ///
     ////////////////////////////////////////////////////////////
     SocketSelector(const SocketSelector& copy);
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Destructor
-    ///
-    ////////////////////////////////////////////////////////////
-    ~SocketSelector();
 
     ////////////////////////////////////////////////////////////
     /// \brief Add a new socket to the selector
@@ -120,7 +121,7 @@ public:
     /// \see isReady
     ///
     ////////////////////////////////////////////////////////////
-    bool wait(Time timeout = Time::Zero);
+    [[nodiscard]] bool wait(Time timeout = Time::Zero);
 
     ////////////////////////////////////////////////////////////
     /// \brief Test a socket to know if it is ready to receive data
@@ -149,22 +150,18 @@ public:
     /// \return Reference to self
     ///
     ////////////////////////////////////////////////////////////
-    SocketSelector& operator =(const SocketSelector& right);
+    SocketSelector& operator=(const SocketSelector& right);
 
 private:
-
     struct SocketSelectorImpl;
 
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    SocketSelectorImpl* m_impl; //!< Opaque pointer to the implementation (which requires OS-specific types)
+    std::unique_ptr<SocketSelectorImpl> m_impl; //!< Opaque pointer to the implementation (which requires OS-specific types)
 };
 
 } // namespace sf
-
-
-#endif // SFML_SOCKETSELECTOR_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -203,7 +200,7 @@ private:
 /// listener.listen(55001);
 ///
 /// // Create a list to store the future clients
-/// std::list<sf::TcpSocket*> clients;
+/// std::list<std::unique_ptr<sf::TcpSocket>> clients;
 ///
 /// // Create a selector
 /// sf::SocketSelector selector;
@@ -221,33 +218,32 @@ private:
 ///         if (selector.isReady(listener))
 ///         {
 ///             // The listener is ready: there is a pending connection
-///             sf::TcpSocket* client = new sf::TcpSocket;
-///             if (listener.accept(*client) == sf::Socket::Done)
+///             auto client = std::make_unique<sf::TcpSocket>();
+///             if (listener.accept(*client) == sf::Socket::Status::Done)
 ///             {
-///                 // Add the new client to the clients list
-///                 clients.push_back(client);
-///
 ///                 // Add the new client to the selector so that we will
 ///                 // be notified when he sends something
 ///                 selector.add(*client);
+///
+///                 // Add the new client to the clients list
+///                 clients.push_back(std::move(client));
 ///             }
 ///             else
 ///             {
 ///                 // Error, we won't get a new connection, delete the socket
-///                 delete client;
+///                 client.reset();
 ///             }
 ///         }
 ///         else
 ///         {
 ///             // The listener socket is not ready, test all other sockets (the clients)
-///             for (std::list<sf::TcpSocket*>::iterator it = clients.begin(); it != clients.end(); ++it)
+///             for (sf::TcpSocket& client : clients)
 ///             {
-///                 sf::TcpSocket& client = **it;
 ///                 if (selector.isReady(client))
 ///                 {
 ///                     // The client has sent some data, we can receive it
 ///                     sf::Packet packet;
-///                     if (client.receive(packet) == sf::Socket::Done)
+///                     if (client.receive(packet) == sf::Socket::Status::Done)
 ///                     {
 ///                         ...
 ///                     }

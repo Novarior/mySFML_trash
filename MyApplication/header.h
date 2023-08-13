@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <time.h>
 
-
 #include <cmath>
 #include <filesystem>
 #include <fstream>
@@ -22,7 +21,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-
+#include <SFML/Audio.hpp>
 // include in program files
 #include "math/mymath.hpp"
 

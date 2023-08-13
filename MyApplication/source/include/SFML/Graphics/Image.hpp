@@ -22,16 +22,18 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_IMAGE_HPP
-#define SFML_IMAGE_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Graphics/Export.hpp>
+
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
-#include <string>
+
+#include <filesystem>
+#include <string_view>
 #include <vector>
 
 
@@ -46,30 +48,14 @@ class InputStream;
 class SFML_GRAPHICS_API Image
 {
 public:
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Default constructor
-    ///
-    /// Creates an empty image.
-    ///
-    ////////////////////////////////////////////////////////////
-    Image();
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Destructor
-    ///
-    ////////////////////////////////////////////////////////////
-    ~Image();
-
     ////////////////////////////////////////////////////////////
     /// \brief Create the image and fill it with a unique color
     ///
-    /// \param width  Width of the image
-    /// \param height Height of the image
-    /// \param color  Fill color
+    /// \param size  Width and height of the image
+    /// \param color Fill color
     ///
     ////////////////////////////////////////////////////////////
-    void create(unsigned int width, unsigned int height, const Color& color = Color(0, 0, 0));
+    void create(const Vector2u& size, const Color& color = Color::Black);
 
     ////////////////////////////////////////////////////////////
     /// \brief Create the image from an array of pixels
@@ -79,12 +65,11 @@ public:
     /// an undefined behavior.
     /// If \a pixels is null, an empty image is created.
     ///
-    /// \param width  Width of the image
-    /// \param height Height of the image
+    /// \param size   Width and height of the image
     /// \param pixels Array of pixels to copy to the image
     ///
     ////////////////////////////////////////////////////////////
-    void create(unsigned int width, unsigned int height, const Uint8* pixels);
+    void create(const Vector2u& size, const std::uint8_t* pixels);
 
     ////////////////////////////////////////////////////////////
     /// \brief Load the image from a file on disk
@@ -101,7 +86,7 @@ public:
     /// \see loadFromMemory, loadFromStream, saveToFile
     ///
     ////////////////////////////////////////////////////////////
-    bool loadFromFile(const std::string& filename);
+    [[nodiscard]] bool loadFromFile(const std::filesystem::path& filename);
 
     ////////////////////////////////////////////////////////////
     /// \brief Load the image from a file in memory
@@ -119,7 +104,7 @@ public:
     /// \see loadFromFile, loadFromStream
     ///
     ////////////////////////////////////////////////////////////
-    bool loadFromMemory(const void* data, std::size_t size);
+    [[nodiscard]] bool loadFromMemory(const void* data, std::size_t size);
 
     ////////////////////////////////////////////////////////////
     /// \brief Load the image from a custom stream
@@ -136,7 +121,7 @@ public:
     /// \see loadFromFile, loadFromMemory
     ///
     ////////////////////////////////////////////////////////////
-    bool loadFromStream(InputStream& stream);
+    [[nodiscard]] bool loadFromStream(InputStream& stream);
 
     ////////////////////////////////////////////////////////////
     /// \brief Save the image to a file on disk
@@ -153,7 +138,7 @@ public:
     /// \see create, loadFromFile, loadFromMemory
     ///
     ////////////////////////////////////////////////////////////
-    bool saveToFile(const std::string& filename) const;
+    [[nodiscard]] bool saveToFile(const std::filesystem::path& filename) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Save the image to a buffer in memory
@@ -171,7 +156,7 @@ public:
     /// \see create, loadFromFile, loadFromMemory, saveToFile
     ///
     ////////////////////////////////////////////////////////////
-    bool saveToMemory(std::vector<sf::Uint8>& output, const std::string& format) const;
+    [[nodiscard]] bool saveToMemory(std::vector<std::uint8_t>& output, std::string_view format) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Return the size (width and height) of the image
@@ -192,7 +177,7 @@ public:
     /// \param alpha Alpha value to assign to transparent pixels
     ///
     ////////////////////////////////////////////////////////////
-    void createMaskFromColor(const Color& color, Uint8 alpha = 0);
+    void createMaskFromColor(const Color& color, std::uint8_t alpha = 0);
 
     ////////////////////////////////////////////////////////////
     /// \brief Copy pixels from another image onto this one
@@ -211,14 +196,25 @@ public:
     /// See https://en.wikipedia.org/wiki/Alpha_compositing for
     /// details on the \b over operator.
     ///
+    /// Note that this function can fail if either image is invalid
+    /// (i.e. zero-sized width or height), or if \a sourceRect is
+    /// not within the boundaries of the \a source parameter, or
+    /// if the destination area is out of the boundaries of this image.
+    ///
+    /// On failure, the destination image is left unchanged.
+    ///
     /// \param source     Source image to copy
-    /// \param destX      X coordinate of the destination position
-    /// \param destY      Y coordinate of the destination position
+    /// \param dest       Coordinates of the destination position
     /// \param sourceRect Sub-rectangle of the source image to copy
     /// \param applyAlpha Should the copy take into account the source transparency?
     ///
+    /// \return True if the operation was successful, false otherwise
+    ///
     ////////////////////////////////////////////////////////////
-    void copy(const Image& source, unsigned int destX, unsigned int destY, const IntRect& sourceRect = IntRect(0, 0, 0, 0), bool applyAlpha = false);
+    [[nodiscard]] bool copy(const Image&    source,
+                            const Vector2u& dest,
+                            const IntRect&  sourceRect = IntRect({0, 0}, {0, 0}),
+                            bool            applyAlpha = false);
 
     ////////////////////////////////////////////////////////////
     /// \brief Change the color of a pixel
@@ -227,14 +223,13 @@ public:
     /// coordinates, using out-of-range values will result in
     /// an undefined behavior.
     ///
-    /// \param x     X coordinate of pixel to change
-    /// \param y     Y coordinate of pixel to change
-    /// \param color New color of the pixel
+    /// \param coords Coordinates of pixel to change
+    /// \param color  New color of the pixel
     ///
     /// \see getPixel
     ///
     ////////////////////////////////////////////////////////////
-    void setPixel(unsigned int x, unsigned int y, const Color& color);
+    void setPixel(const Vector2u& coords, const Color& color);
 
     ////////////////////////////////////////////////////////////
     /// \brief Get the color of a pixel
@@ -243,15 +238,14 @@ public:
     /// coordinates, using out-of-range values will result in
     /// an undefined behavior.
     ///
-    /// \param x X coordinate of pixel to get
-    /// \param y Y coordinate of pixel to get
+    /// \param coords Coordinates of pixel to change
     ///
-    /// \return Color of the pixel at coordinates (x, y)
+    /// \return Color of the pixel at given coordinates
     ///
     /// \see setPixel
     ///
     ////////////////////////////////////////////////////////////
-    Color getPixel(unsigned int x, unsigned int y) const;
+    Color getPixel(const Vector2u& coords) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Get a read-only pointer to the array of pixels
@@ -266,7 +260,7 @@ public:
     /// \return Read-only pointer to the array of pixels
     ///
     ////////////////////////////////////////////////////////////
-    const Uint8* getPixelsPtr() const;
+    const std::uint8_t* getPixelsPtr() const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Flip the image horizontally (left <-> right)
@@ -281,18 +275,14 @@ public:
     void flipVertically();
 
 private:
-
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    Vector2u           m_size;   //!< Image size
-    std::vector<Uint8> m_pixels; //!< Pixels of the image
+    Vector2u                  m_size;   //!< Image size
+    std::vector<std::uint8_t> m_pixels; //!< Pixels of the image
 };
 
 } // namespace sf
-
-
-#endif // SFML_IMAGE_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -326,15 +316,16 @@ private:
 ///
 /// // Create a 20x20 image filled with black color
 /// sf::Image image;
-/// image.create(20, 20, sf::Color::Black);
+/// image.create({20, 20}, sf::Color::Black);
 ///
-/// // Copy image1 on image2 at position (10, 10)
-/// image.copy(background, 10, 10);
+/// // Copy background on image at position (10, 10)
+/// if (!image.copy(background, {10, 10}))
+///     return -1;
 ///
 /// // Make the top-left pixel transparent
-/// sf::Color color = image.getPixel(0, 0);
+/// sf::Color color = image.getPixel({0, 0});
 /// color.a = 0;
-/// image.setPixel(0, 0, color);
+/// image.setPixel({0, 0}, color);
 ///
 /// // Save the image to a file
 /// if (!image.saveToFile("result.png"))

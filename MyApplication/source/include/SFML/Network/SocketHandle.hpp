@@ -22,8 +22,7 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SOCKETHANDLE_HPP
-#define SFML_SOCKETHANDLE_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
@@ -31,7 +30,7 @@
 #include <SFML/Config.hpp>
 
 #if defined(SFML_SYSTEM_WINDOWS)
-    #include <basetsd.h>
+#include <basetsd.h>
 #endif
 
 
@@ -43,15 +42,12 @@ namespace sf
 ////////////////////////////////////////////////////////////
 #if defined(SFML_SYSTEM_WINDOWS)
 
-    typedef UINT_PTR SocketHandle;
+using SocketHandle = UINT_PTR;
 
 #else
 
-    typedef int SocketHandle;
+using SocketHandle = int;
 
 #endif
 
 } // namespace sf
-
-
-#endif // SFML_SOCKETHANDLE_HPP

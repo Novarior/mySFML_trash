@@ -16,7 +16,7 @@ private:
     sf::Sprite renderSprite;
 
     std::map<std::string, gui::Button*> buttons;
-    RotarionCircle* rotationCyrcleShape;
+    std::vector<RotarionCircle*> rotationCyrcleShape;
 
     std::vector<sf::RectangleShape> debug_shapes;
 

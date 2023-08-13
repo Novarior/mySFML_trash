@@ -22,14 +22,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_SFML_WINDOW_HPP
-#define SFML_SFML_WINDOW_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <SFML/System.hpp>
 #include <SFML/Window/Clipboard.hpp>
 #include <SFML/Window/Context.hpp>
 #include <SFML/Window/ContextSettings.hpp>
@@ -45,9 +43,8 @@
 #include <SFML/Window/WindowHandle.hpp>
 #include <SFML/Window/WindowStyle.hpp>
 
+#include <SFML/System.hpp>
 
-
-#endif // SFML_SFML_WINDOW_HPP
 
 ////////////////////////////////////////////////////////////
 /// \defgroup window Window module

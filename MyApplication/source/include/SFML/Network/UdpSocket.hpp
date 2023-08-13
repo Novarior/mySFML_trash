@@ -22,16 +22,20 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_UDPSOCKET_HPP
-#define SFML_UDPSOCKET_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Network/Export.hpp>
-#include <SFML/Network/Socket.hpp>
+
 #include <SFML/Network/IpAddress.hpp>
+#include <SFML/Network/Socket.hpp>
+
+#include <optional>
 #include <vector>
+
+#include <cstddef>
 
 
 namespace sf
@@ -45,14 +49,11 @@ class Packet;
 class SFML_NETWORK_API UdpSocket : public Socket
 {
 public:
-
     ////////////////////////////////////////////////////////////
     // Constants
     ////////////////////////////////////////////////////////////
-    enum
-    {
-        MaxDatagramSize = 65507 //!< The maximum number of bytes that can be sent in a single UDP datagram
-    };
+    // NOLINTNEXTLINE(readability-identifier-naming)
+    static constexpr std::size_t MaxDatagramSize{65507}; //!< The maximum number of bytes that can be sent in a single UDP datagram
 
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
@@ -96,7 +97,7 @@ public:
     /// \see unbind, getLocalPort
     ///
     ////////////////////////////////////////////////////////////
-    Status bind(unsigned short port, const IpAddress& address = IpAddress::Any);
+    [[nodiscard]] Status bind(unsigned short port, const IpAddress& address = IpAddress::Any);
 
     ////////////////////////////////////////////////////////////
     /// \brief Unbind the socket from the local port to which it is bound
@@ -129,7 +130,7 @@ public:
     /// \see receive
     ///
     ////////////////////////////////////////////////////////////
-    Status send(const void* data, std::size_t size, const IpAddress& remoteAddress, unsigned short remotePort);
+    [[nodiscard]] Status send(const void* data, std::size_t size, const IpAddress& remoteAddress, unsigned short remotePort);
 
     ////////////////////////////////////////////////////////////
     /// \brief Receive raw data from a remote peer
@@ -152,7 +153,11 @@ public:
     /// \see send
     ///
     ////////////////////////////////////////////////////////////
-    Status receive(void* data, std::size_t size, std::size_t& received, IpAddress& remoteAddress, unsigned short& remotePort);
+    [[nodiscard]] Status receive(void*                     data,
+                                 std::size_t               size,
+                                 std::size_t&              received,
+                                 std::optional<IpAddress>& remoteAddress,
+                                 unsigned short&           remotePort);
 
     ////////////////////////////////////////////////////////////
     /// \brief Send a formatted packet of data to a remote peer
@@ -170,7 +175,7 @@ public:
     /// \see receive
     ///
     ////////////////////////////////////////////////////////////
-    Status send(Packet& packet, const IpAddress& remoteAddress, unsigned short remotePort);
+    [[nodiscard]] Status send(Packet& packet, const IpAddress& remoteAddress, unsigned short remotePort);
 
     ////////////////////////////////////////////////////////////
     /// \brief Receive a formatted packet of data from a remote peer
@@ -187,20 +192,16 @@ public:
     /// \see send
     ///
     ////////////////////////////////////////////////////////////
-    Status receive(Packet& packet, IpAddress& remoteAddress, unsigned short& remotePort);
+    [[nodiscard]] Status receive(Packet& packet, std::optional<IpAddress>& remoteAddress, unsigned short& remotePort);
 
 private:
-
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    std::vector<char> m_buffer; //!< Temporary buffer holding the received data in Receive(Packet)
+    std::vector<std::byte> m_buffer{MaxDatagramSize}; //!< Temporary buffer holding the received data in Receive(Packet)
 };
 
 } // namespace sf
-
-
-#endif // SFML_UDPSOCKET_HPP
 
 
 ////////////////////////////////////////////////////////////
@@ -212,7 +213,7 @@ private:
 /// it can send to and receive from any host at any time.
 ///
 /// It is a datagram protocol: bounded blocks of data (datagrams)
-/// are transfered over the network rather than a continuous
+/// are transferred over the network rather than a continuous
 /// stream of data (TCP). Therefore, one call to send will always
 /// match one call to receive (if the datagram is not lost),
 /// with the same data that was sent.
@@ -263,10 +264,10 @@ private:
 /// // Receive an answer (most likely from 192.168.1.50, but could be anyone else)
 /// char buffer[1024];
 /// std::size_t received = 0;
-/// sf::IpAddress sender;
+/// std::optional<sf::IpAddress> sender;
 /// unsigned short port;
-/// socket.receive(buffer, sizeof(buffer), received, sender, port);
-/// std::cout << sender.ToString() << " said: " << buffer << std::endl;
+/// if (socket.receive(buffer, sizeof(buffer), received, sender, port) == sf::Socket::Status::Done)
+///     std::cout << sender->toString() << " said: " << buffer << std::endl;
 ///
 /// // ----- The server -----
 ///
@@ -277,10 +278,10 @@ private:
 /// // Receive a message from anyone
 /// char buffer[1024];
 /// std::size_t received = 0;
-/// sf::IpAddress sender;
+/// std::optional<sf::IpAddress> sender;
 /// unsigned short port;
-/// socket.receive(buffer, sizeof(buffer), received, sender, port);
-/// std::cout << sender.ToString() << " said: " << buffer << std::endl;
+/// if (socket.receive(buffer, sizeof(buffer), received, sender, port) == sf::Socket::Status::Done)
+///     std::cout << sender->toString() << " said: " << buffer << std::endl;
 ///
 /// // Send an answer
 /// std::string message = "Welcome " + sender.toString();

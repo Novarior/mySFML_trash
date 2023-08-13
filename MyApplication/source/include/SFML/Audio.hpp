@@ -22,14 +22,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_AUDIO_HPP
-#define SFML_AUDIO_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <SFML/System.hpp>
 #include <SFML/Audio/InputSoundFile.hpp>
 #include <SFML/Audio/Listener.hpp>
 #include <SFML/Audio/Music.hpp>
@@ -44,8 +42,8 @@
 #include <SFML/Audio/SoundSource.hpp>
 #include <SFML/Audio/SoundStream.hpp>
 
+#include <SFML/System.hpp>
 
-#endif // SFML_AUDIO_HPP
 
 ////////////////////////////////////////////////////////////
 /// \defgroup audio Audio module

@@ -5,6 +5,14 @@ RotarionCircle::RotarionCircle(BlocksGenData gendata)
     this->bgd = gendata;
     this->i = 0;
     this->fastRm = false;
+    if (bgd.offsetAngle == 0)
+        bgd.offsetAngle = 0;
+    else if (bgd.offsetAngle == 1)
+        bgd.offsetAngle = M_PI / (3.f / 2.f);
+    else if (bgd.offsetAngle == 2)
+        bgd.offsetAngle = M_PI * (4.f / 3.f);
+    else {
+    }
 }
 
 RotarionCircle::~RotarionCircle()
@@ -14,6 +22,7 @@ RotarionCircle::~RotarionCircle()
 
 void RotarionCircle::update(const float& delta_time)
 {
+
     // push on front
     this->phantoms.push_back(this->shape);
     // itteration on massive and change Alpha channel
@@ -24,7 +33,8 @@ void RotarionCircle::update(const float& delta_time)
             this->phantoms[i].getFillColor().r,
             this->phantoms[i].getFillColor().g,
             this->phantoms[i].getFillColor().b,
-            255 * sin(((i * M_PI_2) / this->phantoms.size()) + (M_PI * 3 / 2)) + this->phantoms.size()));
+            // 255 * sin(((i * M_PI_2) / this->phantoms.size()) + (M_PI * 3 / 2)) + this->phantoms.size()));
+            255 * (log(this->phantoms.size() - i) / -log(this->phantoms.size())) + 255));
     }
     // use same loop for size
     for (int i = 0; i < this->phantoms.size(); i++)
@@ -36,8 +46,8 @@ void RotarionCircle::update(const float& delta_time)
 
     // rotarion
     this->shape.setPosition(sf::Vector2f(
-        this->bgd.offset.x + cos(bgd.pos.x * bgd.frequency) * this->bgd.amplifire,
-        this->bgd.offset.y + sin(bgd.pos.y * bgd.frequency) * this->bgd.amplifire));
+        this->bgd.offset.x + cos(bgd.pos.x * bgd.frequency + bgd.offsetAngle) * this->bgd.amplifire,
+        this->bgd.offset.y + sin(bgd.pos.y * bgd.frequency + bgd.offsetAngle) * this->bgd.amplifire));
 
     // check for fast remove
     if (this->phantoms.size() > this->bgd.countPhantomBlocks) {

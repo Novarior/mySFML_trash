@@ -79,7 +79,7 @@ void MainMenu::initButtons()
 void MainMenu::initBlocks()
 {
     BlocksGenData bgd;
-    bgd.amplifire = 500;
+    bgd.amplifire = 300;
     bgd.countPhantomBlocks = 255;
     bgd.offset = sf::Vector2f(
         this->IstateData->sWindow->getSize().x / 2,
@@ -88,13 +88,17 @@ void MainMenu::initBlocks()
     bgd.pos = sf::Vector2f();
     bgd.frequency = 1.5f;
 
-    this->rotationCyrcleShape = new RotarionCircle(bgd);
     sf::CircleShape shape;
     shape.setFillColor(sf::Color::White);
     shape.setRadius(20.f);
     shape.setOutlineColor(sf::Color::Transparent);
     shape.setOutlineThickness(0.f);
-    this->rotationCyrcleShape->setShape(shape);
+
+    for (int i = 0; i < 3; i++) {
+        bgd.offsetAngle = i;
+        this->rotationCyrcleShape.push_back(new RotarionCircle(bgd));
+        this->rotationCyrcleShape[i]->setShape(shape);
+    }
 }
 
 void MainMenu::initGUI()
@@ -179,7 +183,9 @@ MainMenu::~MainMenu()
         delete it->second;
 
     this->buttons.clear();
-    delete this->rotationCyrcleShape;
+    for (auto it = this->rotationCyrcleShape.begin(); it != this->rotationCyrcleShape.end(); ++it)
+        delete *it;
+    this->rotationCyrcleShape.clear();
 }
 
 void MainMenu::update(const float& delta_time)
@@ -193,7 +199,8 @@ void MainMenu::update(const float& delta_time)
     } else
         this->updateStartProcces();
 
-    this->rotationCyrcleShape->update(delta_time);
+    for (auto& it : this->rotationCyrcleShape)
+        it->update(delta_time);
 
     if (this->debugMode) {
         this->dString_Stream
@@ -202,8 +209,10 @@ void MainMenu::update(const float& delta_time)
             << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
             << "\nDelta Time:\t" << delta_time
             << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y
-            << "\nAntialiasing:\t" << this->IstateData->gfxSettings->contextSettings.antialiasingLevel
-            << "\nvSync:\t" << this->IstateData->gfxSettings->verticalSync;
+            << "\nAntialiasing:\t" << this->IstateData->sWindow->getSettings().antialiasingLevel
+            << "\nvSync:\t" << this->IstateData->gfxSettings->verticalSync
+            << "\nMouse Pos:\t" << this->mousePosWindow.x << " x " << this->mousePosWindow.y
+            << "\nRotations:\t" << this->rotationCyrcleShape.size();
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }
@@ -245,7 +254,8 @@ void MainMenu::render(sf::RenderWindow& target)
     // render background
     renderTexture.draw(this->background);
     // render circle
-    this->rotationCyrcleShape->render(renderTexture);
+    for (auto& it : this->rotationCyrcleShape)
+        it->render(renderTexture);
     // render GUI
     if (!this->buttons.empty())
         for (auto& it : this->buttons)

@@ -22,13 +22,13 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_GLYPH_HPP
-#define SFML_GLYPH_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 #include <SFML/Graphics/Export.hpp>
+
 #include <SFML/Graphics/Rect.hpp>
 
 
@@ -38,22 +38,11 @@ namespace sf
 /// \brief Structure describing a glyph
 ///
 ////////////////////////////////////////////////////////////
-class SFML_GRAPHICS_API Glyph
+struct SFML_GRAPHICS_API Glyph
 {
-public:
-
-    ////////////////////////////////////////////////////////////
-    /// \brief Default constructor
-    ///
-    ////////////////////////////////////////////////////////////
-    Glyph() : advance(0) {}
-
-    ////////////////////////////////////////////////////////////
-    // Member data
-    ////////////////////////////////////////////////////////////
-    float     advance;     //!< Offset to move horizontally to the next character
-    int       lsbDelta;    //!< Left offset after forced autohint. Internally used by getKerning()
-    int       rsbDelta;    //!< Right offset after forced autohint. Internally used by getKerning()
+    float     advance{};   //!< Offset to move horizontally to the next character
+    int       lsbDelta{};  //!< Left offset after forced autohint. Internally used by getKerning()
+    int       rsbDelta{};  //!< Right offset after forced autohint. Internally used by getKerning()
     FloatRect bounds;      //!< Bounding rectangle of the glyph, in coordinates relative to the baseline
     IntRect   textureRect; //!< Texture coordinates of the glyph inside the font's texture
 };
@@ -61,11 +50,8 @@ public:
 } // namespace sf
 
 
-#endif // SFML_GLYPH_HPP
-
-
 ////////////////////////////////////////////////////////////
-/// \class sf::Glyph
+/// \struct sf::Glyph
 /// \ingroup graphics
 ///
 /// A glyph is the visual representation of a character.

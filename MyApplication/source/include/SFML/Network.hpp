@@ -22,14 +22,12 @@
 //
 ////////////////////////////////////////////////////////////
 
-#ifndef SFML_NETWORK_HPP
-#define SFML_NETWORK_HPP
+#pragma once
 
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
 
-#include <SFML/System.hpp>
 #include <SFML/Network/Ftp.hpp>
 #include <SFML/Network/Http.hpp>
 #include <SFML/Network/IpAddress.hpp>
@@ -41,8 +39,8 @@
 #include <SFML/Network/TcpSocket.hpp>
 #include <SFML/Network/UdpSocket.hpp>
 
+#include <SFML/System.hpp>
 
-#endif // SFML_NETWORK_HPP
 
 ////////////////////////////////////////////////////////////
 /// \defgroup network Network module

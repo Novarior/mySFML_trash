@@ -115,6 +115,7 @@ void Core::initWindow()
 
     this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
     this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+    this->mWindow->setActive(true);
 }
 
 Core::Core()

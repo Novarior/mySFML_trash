@@ -81,7 +81,7 @@ void TileMap::pushTree(int x, int y, int seed)
 
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     : keyTime(0.f)
-    , keyTimeMax(1.f)
+    , keyTimeMax(3.f)
 {
     this->Clear();
     this->loadTextuteMap();
@@ -92,12 +92,12 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     this->maxSizeWorldGrid = sf::Vector2u(this->m_dnoice.mapSizeX, this->m_dnoice.mapSizeY);
     this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSizeX * datanoice.gridSize, this->m_dnoice.mapSizeY * datanoice.gridSize);
 
-    this->m_Area.offsetX = (datanoice.RenderWindowX / datanoice.gridSize / 4) + 4;
-    this->m_Area.offsetY = (datanoice.RenderWindowY / datanoice.gridSize / 4) + 4;
-    this->m_Area.fromX = 0;
-    this->m_Area.fromY = 0;
-    this->m_Area.toX = 0;
-    this->m_Area.toY = 0;
+    this->m_renderArea.offsetX = (datanoice.RenderWindowX / datanoice.gridSize / 4) + 4;
+    this->m_renderArea.offsetY = (datanoice.RenderWindowY / datanoice.gridSize / 4) + 4;
+    this->m_renderArea.fromX = 0;
+    this->m_renderArea.fromY = 0;
+    this->m_renderArea.toX = 0;
+    this->m_renderArea.toY = 0;
 
     sf::Color buff;
 
@@ -174,9 +174,9 @@ TileMap::~TileMap()
     this->m_TreeArray.clear();
 }
 
-renderArea TileMap::getRenderArea()
+rectangleWithOffset TileMap::getRenderArea()
 {
-    return this->m_Area;
+    return this->m_renderArea;
 }
 
 const sf::Vector2u TileMap::getMapSizeOnTiles()
@@ -234,32 +234,32 @@ void TileMap::updateWorldBoundsCollision(Entity* entity)
 
 void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
 { // TILES
-    this->fromX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x - 1;
-    if (this->fromX < 0)
-        this->fromX = 0;
-    else if (this->fromX > this->maxSizeWorldGrid.x)
-        this->fromX = this->maxSizeWorldGrid.x;
+    this->m_colisionArea.fromX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x - 1;
+    if (this->m_colisionArea.fromX < 0)
+        this->m_colisionArea.fromX = 0;
+    else if (this->m_colisionArea.fromX > this->maxSizeWorldGrid.x)
+        this->m_colisionArea.fromX = this->maxSizeWorldGrid.x;
 
-    this->toX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x + 3;
-    if (this->toX < 0)
-        this->toX = 0;
-    else if (this->toX > this->maxSizeWorldGrid.x)
-        this->toX = this->maxSizeWorldGrid.x;
+    this->m_colisionArea.toX = entity->e_getGridPositionInt(this->m_dnoice.gridSize).x + 3;
+    if (this->m_colisionArea.toX < 0)
+        this->m_colisionArea.toX = 0;
+    else if (this->m_colisionArea.toX > this->maxSizeWorldGrid.x)
+        this->m_colisionArea.toX = this->maxSizeWorldGrid.x;
 
-    this->fromY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y - 1;
-    if (this->fromY < 0)
-        this->fromY = 0;
-    else if (this->fromY > this->maxSizeWorldGrid.y)
-        this->fromY = this->maxSizeWorldGrid.y;
+    this->m_colisionArea.fromY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y - 1;
+    if (this->m_colisionArea.fromY < 0)
+        this->m_colisionArea.fromY = 0;
+    else if (this->m_colisionArea.fromY > this->maxSizeWorldGrid.y)
+        this->m_colisionArea.fromY = this->maxSizeWorldGrid.y;
 
-    this->toY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y + 3;
-    if (this->toY < 0)
-        this->toY = 0;
-    else if (this->toY > this->maxSizeWorldGrid.y)
-        this->toY = this->maxSizeWorldGrid.y;
+    this->m_colisionArea.toY = entity->e_getGridPositionInt(this->m_dnoice.gridSize).y + 3;
+    if (this->m_colisionArea.toY < 0)
+        this->m_colisionArea.toY = 0;
+    else if (this->m_colisionArea.toY > this->maxSizeWorldGrid.y)
+        this->m_colisionArea.toY = this->maxSizeWorldGrid.y;
 
-    for (int x = this->fromX; x < this->toX; x++) {
-        for (int y = this->fromY; y < this->toY; y++) {
+    for (int x = this->m_colisionArea.fromX; x < this->m_colisionArea.toX; x++) {
+        for (int y = this->m_colisionArea.fromY; y < this->m_colisionArea.toY; y++) {
 
             sf::FloatRect playerBounds = entity->getGlobalBounds();
             sf::FloatRect wallBounds = this->tilemap[x][y][0]->getGlobalBounds();
@@ -305,42 +305,44 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
 
 void TileMap::updateAnimationTiles(const float& delta_time)
 {
-    for (int x = this->m_Area.fromX; x < this->m_Area.toX; x++)
-        for (int y = this->m_Area.fromY; y < this->m_Area.toY; y++)
-            this->tilemap[x][y][0]->update();
+    for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
+        for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
+            this->tilemap[x][y][0]->updateAnimation();
+
+    this->tilemap[0][0][0]->updateFrame();
 }
 
 void TileMap::updateRenderArea(const sf::Vector2i& playerPosition_grid) // update render area
 {
     { // update render area
-        this->m_Area.fromX = playerPosition_grid.x - this->m_Area.offsetX;
-        if (this->m_Area.fromX < 0)
-            this->m_Area.fromX = 0;
-        else if (this->m_Area.fromX > this->maxSizeWorldGrid.x)
-            this->m_Area.fromX = this->maxSizeWorldGrid.x;
+        this->m_renderArea.fromX = playerPosition_grid.x - this->m_renderArea.offsetX;
+        if (this->m_renderArea.fromX < 0)
+            this->m_renderArea.fromX = 0;
+        else if (this->m_renderArea.fromX > this->maxSizeWorldGrid.x)
+            this->m_renderArea.fromX = this->maxSizeWorldGrid.x;
 
-        this->m_Area.toX = playerPosition_grid.x + this->m_Area.offsetX;
-        if (this->m_Area.toX < 0)
-            this->m_Area.toX = 0;
-        else if (this->m_Area.toX > this->maxSizeWorldGrid.x)
-            this->m_Area.toX = this->maxSizeWorldGrid.x;
+        this->m_renderArea.toX = playerPosition_grid.x + this->m_renderArea.offsetX;
+        if (this->m_renderArea.toX < 0)
+            this->m_renderArea.toX = 0;
+        else if (this->m_renderArea.toX > this->maxSizeWorldGrid.x)
+            this->m_renderArea.toX = this->maxSizeWorldGrid.x;
 
-        this->m_Area.fromY = playerPosition_grid.y - this->m_Area.offsetY;
-        if (this->m_Area.fromY < 0)
-            this->m_Area.fromY = 0;
-        else if (this->m_Area.fromY > this->maxSizeWorldGrid.y)
-            this->m_Area.fromY = this->maxSizeWorldGrid.y;
+        this->m_renderArea.fromY = playerPosition_grid.y - this->m_renderArea.offsetY;
+        if (this->m_renderArea.fromY < 0)
+            this->m_renderArea.fromY = 0;
+        else if (this->m_renderArea.fromY > this->maxSizeWorldGrid.y)
+            this->m_renderArea.fromY = this->maxSizeWorldGrid.y;
 
-        this->m_Area.toY = playerPosition_grid.y + this->m_Area.offsetY;
-        if (this->m_Area.toY < 0)
-            this->m_Area.toY = 0;
-        else if (this->m_Area.toY > this->maxSizeWorldGrid.y)
-            this->m_Area.toY = this->maxSizeWorldGrid.y;
+        this->m_renderArea.toY = playerPosition_grid.y + this->m_renderArea.offsetY;
+        if (this->m_renderArea.toY < 0)
+            this->m_renderArea.toY = 0;
+        else if (this->m_renderArea.toY > this->maxSizeWorldGrid.y)
+            this->m_renderArea.toY = this->maxSizeWorldGrid.y;
     }
 
     this->checkreck = sf::Rect(
-        this->m_Area.fromX * this->m_dnoice.gridSize, this->m_Area.fromY * this->m_dnoice.gridSize,
-        this->m_Area.toX * this->m_dnoice.gridSize, this->m_Area.toY * this->m_dnoice.gridSize);
+        this->m_renderArea.fromX * this->m_dnoice.gridSize, this->m_renderArea.fromY * this->m_dnoice.gridSize,
+        this->m_renderArea.toX * this->m_dnoice.gridSize, this->m_renderArea.toY * this->m_dnoice.gridSize);
 }
 
 void TileMap::update(Entity* entity, const float& delta_time)
@@ -356,8 +358,8 @@ void TileMap::update(Entity* entity, const float& delta_time)
 void TileMap::render(sf::RenderTarget* target, const bool debug)
 { // Render tiles
 
-    for (int x = this->m_Area.fromX; x < this->m_Area.toX; x++)
-        for (int y = this->m_Area.fromY; y < this->m_Area.toY; y++)
+    for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
+        for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
             this->tilemap[x][y][0]->render(target);
 
     if (!this->m_TreeArray.empty())

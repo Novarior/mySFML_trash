@@ -6,7 +6,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 {
     this->m_sprite.setTexture(texture_sheet);
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 64.f, 64.f);
-    this->createMovementComponent(7.f, 3.f, 15.f);
+    this->createMovementComponent(10.f, 5.f, 3.f);
     this->createAttributesComponent();
     this->e_setPosition(x, y);
     this->ID_entity = this->count_entitys;

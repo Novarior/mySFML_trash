@@ -39,6 +39,11 @@ const bool& BrickBlock::getCollision()
     return this->m_collision;
 }
 
+void BrickBlock::updateFrame()
+{
+    this->currentFrame++;
+}
+
 const sf::FloatRect BrickBlock::getGlobalBounds()
 {
     return this->m_Shape.getGlobalBounds();
@@ -66,7 +71,6 @@ void BrickBlock::updateAnimation()
 
         this->m_Shape.setTextureRect(sf::IntRect(0, this->currentFrame * this->m_Shape.getSize().y,
             this->m_Shape.getSize().x, this->m_Shape.getSize().y));
-        this->currentFrame++;
     }
 }
 

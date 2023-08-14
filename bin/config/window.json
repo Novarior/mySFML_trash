@@ -7,6 +7,6 @@
 	"fullscreen": "1",
 	"frameRateLimit": "120",
 	"verticalSync": "1",
-	"antialiasingLevel": "16",
+	"antialiasingLevel": "8",
 	"gridSize": "32"
 }

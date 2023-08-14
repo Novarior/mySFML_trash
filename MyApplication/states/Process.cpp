@@ -232,7 +232,6 @@ void Process::updateTileMap(const float& delta_time)
 { // update tilemap
     this->mapTiles->updateRenderArea(this->player->e_getGridPositionInt(this->IgridSize));
     this->mapTiles->update(this->player, delta_time);
-    this->mapTiles->updateAnimationTiles(delta_time);
 
     // update entitys collision
     for (size_t i = 0; i < this->entitys.size(); i++)
@@ -327,7 +326,7 @@ void Process::renderGUI(sf::RenderTarget& target)
 
 void Process::renderTileMap(sf::RenderTarget& target)
 {
-    this->mapTiles->render(&target,  this->debugMode);
+    this->mapTiles->render(&target, this->debugMode);
 }
 
 void Process::renderEntities(sf::RenderTarget& target)

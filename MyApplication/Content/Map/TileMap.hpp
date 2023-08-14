@@ -8,7 +8,7 @@
 
 class Entity;
 
-struct renderArea {
+struct rectangleWithOffset {
     int fromX;
     int fromY;
     int toX;
@@ -20,7 +20,8 @@ struct renderArea {
 
 class TileMap {
 private:
-    renderArea m_Area;
+    rectangleWithOffset m_renderArea;
+    rectangleWithOffset m_colisionArea;
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldFloat;
     noiceData m_dnoice;
@@ -31,11 +32,6 @@ private:
     sf::Sprite m_TreeSprite;
     sf::RectangleShape bariere_box;
     sf::FloatRect checkreck;
-
-    int fromX = 0;
-    int fromY = 0;
-    int toX = 0;
-    int toY = 0;
 
     float keyTime;
     float keyTimeMax;
@@ -62,7 +58,7 @@ public:
     sf::FloatRect getGlobalBounds(const unsigned int x, const unsigned int Y) const;
     bool getCollision(const unsigned int x, const unsigned int y) const;
 
-    renderArea getRenderArea();
+    rectangleWithOffset getRenderArea();
     void render(sf::RenderTarget* target, const bool debug);
 };
 #endif

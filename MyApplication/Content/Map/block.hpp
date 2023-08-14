@@ -19,7 +19,7 @@ private:
     bool m_collision;
     const unsigned short m_type;
     bool m_isAnim;
-    unsigned currentFrame;
+    static unsigned currentFrame;
     unsigned framesCounter;
 
 public:
@@ -29,6 +29,7 @@ public:
     const sf::FloatRect getGlobalBounds();
     const bool intersects(sf::FloatRect rect);
     const bool& getCollision();
+    void updateFrame();
     sf::RectangleShape& getRectangleShape();
 
     void update();

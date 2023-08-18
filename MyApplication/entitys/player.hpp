@@ -4,10 +4,11 @@
 class Player : public Entity {
 private:
 public:
-    Player(float x, float y, sf::Texture& texture_sheet);
+    Player(sf::Vector2f pos);
     virtual ~Player();
 
     void e_update(const float& delta_time);
     void e_render(sf::RenderTarget& target, const bool show_hitbox = false);
+    void e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox = false);
 };
 #endif

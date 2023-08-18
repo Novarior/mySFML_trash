@@ -14,6 +14,7 @@ enum movementState { IDLE = 0,
 class Entity {
 private:
 protected:
+    sf::Texture m_texture;
     sf::Sprite m_sprite;
     MovementComponent* e_movement;
     HitboxComponent* e_hitbox;
@@ -74,5 +75,6 @@ public:
     // render functions
     virtual void e_update(const float& dt) = 0;
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
+    virtual void e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox = false) = 0;
 };
 #endif

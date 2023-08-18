@@ -2,10 +2,10 @@
 	"entity list": [
 		{
 			"ID_record": 0,
-			"entity_uid":2,
+			"entity_uid":1,
 			"position": {
-				"x": 93,
-				"y": 691
+				"x": 352,
+				"y": 576
 			},
 			"attributes": {
 				"hp": 100,
@@ -15,10 +15,10 @@
 		},
 		{
 			"ID_record": 1,
-			"entity_uid":3,
+			"entity_uid":2,
 			"position": {
-				"x": 377.919,
-				"y": 402.488
+				"x": 704,
+				"y": 736
 			},
 			"attributes": {
 				"hp": 100,
@@ -28,10 +28,10 @@
 		},
 		{
 			"ID_record": 2,
-			"entity_uid":4,
+			"entity_uid":3,
 			"position": {
-				"x": 728,
-				"y": 778
+				"x": 640,
+				"y": 224
 			},
 			"attributes": {
 				"hp": 100,
@@ -41,10 +41,10 @@
 		},
 		{
 			"ID_record": 3,
-			"entity_uid":5,
+			"entity_uid":4,
 			"position": {
-				"x": 932,
-				"y": 750
+				"x": 64,
+				"y": 99.9853
 			},
 			"attributes": {
 				"hp": 100,
@@ -54,10 +54,10 @@
 		},
 		{
 			"ID_record": 4,
-			"entity_uid":6,
+			"entity_uid":5,
 			"position": {
-				"x": 360.878,
-				"y": 55
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -67,10 +67,10 @@
 		},
 		{
 			"ID_record": 5,
-			"entity_uid":7,
+			"entity_uid":6,
 			"position": {
-				"x": 604,
-				"y": 518
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -80,10 +80,10 @@
 		},
 		{
 			"ID_record": 6,
-			"entity_uid":8,
+			"entity_uid":7,
 			"position": {
-				"x": 80,
-				"y": 688
+				"x": 576,
+				"y": 320
 			},
 			"attributes": {
 				"hp": 100,
@@ -93,10 +93,10 @@
 		},
 		{
 			"ID_record": 7,
-			"entity_uid":9,
+			"entity_uid":8,
 			"position": {
-				"x": 655,
-				"y": 37
+				"x": 128,
+				"y": 896
 			},
 			"attributes": {
 				"hp": 100,
@@ -106,10 +106,10 @@
 		},
 		{
 			"ID_record": 8,
-			"entity_uid":10,
+			"entity_uid":9,
 			"position": {
-				"x": 461,
-				"y": 657
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -119,10 +119,10 @@
 		},
 		{
 			"ID_record": 9,
-			"entity_uid":11,
+			"entity_uid":10,
 			"position": {
-				"x": 476,
-				"y": 540
+				"x": 448,
+				"y": 800
 			},
 			"attributes": {
 				"hp": 100,
@@ -132,10 +132,10 @@
 		},
 		{
 			"ID_record": 10,
-			"entity_uid":12,
+			"entity_uid":11,
 			"position": {
-				"x": 947,
-				"y": 803
+				"x": 384,
+				"y": 864
 			},
 			"attributes": {
 				"hp": 100,
@@ -145,10 +145,10 @@
 		},
 		{
 			"ID_record": 11,
-			"entity_uid":13,
+			"entity_uid":12,
 			"position": {
-				"x": 58,
-				"y": 402.383
+				"x": 768,
+				"y": 608
 			},
 			"attributes": {
 				"hp": 100,
@@ -158,10 +158,10 @@
 		},
 		{
 			"ID_record": 12,
-			"entity_uid":14,
+			"entity_uid":13,
 			"position": {
-				"x": 395.883,
-				"y": 183
+				"x": 736,
+				"y": 448
 			},
 			"attributes": {
 				"hp": 100,
@@ -171,10 +171,10 @@
 		},
 		{
 			"ID_record": 13,
-			"entity_uid":15,
+			"entity_uid":14,
 			"position": {
-				"x": 826,
-				"y": 578
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -184,10 +184,10 @@
 		},
 		{
 			"ID_record": 14,
-			"entity_uid":16,
+			"entity_uid":15,
 			"position": {
-				"x": 109,
-				"y": 281.326
+				"x": 96,
+				"y": 32
 			},
 			"attributes": {
 				"hp": 100,
@@ -197,10 +197,10 @@
 		},
 		{
 			"ID_record": 15,
-			"entity_uid":17,
+			"entity_uid":16,
 			"position": {
-				"x": 838,
-				"y": 865
+				"x": 544,
+				"y": 960
 			},
 			"attributes": {
 				"hp": 100,
@@ -210,10 +210,10 @@
 		},
 		{
 			"ID_record": 16,
-			"entity_uid":18,
+			"entity_uid":17,
 			"position": {
-				"x": 282.896,
-				"y": 405.827
+				"x": 864,
+				"y": 480
 			},
 			"attributes": {
 				"hp": 100,
@@ -223,10 +223,10 @@
 		},
 		{
 			"ID_record": 17,
-			"entity_uid":19,
+			"entity_uid":18,
 			"position": {
-				"x": 110.747,
-				"y": 135.836
+				"x": 768,
+				"y": 736
 			},
 			"attributes": {
 				"hp": 100,
@@ -236,10 +236,10 @@
 		},
 		{
 			"ID_record": 18,
-			"entity_uid":20,
+			"entity_uid":19,
 			"position": {
-				"x": 413,
-				"y": 779
+				"x": 768,
+				"y": 64
 			},
 			"attributes": {
 				"hp": 100,
@@ -249,10 +249,10 @@
 		},
 		{
 			"ID_record": 19,
-			"entity_uid":21,
+			"entity_uid":20,
 			"position": {
-				"x": 518,
-				"y": 868
+				"x": 896,
+				"y": 384
 			},
 			"attributes": {
 				"hp": 100,
@@ -262,10 +262,10 @@
 		},
 		{
 			"ID_record": 20,
-			"entity_uid":22,
+			"entity_uid":21,
 			"position": {
-				"x": 404,
-				"y": 586
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -275,10 +275,10 @@
 		},
 		{
 			"ID_record": 21,
-			"entity_uid":23,
+			"entity_uid":22,
 			"position": {
-				"x": 345,
-				"y": 680
+				"x": 576,
+				"y": 576
 			},
 			"attributes": {
 				"hp": 100,
@@ -288,10 +288,10 @@
 		},
 		{
 			"ID_record": 22,
-			"entity_uid":24,
+			"entity_uid":23,
 			"position": {
-				"x": 390,
-				"y": 535
+				"x": 96,
+				"y": 96
 			},
 			"attributes": {
 				"hp": 100,
@@ -301,10 +301,10 @@
 		},
 		{
 			"ID_record": 23,
-			"entity_uid":25,
+			"entity_uid":24,
 			"position": {
-				"x": 442.887,
-				"y": 65
+				"x": 480,
+				"y": 704
 			},
 			"attributes": {
 				"hp": 100,
@@ -314,10 +314,10 @@
 		},
 		{
 			"ID_record": 24,
-			"entity_uid":26,
+			"entity_uid":25,
 			"position": {
-				"x": 58,
-				"y": 874
+				"x": 768,
+				"y": 512
 			},
 			"attributes": {
 				"hp": 100,
@@ -327,10 +327,10 @@
 		},
 		{
 			"ID_record": 25,
-			"entity_uid":27,
+			"entity_uid":26,
 			"position": {
-				"x": 390,
-				"y": 765
+				"x": 768,
+				"y": 256
 			},
 			"attributes": {
 				"hp": 100,
@@ -340,10 +340,10 @@
 		},
 		{
 			"ID_record": 26,
-			"entity_uid":28,
+			"entity_uid":27,
 			"position": {
-				"x": 933,
-				"y": 754
+				"x": 64,
+				"y": 96.0066
 			},
 			"attributes": {
 				"hp": 100,
@@ -353,10 +353,10 @@
 		},
 		{
 			"ID_record": 27,
-			"entity_uid":29,
+			"entity_uid":28,
 			"position": {
-				"x": 277,
-				"y": 658
+				"x": 32,
+				"y": 204.567
 			},
 			"attributes": {
 				"hp": 100,
@@ -366,10 +366,10 @@
 		},
 		{
 			"ID_record": 28,
-			"entity_uid":30,
+			"entity_uid":29,
 			"position": {
-				"x": 351,
-				"y": 972
+				"x": 832,
+				"y": 416
 			},
 			"attributes": {
 				"hp": 100,
@@ -379,10 +379,10 @@
 		},
 		{
 			"ID_record": 29,
-			"entity_uid":31,
+			"entity_uid":30,
 			"position": {
-				"x": 53,
-				"y": 345.196
+				"x": 480,
+				"y": 672
 			},
 			"attributes": {
 				"hp": 100,
@@ -392,10 +392,10 @@
 		},
 		{
 			"ID_record": 30,
-			"entity_uid":32,
+			"entity_uid":31,
 			"position": {
-				"x": 691,
-				"y": 577
+				"x": 384,
+				"y": 512
 			},
 			"attributes": {
 				"hp": 100,
@@ -405,10 +405,10 @@
 		},
 		{
 			"ID_record": 31,
-			"entity_uid":33,
+			"entity_uid":32,
 			"position": {
-				"x": 346.014,
-				"y": 200
+				"x": 64,
+				"y": 126.847
 			},
 			"attributes": {
 				"hp": 100,

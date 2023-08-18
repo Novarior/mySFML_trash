@@ -1,9 +1,9 @@
 {
 	"player": {
-		"entity_uid":1,
+		"entity_uid":0,
 		"position": {
-			"x": 100,
-			"y": 100
+			"x": 96,
+			"y": 96
 		},
 		"attributes": {
 			"hp": 100,

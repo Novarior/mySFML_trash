@@ -1,52 +1,45 @@
 #ifndef CPP_PROCESS_CORESTATE_HPP
 #define CPP_PROCESS_CORESTATE_HPP
 
-#include "State.hpp"
 #include "../header.h"
+#include "State.hpp"
 
+#include "../Content/ItemsStuff/Inventory.hpp"
+#include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
+#include "../entitys/Enemys/slime.hpp"
+#include "../entitys/player.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
-#include "../entitys/player.hpp"
-#include "../entitys/Enemys/slime.hpp"
-#include "../Content/Map/TileMap.hpp"
-#include "../Content/ItemsStuff/Inventory.hpp"
 
-struct Gamedata
-{
+struct Gamedata {
     unsigned seed;
     sf::Vector2f currentPlayerPos;
-
 };
 
-class Process :public State
-{
-    private:
-    //flag for load data
+class Process : public State {
+private:
+    // flag for load data
     bool loaded;
     Gamedata m_gamedata;
-    //view and window
+    // view and window
     sf::View view;
     sf::View playerView;
     PauseMenu* pausemenu;
     sf::Sprite renderSprite;
     sf::RenderTexture renderTexture;
-    //game elements
+    // game elements
     Inventory* t_inventory;
     Player* player;
-    sf::Texture playerTextureSHIT;
     TileMap* mapTiles;
     noiceData noicedata;
     std::vector<Entity*> entitys;
     ProcessGenerationNoice* myGN;
-    //GUI
+    sf::Shader shader;
+    // GUI
     gui::ProgressBar* playerHPBar;
 
-
-
-
-
-    //init data who dont use loaded dates
+    // init data who dont use loaded dates
     void initKeybinds();
     void initPauseMenu();
     void initView();
@@ -54,27 +47,28 @@ class Process :public State
     void initTileMapData();
     void initPlayer();
     void initEntitys();
+    void initShader();
 
     const bool loadGameData();
     const bool saveGameData();
 
-    public:
+public:
     Process(StateData* state_data, const bool defaultLoad);
     virtual ~Process();
 
-    //update functions
+    // update functions
     void updateTileMap(const float& delta_time);
     void updateEntitys(const float& delta_time);
     void updateInput(const float& delta_time);
     void updatePlayerInputs(const float& delta_time);
     void update(const float& delta_time);
 
-    //render functions 
+    // render functions
     void renderPlayer(sf::RenderTarget& target);
     void renderGUI(sf::RenderTarget& target);
     void renderTileMap(sf::RenderTarget& target);
     void renderEntities(sf::RenderTarget& target);
-    //main render function
+    // main render function
     void render(sf::RenderWindow& target);
 };
 #endif

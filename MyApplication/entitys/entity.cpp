@@ -16,10 +16,11 @@ void Entity::createAttributesComponent()
 
 Entity::Entity()
 {
-    this->count_entitys++;
     this->e_movement = NULL;
     this->e_hitbox = NULL;
     this->e_attributes = NULL;
+    this->ID_entity = this->count_entitys;
+    this->count_entitys++;
 }
 
 Entity::~Entity()
@@ -27,6 +28,7 @@ Entity::~Entity()
     delete this->e_hitbox;
     delete this->e_movement;
     delete this->e_attributes;
+    this->count_entitys--;
 }
 
 void Entity::e_move(const float& dir_x, const float& dir_y, const float& delta_time)

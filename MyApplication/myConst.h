@@ -22,8 +22,17 @@ const char texture_OCEAN_ANIM[] = "resourses/Textures/Tiles/water_still.png";
 const char texture_SAND[] = "resourses/Textures/Tiles/sand.png";
 const char texture_DIRT[] = "resourses/Textures/Tiles/coarse_dirt.png";
 
+// shaders
+
+const char M_SHADER_01_F[] = "resourses/shaders/Add.frag";
+const char M_SHADER_02_F[] = "resourses/shaders/DownSample.frag";
+const char M_SHADER_03_V[] = "resourses/shaders/Fullpass.vert";
+const char M_SHADER_04_F[] = "resourses/shaders/shader_bloom.frag";
+const char M_SHADER_05_V[] = "resourses/shaders/vertex_shader.vert";
+
 // sprites
 const char texture_TREE[] = "resourses/Textures/Sprites/treee.png";
+const char slime_texture[] = "resourses/Textures/Entitys/slime_terratia.png";
 
 // items
 const char item_img_gold_nugget[] = "resourses/Textures/Textures/gold_nugget.png";

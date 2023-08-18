@@ -131,9 +131,7 @@ void Process::initView()
 
 void Process::initPlayer()
 {
-    if (!this->playerTextureSHIT.loadFromFile(myConst::texture_GRASS)) {
-    }
-    this->player = new Player(100, 100, this->playerTextureSHIT);
+    this->player = new Player(sf::Vector2f(100, 100));
 
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
 
@@ -167,8 +165,14 @@ void Process::initEntitys()
         // call function to get random position
         posx = rand() % 1000;
         posy = rand() % 1000;
-        this->entitys.push_back(new Slime(posx, posy, this->playerTextureSHIT, *this->player));
+        this->entitys.push_back(new Slime(posx, posy, *this->player));
     }
+}
+
+void Process::initShader()
+{
+    if (!this->shader.loadFromFile(myConst::M_SHADER_04_F, sf::Shader::Fragment))
+        std::cout << "\nERROR::PROCESS::LOADSHADER::" << myConst::M_SHADER_03_V;
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad)
@@ -188,6 +192,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
+    this->initShader();
 }
 
 Process::~Process()
@@ -292,6 +297,7 @@ void Process::update(const float& delta_time)
             // get memory usage enemys on bytes
             << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
             << "\n\tEntitys: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
+            << "\n\tTotal Entitys: " << Entity::count_entitys
             << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
             << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
             << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
@@ -303,12 +309,6 @@ void Process::update(const float& delta_time)
 }
 
 // sub render functions
-void Process::renderPlayer(sf::RenderTarget& target)
-{
-    this->player->e_render(target, this->debugMode);
-    this->playerView.setCenter(this->player->e_getPosition());
-}
-
 void Process::renderGUI(sf::RenderTarget& target)
 {
 
@@ -332,9 +332,15 @@ void Process::renderTileMap(sf::RenderTarget& target)
 void Process::renderEntities(sf::RenderTarget& target)
 {
     for (auto* enemy : this->entitys)
-        enemy->e_render(target, this->debugMode);
+        ;
+    // enemy->e_render(target, this->debugMode);
 }
 
+void Process::renderPlayer(sf::RenderTarget& target)
+{
+    this->player->e_render(target, this->shader, this->debugMode);
+    this->playerView.setCenter(this->player->e_getPosition());
+}
 // main render function
 void Process::render(sf::RenderWindow& target)
 {

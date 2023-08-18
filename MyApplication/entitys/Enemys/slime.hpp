@@ -1,20 +1,20 @@
 #ifndef CPP_TEST_CLASS_HPP
 #define CPP_TEST_CLASS_HPP
 #include "../AI/AIFollow.hpp"
-class Slime :public Entity
-{
-    private:
+class Slime : public Entity {
+private:
     AIFollow* m_AIFollow;
 
-    public:
+public:
     /// @brief Construct a new Slime object
     /// @param spawn_pos a position to spawn
     /// @param texture a texture to use for the slime
     /// @param targer_follow a target to follow (player)
-    Slime(float spawn_pos_x, float spawn_pos_y, sf::Texture& texture, Entity& targer_follow);
+    Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow);
     virtual ~Slime();
 
     void e_update(const float& delta_time);
     void e_render(sf::RenderTarget& target, const bool show_hitbox = false);
+    void e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox = false);
 };
 #endif

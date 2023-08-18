@@ -168,8 +168,6 @@ MainMenu::~MainMenu()
             delete it->second;
     this->buttons.clear();
 
-    for (auto it = this->backgrond_shapes.begin(); it != this->backgrond_shapes.end(); ++it)
-        this->backgrond_shapes.erase(it);
     this->backgrond_shapes.clear();
 }
 

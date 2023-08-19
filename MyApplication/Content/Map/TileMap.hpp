@@ -59,6 +59,6 @@ public:
     bool getCollision(const unsigned int x, const unsigned int y) const;
 
     rectangleWithOffset getRenderArea();
-    void render(sf::RenderTarget* target, const bool debug);
+    void render(sf::RenderTarget* target);
 };
 #endif

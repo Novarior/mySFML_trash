@@ -47,7 +47,6 @@ private:
     void initTileMapData();
     void initPlayer();
     void initEntitys();
-    void initShader();
 
     const bool loadGameData();
     const bool saveGameData();

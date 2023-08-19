@@ -29,10 +29,3 @@ void Player::e_render(sf::RenderTarget& target, const bool show_hitbox)
     if (show_hitbox)
         this->e_hitbox->render(target);
 }
-void Player::e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox)
-{
-    target.draw(this->m_sprite, &shader);
-
-    if (show_hitbox)
-        this->e_hitbox->render(target);
-}

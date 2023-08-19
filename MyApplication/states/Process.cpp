@@ -169,12 +169,6 @@ void Process::initEntitys()
     }
 }
 
-void Process::initShader()
-{
-    if (!this->shader.loadFromFile(myConst::M_SHADER_04_F, sf::Shader::Fragment))
-        std::cout << "\nERROR::PROCESS::LOADSHADER::" << myConst::M_SHADER_03_V;
-}
-
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
@@ -192,7 +186,6 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
-    this->initShader();
 }
 
 Process::~Process()
@@ -326,7 +319,7 @@ void Process::renderGUI(sf::RenderTarget& target)
 
 void Process::renderTileMap(sf::RenderTarget& target)
 {
-    this->mapTiles->render(&target, this->debugMode);
+    this->mapTiles->render(&target);
 }
 
 void Process::renderEntities(sf::RenderTarget& target)
@@ -338,7 +331,7 @@ void Process::renderEntities(sf::RenderTarget& target)
 
 void Process::renderPlayer(sf::RenderTarget& target)
 {
-    this->player->e_render(target, this->shader, this->debugMode);
+    this->player->e_render(target);
     this->playerView.setCenter(this->player->e_getPosition());
 }
 // main render function

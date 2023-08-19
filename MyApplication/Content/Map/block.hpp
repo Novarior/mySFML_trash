@@ -13,14 +13,14 @@ enum BLOCKTYPE { NAN_DEF = 0,
 
 class BrickBlock {
 private:
-    sf::RectangleShape m_Shape;
-    sf::RectangleShape m_Hitbox;
+    sf::Sprite m_sprite;
     sf::Texture& m_Texture;
     bool m_collision;
-    const unsigned short m_type;
     bool m_isAnim;
+    const unsigned short m_type;
     static unsigned currentFrame;
     unsigned framesCounter;
+    sf::Vector2f m_size;
 
 public:
     BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false);
@@ -28,12 +28,10 @@ public:
 
     const sf::FloatRect getGlobalBounds();
     const bool intersects(sf::FloatRect rect);
-    const bool& getCollision();
+    inline const bool& getCollision() { return this->m_collision; }
     void updateFrame();
-    sf::RectangleShape& getRectangleShape();
 
-    void update();
     void updateAnimation();
-    void render(sf::RenderTarget* target, const bool draw_collision = false);
+    void render(sf::RenderTarget* target);
 };
 #endif

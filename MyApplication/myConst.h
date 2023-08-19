@@ -24,11 +24,8 @@ const char texture_DIRT[] = "resourses/Textures/Tiles/coarse_dirt.png";
 
 // shaders
 
-const char M_SHADER_01_F[] = "resourses/shaders/Add.frag";
-const char M_SHADER_02_F[] = "resourses/shaders/DownSample.frag";
-const char M_SHADER_03_V[] = "resourses/shaders/Fullpass.vert";
-const char M_SHADER_04_F[] = "resourses/shaders/shader_bloom.frag";
-const char M_SHADER_05_V[] = "resourses/shaders/vertex_shader.vert";
+const char M_SHADER_01_F[] = "resourses/shaders/bloom.frag";
+const char M_SHADER_02_V[] = "resourses/shaders/bloom.vert";
 
 // sprites
 const char texture_TREE[] = "resourses/Textures/Sprites/treee.png";

@@ -69,3 +69,12 @@ const sf::Vector2i Entity::e_getGridPositionInt(const unsigned int& grisSize)
         static_cast<int>(this->m_sprite.getPosition().x) / grisSize,
         static_cast<int>(this->m_sprite.getPosition().y) / grisSize);
 }
+
+const sf::Vector2f Entity::e_getCenterPosition()
+{
+    sf::Vector2f cp(0.f, 0.f);
+    cp = sf::Vector2f(
+        this->m_sprite.getPosition().x + this->m_sprite.getGlobalBounds().width / 2.f,
+        this->m_sprite.getPosition().y + this->m_sprite.getGlobalBounds().height / 2.f);
+    return cp;
+}

@@ -355,9 +355,8 @@ void TileMap::update(Entity* entity, const float& delta_time)
         this->updateAnimationTiles(delta_time);
 }
 
-void TileMap::render(sf::RenderTarget* target, const bool debug)
+void TileMap::render(sf::RenderTarget* target)
 { // Render tiles
-
     for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
         for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
             this->tilemap[x][y][0]->render(target);
@@ -367,5 +366,12 @@ void TileMap::render(sf::RenderTarget* target, const bool debug)
             if (this->checkreck.contains(it.getPosition()))
                 target->draw(it);
 
+    // bariere box
     target->draw(this->bariere_box);
+
+    // draw trees
+    if (!this->m_TreeArray.empty())
+        for (auto it : this->m_TreeArray)
+            if (this->checkreck.contains(it.getPosition()))
+                target->draw(it);
 }

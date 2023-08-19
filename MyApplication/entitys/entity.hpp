@@ -52,6 +52,7 @@ public:
     inline virtual const float& getGridSizeFloat() const { return this->gridSizeF; }
     inline virtual const sf::Vector2f& e_getVelocity() { return this->e_movement->getVelocity(); }
     inline virtual const sf::Vector2f& e_getPosition() { return this->m_sprite.getPosition(); }
+    virtual const sf::Vector2f e_getCenterPosition();
 
     // inline setters functions
     inline virtual void e_setTexture(sf::Texture& texture) { this->m_sprite.setTexture(texture); }
@@ -75,6 +76,5 @@ public:
     // render functions
     virtual void e_update(const float& dt) = 0;
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
-    virtual void e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox = false) = 0;
 };
 #endif

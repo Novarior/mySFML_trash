@@ -18,10 +18,10 @@
 #include <vector>
 
 // include SFML libary
+#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
 // include in program files
 #include "math/mymath.hpp"
 

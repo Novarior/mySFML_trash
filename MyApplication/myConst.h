@@ -32,10 +32,10 @@ const char texture_TREE[] = "resourses/Textures/Sprites/treee.png";
 const char slime_texture[] = "resourses/Textures/Entitys/slime_terratia.png";
 
 // items
-const char item_img_gold_nugget[] = "resourses/Textures/Textures/gold_nugget.png";
-const char item_img_copper_nuggen[] = "resourses/Textures/Textures/copper_nugget.png";
-const char item_img_silver_nuggen[] = "resourses/Textures/Textures/iron_nugget.png";
-const char item_img_someore[] = "resourses/Textures/Textures/some_ore.png";
+const char item_img_gold_nugget[] = "resourses/Textures/Images/gold_nugget.png";
+const char item_img_copper_nuggen[] = "resourses/Textures/Images/copper_nugget.png";
+const char item_img_silver_nuggen[] = "resourses/Textures/Images/iron_nugget.png";
+const char item_img_someore[] = "resourses/Textures/Images/some_ore.png";
 
 // backgrounds
 const char texture_background_mainmenu_lay_1[] = "resourses/Textures/Images/Lay_1.png";

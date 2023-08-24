@@ -136,10 +136,14 @@ void Process::initPlayer()
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
 
     // init player HP bar on top right on screen math position using mmath::p2pX/X
-    this->playerHPBar = new gui::ProgressBar(
-        sf::Vector2f(mmath::p2pX(66, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+    this->playerBar["HP_BAR"] = new gui::ProgressBar(
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
         sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
         sf::Color::Red, this->IstateData->characterSize_game_small, this->IstateData->font);
+    this->playerBar["MP_BAR"] = new gui::ProgressBar(
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Color::Blue, this->IstateData->characterSize_game_small, this->IstateData->font);
 }
 
 // Defauld Init Data
@@ -197,7 +201,10 @@ Process::~Process()
     delete this->pausemenu;
     delete this->player;
     delete this->t_inventory;
-    delete this->playerHPBar;
+
+    // clear bar
+    for (auto& it : this->playerBar)
+        delete it.second;
 
     // clear vector entitys
     for (size_t i = 0; i < this->entitys.size(); i++) {
@@ -258,7 +265,8 @@ void Process::update(const float& delta_time)
         this->updatePlayerInputs(delta_time);
         this->updateTileMap(delta_time);
         this->player->e_update(delta_time);
-        this->playerHPBar->update(this->player->getAttributes()->getCurrentHealth(), this->player->getAttributes()->getMaxHealth());
+        this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes()->health, this->player->getAttributes()->getAttributes()->max_health);
+        this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes()->mana, this->player->getAttributes()->getAttributes()->max_mana);
 
         if (this->t_inventory->getIsOpened() && !this->Ipaused) // inventory  menu update
             this->t_inventory->update(this->mousePosWindow);
@@ -305,7 +313,9 @@ void Process::update(const float& delta_time)
 void Process::renderGUI(sf::RenderTarget& target)
 {
 
-    this->playerHPBar->render(target);
+    // render player bars
+    for (auto& it : this->playerBar)
+        it.second->render(target);
 
     if (this->debugMode) // debuging text render
         target.draw(this->dText);

@@ -13,12 +13,21 @@ class State;
 /// @brief Class for state data
 class StateData {
 public:
-    StateData() { }
+    StateData()
+    {
+        this->sWindow = NULL;
+        this->supportedKeys = NULL;
+        this->sStates = NULL;
+        this->event = NULL;
+        this->gfxSettings = NULL;
+        this->parser = NULL;
+    }
 
     float grid_size;
     sf::RenderWindow* sWindow;
     sf::Font font;
     sf::Font debugFont;
+    sf::Event* event;
     GraphicsSettings* gfxSettings;
     mypars::parsJSON* parser;
     std::stack<State*>* sStates;

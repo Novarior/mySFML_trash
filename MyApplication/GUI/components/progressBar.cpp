@@ -14,8 +14,7 @@ gui::ProgressBar::ProgressBar(sf::Vector2f pos, sf::Vector2f size,
 
     this->text.setFont(font);
     this->text.setCharacterSize(character_size);
-    this->text.setOutlineColor(sf::Color::Black);
-    this->text.setOutlineThickness(1.f);
+    this->text.setOutlineThickness(-3.f);
     this->text.setPosition(
         this->background.getPosition().x + (this->background.getSize().x * 0.5f) - (this->text.getGlobalBounds().width * 0.5f),
         this->background.getPosition().y + (this->background.getSize().y * 0.5f) - (this->text.getGlobalBounds().height * 0.5f));

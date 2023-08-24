@@ -2,9 +2,8 @@
 #define ITEMSTUFF_COINS_H
 #include "../../header.h"
 
-class Coins: public sf::Drawable
-{
-    private:
+class Coins : public sf::Drawable {
+private:
     sf::Font& m_font;
     std::stringstream m_StringStream;
 
@@ -21,22 +20,20 @@ class Coins: public sf::Drawable
     } m_coin_text;
 
     struct CoinShape {
-        sf::RectangleShape m_back;
-        sf::RectangleShape m_GoldShape;
-        sf::RectangleShape m_SilverShape;
-        sf::RectangleShape m_CopperShape;
+        sf::Sprite m_GoldShape;
+        sf::Sprite m_SilverShape;
+        sf::Sprite m_CopperShape;
     } m_coin_shape;
 
     struct CoinTexture {
-        sf::Texture m_TextureGold;
-        sf::Texture m_TextureCopper;
-        sf::Texture m_TextureSilver;
+        sf::Texture m_GoldTexture;
+        sf::Texture m_SilverTexture;
+        sf::Texture m_CopperTexture;
     } m_coin_texture;
 
-
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const {
-        //Draw Texture shapes with image
-        target.draw(m_coin_shape.m_back);
+    inline virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+    {
+        // Draw Texture shapes with image
         target.draw(m_coin_shape.m_GoldShape);
         target.draw(m_coin_shape.m_SilverShape);
         target.draw(m_coin_shape.m_CopperShape);
@@ -46,8 +43,8 @@ class Coins: public sf::Drawable
         target.draw(m_coin_text.m_Text_copper);
     }
 
-    public:
-    /// @brief 
+public:
+    /// @brief
     /// @param pos position this coin box
     /// @param size size this coin box
     /// @param image_size size of icon coins
@@ -64,16 +61,14 @@ class Coins: public sf::Drawable
     void add_SilverCoinCound(const int value);
     void add_CopperCoinCound(const int value);
 
-    //Acsess
+    // Acsess
     const int get_GoldCointCount();
     const int get_SilverCointCount();
     const int get_CopperCointCount();
 
-    //Update coins
+    // Update coins
     void updateCoins();
-    
 
     void getText();
-
 };
 #endif

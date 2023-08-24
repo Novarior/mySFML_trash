@@ -60,6 +60,7 @@ void Core::initStateData()
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
     this->mStatedata.parser = this->parsJSON;
+    this->mStatedata.event = &this->mEvents;
     this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
     this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
     this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
@@ -155,14 +156,14 @@ void Core::update()
     this->updateEventsWindow();
 
     if (!this->mState.empty()) {
-        if (this->mWindow->hasFocus()) {
+       // if (this->mWindow->hasFocus()) {
             this->mState.top()->update(this->deltaTime);
 
             if (this->mState.top()->getQuit()) {
                 delete this->mState.top();
                 this->mState.pop();
             }
-        }
+       // }
     }
     // Application end
     else {

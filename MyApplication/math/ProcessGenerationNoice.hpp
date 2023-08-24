@@ -10,6 +10,7 @@ struct noiceData {
     long seed;
     unsigned octaves;
     double frequency;
+    float amplifire;
     float persistence;
     unsigned int RenderWindowX;
     unsigned int RenderWindowY;
@@ -27,6 +28,8 @@ public:
 
     ProcessGenerationNoice(noiceData data);
     virtual ~ProcessGenerationNoice();
+
+    void setNoiceData(noiceData data) { this->m_data = data; }
 
     void setSeed(double seed);
     double getSeed();

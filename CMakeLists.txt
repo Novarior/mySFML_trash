@@ -1,6 +1,6 @@
 #set minimun cmake version for build 
 cmake_minimum_required(VERSION 3.5.0)
-project(TRYSQUARE VERSION 0.0.4)
+project(SFMLGAME VERSION 0.0.4)
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 #set miniimum c++ standart 
@@ -24,9 +24,11 @@ set(RESOURCE_FILES
     MyApplication/states/PauseMenu.cpp
     #gui includes
     MyApplication/GUI/components/button.cpp
+    MyApplication/GUI/components/textbox.cpp
     MyApplication/GUI/components/selector.cpp
     MyApplication/GUI/components/ProgressBar.cpp
     MyApplication/GUI/components/dropDownList.cpp
+    MyApplication/GUI/components/staticSelector.cpp
     MyApplication/GUI/components/textureSelector.cpp
     #entitys includes
     MyApplication/entitys/entity.cpp 

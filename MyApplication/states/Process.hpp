@@ -37,7 +37,7 @@ private:
     ProcessGenerationNoice* myGN;
     sf::Shader shader;
     // GUI
-    gui::ProgressBar* playerHPBar;
+    std::map<std::string, gui::ProgressBar*> playerBar;
 
     // init data who dont use loaded dates
     void initKeybinds();

@@ -3,28 +3,21 @@
 Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::Font& font, unsigned int character_size)
     : m_font(font)
 {
-
-    this->m_coin_shape.m_back.setSize(size);
-    this->m_coin_shape.m_back.setPosition(pos);
-
-    this->m_coin_shape.m_back.setFillColor(sf::Color::Red);
-
     this->m_coin_shape.m_GoldShape.setPosition(sf::Vector2f(pos.x + size.y / 4, pos.y + (size.y / 4)));
-    this->m_coin_shape.m_GoldShape.setSize(image_size);
+    this->m_coin_shape.m_GoldShape.setTextureRect(sf::IntRect(0, 0, size.x, size.x));
 
     this->m_coin_shape.m_SilverShape.setPosition(sf::Vector2f(pos.x + (size.x / 4), pos.y + (size.y / 4)));
-    this->m_coin_shape.m_SilverShape.setSize(image_size);
+    this->m_coin_shape.m_SilverShape.setTextureRect(sf::IntRect(0, 0, size.x, size.x));
 
     this->m_coin_shape.m_CopperShape.setPosition(sf::Vector2f(pos.x + (size.x / 4) * 2, pos.y + (size.y / 4)));
-    this->m_coin_shape.m_CopperShape.setSize(image_size);
+    this->m_coin_shape.m_CopperShape.setTextureRect(sf::IntRect(0, 0, size.x, size.x));
 
-    this->m_coin_texture.m_TextureGold.loadFromFile(myConst::item_img_gold_nugget);
-    this->m_coin_texture.m_TextureCopper.loadFromFile(myConst::item_img_copper_nuggen);
-    this->m_coin_texture.m_TextureSilver.loadFromFile(myConst::item_img_silver_nuggen);
-
-    this->m_coin_shape.m_GoldShape.setTexture(&this->m_coin_texture.m_TextureGold);
-    this->m_coin_shape.m_SilverShape.setTexture(&this->m_coin_texture.m_TextureSilver);
-    this->m_coin_shape.m_CopperShape.setTexture(&this->m_coin_texture.m_TextureCopper);
+    this->m_coin_texture.m_GoldTexture.loadFromFile(myConst::item_img_gold_nugget);
+    this->m_coin_shape.m_GoldShape.setTexture(this->m_coin_texture.m_GoldTexture);
+    this->m_coin_texture.m_SilverTexture.loadFromFile(myConst::item_img_silver_nuggen);
+    this->m_coin_shape.m_SilverShape.setTexture(this->m_coin_texture.m_SilverTexture);
+    this->m_coin_shape.m_CopperShape.setTexture(this->m_coin_texture.m_SilverTexture);
+    this->m_coin_shape.m_CopperShape.setColor(sf::Color(184, 115, 51, 255));
 
     // init text layout "gold coin"
     {
@@ -35,8 +28,8 @@ Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::F
         this->m_coin_text.m_Text_gold.setFont(this->m_font);
         this->m_coin_text.m_Text_gold.setCharacterSize(character_size);
         this->m_coin_text.m_Text_gold.setPosition(sf::Vector2f(
-            this->m_coin_shape.m_GoldShape.getPosition().x + this->m_coin_shape.m_GoldShape.getSize().x * 1.5f,
-            this->m_coin_shape.m_GoldShape.getPosition().y - this->m_coin_shape.m_GoldShape.getSize().y / 3));
+            this->m_coin_shape.m_GoldShape.getPosition().x + this->m_coin_text.m_Text_silver.getCharacterSize(),
+            this->m_coin_shape.m_GoldShape.getPosition().y));
     }
     // init text layout "silver coin"
     {
@@ -47,8 +40,8 @@ Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::F
         this->m_coin_text.m_Text_silver.setFont(this->m_font);
         this->m_coin_text.m_Text_silver.setCharacterSize(character_size);
         this->m_coin_text.m_Text_silver.setPosition(sf::Vector2f(
-            this->m_coin_shape.m_SilverShape.getPosition().x + this->m_coin_shape.m_SilverShape.getSize().x * 1.5f,
-            this->m_coin_shape.m_SilverShape.getPosition().y - this->m_coin_shape.m_SilverShape.getSize().y / 3));
+            this->m_coin_shape.m_SilverShape.getPosition().x + this->m_coin_text.m_Text_silver.getCharacterSize(),
+            this->m_coin_shape.m_SilverShape.getPosition().y));
     }
     // init text layout "copper coin"
     {
@@ -59,8 +52,8 @@ Coins::Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::F
         this->m_coin_text.m_Text_copper.setFont(this->m_font);
         this->m_coin_text.m_Text_copper.setCharacterSize(character_size);
         this->m_coin_text.m_Text_copper.setPosition(sf::Vector2f(
-            this->m_coin_shape.m_CopperShape.getPosition().x + this->m_coin_shape.m_CopperShape.getSize().x * 1.5f,
-            this->m_coin_shape.m_CopperShape.getPosition().y - this->m_coin_shape.m_CopperShape.getSize().y / 3));
+            this->m_coin_shape.m_CopperShape.getPosition().x + this->m_coin_text.m_Text_silver.getCharacterSize(),
+            this->m_coin_shape.m_CopperShape.getPosition().y));
     }
 }
 

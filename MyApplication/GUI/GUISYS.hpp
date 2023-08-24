@@ -6,8 +6,10 @@
 #include "components/dropDownList.hpp"
 #include "components/progressBar.hpp"
 #include "components/selector.hpp"
+#include "components/staticSelector.hpp"
 // #include "components/shortcuts.hpp"
 // #include "components/slider.hpp"
+#include "components/textbox.hpp"
 #include "components/textureSelector.hpp"
 
 #endif

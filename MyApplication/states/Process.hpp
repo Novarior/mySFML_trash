@@ -12,11 +12,6 @@
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
 
-struct Gamedata {
-    unsigned seed;
-    sf::Vector2f currentPlayerPos;
-};
-
 class Process : public State {
 private:
     // flag for load data
@@ -38,6 +33,7 @@ private:
     sf::Shader shader;
     // GUI
     std::map<std::string, gui::ProgressBar*> playerBar;
+    gui::MiniMap* minimap;
 
     // init data who dont use loaded dates
     void initKeybinds();
@@ -47,6 +43,8 @@ private:
     void initTileMapData();
     void initPlayer();
     void initEntitys();
+
+    void intGUI();
 
     const bool loadGameData();
     const bool saveGameData();

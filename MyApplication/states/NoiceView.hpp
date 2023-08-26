@@ -26,9 +26,9 @@ private:
     bool showTabmenu;
     sf::RectangleShape tabShape;
     std::map<std::string, gui::StaticSelector*> staticSelector;
-    gui::Textbox* textbox;
+    gui::Selector* selector;
 
-    short tick;
+
     int gridSizeX, gridSizeY;
     sf::Vector2f closeGrid;
     bool isGeneratorClosed;

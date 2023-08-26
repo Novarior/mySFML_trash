@@ -55,12 +55,21 @@ public:
     virtual const sf::Vector2f e_getCenterPosition();
 
     // inline setters functions
+    inline virtual void e_setAlive(const bool isAlive) { this->isAlive = isAlive; }
+    inline virtual void e_setCollision(const bool isCollision) { this->isCollision = isCollision; }
+    inline virtual void e_loadTexture(const std::string file_path) { this->m_texture.loadFromFile(file_path); }
+    inline virtual void e_setTexture(sf::Texture* texture) { this->m_sprite.setTexture(*texture); }
     inline virtual void e_setTexture(sf::Texture& texture) { this->m_sprite.setTexture(texture); }
     inline virtual void e_setPosition(const sf::Vector2f pos) { this->m_sprite.setPosition(pos); }
     inline virtual void e_setPosition(const float pos_x, const float pos_y) { this->m_sprite.setPosition(sf::Vector2f(pos_x, pos_y)); }
+    inline virtual void e_setID(const unsigned int& ID) { this->ID_entity = ID; }
 
     // inline update functions
-    inline virtual void e_updateMovement(const float& delta_time) { this->e_movement->update(delta_time); }
+    inline virtual void
+    e_updateMovement(const float& delta_time)
+    {
+        this->e_movement->update(delta_time);
+    }
     inline virtual void e_updateHitbox(sf::IntRect rectEntity, sf::IntRect rectCollision) { this->e_hitbox->update(); }
 
     virtual void e_updateAnimation(std::string keyNameAnimation, const float& delta_time) { }

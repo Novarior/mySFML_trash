@@ -24,6 +24,7 @@ set(RESOURCE_FILES
     MyApplication/states/PauseMenu.cpp
     #gui includes
     MyApplication/GUI/components/button.cpp
+    MyApplication/GUI/components/minimap.cpp
     MyApplication/GUI/components/textbox.cpp
     MyApplication/GUI/components/selector.cpp
     MyApplication/GUI/components/ProgressBar.cpp

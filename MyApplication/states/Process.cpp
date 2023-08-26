@@ -2,64 +2,13 @@
 
 const bool Process::loadGameData()
 {
-
     // load game config
-    std::ifstream ifs("config/gameconfig.cfg");
-    if (ifs.is_open()) {
-        sf::Vector2f playerBuffPos;
-
-        ifs >> this->noicedata.seed;
-        ifs >> this->noicedata.octaves;
-        ifs >> this->noicedata.gridSize;
-        ifs >> this->noicedata.frequency;
-        ifs >> this->noicedata.mapSizeX >> this->noicedata.mapSizeY;
-        ifs >> this->noicedata.RenderWindowX >> this->noicedata.RenderWindowY;
-
-        ifs >> this->noicedata.persistence;
-    } else
-        return false;
-    ifs.close();
-
-    // load player
-    std::ifstream ifs1("config/playerdata.cfg");
-    if (ifs1.is_open()) {
-        // buffer for player position and attributes
-        sf::Vector2f playerBuffPos;
-        Atri buffer;
-        // load player position to buffer
-        ifs1 >> playerBuffPos.x >> playerBuffPos.y;
-        // load player attributes to buffer
-        ifs1 >> buffer.health >> buffer.max_health >> buffer.experience >> buffer.experience_for_level >> buffer.level >> buffer.some_points;
-        // set player position
-        this->player->e_setPosition(playerBuffPos);
-        // set attributes to player
-        this->player->getAttributes()->setAttributes(buffer);
-    } else
-        printf("ERROR::PLAYERDATA.CFG::COULD_NOT_LOAD\n");
-    ifs1.close();
-
+    this->Iparser->loadGameData("config/gameconfig.cfg", this->IstateData->gameData);
     return true;
 }
 
 const bool Process::saveGameData()
 {
-    // save game config
-    std::ofstream ofs("config/gameconfig.cfg");
-    if (ofs.is_open()) {
-        ofs << this->noicedata.seed << '\n';
-        ofs << this->noicedata.octaves << '\n';
-        ofs << this->noicedata.gridSize << '\n';
-        ofs << this->noicedata.frequency << '\n';
-        ofs << this->noicedata.mapSizeX << ' ' << this->noicedata.mapSizeY << '\n';
-        ofs << this->noicedata.RenderWindowX << ' ' << this->noicedata.RenderWindowY << '\n';
-        ofs << this->noicedata.persistence << '\n';
-    } else {
-        printf("ERROR::GAMECONFIG.CFG::COULD_NOT_SAVE\n");
-        ofs.close();
-        return false;
-    }
-    ofs.close();
-
     // save player to JSON file
     if (!this->Iparser->savePlayer("config/playerdata.json", this->player))
         printf("ERROR::PLAYERDATA.JSON::COULD_NOT_SAVE\n");
@@ -69,6 +18,9 @@ const bool Process::saveGameData()
     // save entitys pos and other data
     if (!this->Iparser->saveEntitys("config/entitysdata.json", this->entitys))
         printf("ERROR::ENTITYSDATA.JSON::COULD_NOT_SAVE\n");
+    // save game data to JSON file
+    if (!this->Iparser->saveGameData("config/gamedata.json", this->IstateData->gameData))
+        printf("ERROR::GAMEDATA.JSON::COULD_NOT_SAVE\n");
 
     return true;
 }
@@ -92,6 +44,7 @@ void Process::initPauseMenu()
     const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
     this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
     this->pausemenu->addButton("EXIT_BUTTON", mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::p2pY(6.f, vm), mmath::calcCharSize(vm), "Quit");
+    this->pausemenu->addButton("GEN", mmath::p2pX(20, vm), mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::calcCharSize(vm), "Generate");
 }
 
 void Process::initTileMap()
@@ -149,10 +102,13 @@ void Process::initPlayer()
 // Defauld Init Data
 void Process::initTileMapData()
 {
-    this->noicedata.seed = std::time(nullptr);
+    if (this->loaded)
+        return;
+    this->noicedata.seed = std::time(0);
     this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.octaves = 8;
     this->noicedata.frequency = 8;
+    this->noicedata.amplifire = 0.5f;
     this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
     this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
     this->noicedata.mapSizeX = 620;
@@ -182,6 +138,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
             this->loaded = true;
         else
             this->loaded = false;
+    } else {
     }
     this->initKeybinds();
     this->initView();
@@ -255,15 +212,24 @@ void Process::update(const float& delta_time)
     this->updateKeytime(delta_time);
     this->updateInput(delta_time);
 
+    if (m_gamedata.game_started == false) // update game data
+        this->m_gamedata.game_started = true;
+
     if (this->Ipaused) { // update pause
         this->pausemenu->update(this->mousePosWindow);
 
         if (this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
+        if (this->pausemenu->isButtonPressed("GEN") && this->getKeytime()) {
+            delete this->myGN;
+            delete this->mapTiles;
+            this->initTileMapData();
+            this->initTileMap();
+        }
     } else { // update game
         this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
-        this->updateTileMap(delta_time);
+
         this->player->e_update(delta_time);
         this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes()->health, this->player->getAttributes()->getAttributes()->max_health);
         this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes()->mana, this->player->getAttributes()->getAttributes()->max_mana);
@@ -271,7 +237,7 @@ void Process::update(const float& delta_time)
         if (this->t_inventory->getIsOpened() && !this->Ipaused) // inventory  menu update
             this->t_inventory->update(this->mousePosWindow);
     }
-
+    this->updateTileMap(delta_time);
     if (this->debugMode) { // update debug information
         double fps = 1.0f / delta_time;
         this->dString_Stream
@@ -302,7 +268,17 @@ void Process::update(const float& delta_time)
             << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
             << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
             << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
-            << "\n\tTotal usage: " << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes";
+            << "\n\tTotal usage: " << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes"
+            << "\nGenerator data:"
+            << "\n\tSeed:\t" << this->noicedata.seed
+            << "\n\tOctaves:\t" << this->noicedata.octaves
+            << "\n\tFrequency:\t" << this->noicedata.frequency
+            << "\n\tAmplifire:\t" << this->noicedata.amplifire
+            << "\n\tPersistence:\t" << this->noicedata.persistence
+            << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
+            << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
+            << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
+            << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY;
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

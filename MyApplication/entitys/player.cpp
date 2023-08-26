@@ -4,6 +4,7 @@
 // Constructors / Destructors
 Player::Player(sf::Vector2f pos)
 {
+
     this->m_texture.loadFromFile(myConst::slime_texture);
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale(0.02f, 0.02f);
@@ -11,6 +12,7 @@ Player::Player(sf::Vector2f pos)
     this->createMovementComponent(10.f, 5.f, 3.f);
     this->createAttributesComponent();
     this->e_setPosition(pos);
+    this->isAlive = true;
 }
 
 Player::~Player() { }

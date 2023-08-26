@@ -1,7 +1,7 @@
 #ifndef CPP_COREPROGRAM_H
 #define CPP_COREPROGRAM_H
 
-#include "source/mypars/parsJSON.hpp"
+
 #include "states/MainMenu.hpp"
 #include "states/gfx.hpp"
 

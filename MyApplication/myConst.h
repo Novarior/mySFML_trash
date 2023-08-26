@@ -3,8 +3,13 @@
 
 namespace myConst {
 // path constants
+const char config_game[] = "config/gamedata.json";
+const char config_entitydata[] = "config/entitysdata.json";
+const char config_itemdata[] = "config/inventorydata.json";
+const char config_playerdata[] = "config/playerdata.json";
 const char config_window[] = "config/window.json";
 const char config_keybinds[] = "config/keybinds.json";
+const char config_noicedata[] = "config/noicedata.json";
 
 // fonst
 const char data_debugfont_path[] = "resourses/fonts/Muli-Regular.ttf";

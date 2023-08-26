@@ -17,9 +17,10 @@ const bool StaticSelector::getKeytime()
 }
 
 StaticSelector::StaticSelector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font,
-    unsigned int character_size, float current_value, float max_value, float change_step)
+    unsigned int character_size, float current_value, float max_value, float change_step,
+    bool addritional_text, std::string add_text)
     : valueMax(max_value)
-    , keytimeMax(0.2f)
+    , keytimeMax(0.1f)
     , keytime(0.f)
     , value(current_value)
     , sizeStep(change_step)
@@ -28,6 +29,8 @@ StaticSelector::StaticSelector(sf::Vector2f pos, sf::Vector2f size, sf::Font& fo
     this->box.setPosition(pos.x + (mmath::p2pX(10, size.x)), pos.y);
     this->box.setSize(sf::Vector2f(size.x - (mmath::p2pX(20, size.x)), size.y));
     this->box.setFillColor(sf::Color(50, 50, 50, 100));
+    this->box.setOutlineThickness(-1.f);
+    this->box.setOutlineColor(sf::Color(40, 40, 40, 120));
     // init text
     this->text.setFont(font);
     this->text.setCharacterSize(character_size);
@@ -51,6 +54,10 @@ StaticSelector::StaticSelector(sf::Vector2f pos, sf::Vector2f size, sf::Font& fo
         font, "+", 30,
         sf::Color::White, sf::Color(200, 200, 200, 200), sf::Color(150, 150, 150, 200),
         sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
+
+    this->addritionalText_flag = addritional_text;
+    if (this->addritionalText_flag)
+        this->additionaText = add_text;
 }
 
 StaticSelector::~StaticSelector()
@@ -108,7 +115,10 @@ void StaticSelector::update(const float& delta_time, const sf::Vector2i& mousePo
         this->ValueIsChanged = true;
     }
     std::stringstream ss;
+    if (this->addritionalText_flag && this->additionaText != "")
+        ss << this->additionaText;
     ss << std::fixed << std::setprecision(1) << this->value;
+
     this->text.setString(ss.str());
     this->text.setPosition(
         this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f,

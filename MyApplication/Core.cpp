@@ -5,12 +5,17 @@
             -ROOT
             -Myapp.app
             -Config/
-                -KeyBinds.json
-                -Config.json
+                -entitysdata.json
+                -gameconfig.cfg
+                -inventorydata.json
+                -playerdata.json
+                -Window.json
+                -supported_keys.json
             -resourses/
-                -textures
-                -sprites
+                -fonts
                 -sounds
+                -sprites
+                -textures
 
 */
 void Core::initDirectories()
@@ -45,7 +50,6 @@ void Core::initDirectories()
 void Core::initVar()
 {
     this->mWindow = NULL;
-    srand(std::time(NULL));
     if (!this->gfxSettings.loadFromFile("Config/window.json"))
         this->gfxSettings.saveToFile("Config/window.json");
 }
@@ -60,11 +64,11 @@ void Core::initStateData()
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
     this->mStatedata.parser = this->parsJSON;
-    this->mStatedata.event = &this->mEvents;
     this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
     this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
     this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
     this->mStatedata.characterSize_game_small = mmath::calcCharSize(this->mWindow->getSize(), 100);
+    this->mStatedata.reserGUI = false;
 }
 
 void Core::initKeyBinds()
@@ -116,6 +120,7 @@ void Core::initWindow()
 
     this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
     this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+    this->mWindow->setKeyRepeatEnabled(false);
 }
 
 Core::Core()
@@ -156,14 +161,14 @@ void Core::update()
     this->updateEventsWindow();
 
     if (!this->mState.empty()) {
-       // if (this->mWindow->hasFocus()) {
-            this->mState.top()->update(this->deltaTime);
+        // if (this->mWindow->hasFocus()) {
+        this->mState.top()->update(this->deltaTime);
 
-            if (this->mState.top()->getQuit()) {
-                delete this->mState.top();
-                this->mState.pop();
-            }
-       // }
+        if (this->mState.top()->getQuit()) {
+            delete this->mState.top();
+            this->mState.pop();
+        }
+        // }
     }
     // Application end
     else {

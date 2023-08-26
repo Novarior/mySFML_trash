@@ -14,6 +14,7 @@ struct noiceData {
     float persistence;
     unsigned int RenderWindowX;
     unsigned int RenderWindowY;
+    unsigned int smoothMode;
 };
 
 class ProcessGenerationNoice {
@@ -32,6 +33,7 @@ public:
     void setNoiceData(noiceData data) { this->m_data = data; }
 
     void setSeed(double seed);
+    noiceData getNoiceData() { return this->m_data; }
     double getSeed();
     double getNoice(double x, double y);
 };

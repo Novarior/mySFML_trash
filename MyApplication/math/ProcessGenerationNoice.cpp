@@ -2,17 +2,44 @@
 
 double ProcessGenerationNoice::Interpolate(double a, double b, double x)
 {
-    // double ft = x * M_PI;
-    // double f = (1 - cos(ft)) * 0.5;
-    // return  a*(1-f) + b*f;
-
-    // Use this cubic interpolation [[Smoothstep]] instead, for a smooth appearance:
-    // return (a - b) * (3.0 - x * 2.0) * x * x + b;
-    // Use [[Smootherstep]] for an even smoother result with a second derivative equal to zero on boundaries:
-    // return (a - b) * ((x * (x * 6.0 - 15.0) + 10.0) * x * x * x) + b;
-    return a + x * (b - a);
-
-    // function
+    double result = 0;
+    switch (this->m_data.smoothMode) {
+    case 0: {
+        // linear interpolation
+        result = a + x * (b - a);
+    } break;
+    case 1: {
+        // cosine interpolation
+        double ft = x * M_PI;
+        double f = (1 - cos(ft)) * 0.5;
+        result = a * (1 - f) + b * f;
+    } break;
+    case 2: {
+        // cubic interpolation
+        result = (a - b) * (3.0 - x * 2.0) * x * x + b;
+    } break;
+    case 3: {
+        // quintic interpolation
+        result = (a - b) * ((x * (x * 6.0 - 15.0) + 10.0) * x * x * x) + b;
+    } break;
+    case 4: {
+        // quartic interpolation
+        result = (a - b) * (x * x * (x * (x * 6.0 - 15.0) + 10.0)) + b;
+    } break;
+    case 5: {
+        // quadratic interpolation
+        result = (a - b) * (x * (x - 2.0) * x + 1.0) + b;
+    } break;
+    case 6: {
+        // hermite interpolation
+        result = (a - b) * (x * x * (3.0 - x * 2.0)) + b;
+    } break;
+    default: {
+        // default linear interpolation
+        result = a + x * (b - a);
+    } break;
+    }
+    return result;
 }
 
 double ProcessGenerationNoice::Noise(int i, int x, int y)

@@ -236,6 +236,7 @@ void SettingsState::resetGui()
     for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
         delete it->second;
     this->buttons.clear();
+    this->IstateData->reserGUI = true;
 
     // delete selector
     delete this->selector_vsync;

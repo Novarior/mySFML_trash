@@ -11,6 +11,7 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);
     this->m_AIFollow = new AIFollow(*this, targer_follow);
+    this->isAlive = true;
 }
 
 Slime::~Slime()

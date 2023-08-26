@@ -2,11 +2,17 @@
 #define CPP_STATE_CORESTATE_HPP
 
 #include "../GUI/GUISYS.hpp"
-#include "../header.h"
 #include "../math/mymath.hpp"
-#include "gfx.hpp"
-// include parser
 #include "../source/mypars/parsJSON.hpp"
+#include "gfx.hpp"
+namespace mypars {
+class parsJSON;
+};
+
+struct Gamedata {
+    bool game_started;
+    sf::Vector2f currentPlayerPos;
+};
 
 /// @brief Forward declaration of State class
 class State;
@@ -18,7 +24,7 @@ public:
         this->sWindow = NULL;
         this->supportedKeys = NULL;
         this->sStates = NULL;
-        this->event = NULL;
+
         this->gfxSettings = NULL;
         this->parser = NULL;
     }
@@ -27,7 +33,6 @@ public:
     sf::RenderWindow* sWindow;
     sf::Font font;
     sf::Font debugFont;
-    sf::Event* event;
     GraphicsSettings* gfxSettings;
     mypars::parsJSON* parser;
     std::stack<State*>* sStates;
@@ -36,6 +41,8 @@ public:
     unsigned int characterSize_game_big;
     unsigned int characterSize_game_medium;
     unsigned int characterSize_game_small;
+    bool reserGUI;
+    Gamedata gameData;
 };
 
 /// @brief Abstract class for game states

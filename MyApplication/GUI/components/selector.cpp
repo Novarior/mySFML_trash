@@ -61,6 +61,12 @@ std::string Selector::getActiveElement() const
     return this->list[this->activeElement];
 }
 
+void Selector::setActiveElement(unsigned int id)
+{
+    this->activeElement = id;
+    this->text.setString(this->list[id]);
+}
+
 void Selector::update(const float& delta_time, const sf::Vector2i& mousePos)
 {
     for (auto& it : this->buttons)

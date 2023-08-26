@@ -15,7 +15,6 @@
 class Process : public State {
 private:
     // flag for load data
-    bool loaded;
     Gamedata m_gamedata;
     // view and window
     sf::View view;

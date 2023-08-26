@@ -16,13 +16,15 @@ private:
 
 public:
     Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font,
-        unsigned int character_size, std::string list[], unsigned nrOfElements, 
-        unsigned default_active_element=0);
+        unsigned int character_size, std::string list[], unsigned nrOfElements,
+        unsigned default_active_element = 0);
     virtual ~Selector();
 
     // accessors
     unsigned getActiveElementID() const;
     std::string getActiveElement() const;
+    void setActiveElement(unsigned int id);
+
     void update(const float& delta_time, const sf::Vector2i& mousePos);
     void updateKeyTime(const float& delta_time);
     const bool getKeytime();

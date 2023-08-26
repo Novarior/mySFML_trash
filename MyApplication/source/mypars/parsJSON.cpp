@@ -136,11 +136,6 @@ const bool parsJSON::loadNoiceData(const std::string& filename, noiceData& data)
 { // load noice data
     std::ifstream ifs(filename);
     std::string line;
-    float seed = -1.2345f;
-    float octaves = -1.2345f;
-    float frequency = -1.2345f;
-    float amplifire = -1.2345f;
-    float persistence = -1.2345f;
     // check open file
     if (!ifs.is_open()) {
         printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
@@ -163,23 +158,23 @@ const bool parsJSON::loadNoiceData(const std::string& filename, noiceData& data)
                 continue;
             // read noise data
             if (line.find("seed") != std::string::npos) {
-                seed = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
+                data.seed = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
                 continue;
             }
             if (line.find("octaves") != std::string::npos) {
-                octaves = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
+                data.octaves = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
                 continue;
             }
             if (line.find("frequency") != std::string::npos) {
-                frequency = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
+                data.frequency = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
                 continue;
             }
             if (line.find("amplifire") != std::string::npos) {
-                amplifire = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
+                data.amplifire = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
                 continue;
             }
             if (line.find("persistence") != std::string::npos) {
-                persistence = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
+                data.persistence = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
                 continue;
             }
             if (line.find("smooth") != std::string::npos) {
@@ -194,11 +189,6 @@ const bool parsJSON::loadNoiceData(const std::string& filename, noiceData& data)
         }
         // set noice data
     }
-    data.seed = seed;
-    data.octaves = octaves;
-    data.frequency = frequency;
-    data.amplifire = amplifire;
-    data.persistence = persistence;
 
     return true;
 }
@@ -239,6 +229,7 @@ const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
             return false;
         }
     }
+    return true;
 }
 // SAVES
 // save player
@@ -389,14 +380,14 @@ const bool parsJSON::saveNoiceData(const std::string& filename, noiceData _dataN
     // save to json file
     ofs << "{\n";
     // noice section
-    ofs << "\t\t\"noice\": {\n";
-    ofs << "\t\t\t\"seed\": " << _dataNoice.seed << ",\n";
-    ofs << "\t\t\t\"octaves\": " << _dataNoice.octaves << ",\n";
-    ofs << "\t\t\t\"frequency\": " << _dataNoice.frequency << ",\n";
-    ofs << "\t\t\t\"amplifire\": " << _dataNoice.amplifire << ",\n";
-    ofs << "\t\t\t\"persistence\": " << _dataNoice.persistence << ",\n";
-    ofs << "\t\t\t\"smooth\": " << _dataNoice.smoothMode << "\n";
-    ofs << "\t\t}\n";
+    ofs << "\t\"noice\": {\n";
+    ofs << "\t\t\"seed\": " << _dataNoice.seed << ",\n";
+    ofs << "\t\t\"octaves\": " << _dataNoice.octaves << ",\n";
+    ofs << "\t\t\"frequency\": " << _dataNoice.frequency << ",\n";
+    ofs << "\t\t\"amplifire\": " << _dataNoice.amplifire << ",\n";
+    ofs << "\t\t\"persistence\": " << _dataNoice.persistence << ",\n";
+    ofs << "\t\t\"smooth\": " << _dataNoice.smoothMode << "\n";
+    ofs << "\t}\n";
     ofs << "}\n";
 
     // close file

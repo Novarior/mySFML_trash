@@ -3,24 +3,37 @@
 const bool Process::loadGameData()
 {
     // load game config
-    this->Iparser->loadGameData("config/gameconfig.cfg", this->IstateData->gameData);
+
+    if (!this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData))
+        printf("ERROR::PROCESS::LOAD::GAMEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_game);
+
+    // load noice config
+    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata))
+        printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
+    else {
+        this->noicedata.mapSizeX = 1000;
+        this->noicedata.mapSizeY = 1000;
+        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
+        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+        this->noicedata.gridSize = this->IstateData->grid_size;
+    }
     return true;
 }
 
 const bool Process::saveGameData()
 {
     // save player to JSON file
-    if (!this->Iparser->savePlayer("config/playerdata.json", this->player))
-        printf("ERROR::PLAYERDATA.JSON::COULD_NOT_SAVE\n");
+    if (!this->Iparser->savePlayer(myConst::config_playerdata, this->player))
+        printf("ERROR::PROCESS::PLAYERDATA::COULD_NOT_SAVE\n");
     // save inventory to JSON file
-    if (!this->Iparser->saveInventory("config/inventorydata.json", this->t_inventory))
-        printf("ERROR::INVENTORYDATA.JSON::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveInventory(myConst::config_inventory, this->t_inventory))
+        printf("ERROR::PROCESS::INVENTORYDATA::COULD_NOT_SAVE\n");
     // save entitys pos and other data
-    if (!this->Iparser->saveEntitys("config/entitysdata.json", this->entitys))
-        printf("ERROR::ENTITYSDATA.JSON::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveEntitys(myConst::config_entitydata, this->entitys))
+        printf("ERROR::PROCESS::ENTITYSDATA::COULD_NOT_SAVE\n");
     // save game data to JSON file
-    if (!this->Iparser->saveGameData("config/gamedata.json", this->IstateData->gameData))
-        printf("ERROR::GAMEDATA.JSON::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData))
+        printf("ERROR::PROCESS::GAMEDATA::COULD_NOT_SAVE\n");
 
     return true;
 }
@@ -102,8 +115,6 @@ void Process::initPlayer()
 // Defauld Init Data
 void Process::initTileMapData()
 {
-    if (this->loaded)
-        return;
     this->noicedata.seed = std::time(0);
     this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.octaves = 8;
@@ -133,17 +144,14 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
     // init Parser
-    if (defaultLoad) {
-        if (this->loadGameData())
-            this->loaded = true;
-        else
-            this->loaded = false;
-    } else {
-    }
+    if (defaultLoad)
+        this->loadGameData();
+    else
+        this->initTileMapData();
+
     this->initKeybinds();
     this->initView();
     this->initPauseMenu();
-    this->initTileMapData();
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
@@ -288,9 +296,7 @@ void Process::update(const float& delta_time)
 // sub render functions
 void Process::renderGUI(sf::RenderTarget& target)
 {
-
-    // render player bars
-    for (auto& it : this->playerBar)
+    for (auto& it : this->playerBar) // render player bars
         it.second->render(target);
 
     if (this->debugMode) // debuging text render

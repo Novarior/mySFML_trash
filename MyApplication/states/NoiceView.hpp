@@ -28,7 +28,6 @@ private:
     std::map<std::string, gui::StaticSelector*> staticSelector;
     gui::Selector* selector;
 
-
     int gridSizeX, gridSizeY;
     sf::Vector2f closeGrid;
     bool isGeneratorClosed;

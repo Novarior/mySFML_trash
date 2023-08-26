@@ -82,22 +82,19 @@ void TileMap::pushTree(int x, int y, int seed)
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     : keyTime(0.f)
     , keyTimeMax(3.f)
+    , m_dnoice(datanoice)
 {
     this->Clear();
     this->loadTextuteMap();
 
     double writebuff;
 
-    this->m_dnoice = datanoice;
     this->maxSizeWorldGrid = sf::Vector2u(this->m_dnoice.mapSizeX, this->m_dnoice.mapSizeY);
     this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSizeX * datanoice.gridSize, this->m_dnoice.mapSizeY * datanoice.gridSize);
 
     this->m_renderArea.offsetX = (datanoice.RenderWindowX / datanoice.gridSize / 4) + 4;
     this->m_renderArea.offsetY = (datanoice.RenderWindowY / datanoice.gridSize / 4) + 4;
-    this->m_renderArea.fromX = 0;
-    this->m_renderArea.fromY = 0;
-    this->m_renderArea.toX = 0;
-    this->m_renderArea.toY = 0;
+    this->updateRenderArea(sf::Vector2i(0, 0));
 
     sf::Color buff;
 

@@ -1,0 +1,10 @@
+{
+	"noice": {
+		"seed": 16807,
+		"octaves": 6,
+		"frequency": 7.1,
+		"amplifire": 1.2,
+		"persistence": 0.9,
+		"smooth": 0
+	}
+}

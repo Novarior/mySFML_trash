@@ -62,15 +62,14 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
 {
     this->initKeybinds();
 
-    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata)) {
-        // init noise data
-        this->noicedata.gridSize = this->IstateData->grid_size;
+    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata)) { // init noise data
         this->noicedata.octaves = 8;
         this->noicedata.seed = std::rand();
         this->noicedata.frequency = 8;
         this->noicedata.amplifire = 1;
         this->noicedata.persistence = 0.6f;
     }
+    this->noicedata.gridSize = this->IstateData->grid_size;
     this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
     this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
     this->noicedata.mapSizeX = this->IstateData->gfxSettings->resolution.width;
@@ -172,7 +171,7 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
 
 NoiceView::~NoiceView()
 {
-    this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData);
+    this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
     delete this->myGN;
     for (auto& it : this->buttons)
         delete it.second;
@@ -229,14 +228,15 @@ void NoiceView::update(const float& delta_time)
             this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
         }
         if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-            this->Iparser->saveNoiceData("config/gamedata.json", this->noicedata);
+            this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
         }
         if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-            this->Iparser->loadNoiceData("config/gamedata.json", this->noicedata);
+            this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);
             this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
             this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
             this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
             this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
+            this->selector->setActiveElement(this->noicedata.smoothMode);
         }
         this->selector->update(delta_time, this->mousePosWindow);
 

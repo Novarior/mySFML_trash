@@ -31,7 +31,6 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
             writebuff = static_cast<int>(writebuff) % 255;
             if (writebuff < 0)
                 writebuff = writebuff * -1;
-
             if (writebuff < 55) { // sea
                 this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.9, 255));
                 this->m_BlocksCounter.ocean++;
@@ -47,6 +46,21 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
             } else if (writebuff < 175) { // cave
                 this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
                 this->m_BlocksCounter.rock++;
+            } else if (writebuff < 180) { // mountain
+                this->image.setPixel(x, y, sf::Color(120 - writebuff * 0.2, 100 + writebuff * 0.2, 120 - writebuff * 0.2, 255));
+                this->m_BlocksCounter.mountain++;
+            } else if (writebuff < 200) { // snow
+                this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.4, 255 - writebuff * 0.4, 255 - writebuff * 0.4, 255));
+                this->m_BlocksCounter.snow++;
+            } else if (writebuff < 210) { // desert
+                this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.2, 255 - writebuff * 0.4, 150 - writebuff * 0.1, 255));
+                this->m_BlocksCounter.desert++;
+            } else if (writebuff < 220) { // forest
+                this->image.setPixel(x, y, sf::Color(30 + writebuff * 0.1, 100 + writebuff * 0.3, 30 + writebuff * 0.1, 255));
+                this->m_BlocksCounter.forest++;
+            } else if (writebuff < 230) { // lava
+                this->image.setPixel(x, y, sf::Color(255, 80 + writebuff * 0.3, 0, 255));
+                this->m_BlocksCounter.lava++;
             } else { // other
                 this->image.setPixel(x, y, sf::Color(writebuff, writebuff, writebuff, 255));
                 this->m_BlocksCounter.other++;
@@ -139,14 +153,6 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    // linear interpolation = 0
-    // cosine interpolation  = 1
-    // cubic interpolation = 2
-    // quintic interpolation = 3
-    // quartic interpolation = 4
-    // quadratic interpolation = 5
-    // hermite interpolation = 6
-
     std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
 
     this->selector = new gui::Selector(
@@ -166,7 +172,7 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
     this->dText.setPosition(sf::Vector2f(0, 0));
     this->dText.setFillColor(sf::Color::White);
     this->dText.setOutlineColor(sf::Color::Black);
-    this->dText.setOutlineThickness(1.f);
+    this->dText.setOutlineThickness(2.f);
 }
 
 NoiceView::~NoiceView()
@@ -262,10 +268,14 @@ void NoiceView::update(const float& delta_time)
             << "\nBlock counter:"
             << "\n\tgrass: " << this->m_BlocksCounter.grass
             << "\n\tdirt: " << this->m_BlocksCounter.dirt
-            << "\n\tmud: " << this->m_BlocksCounter.mud
             << "\n\tocean: " << this->m_BlocksCounter.ocean
             << "\n\trock: " << this->m_BlocksCounter.rock
             << "\n\tsand: " << this->m_BlocksCounter.sand
+            << "\n\tmountain: " << this->m_BlocksCounter.mountain
+            << "\n\tsnow: " << this->m_BlocksCounter.snow
+            << "\n\tdesert: " << this->m_BlocksCounter.desert
+            << "\n\tforest: " << this->m_BlocksCounter.forest
+            << "\n\tlava: " << this->m_BlocksCounter.lava
             << "\n\tother " << this->m_BlocksCounter.other
             << "\nGenerator data:"
             << "\n\tGenerator closed:\t" << this->isGeneratorClosed

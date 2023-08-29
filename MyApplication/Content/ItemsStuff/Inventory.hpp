@@ -56,9 +56,9 @@ public:
     void render(sf::RenderTarget& target);
 
     // funcrions for manipulating with items
-    void addItem(Item* item);
-    void removeItem(Item* item);
-    void removeItem(unsigned int ID);
+    bool addItem(Item* item);
+    bool removeItem(Item* item);
+    bool removeItem(unsigned int ID);
     void clear();
 
     Item* getItem(unsigned int ID);
@@ -79,8 +79,8 @@ private:
 
     // containers for items and ect.
     Coins* m_Coins;
-    std::map<unsigned int, Item*> m_InventoryMap;
-    std::vector<Cell> CellsInventory;
+    std::vector<std::vector<std::map<unsigned int, Item*>>> InventoryArray;
+    std::vector<std::vector<Cell>> CellsInventory;
 
     // variables
     sf::Font& m_font;

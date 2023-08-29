@@ -1,10 +1,7 @@
 {
-	"noice": {
-		"seed": 16807,
-		"octaves": 6,
-		"frequency": 7.1,
-		"amplifire": 1.2,
-		"persistence": 0.9,
-		"smooth": 0
-	}
+    "amplifire": 0.800000011920929,
+    "frequency": 6.900000095367432,
+    "octaves": 7,
+    "persistence": 0.699999988079071,
+    "seed": 16807
 }

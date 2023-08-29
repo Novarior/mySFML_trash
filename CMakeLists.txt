@@ -62,11 +62,18 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 set(Template_ver MyApplication/cmakever.h.in )
 configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../MyApplication/cmakever.h)
 
-#include SFML library on priject
+#include SFML library on project
 set(SFML_DIR  "/usr/local/lib/cmake/SFML" )
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
 find_package(SFML 2.5 COMPONENTS window REQUIRED)
+#include json library on project
+set(JSONLIB_DIR "/usr/local/lib/cmake/nlohmann_json")
+find_package(nlohmann_json 3.9.1 REQUIRED)
+include_directories(/usr/local/Cellar/nlohmann-json/include)
+
+
+
 
 ##build
 if(APPLE)
@@ -74,6 +81,7 @@ add_executable(GameProto ${RESOURCE_FILES})
 
 set_target_properties(GameProto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
+target_link_libraries(GameProto nlohmann_json::nlohmann_json)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
 target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
 

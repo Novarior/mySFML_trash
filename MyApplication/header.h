@@ -17,6 +17,11 @@
 #include <string>
 #include <vector>
 
+// include nlohmann/json libary
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
+using namespace nlohmann;
+
 // include SFML libary
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>

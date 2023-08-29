@@ -1,3 +1,4 @@
+#define JSON_ImplicitConversions 0
 #include "Core.h"
 
 unsigned int Entity::count_entitys = 0;
@@ -8,5 +9,6 @@ int main()
 {
     Core mc;
     mc.run();
+
     return 0;
 }

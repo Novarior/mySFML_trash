@@ -4,4 +4,8 @@ lmao
 
 can build this proj with cmake
 and use as it is
+
+using libs:
+- SFML
+- JSON for Modern C++ by nlohmann/json
 ```

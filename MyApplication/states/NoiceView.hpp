@@ -13,8 +13,12 @@ private:
         int sand = 0;
         int rock = 0;
         int ocean = 0;
-        int mud = 0;
         int other = 0;
+        int mountain = 0;
+        int snow = 0;
+        int desert = 0;
+        int forest = 0;
+        int lava = 0;
     } m_BlocksCounter;
 
     noiceData noicedata;

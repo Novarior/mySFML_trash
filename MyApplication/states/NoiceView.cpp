@@ -243,6 +243,22 @@ void NoiceView::freeThreads()
     }
 }
 
+void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
+{
+    sf::Texture texture;
+    std::vector<sf::RectangleShape> shapes;
+    shapes.insert(shapes.end(), this->myLS->internalArray(), this->myLS->internalArray() + this->myLS->getSizeArray());
+    texture.create(window.getSize().x, window.getSize().y);
+    window.clear(sf::Color::Transparent);
+
+    for (auto it : shapes)
+        window.draw(it);
+
+    texture.update(window);
+    sf::Image image = texture.copyToImage();
+    image.saveToFile("tree" + std::to_string(std::time(NULL)) + ".png");
+}
+
 void NoiceView::updateInput(const float& delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
@@ -330,6 +346,7 @@ void NoiceView::updateButtons(const float& delta_time)
     }
     if (this->buttons["SAVE_GENDATA"]->isPressed()) {
         this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
+        this->saveTreeAsImage(*this->IstateData->sWindow);
     }
     if (this->buttons["LOAD_GENDATA"]->isPressed()) {
         this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);

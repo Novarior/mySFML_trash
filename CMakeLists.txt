@@ -70,14 +70,11 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
 find_package(SFML 2.5 COMPONENTS window REQUIRED)
 
-
-
-
 ##build
 if(APPLE)
 add_executable(GameProto ${RESOURCE_FILES})
 
-set_target_properties(GameProto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+set_target_properties(GameProto PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
 target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
@@ -86,12 +83,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug)
 message("GameProto" ${CMAKE_BINARY_DIR}/debug)
 endif()
 
-
 if(WIN32)  
 set(CMAKE_SYSTEM_NAME Windows)
 add_executable(GameProto ${RESOURCE_FILES})
 
-set_target_properties(GameProto PROPERTIES CXX_STANDARD 17 CXX_STANDARD_REQUIRED ON)
+set_target_properties(GameProto PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
 target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
 target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files

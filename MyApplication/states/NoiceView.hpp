@@ -41,7 +41,7 @@ private:
 
     // threads
     std::vector<std::thread> threads;
-    const int numThreads = 1;
+    const int numThreads = 2;
 
     sf::Vector2u generateArea;
     sf::Vector2f closeGrid;
@@ -54,19 +54,21 @@ private:
     void initNoice();
     void initDebugText();
 
-    void createStepByStep(sf::Vector2f pos);
-
     void freeThreads();
+    void createStepByStep(sf::Vector2f pos);
+    void saveTreeAsImage(sf::RenderWindow& window);
+
+    void updateInput(const float& delta_time);
+    void updateButtons(const float& delta_time);
+    void updateDebugText(const float& delta_time);
+
+    void renderTabMenu(sf::RenderTarget& target);
 
 public:
     NoiceView(StateData* statedata);
     virtual ~NoiceView();
 
-    void updateInput(const float& delta_time);
-    void updateButtons(const float& delta_time);
-    void updateDebugText(const float& delta_time);
     void update(const float& delta_time);
-    void renderTabMenu(sf::RenderTarget& target);
     void render(sf::RenderWindow& target);
 };
 #endif

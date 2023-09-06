@@ -2,10 +2,6 @@
 #define CPP_CUSTOMHEADER_H
 
 // including stl lib
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
 #include <cmath>
 #include <filesystem>
 #include <fstream>
@@ -14,8 +10,11 @@
 #include <ostream>
 #include <sstream>
 #include <stack>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string>
 #include <thread>
+#include <time.h>
 #include <vector>
 
 // include nlohmann/json libary

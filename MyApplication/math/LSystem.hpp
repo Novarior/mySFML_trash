@@ -40,6 +40,9 @@ private:
 public:
     LSystem();
     ~LSystem();
+    // get all sf::RectangleShape on array
+    sf::RectangleShape* internalArray() { return this->line.data(); }
+    size_t getSizeArray() { return this->line.size(); }
 
     void generate();
     void setAxiom(std::string axiom) { this->axiom = axiom; }

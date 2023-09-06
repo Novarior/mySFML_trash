@@ -187,6 +187,16 @@ NoiceView::NoiceView(StateData* statedata)
 
     // init simple noise
     this->mySN = new SimplexNoise();
+    // init LSystem
+    this->myLS = new LSystem();
+    this->myLS->setAxiom("qqqqs");
+    // rules:
+    // d -> qd
+    // s -> d[-s][+s]s
+    this->myLS->setRule('d', "qd");
+    this->myLS->setRule('s', "d[-qs]+qs");
+    this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
+    this->myLS->generate();
 }
 
 NoiceView::~NoiceView()
@@ -201,7 +211,8 @@ NoiceView::~NoiceView()
 
     delete this->selector;
     delete this->mySN;
-    
+    delete this->myLS;
+
     for (std::thread& thread : this->threads) {
         if (thread.joinable()) {
             thread.join();
@@ -222,6 +233,8 @@ void NoiceView::update(const float& delta_time)
     this->updateKeytime(delta_time);
     this->updateInput(delta_time);
     this->updateMousePositions();
+
+    this->myLS->update(delta_time);
 
     if (this->showTabmenu) {
         for (auto& it : this->buttons)
@@ -359,4 +372,6 @@ void NoiceView::render(sf::RenderWindow& target)
 
     if (this->showTabmenu)
         this->renderTabMenu(target);
+
+    this->myLS->render(target);
 }

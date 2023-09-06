@@ -2,6 +2,7 @@
 #define CPP_STATE_NOICEVIEW_HPP
 
 #include "../GUI/GUISYS.hpp"
+#include "../math/LSystem.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "../math/simplex.hpp"
 #include "State.hpp"
@@ -28,6 +29,7 @@ private:
     ProcessGenerationNoice* myGN;
     ProcessGenerationNoice* myGN_biome;
     SimplexNoise* mySN;
+    LSystem* myLS;
     sf::Image image;
     sf::Texture texture;
     sf::RectangleShape shape;

@@ -18,61 +18,68 @@ void NoiceView::initButton()
 void NoiceView::createStepByStep(sf::Vector2f pos)
 {
     double writebuff = 0;
-    double min = 10, max = 0;
+    double writebuff_biome = 0;
 
-    for (int x = pos.x * this->gridSizeX; x < (pos.x + 1) * this->gridSizeX; x++) {
-        for (int y = pos.y * this->gridSizeY; y < (pos.y + 1) * this->gridSizeY; y++) {
-            writebuff = myGN->getNoice(x, y);
-            if (writebuff < min)
-                min = writebuff;
-            if (writebuff > max)
-                max = writebuff;
-            writebuff *= 255;
-            writebuff = static_cast<int>(writebuff) % 255;
-            if (writebuff < 0)
-                writebuff = writebuff * -1;
-            if (writebuff < 55) { // sea
-                this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.9, 255));
-                this->m_BlocksCounter.ocean++;
-            } else if (writebuff < 66) { // sand
-                this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255));
-                this->m_BlocksCounter.sand++;
-            } else if (writebuff < 160) { // grass
-                this->image.setPixel(x, y, sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255));
-                this->m_BlocksCounter.grass++;
-            } else if (writebuff < 165) { // ground
-                this->image.setPixel(x, y, sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255));
-                this->m_BlocksCounter.dirt++;
-            } else if (writebuff < 175) { // cave
-                this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
-                this->m_BlocksCounter.rock++;
-            } else if (writebuff < 180) { // mountain
-                this->image.setPixel(x, y, sf::Color(120 - writebuff * 0.2, 100 + writebuff * 0.2, 120 - writebuff * 0.2, 255));
-                this->m_BlocksCounter.mountain++;
-            } else if (writebuff < 200) { // snow
-                this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.4, 255 - writebuff * 0.4, 255 - writebuff * 0.4, 255));
-                this->m_BlocksCounter.snow++;
-            } else if (writebuff < 210) { // desert
-                this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.2, 255 - writebuff * 0.4, 150 - writebuff * 0.1, 255));
-                this->m_BlocksCounter.desert++;
-            } else if (writebuff < 220) { // forest
-                this->image.setPixel(x, y, sf::Color(30 + writebuff * 0.1, 100 + writebuff * 0.3, 30 + writebuff * 0.1, 255));
-                this->m_BlocksCounter.forest++;
-            } else if (writebuff < 230) { // lava
-                this->image.setPixel(x, y, sf::Color(255, 80 + writebuff * 0.3, 0, 255));
-                this->m_BlocksCounter.lava++;
-            } else { // other
-                this->image.setPixel(x, y, sf::Color(writebuff, writebuff, writebuff, 255));
-                this->m_BlocksCounter.other++;
+    for (int x = pos.x * this->generateArea.x; x < (pos.x + 1) * this->generateArea.x; x++) {
+        for (int y = pos.y * this->generateArea.y; y < (pos.y + 1) * this->generateArea.y; y++) {
+            //  writebuff = myGN->getNoice(x, y);
+            writebuff = mySN->noise(x * 0.005, y * 0.005);
+            //  writebuff_biome = myGN_biome->getNoice(x, y);
+            int normalized_value = static_cast<int>((writebuff - -1.f) / (1.f - -1.f) * 255);
+            this->image.setPixel(x, y, sf::Color(normalized_value, normalized_value, normalized_value, 255));
+
+            /* Default
+            if (writebuff_biome < 55) { // sea biome
+                if (writebuff < 45) { // deep ocean
+                    this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.5, 255));
+                    this->m_BlocksCounter.deep_ocean++;
+                } else if (writebuff < 66) { // ocean
+                    this->image.setPixel(x, y, sf::Color(0, 20 + writebuff * 0.7, 100 + writebuff * 1.7, 255));
+                    this->m_BlocksCounter.ocean++;
+                } else if (writebuff < 66) { //  sand
+                    this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255));
+                    this->m_BlocksCounter.sand++;
+                } else if (writebuff < 66) { // sea sand
+                    this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 140 + writebuff * 1.6, 120 + writebuff * 0.1, 255));
+                    this->m_BlocksCounter.seasand++;
+                } else if (writebuff < 210) { // desert
+                    this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.2, 255 - writebuff * 0.4, 150 - writebuff * 0.1, 255));
+                    this->m_BlocksCounter.beath++;
+                } else { // lava
+                    this->image.setPixel(x, y, sf::Color(255, 80 + writebuff * 0.3, 0, 255));
+                    this->m_BlocksCounter.lava++;
+                }
+            } else if (writebuff_biome < 160) { // Grassland
+                if (writebuff < 160) { // grass
+                    this->image.setPixel(x, y, sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255));
+                    this->m_BlocksCounter.grass++;
+                } else if (writebuff < 165) { // ground
+                    this->image.setPixel(x, y, sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255));
+                    this->m_BlocksCounter.dirt++;
+                } else if (writebuff < 175) { // cave
+                    this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
+                    this->m_BlocksCounter.rock++;
+                }
+            } else if (writebuff_biome < 200) { // mountains
+                if (writebuff < 180) { // mountain
+                    this->image.setPixel(x, y, sf::Color(120 - writebuff * 0.2, 100 + writebuff * 0.2, 120 - writebuff * 0.2, 255));
+                    this->m_BlocksCounter.mountain++;
+                } else if (writebuff < 200) { // snow
+                    this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.4, 255 - writebuff * 0.4, 255 - writebuff * 0.4, 255));
+                    this->m_BlocksCounter.snow++;
+                }
             }
+
+            */
         }
+        this->texture.update(this->image);
+        this->shape.setTexture(&this->texture);
     }
-    this->texture.update(this->image);
-    this->shape.setTexture(&this->texture);
 }
 
-NoiceView::NoiceView(StateData* statedata, bool quick)
+NoiceView::NoiceView(StateData* statedata)
     : State(statedata)
+
 {
     this->initKeybinds();
 
@@ -94,9 +101,13 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
     this->shape.setSize(sf::Vector2f(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY));
     this->texture.create(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY);
     this->myGN = new ProcessGenerationNoice(this->noicedata);
+    this->myGN_biome = new ProcessGenerationNoice(this->noicedata);
+    this->myGN_biome->setSeed(this->myGN_biome->getSeed() + 1.f);
     this->isGeneratorClosed = false;
-    this->gridSizeX = this->noicedata.RenderWindowX / 10;
-    this->gridSizeY = this->noicedata.RenderWindowY / 10;
+
+    this->generateArea.x = this->noicedata.RenderWindowX / this->numThreads;
+    this->generateArea.y = this->noicedata.RenderWindowY / this->numThreads;
+
     this->closeGrid = sf::Vector2f();
 
     // tab menu
@@ -173,6 +184,9 @@ NoiceView::NoiceView(StateData* statedata, bool quick)
     this->dText.setFillColor(sf::Color::White);
     this->dText.setOutlineColor(sf::Color::Black);
     this->dText.setOutlineThickness(2.f);
+
+    // init simple noise
+    this->mySN = new SimplexNoise();
 }
 
 NoiceView::~NoiceView()
@@ -186,6 +200,13 @@ NoiceView::~NoiceView()
         delete it.second;
 
     delete this->selector;
+    delete this->mySN;
+    
+    for (std::thread& thread : this->threads) {
+        if (thread.joinable()) {
+            thread.join();
+        }
+    }
 }
 
 void NoiceView::updateInput(const float& delta_time)
@@ -248,32 +269,50 @@ void NoiceView::update(const float& delta_time)
 
         this->noicedata.smoothMode = this->selector->getActiveElementID();
     }
+    if (this->isGeneratorClosed == false) {
+        for (int i = 0; i < this->numThreads; ++i) {
+            int startX = i * this->generateArea.x;
+            int endX = (i + 1) * this->generateArea.y;
 
-    if (!this->isGeneratorClosed) {
-        this->createStepByStep(this->closeGrid);
-        if (this->closeGrid.x == 9) {
-            this->closeGrid.x = 0;
-            this->closeGrid.y += 1;
-        } else
-            this->closeGrid.x += 1;
+            for (int j = 0; j < this->numThreads; ++j) {
+                int startY = j * this->generateArea.x;
+                int endY = (j + 1) * this->generateArea.x;
 
-        if (this->closeGrid.y == 10)
-            this->isGeneratorClosed = true;
+                // Создаем поток и передаем ему функцию fillImage
+                this->threads.emplace_back(&NoiceView::createStepByStep, this, (sf::Vector2f(i, j)));
+            }
+        }
+        this->isGeneratorClosed = true;
     }
+
+    // if (!this->isGeneratorClosed) {
+    //     this->createStepByStep(this->closeGrid);
+    //     if (this->closeGrid.x == 9) {
+    //         this->closeGrid.x = 0;
+    //         this->closeGrid.y += 1;
+    //     } else
+    //         this->closeGrid.x += 1;
+
+    //     if (this->closeGrid.y == 10)
+    //         this->isGeneratorClosed = true;
+    // }
 
     if (this->debugMode) { // update debug information
         double fps = 1.0f / delta_time;
         this->dString_Stream
             << "FPS:\t" << fps
             << "\nBlock counter:"
+            << "\n\tdeep ocean: " << this->m_BlocksCounter.deep_ocean
+            << "\n\tocean: " << this->m_BlocksCounter.ocean
+            << "\n\tbeath: " << this->m_BlocksCounter.beath
+            << "\n\tseasand: " << this->m_BlocksCounter.seasand
+            << "\n\tsand: " << this->m_BlocksCounter.sand
             << "\n\tgrass: " << this->m_BlocksCounter.grass
             << "\n\tdirt: " << this->m_BlocksCounter.dirt
-            << "\n\tocean: " << this->m_BlocksCounter.ocean
             << "\n\trock: " << this->m_BlocksCounter.rock
-            << "\n\tsand: " << this->m_BlocksCounter.sand
             << "\n\tmountain: " << this->m_BlocksCounter.mountain
             << "\n\tsnow: " << this->m_BlocksCounter.snow
-            << "\n\tdesert: " << this->m_BlocksCounter.desert
+            << "\n\tdesert: " << this->m_BlocksCounter.seasand
             << "\n\tforest: " << this->m_BlocksCounter.forest
             << "\n\tlava: " << this->m_BlocksCounter.lava
             << "\n\tother " << this->m_BlocksCounter.other
@@ -288,8 +327,8 @@ void NoiceView::update(const float& delta_time)
             << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
             << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
             << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY
-            << "\n\tGridSizeX:\t" << this->gridSizeX
-            << "\n\tGridSizeY:\t" << this->gridSizeY
+            << "\n\tGenerateAreaX:\t" << this->generateArea.x
+            << "\n\tGenerateAreaY:\t" << this->generateArea.y
             << "\n\tSmoothMode:\t" << this->selector->getActiveElement() << ": " << this->selector->getActiveElementID()
             << "\nPause:\t" << this->Ipaused;
 

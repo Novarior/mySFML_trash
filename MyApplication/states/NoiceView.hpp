@@ -3,26 +3,31 @@
 
 #include "../GUI/GUISYS.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
+#include "../math/simplex.hpp"
 #include "State.hpp"
 
 class NoiceView : public State {
 private:
     struct {
+        int deep_ocean = 0;
+        int ocean = 0;
+        int seasand = 0;
+        int beath = 0;
+        int sand = 0;
         int grass = 0;
         int dirt = 0;
-        int sand = 0;
         int rock = 0;
-        int ocean = 0;
         int other = 0;
         int mountain = 0;
         int snow = 0;
-        int desert = 0;
         int forest = 0;
         int lava = 0;
     } m_BlocksCounter;
 
     noiceData noicedata;
     ProcessGenerationNoice* myGN;
+    ProcessGenerationNoice* myGN_biome;
+    SimplexNoise* mySN;
     sf::Image image;
     sf::Texture texture;
     sf::RectangleShape shape;
@@ -32,7 +37,11 @@ private:
     std::map<std::string, gui::StaticSelector*> staticSelector;
     gui::Selector* selector;
 
-    int gridSizeX, gridSizeY;
+    // threads
+    std::vector<std::thread> threads;
+    const int numThreads = 1;
+
+    sf::Vector2u generateArea;
     sf::Vector2f closeGrid;
     bool isGeneratorClosed;
 
@@ -42,7 +51,7 @@ private:
     void createStepByStep(sf::Vector2f pos);
 
 public:
-    NoiceView(StateData* statedata, bool quick);
+    NoiceView(StateData* statedata);
     virtual ~NoiceView();
 
     void updateInput(const float& delta_time);

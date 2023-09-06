@@ -1,9 +1,9 @@
 {
 	"noice": {
 		"seed": 0,
-		"octaves": 7,
-		"frequency": 7,
-		"amplifire": 1,
+		"octaves": 9,
+		"frequency": 8.5,
+		"amplifire": 1.3,
 		"persistence": 0.6,
 		"smooth": 0
 	}

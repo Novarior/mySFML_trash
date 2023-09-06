@@ -231,7 +231,7 @@ void MainMenu::updateButtons()
             this->Istates->push(new SettingsState(this->IstateData));
 
         if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-            this->Istates->push(new NoiceView(this->IstateData, false));
+            this->Istates->push(new NoiceView(this->IstateData));
     }
 }
 

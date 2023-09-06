@@ -345,7 +345,8 @@ void NoiceView::updateButtons(const float& delta_time)
 
 void NoiceView::update(const float& delta_time)
 {
-    this->freeThreads(); this->updateKeytime(delta_time);
+    this->freeThreads();
+    this->updateKeytime(delta_time);
     this->updateInput(delta_time);
     this->updateMousePositions();
     if (this->showTabmenu)

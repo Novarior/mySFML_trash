@@ -243,20 +243,66 @@ void NoiceView::freeThreads()
     }
 }
 
+sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
+{
+    sf::Vector2u size = image.getSize();
+    sf::IntRect mrect(size.x, size.y, 0, 0);
+
+    for (unsigned int x = 0; x < size.x; x++) {
+        for (unsigned int y = 0; y < size.y; y++) {
+            if (image.getPixel(x, y) != sf::Color::Transparent) {
+                if (x < mrect.left)
+                    mrect.left = x;
+                if (y < mrect.top)
+                    mrect.top = y;
+                if (x > mrect.width)
+                    mrect.width = x;
+                if (y > mrect.height)
+                    mrect.height = y;
+            }
+        }
+    }
+
+    return mrect;
+}
+
 void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
 {
+    // create texture with window size
     sf::Texture texture;
+    texture.create(window.getSize().x, window.getSize().y);
+
+    // get array shape
     std::vector<sf::RectangleShape> shapes;
     shapes.insert(shapes.end(), this->myLS->internalArray(), this->myLS->internalArray() + this->myLS->getSizeArray());
-    texture.create(window.getSize().x, window.getSize().y);
-    window.clear(sf::Color::Transparent);
 
-    for (auto it : shapes)
+    // Очищаем окно и рисуем все фигуры на текстуре
+    window.clear(sf::Color::Transparent);
+    for (auto& it : shapes)
         window.draw(it);
 
+    // update
     texture.update(window);
+
+    // get snapshoot
     sf::Image image = texture.copyToImage();
-    image.saveToFile("tree" + std::to_string(std::time(NULL)) + ".png");
+
+    // find Transparent pixels
+    sf::IntRect mrect = findNonTransparentRect(image);
+
+    // create newe image on mrect base
+    sf::Image simg;
+    simg.create(mrect.width - mrect.left, mrect.height - mrect.top);
+
+    // copy pixels from original image
+    for (int x = mrect.left; x < mrect.width; x++)
+        for (int y = mrect.top; y < mrect.height; y++)
+            simg.setPixel(x - mrect.left, y - mrect.top, image.getPixel(x, y));
+
+    std::stringstream ss;
+    ss << myConst::f_Trees << "tree" << std::to_string(std::time(nullptr)) << ".png";
+    // Сохраняем изображение
+    simg.saveToFile(ss.str());
 }
 
 void NoiceView::updateInput(const float& delta_time)
@@ -340,9 +386,12 @@ void NoiceView::updateButtons(const float& delta_time)
         this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
     }
     if (this->buttons["G_TREE"]->isPressed()) {
-        this->threads.emplace_back(&LSystem::generate, this->myLS);
-        if (this->threads.back().joinable())
-            this->threads.back().join();
+        for (int x = 0; x < 1000; x++) {
+            this->threads.emplace_back(&LSystem::generate, this->myLS);
+            if (this->threads.back().joinable())
+                this->threads.back().join();
+            this->saveTreeAsImage(*this->IstateData->sWindow);
+        }
     }
     if (this->buttons["SAVE_GENDATA"]->isPressed()) {
         this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);

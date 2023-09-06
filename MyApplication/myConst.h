@@ -27,6 +27,8 @@ const char texture_OCEAN_ANIM[] = "resourses/Textures/Tiles/water_still.png";
 const char texture_SAND[] = "resourses/Textures/Tiles/sand.png";
 const char texture_DIRT[] = "resourses/Textures/Tiles/coarse_dirt.png";
 
+const char f_Trees[] = "resourses/Textures/Trees/";
+
 // shaders
 
 const char M_SHADER_01_F[] = "resourses/shaders/bloom.frag";

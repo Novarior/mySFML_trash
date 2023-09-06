@@ -20,7 +20,7 @@ void LSystem::generate()
     this->data.width = 11;
     this->data.chanceSkip = 60;
     this->data.seed = 0;
-    this->axiom = "qqqs";
+    this->axiom = "qqqqqs";
     this->sentence = axiom;
     for (int i = 0; i < this->data.steps; i++) {
         this->generateSentence();

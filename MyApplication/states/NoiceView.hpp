@@ -57,6 +57,7 @@ private:
     void freeThreads();
     void createStepByStep(sf::Vector2f pos);
     void saveTreeAsImage(sf::RenderWindow& window);
+    sf::IntRect findNonTransparentRect(const sf::Image& image);
 
     void updateInput(const float& delta_time);
     void updateButtons(const float& delta_time);

@@ -48,15 +48,23 @@ private:
     bool isGeneratorClosed;
 
     void initKeybinds();
-    void initButton();
+    void initButtons();
+    void initSelectors();
+    void initTabMenu();
+    void initNoice();
+    void initDebugText();
 
     void createStepByStep(sf::Vector2f pos);
+
+    void freeThreads();
 
 public:
     NoiceView(StateData* statedata);
     virtual ~NoiceView();
 
     void updateInput(const float& delta_time);
+    void updateButtons(const float& delta_time);
+    void updateDebugText(const float& delta_time);
     void update(const float& delta_time);
     void renderTabMenu(sf::RenderTarget& target);
     void render(sf::RenderWindow& target);

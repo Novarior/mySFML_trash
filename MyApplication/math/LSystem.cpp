@@ -10,15 +10,17 @@ LSystem::~LSystem()
 
 void LSystem::generate()
 {
+    this->line.clear();
     this->data.pos = sf::Vector2f(0, 0);
-    this->data.angle = 20;
+    this->data.angle = 15;
     this->data.currentAngle = 0;
-    this->data.length = 10;
+    this->data.length = 20;
     this->data.steps = 13;
-    this->data.width = 16;
-    this->data.chanceSkip = 40;
+    this->data.alpha = 255;
+    this->data.width = 11;
+    this->data.chanceSkip = 60;
     this->data.seed = 0;
-    this->data.axiom = 's';
+    this->axiom = "qqqs";
     this->sentence = axiom;
     for (int i = 0; i < this->data.steps; i++) {
         this->generateSentence();
@@ -59,64 +61,49 @@ void LSystem::applyRules()
     int randlength = 0;
     sf::Vector2f nextPos;
     sf::RectangleShape bufferShape;
-
-    randangle = rand() % 25;
+    int chance = rand() % 100;
     for (int i = 0; i < this->sentence.length(); i++) {
+        chance = rand() % 100;
         char current = sentence[i];
         // charset s, d, q, [, ], +, -
-        if (current == 'd') {
-            int chance = rand() % 100;
-            if (chance < this->data.chanceSkip) {
+        if (current == 'd' || current == 'q') { // red segment
+            if (chance < this->data.chanceSkip)
                 continue;
-            }
             // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -(this->data.length + randlength)), this->data.currentAngle);
+            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle);
             // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.width, this->data.length + randlength));
-            //   bufferShape.setOrigin(sf::Vector2f(this->data.width / 2, 0));
-            bufferShape.setPosition(this->data.pos + data.offsetPos);
+            bufferShape.setSize(sf::Vector2f(this->data.length, this->data.width));
+            bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
+            bufferShape.setPosition(nextPos + data.offsetPos);
             bufferShape.setRotation(this->data.currentAngle);
-            bufferShape.setFillColor(sf::Color::Red);
+            bufferShape.setFillColor(sf::Color(80, 35, 25, this->data.alpha));
             this->line.push_back(bufferShape);
             // set pos to next pos
             this->data.pos = nextPos;
-        } else if (current == 's') {
-            // add leafs
+
+        } else if (current == 's') { // green segment leafs
             // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -(this->data.length + randlength)), this->data.currentAngle);
+            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle);
             // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.width * 2, this->data.length + randlength));
-            //  bufferShape.setOrigin(sf::Vector2f(this->data.width / 2, 0));
+            bufferShape.setSize(sf::Vector2f(this->data.length + std::rand() % 3 + 1, this->data.width - 2));
+            bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
             bufferShape.setPosition(this->data.pos + data.offsetPos);
             bufferShape.setRotation(this->data.currentAngle);
-            bufferShape.setFillColor(sf::Color::Green);
-            this->line.push_back(bufferShape);
-            // set pos to next pos
-            this->data.pos = nextPos;
-        } else if (current == 'q') {
-            int chance = rand() % 100;
-            if (chance < this->data.chanceSkip) {
-                continue;
-            }
-            // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, (-(this->data.length + randlength))), this->data.currentAngle);
-            // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.width, this->data.length + randlength));
-            bufferShape.setOrigin(sf::Vector2f(this->data.width / 2, 0));
-            bufferShape.setPosition(this->data.pos + data.offsetPos);
-            bufferShape.setRotation(this->data.currentAngle);
-            bufferShape.setFillColor(sf::Color::Blue);
+            // set random color in green range 100-255
+            int randcolor = rand() % 155 + 100;
+            bufferShape.setFillColor(sf::Color(0, randcolor, 0));
             this->line.push_back(bufferShape);
             // set pos to next pos
             this->data.pos = nextPos;
         } else if (current == '+') {
-            randangle = rand() % 30 - 15;
+            randangle = rand() % 26 - 13;
             this->data.currentAngle += (data.angle + randangle);
         } else if (current == '-') {
-            randangle = rand() % 30 - 15;
+            randangle = rand() % 26 - 13;
             this->data.currentAngle -= (data.angle + randangle);
         } else if (current == '[') {
-            this->data.width *= 0.75;
+            this->data.length *= 0.80;
+            this->data.alpha *= 0.98;
             this->stack.push(this->data);
         } else if (current == ']') {
             this->data = this->stack.top();

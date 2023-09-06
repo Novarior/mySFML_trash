@@ -7,10 +7,10 @@ struct GData {
     float angle;
     float currentAngle;
     unsigned chanceSkip;
-    int length;
+    float length;
     float width;
+    std::uint8_t alpha;
     sf::Vector2f offsetPos;
-    char axiom;
     sf::Vector2f pos;
 };
 // l-system tree pifagor

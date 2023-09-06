@@ -13,7 +13,7 @@ gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::st
     this->shape.setPosition(sf::Vector2f(pos.x, pos.y));
     this->shape.setSize(sf::Vector2f(size.x, size.y));
     this->shape.setFillColor(idle_color);
-    this->shape.setOutlineThickness(1.f);
+    this->shape.setOutlineThickness(-1.f);
     this->shape.setOutlineColor(outline_idle_color);
 
     this->text.setFont(font);

@@ -14,7 +14,7 @@ State::State(StateData* state_data)
     this->Iquit = false;
     this->Ipaused = false;
     this->Ikeytime = 0.f;
-    this->IkeytimeMax = 1.f;
+    this->IkeytimeMax = 0.5f;
     this->IgridSize = state_data->grid_size;
     this->IsupportedKeys = state_data->supportedKeys;
 

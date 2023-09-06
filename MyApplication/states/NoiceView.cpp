@@ -6,15 +6,6 @@ void NoiceView::initKeybinds()
     this->Ikeybinds["TAB_MENU"] = this->IsupportedKeys->at("Tab");
 }
 
-void NoiceView::initButton()
-{
-    this->buttons["EXIT_BTN"] = new gui::Button(
-        sf::Vector2f(), sf::Vector2f(250, 100),
-        this->IstateData->font, "Exit", this->IstateData->characterSize_game_small,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-}
-
 void NoiceView::createStepByStep(sf::Vector2f pos)
 {
     double writebuff = 0;
@@ -77,12 +68,93 @@ void NoiceView::createStepByStep(sf::Vector2f pos)
     }
 }
 
-NoiceView::NoiceView(StateData* statedata)
-    : State(statedata)
+void NoiceView::initTabMenu()
+{ // tab menu
+    this->tabShape.setPosition(sf::Vector2f(
+        mmath::p2pX(70, this->IstateData->sWindow->getSize().x), 0));
+    this->tabShape.setSize(sf::Vector2f(
+        mmath::p2pX(30, this->IstateData->sWindow->getSize().x),
+        this->IstateData->sWindow->getSize().y));
+    // half transparent gray
+    this->tabShape.setFillColor(sf::Color(150, 150, 150, 200));
+    this->tabShape.setOutlineThickness(5.f);
+    this->tabShape.setOutlineColor(sf::Color(100, 100, 100, 192));
+    this->showTabmenu = false;
+}
 
+void NoiceView::initButtons()
+{ // init buttons
+    this->buttons["G_NOICE"] = new gui::Button(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, "Gen Noice", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color::Black, sf::Color::Black, sf::Color::Black);
+
+    this->buttons["G_TREE"] = new gui::Button(
+        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, "Gen Tree", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color::Black, sf::Color::Black, sf::Color::Black);
+
+    this->buttons["SAVE_GENDATA"] = new gui::Button(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, "Save", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color::Black, sf::Color::Black, sf::Color::Black);
+
+    this->buttons["LOAD_GENDATA"] = new gui::Button(
+        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, "Load", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
+        sf::Color::Black, sf::Color::Black, sf::Color::Black);
+}
+
+void NoiceView::initSelectors()
+{ // init static selector in tab menu
+    this->staticSelector["OCTAVES"] = new gui::StaticSelector(
+        sf::Vector2f(this->tabShape.getPosition()),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 1.f, true, "Octaves: ");
+
+    this->staticSelector["FREQUENCY"] = new gui::StaticSelector(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 0.1f, true, "Frequency: ");
+
+    this->staticSelector["PERSISTENCE"] = new gui::StaticSelector(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 5, 0.1f, true, "Persistence: ");
+
+    this->staticSelector["AMPLIFIRE"] = new gui::StaticSelector(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 3, 0.1f, true, "Amplifire: ");
+
+    std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
+
+    this->selector = new gui::Selector(
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        this->IstateData->font, this->IstateData->characterSize_game_big, list.data(), list.size(), 0);
+
+    // set default value for static selector
+    this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
+    this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
+    this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
+    this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
+}
+
+void NoiceView::initNoice()
 {
-    this->initKeybinds();
-
     if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata)) { // init noise data
         this->noicedata.octaves = 8;
         this->noicedata.seed = std::rand();
@@ -109,92 +181,34 @@ NoiceView::NoiceView(StateData* statedata)
     this->generateArea.y = this->noicedata.RenderWindowY / this->numThreads;
 
     this->closeGrid = sf::Vector2f();
+}
 
-    // tab menu
-    this->tabShape.setPosition(sf::Vector2f(
-        mmath::p2pX(70, this->IstateData->sWindow->getSize().x), 0));
-    this->tabShape.setSize(sf::Vector2f(
-        mmath::p2pX(30, this->IstateData->sWindow->getSize().x),
-        this->IstateData->sWindow->getSize().y));
-    // half transparent gray
-    this->tabShape.setFillColor(sf::Color(150, 150, 150, 200));
-    this->tabShape.setOutlineThickness(5.f);
-    this->tabShape.setOutlineColor(sf::Color(100, 100, 100, 192));
-    this->showTabmenu = false;
-
-    // init static selector in tab menu
-    this->staticSelector["OCTAVES"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition()),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 1.f, true, "Octaves: ");
-
-    this->staticSelector["FREQUENCY"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 0.1f, true, "Frequency: ");
-
-    this->staticSelector["PERSISTENCE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 5, 0.1f, true, "Persistence: ");
-
-    this->staticSelector["AMPLIFIRE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 3, 0.1f, true, "Amplifire: ");
-    // init buttons
-    this->buttons["GENERATE"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Generate", this->IstateData->characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
-    this->buttons["SAVE_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Save", this->IstateData->characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
-    this->buttons["LOAD_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Load", this->IstateData->characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
-
-    std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
-
-    this->selector = new gui::Selector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, list.data(), list.size(), 0);
-
-    // set default value for static selector
-    this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
-    this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
-    this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
-    this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
-
-    // init debug text
+void NoiceView::initDebugText()
+{ // init debug text
     this->dText.setFont(this->IstateData->debugFont);
     this->dText.setCharacterSize(this->IstateData->characterSize_debug);
     this->dText.setPosition(sf::Vector2f(0, 0));
     this->dText.setFillColor(sf::Color::White);
     this->dText.setOutlineColor(sf::Color::Black);
     this->dText.setOutlineThickness(2.f);
+}
+
+NoiceView::NoiceView(StateData* statedata)
+    : State(statedata)
+{
+    this->initKeybinds();
+    this->initTabMenu();
+    this->initButtons();
+    this->initNoice();
+    this->initSelectors();
+    this->initDebugText();
 
     // init simple noise
     this->mySN = new SimplexNoise();
     // init LSystem
     this->myLS = new LSystem();
-    this->myLS->setAxiom("qqqqs");
-    // rules:
-    // d -> qd
-    // s -> d[-s][+s]s
     this->myLS->setRule('d', "qd");
-    this->myLS->setRule('s', "d[-qs]+qs");
+    this->myLS->setRule('s', "d[-qs][+qs]q");
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
 }
@@ -220,6 +234,15 @@ NoiceView::~NoiceView()
     }
 }
 
+void NoiceView::freeThreads()
+{
+    for (std::thread& thread : this->threads) {
+        if (thread.joinable()) {
+            thread.join();
+        }
+    }
+}
+
 void NoiceView::updateInput(const float& delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
@@ -228,60 +251,107 @@ void NoiceView::updateInput(const float& delta_time)
         this->showTabmenu = !this->showTabmenu;
 }
 
+void NoiceView::updateDebugText(const float& delta_time)
+{
+    double fps = 1.0f / delta_time;
+    this->dString_Stream
+        << "FPS:\t" << fps
+        << "\nBlock counter:"
+        << "\n\tdeep ocean: " << this->m_BlocksCounter.deep_ocean
+        << "\n\tocean: " << this->m_BlocksCounter.ocean
+        << "\n\tbeath: " << this->m_BlocksCounter.beath
+        << "\n\tseasand: " << this->m_BlocksCounter.seasand
+        << "\n\tsand: " << this->m_BlocksCounter.sand
+        << "\n\tgrass: " << this->m_BlocksCounter.grass
+        << "\n\tdirt: " << this->m_BlocksCounter.dirt
+        << "\n\trock: " << this->m_BlocksCounter.rock
+        << "\n\tmountain: " << this->m_BlocksCounter.mountain
+        << "\n\tsnow: " << this->m_BlocksCounter.snow
+        << "\n\tdesert: " << this->m_BlocksCounter.seasand
+        << "\n\tforest: " << this->m_BlocksCounter.forest
+        << "\n\tlava: " << this->m_BlocksCounter.lava
+        << "\n\tother " << this->m_BlocksCounter.other
+        << "\nGenerator data:"
+        << "\n\tGenerator closed:\t" << this->isGeneratorClosed
+        << "\n\tSeed:\t" << this->noicedata.seed
+        << "\n\tOctaves:\t" << this->noicedata.octaves
+        << "\n\tFrequency:\t" << this->noicedata.frequency
+        << "\n\tAmplifire:\t" << this->noicedata.amplifire
+        << "\n\tPersistence:\t" << this->noicedata.persistence
+        << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
+        << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
+        << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
+        << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY
+        << "\n\tGenerateAreaX:\t" << this->generateArea.x
+        << "\n\tGenerateAreaY:\t" << this->generateArea.y
+        << "\n\tSmoothMode:\t" << this->selector->getActiveElement() << ": " << this->selector->getActiveElementID()
+        << "\nPause:\t" << this->Ipaused;
+
+    this->dText.setString(this->dString_Stream.str());
+    this->dString_Stream.str("");
+}
+
+void NoiceView::updateButtons(const float& delta_time)
+{
+    for (auto& it : this->buttons)
+        it.second->update(this->mousePosWindow);
+
+    for (auto& it : this->staticSelector)
+        it.second->update(delta_time, this->mousePosWindow);
+
+    this->selector->update(delta_time, this->mousePosWindow);
+
+    if (this->staticSelector["OCTAVES"]->isValueChanged()) {
+        this->noicedata.octaves = this->staticSelector["OCTAVES"]->getCurrentValue();
+        this->staticSelector["OCTAVES"]->closeChangeValue();
+    }
+    if (this->staticSelector["FREQUENCY"]->isValueChanged()) {
+        this->noicedata.frequency = this->staticSelector["FREQUENCY"]->getCurrentValue();
+        this->staticSelector["FREQUENCY"]->closeChangeValue();
+    }
+    if (this->staticSelector["PERSISTENCE"]->isValueChanged()) {
+        this->noicedata.persistence = this->staticSelector["PERSISTENCE"]->getCurrentValue();
+        this->staticSelector["PERSISTENCE"]->closeChangeValue();
+    }
+    if (this->staticSelector["AMPLIFIRE"]->isValueChanged()) {
+        this->noicedata.amplifire = this->staticSelector["AMPLIFIRE"]->getCurrentValue();
+        this->staticSelector["AMPLIFIRE"]->closeChangeValue();
+    }
+    if (this->buttons["G_NOICE"]->isPressed()) {
+        this->myGN->setNoiceData(this->noicedata);
+        this->isGeneratorClosed = false;
+        this->closeGrid = sf::Vector2f();
+        this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
+    }
+    if (this->buttons["G_TREE"]->isPressed()) {
+        this->threads.emplace_back(&LSystem::generate, this->myLS);
+        if (this->threads.back().joinable())
+            this->threads.back().join();
+    }
+    if (this->buttons["SAVE_GENDATA"]->isPressed()) {
+        this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
+    }
+    if (this->buttons["LOAD_GENDATA"]->isPressed()) {
+        this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);
+        this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
+        this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
+        this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
+        this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
+        this->selector->setActiveElement(this->noicedata.smoothMode);
+    }
+    this->selector->update(delta_time, this->mousePosWindow);
+    this->noicedata.smoothMode = this->selector->getActiveElementID();
+}
+
 void NoiceView::update(const float& delta_time)
 {
-    this->updateKeytime(delta_time);
+    this->freeThreads(); this->updateKeytime(delta_time);
     this->updateInput(delta_time);
     this->updateMousePositions();
-
+    if (this->showTabmenu)
+        this->updateButtons(delta_time);
     this->myLS->update(delta_time);
 
-    if (this->showTabmenu) {
-        for (auto& it : this->buttons)
-            it.second->update(this->mousePosWindow);
-
-        for (auto& it : this->staticSelector)
-            it.second->update(delta_time, this->mousePosWindow);
-
-        this->selector->update(delta_time, this->mousePosWindow);
-
-        if (this->staticSelector["OCTAVES"]->isValueChanged()) {
-            this->noicedata.octaves = this->staticSelector["OCTAVES"]->getCurrentValue();
-            this->staticSelector["OCTAVES"]->closeChangeValue();
-        }
-        if (this->staticSelector["FREQUENCY"]->isValueChanged()) {
-            this->noicedata.frequency = this->staticSelector["FREQUENCY"]->getCurrentValue();
-            this->staticSelector["FREQUENCY"]->closeChangeValue();
-        }
-        if (this->staticSelector["PERSISTENCE"]->isValueChanged()) {
-            this->noicedata.persistence = this->staticSelector["PERSISTENCE"]->getCurrentValue();
-            this->staticSelector["PERSISTENCE"]->closeChangeValue();
-        }
-        if (this->staticSelector["AMPLIFIRE"]->isValueChanged()) {
-            this->noicedata.amplifire = this->staticSelector["AMPLIFIRE"]->getCurrentValue();
-            this->staticSelector["AMPLIFIRE"]->closeChangeValue();
-        }
-        if (this->buttons["GENERATE"]->isPressed()) {
-            this->myGN->setNoiceData(this->noicedata);
-            this->isGeneratorClosed = false;
-            this->closeGrid = sf::Vector2f();
-            this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
-        }
-        if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-            this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
-        }
-        if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-            this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);
-            this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
-            this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
-            this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
-            this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
-            this->selector->setActiveElement(this->noicedata.smoothMode);
-        }
-        this->selector->update(delta_time, this->mousePosWindow);
-
-        this->noicedata.smoothMode = this->selector->getActiveElementID();
-    }
     if (this->isGeneratorClosed == false) {
         for (int i = 0; i < this->numThreads; ++i) {
             int startX = i * this->generateArea.x;
@@ -298,56 +368,8 @@ void NoiceView::update(const float& delta_time)
         this->isGeneratorClosed = true;
     }
 
-    // if (!this->isGeneratorClosed) {
-    //     this->createStepByStep(this->closeGrid);
-    //     if (this->closeGrid.x == 9) {
-    //         this->closeGrid.x = 0;
-    //         this->closeGrid.y += 1;
-    //     } else
-    //         this->closeGrid.x += 1;
-
-    //     if (this->closeGrid.y == 10)
-    //         this->isGeneratorClosed = true;
-    // }
-
-    if (this->debugMode) { // update debug information
-        double fps = 1.0f / delta_time;
-        this->dString_Stream
-            << "FPS:\t" << fps
-            << "\nBlock counter:"
-            << "\n\tdeep ocean: " << this->m_BlocksCounter.deep_ocean
-            << "\n\tocean: " << this->m_BlocksCounter.ocean
-            << "\n\tbeath: " << this->m_BlocksCounter.beath
-            << "\n\tseasand: " << this->m_BlocksCounter.seasand
-            << "\n\tsand: " << this->m_BlocksCounter.sand
-            << "\n\tgrass: " << this->m_BlocksCounter.grass
-            << "\n\tdirt: " << this->m_BlocksCounter.dirt
-            << "\n\trock: " << this->m_BlocksCounter.rock
-            << "\n\tmountain: " << this->m_BlocksCounter.mountain
-            << "\n\tsnow: " << this->m_BlocksCounter.snow
-            << "\n\tdesert: " << this->m_BlocksCounter.seasand
-            << "\n\tforest: " << this->m_BlocksCounter.forest
-            << "\n\tlava: " << this->m_BlocksCounter.lava
-            << "\n\tother " << this->m_BlocksCounter.other
-            << "\nGenerator data:"
-            << "\n\tGenerator closed:\t" << this->isGeneratorClosed
-            << "\n\tSeed:\t" << this->noicedata.seed
-            << "\n\tOctaves:\t" << this->noicedata.octaves
-            << "\n\tFrequency:\t" << this->noicedata.frequency
-            << "\n\tAmplifire:\t" << this->noicedata.amplifire
-            << "\n\tPersistence:\t" << this->noicedata.persistence
-            << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
-            << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
-            << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
-            << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY
-            << "\n\tGenerateAreaX:\t" << this->generateArea.x
-            << "\n\tGenerateAreaY:\t" << this->generateArea.y
-            << "\n\tSmoothMode:\t" << this->selector->getActiveElement() << ": " << this->selector->getActiveElementID()
-            << "\nPause:\t" << this->Ipaused;
-
-        this->dText.setString(this->dString_Stream.str());
-        this->dString_Stream.str("");
-    }
+    if (this->debugMode)
+        this->updateDebugText(delta_time);
 }
 
 void NoiceView::renderTabMenu(sf::RenderTarget& target)
@@ -366,12 +388,11 @@ void NoiceView::renderTabMenu(sf::RenderTarget& target)
 void NoiceView::render(sf::RenderWindow& target)
 {
     target.draw(this->shape);
+    this->myLS->render(target);
 
     if (this->debugMode)
         target.draw(this->dText);
 
     if (this->showTabmenu)
         this->renderTabMenu(target);
-
-    this->myLS->render(target);
 }

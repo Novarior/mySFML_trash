@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(RESOURCE_FILES
 mymath.cpp 
 ProcessGenerationNoice.cpp
+simplex.cpp
 )
 
 

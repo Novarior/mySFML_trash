@@ -16,6 +16,7 @@ set(RESOURCE_FILES
     MyApplication/source/mypars/parsJSON.cpp
     MyApplication/math/ProcessGenerationNoice.cpp
     MyApplication/math/simplex.cpp
+    MyApplication/math/LSystem.cpp
     #include states
     MyApplication/states/State.cpp
     MyApplication/states/Process.cpp

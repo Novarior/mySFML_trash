@@ -161,14 +161,14 @@ void Core::update()
     this->updateEventsWindow();
 
     if (!this->mState.empty()) {
-        // if (this->mWindow->hasFocus()) {
-        this->mState.top()->update(this->deltaTime);
+        if (this->mWindow->hasFocus()) {
+            this->mState.top()->update(this->deltaTime);
 
-        if (this->mState.top()->getQuit()) {
-            delete this->mState.top();
-            this->mState.pop();
+            if (this->mState.top()->getQuit()) {
+                delete this->mState.top();
+                this->mState.pop();
+            }
         }
-        // }
     }
     // Application end
     else {

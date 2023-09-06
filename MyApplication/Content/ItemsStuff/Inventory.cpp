@@ -70,16 +70,13 @@ Inventory::~Inventory()
             slotMap.clear();
         }
     }
-    InventoryArray.clear();
+    this->InventoryArray.clear();
 
     // Очистка вектора CellsInventory
-    for (auto& rowCells : CellsInventory) {
-        for (auto& cell : rowCells) {
-            cell.~Cell();
-        }
+    for (auto& rowCells : this->CellsInventory)
         rowCells.clear();
-    }
-    CellsInventory.clear();
+
+    this->CellsInventory.clear();
 
     // clearing the GUI coins
     if (this->m_Coins != nullptr)

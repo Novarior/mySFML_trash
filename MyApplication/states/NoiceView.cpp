@@ -386,16 +386,11 @@ void NoiceView::updateButtons(const float& delta_time)
         this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
     }
     if (this->buttons["G_TREE"]->isPressed()) {
-        for (int x = 0; x < 1000; x++) {
-            this->threads.emplace_back(&LSystem::generate, this->myLS);
-            if (this->threads.back().joinable())
-                this->threads.back().join();
-            this->saveTreeAsImage(*this->IstateData->sWindow);
-        }
+        this->myLS->generate();
+        this->saveTreeAsImage(*this->IstateData->sWindow);
     }
     if (this->buttons["SAVE_GENDATA"]->isPressed()) {
         this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
-        this->saveTreeAsImage(*this->IstateData->sWindow);
     }
     if (this->buttons["LOAD_GENDATA"]->isPressed()) {
         this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);

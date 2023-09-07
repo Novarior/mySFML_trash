@@ -35,7 +35,6 @@ const char M_SHADER_01_F[] = "resourses/shaders/bloom.frag";
 const char M_SHADER_02_V[] = "resourses/shaders/bloom.vert";
 
 // sprites
-const char texture_TREE[] = "resourses/Textures/Sprites/treee.png";
 const char slime_texture[] = "resourses/Textures/Entitys/slime_terratia.png";
 
 // items

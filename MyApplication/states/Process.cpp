@@ -140,6 +140,20 @@ void Process::initEntitys()
     }
 }
 
+void Process::initTrees()
+{ // load a lot images from floder and push to array
+  // find floder with trees
+  // load all images from floder
+  // push to array
+    sf::Texture texture;
+    for (const auto& it : std::filesystem::directory_iterator(myConst::f_Trees)) {
+        if (!texture.loadFromFile(it.path().c_str()))
+            printf("\nERROR::PROCESS::INIT::TREES::COULD_NOT_LOAD\n   %s\n", it.path().c_str());
+        this->trees.push_back(sf::Sprite(texture));
+    }
+    std::cout << this->trees.size() << " trees loaded\n";
+}
+
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
@@ -155,6 +169,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
+    this->initTrees();
 }
 
 Process::~Process()

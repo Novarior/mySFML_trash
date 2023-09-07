@@ -69,19 +69,11 @@ void TileMap::loadTextuteMap()
     };
 }
 
-void TileMap::pushTree(int x, int y, int seed)
-{
-    int i = (1 + x + seed + y) % 3;
-    this->m_TreeSprite.setTextureRect(list_treeRect[i]);
-    this->m_TreeSprite.setPosition(
-        (x * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().width * 0.5,
-        (y * this->m_dnoice.gridSize) - this->m_TreeSprite.getGlobalBounds().height * 0.75);
-    this->m_TreeArray.push_back(this->m_TreeSprite);
-}
+void TileMap::pushTree(int x, int y, int seed) { }
 
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     : keyTime(0.f)
-    , keyTimeMax(3.f)
+    , keyTimeMax(0.5f)
     , m_dnoice(datanoice)
 {
     this->Clear();
@@ -97,11 +89,6 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     this->updateRenderArea(sf::Vector2i(0, 0));
 
     sf::Color buff;
-
-    if (this->m_TreeTexture.loadFromFile(myConst::texture_TREE)) {
-        this->m_TreeSprite.setTexture(this->m_TreeTexture);
-        this->m_TreeTexture.setSmooth(true);
-    }
 
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<BrickBlock*>>());
 
@@ -168,7 +155,6 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
 TileMap::~TileMap()
 {
     this->Clear();
-    this->m_TreeArray.clear();
 }
 
 rectangleWithOffset TileMap::getRenderArea()
@@ -302,11 +288,10 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
 
 void TileMap::updateAnimationTiles(const float& delta_time)
 {
-    for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
-        for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
-            this->tilemap[x][y][0]->updateAnimation();
-
-    this->tilemap[0][0][0]->updateFrame();
+    if (this->getKeyTime())
+        for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
+            for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
+                this->tilemap[x][y][0]->updateAnimation();
 }
 
 void TileMap::updateRenderArea(const sf::Vector2i& playerPosition_grid) // update render area
@@ -358,17 +343,6 @@ void TileMap::render(sf::RenderTarget* target)
         for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
             this->tilemap[x][y][0]->render(target);
 
-    if (!this->m_TreeArray.empty())
-        for (auto it : this->m_TreeArray)
-            if (this->checkreck.contains(it.getPosition()))
-                target->draw(it);
-
     // bariere box
     target->draw(this->bariere_box);
-
-    // draw trees
-    if (!this->m_TreeArray.empty())
-        for (auto it : this->m_TreeArray)
-            if (this->checkreck.contains(it.getPosition()))
-                target->draw(it);
 }

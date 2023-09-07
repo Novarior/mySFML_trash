@@ -27,9 +27,6 @@ private:
     noiceData m_dnoice;
     std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
     std::map<std::string, sf::Texture> m_TexturesList;
-    std::vector<sf::Sprite> m_TreeArray;
-    sf::Texture m_TreeTexture;
-    sf::Sprite m_TreeSprite;
     sf::RectangleShape bariere_box;
     sf::FloatRect checkreck;
 

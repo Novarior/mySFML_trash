@@ -29,6 +29,8 @@ private:
     std::map<std::string, sf::Texture> m_TexturesList;
     sf::RectangleShape bariere_box;
     sf::FloatRect checkreck;
+    std::vector<sf::Texture> listTrees;
+    std::vector<sf::RectangleShape> trees;
 
     float keyTime;
     float keyTimeMax;
@@ -38,6 +40,7 @@ private:
     void Clear();
     void loadTextuteMap();
     void pushTree(int x, int y, int seed);
+    void initTrees();
 
 public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);

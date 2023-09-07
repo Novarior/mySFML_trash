@@ -20,10 +20,11 @@ private:
     const unsigned short m_type;
     static unsigned currentFrame;
     unsigned framesCounter;
+    bool isSetTree;
     sf::Vector2f m_size;
 
 public:
-    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false);
+    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false, bool isSetTree = false);
     virtual ~BrickBlock();
 
     const sf::FloatRect getGlobalBounds();

@@ -127,6 +127,7 @@ void MainMenu::resetGUI()
 
 void MainMenu::initStartProcces()
 {
+    this->isstatred = false;
     this->fadeShape.setFillColor(sf::Color(0, 0, 0, 0));
     this->fadeShape.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
 }

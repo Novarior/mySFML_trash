@@ -14,11 +14,26 @@ void TileMap::Clear()
             this->tilemap.clear();
         }
     }
+    this->trees.clear();
+}
+
+void TileMap::initTrees()
+{ // load a lot images from floder and push to array
+  // find floder with trees
+  // load all images from floder
+  // push to array
+    sf::Texture texture;
+    for (const auto& it : std::filesystem::directory_iterator(myConst::f_Trees)) {
+        if (!texture.loadFromFile(it.path().c_str()))
+            printf("\nERROR::PROCESS::INIT::TREES::COULD_NOT_LOAD\n   %s\n", it.path().c_str());
+        texture.setSmooth(true);
+        this->listTrees.push_back(texture);
+    }
+    std::cout << this->listTrees.size() << " trees loaded\n";
 }
 
 void TileMap::loadTextuteMap()
 {
-
     if (!this->m_TexturesList["GRASS"].loadFromFile(myConst::texture_DIRT)) {
         sf::Image img;
         img.create(32, 32);
@@ -69,7 +84,15 @@ void TileMap::loadTextuteMap()
     };
 }
 
-void TileMap::pushTree(int x, int y, int seed) { }
+void TileMap::pushTree(int x, int y, int seed)
+{
+    sf::RectangleShape tree;
+    tree.setSize(sf::Vector2f(64.f, 64.f));
+    tree.setTexture(&this->listTrees[rand() % this->listTrees.size()]);
+    this->trees.push_back(tree);
+    this->trees.back().setPosition(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize);
+    this->trees.back().setOrigin(0.01f, 0.01f);
+}
 
 TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
     : keyTime(0.f)
@@ -78,6 +101,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
 {
     this->Clear();
     this->loadTextuteMap();
+    this->initTrees();
 
     double writebuff;
 
@@ -122,7 +146,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
                 // init Trees
-                if (rand() % 100 < 15)
+                if (rand() % 100 < 10)
                     this->pushTree(x, y, this->m_dnoice.seed);
             } else if (writebuff < 165) { // dirt
                 buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
@@ -342,6 +366,11 @@ void TileMap::render(sf::RenderTarget* target)
     for (int x = this->m_renderArea.fromX; x < this->m_renderArea.toX; x++)
         for (int y = this->m_renderArea.fromY; y < this->m_renderArea.toY; y++)
             this->tilemap[x][y][0]->render(target);
+
+    // Render trees on screen area
+    for (int i = 0; i < this->trees.size(); i++)
+        if (this->checkreck.intersects(this->trees[i].getGlobalBounds()))
+            target->draw(this->trees[i]);
 
     // bariere box
     target->draw(this->bariere_box);

@@ -227,20 +227,14 @@ NoiceView::~NoiceView()
     delete this->mySN;
     delete this->myLS;
 
-    for (std::thread& thread : this->threads) {
-        if (thread.joinable()) {
-            thread.join();
-        }
-    }
+    this->freeThreads();
 }
 
 void NoiceView::freeThreads()
 {
-    for (std::thread& thread : this->threads) {
-        if (thread.joinable()) {
+    for (std::thread& thread : this->threads)
+        if (thread.joinable())
             thread.join();
-        }
-    }
 }
 
 sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
@@ -248,8 +242,8 @@ sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
     sf::Vector2u size = image.getSize();
     sf::IntRect mrect(size.x, size.y, 0, 0);
 
-    for (unsigned int x = 0; x < size.x; x++) {
-        for (unsigned int y = 0; y < size.y; y++) {
+    for (unsigned int x = 0; x < size.x; x++)
+        for (unsigned int y = 0; y < size.y; y++)
             if (image.getPixel(x, y) != sf::Color::Transparent) {
                 if (x < mrect.left)
                     mrect.left = x;
@@ -260,8 +254,6 @@ sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
                 if (y > mrect.height)
                     mrect.height = y;
             }
-        }
-    }
 
     return mrect;
 }

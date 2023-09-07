@@ -30,7 +30,6 @@ private:
     std::vector<Entity*> entitys;
     ProcessGenerationNoice* myGN;
     sf::Shader shader;
-    std::vector<sf::Sprite> trees;
     // GUI
     std::map<std::string, gui::ProgressBar*> playerBar;
     gui::MiniMap* minimap;
@@ -43,7 +42,7 @@ private:
     void initTileMapData();
     void initPlayer();
     void initEntitys();
-    void initTrees();
+
 
     void intGUI();
 

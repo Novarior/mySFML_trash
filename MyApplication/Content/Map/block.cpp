@@ -1,10 +1,11 @@
 #include "block.hpp"
 
 BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collision,
-    sf::Texture& texture, unsigned short type, bool isAnim)
+    sf::Texture& texture, unsigned short type, bool isAnim, bool isSetTree)
     : m_Texture(texture)
     , m_type(type)
     , m_isAnim(isAnim)
+    , isSetTree(isSetTree)
     , m_collision(collision)
     , m_size(size)
 {

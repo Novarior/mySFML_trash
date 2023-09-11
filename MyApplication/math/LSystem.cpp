@@ -60,7 +60,8 @@ void LSystem::applyRules()
     int randangle = 0;
     int randlength = 0;
     sf::Vector2f nextPos;
-    sf::RectangleShape bufferShape;
+    sf::Vector2f localoffsetPos = { 2.0f, 2.0f };
+    sf::CircleShape bufferShape;
     int chance = rand() % 100;
     for (int i = 0; i < this->sentence.length(); i++) {
         chance = rand() % 100;
@@ -70,13 +71,23 @@ void LSystem::applyRules()
             if (chance < this->data.chanceSkip)
                 continue;
             // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle);
-            // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.length, this->data.width));
+            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.length), this->data.currentAngle);
+            // push thre shapes half transparent wite and black
+            bufferShape.setRadius(this->data.length);
             bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
             bufferShape.setPosition(nextPos + data.offsetPos);
-            bufferShape.setRotation(this->data.currentAngle);
-            bufferShape.setFillColor(sf::Color(80, 35, 25, this->data.alpha));
+
+            // withe shape
+            bufferShape.setFillColor(sf::Color(255, 255, 255, 127));
+            bufferShape.setPosition(nextPos + data.offsetPos - localoffsetPos);
+            this->line_whiteShadow.push_back(bufferShape);
+            // black shape
+            bufferShape.setFillColor(sf::Color(0, 0, 0, 127));
+            bufferShape.setPosition(nextPos + data.offsetPos + localoffsetPos);
+            this->line_blackShadow.push_back(bufferShape);
+            // original shape
+            bufferShape.setFillColor(sf::Color(80, 35, 25, this->data.alpha / 2));
+            bufferShape.setPosition(nextPos + data.offsetPos);
             this->line.push_back(bufferShape);
             // set pos to next pos
             this->data.pos = nextPos;
@@ -85,7 +96,7 @@ void LSystem::applyRules()
             // calculate next pos
             nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle);
             // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.length + std::rand() % 3 + 1, this->data.width - 2));
+            bufferShape.setRadius(this->data.length);
             bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
             bufferShape.setPosition(this->data.pos + data.offsetPos);
             bufferShape.setRotation(this->data.currentAngle);
@@ -118,6 +129,10 @@ void LSystem::update(const float& delta_time)
 
 void LSystem::render(sf::RenderTarget& target)
 { // render shapes
+    for (auto& shape : this->line_whiteShadow)
+        target.draw(shape);
+    for (auto& shape : this->line_blackShadow)
+        target.draw(shape);
     for (auto& shape : this->line)
         target.draw(shape);
 }

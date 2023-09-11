@@ -13,10 +13,11 @@ set(RESOURCE_FILES
     MyApplication/Core.cpp 
     MyApplication/states/gfx.cpp
     MyApplication/math/mymath.cpp
-    MyApplication/source/mypars/parsJSON.cpp
-    MyApplication/math/ProcessGenerationNoice.cpp
     MyApplication/math/simplex.cpp
     MyApplication/math/LSystem.cpp
+    MyApplication/math/TabletTree.cpp
+    MyApplication/source/mypars/parsJSON.cpp
+    MyApplication/math/ProcessGenerationNoice.cpp
     #include states
     MyApplication/states/State.cpp
     MyApplication/states/Process.cpp
@@ -70,6 +71,9 @@ find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 find_package(SFML 2.5 COMPONENTS system REQUIRED)
 find_package(SFML 2.5 COMPONENTS window REQUIRED)
 
+set(CMAKE_TOOLCHAIN_FILE "build/toolchain.cmake")
+
+
 ##build
 if(APPLE)
 add_executable(GameProto ${RESOURCE_FILES})
@@ -79,22 +83,30 @@ target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
 target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
 target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
-message("GameProto" ${CMAKE_BINARY_DIR}/debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) 
+message("GameProto" ${CMAKE_BINARY_DIR}/bin)
 endif()
 
-if(WIN32)  
-set(CMAKE_SYSTEM_NAME Windows)
-add_executable(GameProto ${RESOURCE_FILES})
+if(WIN64)
+    # Путь к компилятору i686-w64-mingw32-g++
+    set(CMAKE_C_COMPILER "/opt/local/bin/i686-w64-mingw32-gcc")
+    set(CMAKE_CXX_COMPILER "/opt/local/bin/i686-w64-mingw32-g++")
+    # Путь к компилятору x86_64-w64-mingw32-g++
+    set(CMAKE_C_COMPILER "/opt/local/bin/x86_64-w64-mingw32-gcc")
+    set(CMAKE_CXX_COMPILER "/opt/local/bin/x86_64-w64-mingw32-g++")
 
-set_target_properties(GameProto PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
-target_link_libraries(GameProto sfml-graphics sfml-system sfml-window)
-target_include_directories(GameProto PRIVATE ${Template_ver}) #include generate config file
-target_include_directories(GameProto PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}) #include resource files
+    # Смена системы на Windows
+    set(CMAKE_SYSTEM_NAME Windows)
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/debug) 
-message("GameProto" ${CMAKE_BINARY_DIR}/debug)
+    try_compile(COMPILE_RESULT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ${CMAKE_CURRENT_SOURCE_DIR}/MyApplication/main.cpp)
+    
+    add_executable(GameProto_Windows ${RESOURCE_FILES})
+
+    set_target_properties(GameProto_Windows PROPERTIES CXX_STANDARD 20 CXX_STANDARD_REQUIRED ON)
+    target_link_libraries(GameProto_Windows sfml-graphics sfml-system sfml-window)
+
+
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+    message("GameProto_Windows" ${CMAKE_BINARY_DIR}/bin)
 endif()
-
-
 ###

@@ -345,6 +345,30 @@ MyApplication/GUI/components/dropDownList.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/dropDownList.cpp.s
 .PHONY : MyApplication/GUI/components/dropDownList.cpp.s
 
+MyApplication/GUI/components/minimap.o: MyApplication/GUI/components/minimap.cpp.o
+.PHONY : MyApplication/GUI/components/minimap.o
+
+# target to build an object file
+MyApplication/GUI/components/minimap.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/minimap.cpp.o
+.PHONY : MyApplication/GUI/components/minimap.cpp.o
+
+MyApplication/GUI/components/minimap.i: MyApplication/GUI/components/minimap.cpp.i
+.PHONY : MyApplication/GUI/components/minimap.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/minimap.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/minimap.cpp.i
+.PHONY : MyApplication/GUI/components/minimap.cpp.i
+
+MyApplication/GUI/components/minimap.s: MyApplication/GUI/components/minimap.cpp.s
+.PHONY : MyApplication/GUI/components/minimap.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/minimap.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/minimap.cpp.s
+.PHONY : MyApplication/GUI/components/minimap.cpp.s
+
 MyApplication/GUI/components/selector.o: MyApplication/GUI/components/selector.cpp.o
 .PHONY : MyApplication/GUI/components/selector.o
 
@@ -368,6 +392,54 @@ MyApplication/GUI/components/selector.s: MyApplication/GUI/components/selector.c
 MyApplication/GUI/components/selector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/selector.cpp.s
 .PHONY : MyApplication/GUI/components/selector.cpp.s
+
+MyApplication/GUI/components/staticSelector.o: MyApplication/GUI/components/staticSelector.cpp.o
+.PHONY : MyApplication/GUI/components/staticSelector.o
+
+# target to build an object file
+MyApplication/GUI/components/staticSelector.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/staticSelector.cpp.o
+.PHONY : MyApplication/GUI/components/staticSelector.cpp.o
+
+MyApplication/GUI/components/staticSelector.i: MyApplication/GUI/components/staticSelector.cpp.i
+.PHONY : MyApplication/GUI/components/staticSelector.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/staticSelector.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/staticSelector.cpp.i
+.PHONY : MyApplication/GUI/components/staticSelector.cpp.i
+
+MyApplication/GUI/components/staticSelector.s: MyApplication/GUI/components/staticSelector.cpp.s
+.PHONY : MyApplication/GUI/components/staticSelector.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/staticSelector.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/staticSelector.cpp.s
+.PHONY : MyApplication/GUI/components/staticSelector.cpp.s
+
+MyApplication/GUI/components/textbox.o: MyApplication/GUI/components/textbox.cpp.o
+.PHONY : MyApplication/GUI/components/textbox.o
+
+# target to build an object file
+MyApplication/GUI/components/textbox.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textbox.cpp.o
+.PHONY : MyApplication/GUI/components/textbox.cpp.o
+
+MyApplication/GUI/components/textbox.i: MyApplication/GUI/components/textbox.cpp.i
+.PHONY : MyApplication/GUI/components/textbox.i
+
+# target to preprocess a source file
+MyApplication/GUI/components/textbox.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textbox.cpp.i
+.PHONY : MyApplication/GUI/components/textbox.cpp.i
+
+MyApplication/GUI/components/textbox.s: MyApplication/GUI/components/textbox.cpp.s
+.PHONY : MyApplication/GUI/components/textbox.s
+
+# target to generate assembly for a file
+MyApplication/GUI/components/textbox.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/GUI/components/textbox.cpp.s
+.PHONY : MyApplication/GUI/components/textbox.cpp.s
 
 MyApplication/GUI/components/textureSelector.o: MyApplication/GUI/components/textureSelector.cpp.o
 .PHONY : MyApplication/GUI/components/textureSelector.o
@@ -609,6 +681,30 @@ MyApplication/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/main.cpp.s
 .PHONY : MyApplication/main.cpp.s
 
+MyApplication/math/LSystem.o: MyApplication/math/LSystem.cpp.o
+.PHONY : MyApplication/math/LSystem.o
+
+# target to build an object file
+MyApplication/math/LSystem.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/LSystem.cpp.o
+.PHONY : MyApplication/math/LSystem.cpp.o
+
+MyApplication/math/LSystem.i: MyApplication/math/LSystem.cpp.i
+.PHONY : MyApplication/math/LSystem.i
+
+# target to preprocess a source file
+MyApplication/math/LSystem.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/LSystem.cpp.i
+.PHONY : MyApplication/math/LSystem.cpp.i
+
+MyApplication/math/LSystem.s: MyApplication/math/LSystem.cpp.s
+.PHONY : MyApplication/math/LSystem.s
+
+# target to generate assembly for a file
+MyApplication/math/LSystem.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/LSystem.cpp.s
+.PHONY : MyApplication/math/LSystem.cpp.s
+
 MyApplication/math/ProcessGenerationNoice.o: MyApplication/math/ProcessGenerationNoice.cpp.o
 .PHONY : MyApplication/math/ProcessGenerationNoice.o
 
@@ -656,6 +752,30 @@ MyApplication/math/mymath.s: MyApplication/math/mymath.cpp.s
 MyApplication/math/mymath.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/mymath.cpp.s
 .PHONY : MyApplication/math/mymath.cpp.s
+
+MyApplication/math/simplex.o: MyApplication/math/simplex.cpp.o
+.PHONY : MyApplication/math/simplex.o
+
+# target to build an object file
+MyApplication/math/simplex.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/simplex.cpp.o
+.PHONY : MyApplication/math/simplex.cpp.o
+
+MyApplication/math/simplex.i: MyApplication/math/simplex.cpp.i
+.PHONY : MyApplication/math/simplex.i
+
+# target to preprocess a source file
+MyApplication/math/simplex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/simplex.cpp.i
+.PHONY : MyApplication/math/simplex.cpp.i
+
+MyApplication/math/simplex.s: MyApplication/math/simplex.cpp.s
+.PHONY : MyApplication/math/simplex.s
+
+# target to generate assembly for a file
+MyApplication/math/simplex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/GameProto.dir/build.make CMakeFiles/GameProto.dir/MyApplication/math/simplex.cpp.s
+.PHONY : MyApplication/math/simplex.cpp.s
 
 MyApplication/source/mypars/parsJSON.o: MyApplication/source/mypars/parsJSON.cpp.o
 .PHONY : MyApplication/source/mypars/parsJSON.o
@@ -885,9 +1005,18 @@ help:
 	@echo "... MyApplication/GUI/components/dropDownList.o"
 	@echo "... MyApplication/GUI/components/dropDownList.i"
 	@echo "... MyApplication/GUI/components/dropDownList.s"
+	@echo "... MyApplication/GUI/components/minimap.o"
+	@echo "... MyApplication/GUI/components/minimap.i"
+	@echo "... MyApplication/GUI/components/minimap.s"
 	@echo "... MyApplication/GUI/components/selector.o"
 	@echo "... MyApplication/GUI/components/selector.i"
 	@echo "... MyApplication/GUI/components/selector.s"
+	@echo "... MyApplication/GUI/components/staticSelector.o"
+	@echo "... MyApplication/GUI/components/staticSelector.i"
+	@echo "... MyApplication/GUI/components/staticSelector.s"
+	@echo "... MyApplication/GUI/components/textbox.o"
+	@echo "... MyApplication/GUI/components/textbox.i"
+	@echo "... MyApplication/GUI/components/textbox.s"
 	@echo "... MyApplication/GUI/components/textureSelector.o"
 	@echo "... MyApplication/GUI/components/textureSelector.i"
 	@echo "... MyApplication/GUI/components/textureSelector.s"
@@ -918,12 +1047,18 @@ help:
 	@echo "... MyApplication/main.o"
 	@echo "... MyApplication/main.i"
 	@echo "... MyApplication/main.s"
+	@echo "... MyApplication/math/LSystem.o"
+	@echo "... MyApplication/math/LSystem.i"
+	@echo "... MyApplication/math/LSystem.s"
 	@echo "... MyApplication/math/ProcessGenerationNoice.o"
 	@echo "... MyApplication/math/ProcessGenerationNoice.i"
 	@echo "... MyApplication/math/ProcessGenerationNoice.s"
 	@echo "... MyApplication/math/mymath.o"
 	@echo "... MyApplication/math/mymath.i"
 	@echo "... MyApplication/math/mymath.s"
+	@echo "... MyApplication/math/simplex.o"
+	@echo "... MyApplication/math/simplex.i"
+	@echo "... MyApplication/math/simplex.s"
 	@echo "... MyApplication/source/mypars/parsJSON.o"
 	@echo "... MyApplication/source/mypars/parsJSON.i"
 	@echo "... MyApplication/source/mypars/parsJSON.s"

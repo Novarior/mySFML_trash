@@ -97,8 +97,10 @@ void Process::initView()
 
 void Process::initPlayer()
 {
-    this->player = new Player(sf::Vector2f(100, 100));
-
+    // get array with posible spawn positions
+    std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
+    // set player position to random position getting from spawnPosArray
+    this->player = new Player(spawnPosArray[rand() % spawnPosArray.size()]);
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
 
     // init player HP bar on top right on screen math position using mmath::p2pX/X
@@ -129,14 +131,15 @@ void Process::initTileMapData()
 
 void Process::initEntitys()
 {
-    float posx = 0;
-    float posy = 0;
+    // get random position from map array
+    std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
 
     for (size_t i = 0; i < 32; i++) {
         // call function to get random position
-        posx = rand() % 1000;
-        posy = rand() % 1000;
-        this->entitys.push_back(new Slime(posx, posy, *this->player));
+        this->entitys.push_back(new Slime(
+            spawnPosArray[rand() % spawnPosArray.size()].x,
+            spawnPosArray[rand() % spawnPosArray.size()].y,
+            *this->player));
     }
 }
 
@@ -317,8 +320,7 @@ void Process::renderTileMap(sf::RenderTarget& target)
 void Process::renderEntities(sf::RenderTarget& target)
 {
     for (auto* enemy : this->entitys)
-        ;
-    // enemy->e_render(target, this->debugMode);
+        enemy->e_render(target, this->debugMode);
 }
 
 void Process::renderPlayer(sf::RenderTarget& target)

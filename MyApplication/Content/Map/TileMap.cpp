@@ -24,10 +24,13 @@ void TileMap::initTrees()
   // push to array
     sf::Texture texture;
     for (const auto& it : std::filesystem::directory_iterator(myConst::f_Trees)) {
-        if (!texture.loadFromFile(it.path().c_str()))
+        if (it.path().extension() != ".png")
+            continue;
+        if (texture.loadFromFile(it.path().c_str())) {
+            texture.setSmooth(true);
+            this->listTrees.push_back(texture);
+        } else
             printf("\nERROR::PROCESS::INIT::TREES::COULD_NOT_LOAD\n   %s\n", it.path().c_str());
-        texture.setSmooth(true);
-        this->listTrees.push_back(texture);
     }
     std::cout << this->listTrees.size() << " trees loaded\n";
 }
@@ -84,7 +87,7 @@ void TileMap::loadTextuteMap()
     };
 }
 
-void TileMap::pushTree(int x, int y, int seed)
+void TileMap::pushTree(int x, int y)
 {
     sf::RectangleShape tree;
     tree.setSize(sf::Vector2f(64.f, 64.f));
@@ -146,8 +149,11 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
                 // init Trees
-                if (rand() % 100 < 10)
-                    this->pushTree(x, y, this->m_dnoice.seed);
+                if (rand() % 100 < 5)
+                    this->pushTree(x, y);
+
+                // write grass block position on array
+                this->m_listGrassBlocks.push_back(sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize));
             } else if (writebuff < 165) { // dirt
                 buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
@@ -179,6 +185,8 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
 TileMap::~TileMap()
 {
     this->Clear();
+    this->listTrees.clear();
+    this->m_TexturesList.clear();
 }
 
 rectangleWithOffset TileMap::getRenderArea()
@@ -204,6 +212,11 @@ bool TileMap::getCollision(const unsigned int x, const unsigned int y) const
 sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int y) const
 {
     return this->tilemap[x][y][0]->getGlobalBounds();
+}
+
+std::vector<sf::Vector2f> TileMap::getSpawnPosArray()
+{
+    return this->m_listGrassBlocks;
 }
 
 const bool TileMap::getKeyTime()

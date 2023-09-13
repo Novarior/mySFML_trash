@@ -208,13 +208,9 @@ NoiceView::NoiceView(StateData* statedata)
     // init LSystem
     this->myLS = new LSystem();
     this->myLS->setRule('d', "qd");
-    this->myLS->setRule('s', "d[-qs][+qs]q");
+    this->myLS->setRule('s', "d[-qqs]+qqs");
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
-    // init TabletTree
-    this->myTT = new TabletTree();
-    this->myTT->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
-    this->myTT->generate();
 }
 
 NoiceView::~NoiceView()
@@ -230,7 +226,6 @@ NoiceView::~NoiceView()
     delete this->selector;
     delete this->mySN;
     delete this->myLS;
-    delete this->myTT;
 
     this->freeThreads();
 }
@@ -270,7 +265,7 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
     texture.create(window.getSize().x, window.getSize().y);
 
     // get array shape
-    std::vector<sf::CircleShape> shapes;
+    std::vector<sf::RectangleShape> shapes;
     shapes.insert(shapes.end(), this->myLS->internalArray(), this->myLS->internalArray() + this->myLS->getSizeArray());
 
     // Очищаем окно и рисуем все фигуры на текстуре
@@ -451,11 +446,7 @@ void NoiceView::render(sf::RenderWindow& target)
     target.draw(this->shape);
 
     if (this->myLS != nullptr)
-        ;
-    //  this->myLS->render(target);
-
-    if (this->myTT != nullptr)
-        this->myTT->render(target);
+        this->myLS->render(target);
 
     if (this->debugMode)
         target.draw(this->dText);

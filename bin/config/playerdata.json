@@ -2,11 +2,11 @@
 	"player": {
 		"entity_uid":0,
 		"position": {
-			"x": 9312,
-			"y": 4560
+			"x": 9435.28,
+			"y": 13103.5
 		},
 		"attributes": {
-			"hp": 83.1973,
+			"hp": 26.3039,
 			"max_hp": 200,
 			"current_exp": 0,
 			"exp_for_level": 200,

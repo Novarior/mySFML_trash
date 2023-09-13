@@ -90,31 +90,19 @@ void TileMap::loadTextuteMap()
 void TileMap::pushTree(int x, int y)
 {
     sf::RectangleShape tree;
-    tree.setSize(sf::Vector2f(64.f, 64.f));
+    tree.setSize(sf::Vector2f(256.f, 256.f));
     tree.setTexture(&this->listTrees[rand() % this->listTrees.size()]);
     this->trees.push_back(tree);
     this->trees.back().setPosition(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize);
     this->trees.back().setOrigin(0.01f, 0.01f);
 }
 
-TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
-    : keyTime(0.f)
-    , keyTimeMax(0.5f)
-    , m_dnoice(datanoice)
+void TileMap::generateMap()
 {
-    this->Clear();
-    this->loadTextuteMap();
-    this->initTrees();
+    this->maxSizeWorldGrid = sf::Vector2u(this->m_dnoice.mapSizeX, this->m_dnoice.mapSizeY);
+    this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSizeX * this->m_dnoice.gridSize, this->m_dnoice.mapSizeY * this->m_dnoice.gridSize);
 
     double writebuff;
-
-    this->maxSizeWorldGrid = sf::Vector2u(this->m_dnoice.mapSizeX, this->m_dnoice.mapSizeY);
-    this->maxSizeWorldFloat = sf::Vector2f(this->m_dnoice.mapSizeX * datanoice.gridSize, this->m_dnoice.mapSizeY * datanoice.gridSize);
-
-    this->m_renderArea.offsetX = (datanoice.RenderWindowX / datanoice.gridSize / 4) + 4;
-    this->m_renderArea.offsetY = (datanoice.RenderWindowY / datanoice.gridSize / 4) + 4;
-    this->updateRenderArea(sf::Vector2i(0, 0));
-
     sf::Color buff;
 
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<BrickBlock*>>());
@@ -123,7 +111,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
         this->tilemap[x].resize(this->maxSizeWorldGrid.y, std::vector<BrickBlock*>());
 
         for (int y = 0; y < this->m_dnoice.mapSizeY; y++) {
-            writebuff = noice->getNoice(x, y);
+            writebuff = this->mGen_noice.getNoice(x, y);
             writebuff *= 255;
             writebuff = static_cast<int>(writebuff) % 255;
             if (writebuff < 0)
@@ -149,7 +137,7 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
                 // init Trees
-                if (rand() % 100 < 5)
+                if (rand() % 100 < 1)
                     this->pushTree(x, y);
 
                 // write grass block position on array
@@ -175,11 +163,32 @@ TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
             }
         }
     }
+}
+
+TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
+    : keyTime(0.f)
+    , keyTimeMax(0.5f)
+    , m_dnoice(datanoice)
+    , mGen_noice(*noice)
+{
+    this->Clear();
+    this->loadTextuteMap();
+    this->initTrees();
+    this->generateMap();
+    this->updateRenderArea(sf::Vector2i(0, 0));
+
+    this->m_renderArea.offsetX = (this->m_dnoice.RenderWindowX / this->m_dnoice.gridSize / 4) + 4;
+    this->m_renderArea.offsetY = (this->m_dnoice.RenderWindowY / this->m_dnoice.gridSize / 4) + 4;
 
     this->bariere_box.setFillColor(sf::Color::Transparent);
     this->bariere_box.setOutlineColor(sf::Color::Red);
     this->bariere_box.setOutlineThickness(3.f);
     this->bariere_box.setSize(this->maxSizeWorldFloat);
+
+    // sort this->trees by y position
+    std::sort(this->trees.begin(), this->trees.end(), [](const sf::RectangleShape& lhs, const sf::RectangleShape& rhs) {
+        return lhs.getPosition().y < rhs.getPosition().y;
+    });
 }
 
 TileMap::~TileMap()

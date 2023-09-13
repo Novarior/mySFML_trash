@@ -15,7 +15,6 @@ set(RESOURCE_FILES
     MyApplication/math/mymath.cpp
     MyApplication/math/simplex.cpp
     MyApplication/math/LSystem.cpp
-    MyApplication/math/TabletTree.cpp
     MyApplication/source/mypars/parsJSON.cpp
     MyApplication/math/ProcessGenerationNoice.cpp
     #include states

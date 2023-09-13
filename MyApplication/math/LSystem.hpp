@@ -30,20 +30,17 @@ private:
     std::string sentence;
     std::map<char, std::string> rules;
     std::stack<GData> stack;
-    std::vector<sf::CircleShape> line;
-    std::vector<sf::CircleShape> line_whiteShadow;
-    std::vector<sf::CircleShape> line_blackShadow;
+    std::vector<sf::RectangleShape> line;
 
     void generateSentence();
     void applyRules();
-
     sf::Vector2f rotate(sf::Vector2f v, float angle);
 
 public:
     LSystem();
     ~LSystem();
     // get all sf::RectangleShape on array
-    sf::CircleShape* internalArray() { return this->line.data(); }
+    sf::RectangleShape* internalArray() { return this->line.data(); }
     size_t getSizeArray() { return this->line.size(); }
 
     void generate();
@@ -53,7 +50,7 @@ public:
     void setAxiom(char axiom) { this->axiom = axiom; }
     void setOffsetPos(sf::Vector2f offsetPos) { this->data.offsetPos = offsetPos; }
 
-    size_t getSizeTree() { return this->line.size() + this->line_blackShadow.size() + this->line_whiteShadow.size(); }
+    size_t getSizeTree() { return this->line.size(); }
 
     void update(const float& delta_time);
     void render(sf::RenderTarget& target);

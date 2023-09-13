@@ -24,6 +24,7 @@ private:
     sf::Vector2u maxSizeWorldGrid;
     sf::Vector2f maxSizeWorldFloat;
     noiceData m_dnoice;
+    ProcessGenerationNoice mGen_noice;
     std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
     std::vector<sf::Vector2f> m_listGrassBlocks;
     std::map<std::string, sf::Texture> m_TexturesList;
@@ -39,6 +40,8 @@ private:
 
     void Clear();
     void loadTextuteMap();
+    void generateMap();
+
     void pushTree(int x, int y);
     void initTrees();
 

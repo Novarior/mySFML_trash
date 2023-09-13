@@ -8,6 +8,7 @@ public:
     {
         this->m_name = "Stone";
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
+        this->m_Usable = false;
 
         if (this->m_texture.loadFromFile(texture_path))
             this->m_shape.setTexture(&this->m_texture);
@@ -18,6 +19,13 @@ public:
         this->m_pickable = picked_up;
     }
     virtual ~Stone() { }
+
+    void useItem() override
+    {
+        // print to console that you used this item
+
+        std::cout << this->m_name << " is not usable" << std::endl;
+    }
 
     void update(const float& delta_time, sf::Vector2i mouse_pos) override { }
     void render(sf::RenderTarget& target) override

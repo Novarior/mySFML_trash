@@ -2,73 +2,63 @@
 #define ITEMSTUFF_COINS_H
 #include "../../header.h"
 
-class Coins : public sf::Drawable {
+class Coins {
 private:
-    sf::Font& m_font;
-    std::stringstream m_StringStream;
-
-    struct CoinCount {
-        int goldCount = 0;
-        int silverCount = 0;
-        int copperCount = 0;
-    } m_coin_count;
-
-    struct CoinText {
-        sf::Text m_Text_gold;
-        sf::Text m_Text_silver;
-        sf::Text m_Text_copper;
-    } m_coin_text;
-
-    struct CoinShape {
-        sf::Sprite m_GoldShape;
-        sf::Sprite m_SilverShape;
-        sf::Sprite m_CopperShape;
-    } m_coin_shape;
-
-    struct CoinTexture {
-        sf::Texture m_GoldTexture;
-        sf::Texture m_SilverTexture;
-        sf::Texture m_CopperTexture;
-    } m_coin_texture;
-
-    inline virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
-    {
-        // Draw Texture shapes with image
-        target.draw(m_coin_shape.m_GoldShape);
-        target.draw(m_coin_shape.m_SilverShape);
-        target.draw(m_coin_shape.m_CopperShape);
-
-        target.draw(m_coin_text.m_Text_gold);
-        target.draw(m_coin_text.m_Text_silver);
-        target.draw(m_coin_text.m_Text_copper);
-    }
+    int m_gold;
+    int m_silver;
+    int m_copper;
 
 public:
-    /// @brief
-    /// @param pos position this coin box
-    /// @param size size this coin box
-    /// @param image_size size of icon coins
-    /// @param font font for text
-    /// @param character_size size letter
-    Coins(sf::Vector2f pos, sf::Vector2f size, sf::Vector2f image_size, sf::Font& font, unsigned int character_size);
-    virtual ~Coins();
+    /// @brief template constructor for Coins
+    /// @param m_gold - gold coins
+    /// @param m_silver - silver coins
+    /// @param m_copper - copper coins
+    Coins(const int gold = 0, const int silver = 0, const int copper = 0)
+    {
+        this->m_gold = gold;
+        this->m_silver = silver;
+        this->m_copper = copper;
+    }
+    virtual ~Coins() { }
 
-    void set_GoldCoinCouns(const int value);
-    void set_SilverCoinCouns(const int value);
-    void set_CopperCoinCouns(const int value);
+    void set_GoldCoinCouns(const int value) { this->m_gold = value; }
+    void set_SilverCoinCouns(const int value) { this->m_silver = value; }
+    void set_CopperCoinCouns(const int value) { this->m_copper = value; }
 
-    void add_GoldCoinCound(const int value);
-    void add_SilverCoinCound(const int value);
-    void add_CopperCoinCound(const int value);
+    void add_GoldCoinCound(const int value) { this->m_gold += value; }
+    void add_SilverCoinCound(const int value) { this->m_silver += value; }
+    void add_CopperCoinCound(const int value) { this->m_copper += value; }
 
     // Acsess
-    const int get_GoldCointCount();
-    const int get_SilverCointCount();
-    const int get_CopperCointCount();
+    const int get_GoldCointCount() { return this->m_gold; }
+    const int get_SilverCointCount() { return this->m_silver; }
+    const int get_CopperCointCount() { return this->m_copper; }
 
     // Update coins
-    void updateCoins();
+    void updateCoins()
+    {
+        // if copper coins bigger that 100
+        if (this->m_copper >= 100) {
+            this->m_silver += this->m_copper / 100;
+            this->m_copper = this->m_copper % 100;
+        }
+        // else copper coins smaller that 0
+        else if (this->m_copper < 0 && this->m_copper > -100) {
+            this->m_silver -= 1;
+            this->m_copper = 100 + this->m_copper;
+        }
 
-    void getText();
+        // if silver coins bigger that 100
+        if (this->m_silver >= 100) {
+            this->m_gold += this->m_silver / 100;
+            this->m_silver = this->m_silver % 100;
+        }
+        // else silver coins smaller that 0
+        // and if silver coins quantity bigger that 0
+        else if (this->m_silver < 0 && this->m_silver > -100) {
+            this->m_gold -= 1;
+            this->m_silver = 100 + this->m_silver;
+        }
+    }
 };
 #endif

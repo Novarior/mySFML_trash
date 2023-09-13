@@ -48,8 +48,6 @@ set(RESOURCE_FILES
     MyApplication/Content/Map/block.cpp 
     MyApplication/Content/Map/TileMap.cpp
     #items includes
-    MyApplication/Content/ItemsStuff/Item.hpp
-    MyApplication/Content/ItemsStuff/Coins.cpp
     MyApplication/Content/ItemsStuff/Inventory.cpp
     #ect includes
     MyApplication/Content/rotationCircle.cpp 

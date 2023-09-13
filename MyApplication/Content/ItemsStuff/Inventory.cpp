@@ -3,9 +3,6 @@
 Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& font, unsigned int character_size)
     : m_font(font)
 {
-    // init all variables who use in this class operator new like nullptr
-    this->m_Coins = nullptr;
-
     // init flag for inventory
     this->isOpened = false;
 
@@ -47,12 +44,7 @@ Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& fo
     }
 
     // init Coins GUI
-    this->m_Coins = new Coins(
-        sf::Vector2f(
-            m_background_inventory.getPosition().x,
-            m_background_inventory.getPosition().y + this->m_background_inventory.getSize().y - screen_1t10.y * 2 / 3),
-        sf::Vector2f(screen_2to3.x, screen_1t10.y * 2 / 3),
-        sf::Vector2f(gridSize_cell, gridSize_cell), this->m_font, character_size);
+    this->m_Coins = { 0, 0, 0 };
 
     // initializing the inventory map (empty)
     this->InventoryArray.resize(rows, std::vector<std::map<unsigned int, Item*>>(cols));
@@ -77,10 +69,6 @@ Inventory::~Inventory()
         rowCells.clear();
 
     this->CellsInventory.clear();
-
-    // clearing the GUI coins
-    if (this->m_Coins != nullptr)
-        delete this->m_Coins;
 }
 
 bool Inventory::addItem(Item* item)
@@ -92,7 +80,7 @@ bool Inventory::addItem(Item* item)
             for (std::map<unsigned int, Item*>& slotMap : row) {
                 for (auto& entry : slotMap) {
                     if (entry.second != nullptr && entry.second == item) {
-                        if (entry.second->getStackable()) {
+                        if (entry.second->isStackable()) {
                             entry.second->addQuantity(item->getQuantity());
                             return true;
                         } else {
@@ -184,11 +172,9 @@ const unsigned int Inventory::getCurrentCellID(sf::Vector2i mousePos)
     return 0;
 }
 
-Coins* Inventory::getCoins()
+Coins& Inventory::getCoins()
 {
-    if (this->m_Coins != nullptr)
-        return this->m_Coins;
-    return nullptr;
+    return this->m_Coins;
 }
 // get item from the inventory by using ID item
 Item* Inventory::getItem(unsigned int ID)
@@ -230,17 +216,14 @@ void Inventory::update(sf::Vector2i mouse_pos)
             for (auto& cell : rowCells)
                 cell.update(mouse_pos);
 
-    this->m_StringStream << this->m_Coins->get_GoldCointCount() << "\t\t" << this->m_Coins->get_SilverCointCount() << "\t\t" << this->m_Coins->get_CopperCointCount();
+    this->m_StringStream << this->m_Coins.get_GoldCointCount() << "\t\t" << this->m_Coins.get_SilverCointCount() << "\t\t" << this->m_Coins.get_CopperCointCount();
     this->m_Text.setString(this->m_StringStream.str());
     this->m_StringStream.str("");
-
-    this->m_Coins->getText();
 }
 
 void Inventory::render(sf::RenderTarget& target)
 {
     // rendering the inventory
-
     // draw background layout
     target.draw(this->m_background_inventory);
 
@@ -261,7 +244,4 @@ void Inventory::render(sf::RenderTarget& target)
             }
         }
     }
-
-    // draw coins
-    target.draw(*this->m_Coins);
 }

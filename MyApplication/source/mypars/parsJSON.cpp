@@ -289,7 +289,8 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
             ofs << "\t\t\t\t\"name\": \"" << inventory->getItemFromNumSlot(i)->getName() << "\",\n";
             ofs << "\t\t\t\t\"count\": " << inventory->getItemFromNumSlot(i)->getQuantity() << ",\n";
             ofs << "\t\t\t\t\"price\": " << inventory->getItemFromNumSlot(i)->getPrice() << ",\n";
-            ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->getStackable() << ",\n";
+            ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->isStackable() << ",\n";
+            ofs << "\t\t\t\t\"usable\": " << inventory->getItemFromNumSlot(i)->isUsable()<< ",\n";
             ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getID() << "\n";
 
             if (i != inventory->getSizeInventory() - 1)
@@ -303,6 +304,7 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
             ofs << "\t\t\t\t\"count\": null,\n";
             ofs << "\t\t\t\t\"price\": null,\n";
             ofs << "\t\t\t\t\"stackable\": null,\n";
+            ofs << "\t\t\t\t\"usable\": null\n";
             ofs << "\t\t\t\t\"unic ID\": null\n";
 
             if (i != inventory->getSizeInventory() - 1)
@@ -314,9 +316,9 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
 
     ofs << "\t\t],\n";
     ofs << "\t\t\"coins\": {\n";
-    ofs << "\t\t\t\"gold\": " << inventory->getCoins()->get_GoldCointCount() << ",\n";
-    ofs << "\t\t\t\"silver\": " << inventory->getCoins()->get_SilverCointCount() << ",\n";
-    ofs << "\t\t\t\"copper\": " << inventory->getCoins()->get_CopperCointCount() << "\n";
+    ofs << "\t\t\t\"gold\": " << inventory->getCoins().get_GoldCointCount() << ",\n";
+    ofs << "\t\t\t\"silver\": " << inventory->getCoins().get_SilverCointCount() << ",\n";
+    ofs << "\t\t\t\"copper\": " << inventory->getCoins().get_CopperCointCount() << "\n";
     ofs << "\t\t}\n";
     ofs << "\t}\n";
     ofs << "}\n";

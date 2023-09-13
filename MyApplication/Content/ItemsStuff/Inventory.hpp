@@ -72,13 +72,13 @@ public:
     const int getSizeInventory() { return this->CellsInventory.size(); }
 
     // functions for manipulating with coins
-    Coins* getCoins();
+    Coins& getCoins();
 
 private:
     bool isOpened;
 
     // containers for items and ect.
-    Coins* m_Coins;
+    Coins m_Coins;
     std::vector<std::vector<std::map<unsigned int, Item*>>> InventoryArray;
     std::vector<std::vector<Cell>> CellsInventory;
 

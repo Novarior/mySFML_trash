@@ -1,7 +1,8 @@
 **/.vscode
 build/
 **/CMakeFiles/
-bin/GameProto
+
+bin
 **/textures/Trees
 **/.DS_Store
 .DS_Store

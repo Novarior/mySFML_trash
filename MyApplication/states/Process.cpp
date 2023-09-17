@@ -279,8 +279,10 @@ void Process::update(const float& delta_time)
         if (this->pausemenu->isButtonPressed("GEN") && this->getKeytime()) {
             delete this->myGN;
             delete this->mapTiles;
+            delete this->minimap;
             this->initTileMapData();
             this->initTileMap();
+            this->initMiniMap();
         }
     } else { // update game
         this->updateEntitys(delta_time);

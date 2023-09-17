@@ -243,25 +243,21 @@ const bool parsJSON::savePlayer(const std::string& filename, Entity* player)
         return false;
     }
     // save to json file
-    ofs << "{\n";
-    ofs << "\t\"player\": {\n";
-    ofs << "\t\t\"entity_uid\":" << player->e_getID() << ",\n";
-    ofs << "\t\t\"position\": {\n";
-    ofs << "\t\t\t\"x\": " << player->e_getPosition().x << ",\n";
-    ofs << "\t\t\t\"y\": " << player->e_getPosition().y << "\n";
-    ofs << "\t\t},\n";
+    json jk;
+    jk["player"];
+    jk["player"]["entity_uid"] = player->e_getID();
+    jk["player"]["position"]["x"] = player->e_getPosition().x;
+    jk["player"]["position"]["y"] = player->e_getPosition().y;
     // save player attributes
-    ofs << "\t\t\"attributes\": {\n";
-    ofs << "\t\t\t\"hp\": " << player->getAttributes()->getAttributes()->health << ",\n";
-    ofs << "\t\t\t\"max_hp\": " << player->getAttributes()->getAttributes()->max_health << ",\n";
-    ofs << "\t\t\t\"current_exp\": " << player->getAttributes()->getAttributes()->experience << ",\n";
-    ofs << "\t\t\t\"exp_for_level\": " << player->getAttributes()->getAttributes()->experience_for_level << ",\n";
-    ofs << "\t\t\t\"level\": " << player->getAttributes()->getAttributes()->level << ",\n";
-    ofs << "\t\t\t\"some_points\": " << player->getAttributes()->getAttributes()->some_points << "\n";
-    ofs << "\t\t}\n";
-    ofs << "\t}\n";
-    ofs << "}\n";
+    jk["player"]["attributes"];
+    jk["player"]["attributes"]["hp"] = player->getAttributes()->getAttributes()->health;
+    jk["player"]["attributes"]["max_hp"] = player->getAttributes()->getAttributes()->max_health;
+    jk["player"]["attributes"]["current_exp"] = player->getAttributes()->getAttributes()->experience;
+    jk["player"]["attributes"]["exp_for_level"] = player->getAttributes()->getAttributes()->experience_for_level;
+    jk["player"]["attributes"]["level"] = player->getAttributes()->getAttributes()->level;
+    jk["player"]["attributes"]["some_points"] = player->getAttributes()->getAttributes()->some_points;
     // close file
+    ofs << std::setw(4) << jk;
     ofs.close();
     return true;
 }
@@ -275,53 +271,40 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
         printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
+    json jk;
     // save to json file
-    ofs << "{\n";
-    ofs << "\t\"inventory\": {\n";
-    ofs << "\t\t\"size\": " << inventory->getSizeInventory() << ",\n";
-    ofs << "\t\t\"items\": [\n";
+    jk["inventory"];
+    jk["inventory"]["size"] = inventory->getSizeInventory();
+    jk["inventory"]["items"];
     for (size_t i = 0; i < inventory->getSizeInventory(); i++) {
-        ofs << "\t\t\t{\n";
+        jk["inventory"]["items"][i];
         // check item if null
         if (inventory->getItemFromNumSlot(i) != nullptr) {
             // write "slot if is not empty
-            ofs << "\t\t\t\t\"slot\": " << i << ",\n";
-            ofs << "\t\t\t\t\"name\": \"" << inventory->getItemFromNumSlot(i)->getName() << "\",\n";
-            ofs << "\t\t\t\t\"count\": " << inventory->getItemFromNumSlot(i)->getQuantity() << ",\n";
-            ofs << "\t\t\t\t\"price\": " << inventory->getItemFromNumSlot(i)->getPrice() << ",\n";
-            ofs << "\t\t\t\t\"stackable\": " << inventory->getItemFromNumSlot(i)->isStackable() << ",\n";
-            ofs << "\t\t\t\t\"usable\": " << inventory->getItemFromNumSlot(i)->isUsable()<< ",\n";
-            ofs << "\t\t\t\t\"unic ID\": " << inventory->getItemFromNumSlot(i)->getID() << "\n";
-
-            if (i != inventory->getSizeInventory() - 1)
-                ofs << "\t\t\t},\n";
-            else
-                ofs << "\t\t\t}\n";
+            jk["inventory"]["items"][i]["slot"] = i;
+            jk["inventory"]["items"][i]["name"] = inventory->getItemFromNumSlot(i)->getName();
+            jk["inventory"]["items"][i]["count"] = inventory->getItemFromNumSlot(i)->getQuantity();
+            jk["inventory"]["items"][i]["price"] = inventory->getItemFromNumSlot(i)->getPrice();
+            jk["inventory"]["items"][i]["stackable"] = inventory->getItemFromNumSlot(i)->isStackable();
+            jk["inventory"]["items"][i]["usable"] = inventory->getItemFromNumSlot(i)->isUsable();
+            jk["inventory"]["items"][i]["unic ID"] = inventory->getItemFromNumSlot(i)->getID();
         } else {
             // write "slot" if is empty
-            ofs << "\t\t\t\t\"slot\": " << i << ",\n";
-            ofs << "\t\t\t\t\"name\": null,\n";
-            ofs << "\t\t\t\t\"count\": null,\n";
-            ofs << "\t\t\t\t\"price\": null,\n";
-            ofs << "\t\t\t\t\"stackable\": null,\n";
-            ofs << "\t\t\t\t\"usable\": null\n";
-            ofs << "\t\t\t\t\"unic ID\": null\n";
-
-            if (i != inventory->getSizeInventory() - 1)
-                ofs << "\t\t\t},\n";
-            else
-                ofs << "\t\t\t}\n";
+            jk["inventory"]["items"][i]["slot"] = i;
+            jk["inventory"]["items"][i]["name"] = nullptr;
+            jk["inventory"]["items"][i]["count"] = nullptr;
+            jk["inventory"]["items"][i]["price"] = nullptr;
+            jk["inventory"]["items"][i]["stackable"] = nullptr;
+            jk["inventory"]["items"][i]["usable"] = nullptr;
+            jk["inventory"]["items"][i]["unic ID"] = nullptr;
         }
     }
-
-    ofs << "\t\t],\n";
-    ofs << "\t\t\"coins\": {\n";
-    ofs << "\t\t\t\"gold\": " << inventory->getCoins().get_GoldCointCount() << ",\n";
-    ofs << "\t\t\t\"silver\": " << inventory->getCoins().get_SilverCointCount() << ",\n";
-    ofs << "\t\t\t\"copper\": " << inventory->getCoins().get_CopperCointCount() << "\n";
-    ofs << "\t\t}\n";
-    ofs << "\t}\n";
-    ofs << "}\n";
+    jk["inventory"]["coins"];
+    jk["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
+    jk["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
+    jk["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
+    // save to json file
+    ofs << std::setw(4) << jk;
     // close file
     ofs.close();
     return true;
@@ -336,35 +319,29 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
         printf("ERROR::PARSER::OPEN::ENTITYS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
+
     // save to json file
-    ofs << "{\n";
-    ofs << "\t\"entity list\": [\n";
+    json jk;
+    jk["entity list"];
     // save entitys
     for (size_t i = 0; i < entitys.size(); i++) {
         // check entity if null, is null continue
         if (entitys[i] == nullptr || entitys[i]->e_getAlive() == false)
             continue;
 
-        ofs << "\t\t{\n";
-        ofs << "\t\t\t\"ID_record\": " << i << ",\n";
-        ofs << "\t\t\t\"entity_uid\":" << entitys[i]->e_getID() << ",\n";
-        ofs << "\t\t\t\"position\": {\n";
-        ofs << "\t\t\t\t\"x\": " << entitys[i]->e_getPosition().x << ",\n";
-        ofs << "\t\t\t\t\"y\": " << entitys[i]->e_getPosition().y << "\n";
-        ofs << "\t\t\t},\n";
-        ofs << "\t\t\t\"attributes\": {\n";
-        ofs << "\t\t\t\t\"hp\": " << entitys[i]->getAttributes()->getAttributes()->health << ",\n";
-        ofs << "\t\t\t\t\"max_hp\": " << entitys[i]->getAttributes()->getAttributes()->max_health << ",\n";
-        ofs << "\t\t\t\t\"level\": " << entitys[i]->getAttributes()->getAttributes()->level << "\n";
-        ofs << "\t\t\t}\n";
-        ofs << "\t\t}";
-        if (i != entitys.size() - 1) {
-            ofs << ",";
-        }
-        ofs << "\n";
+        jk["entity list"][i];
+        jk["entity list"][i]["ID_record"] = i;
+        jk["entity list"][i]["entity_uid"] = entitys[i]->e_getID();
+        jk["entity list"][i]["position"]["x"] = entitys[i]->e_getPosition().x;
+        jk["entity list"][i]["position"]["y"] = entitys[i]->e_getPosition().y;
+        // save entity attributes
+        jk["entity list"][i]["attributes"];
+        jk["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes()->health;
+        jk["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes()->max_health;
+        jk["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes()->level;
     }
-    ofs << "\t]\n";
-    ofs << "}\n";
+    // save to json file
+    ofs << std::setw(4) << jk;
     // close file
     ofs.close();
     return true;
@@ -407,21 +384,15 @@ const bool parsJSON::saveKeyBinds(const std::string& filename, std::map<std::str
     }
 
     // save to json file
-    ofs << "{\n";
-    ofs << "\t\"key_binds\": [\n";
+    json jk;
+    jk["key_binds"];
+    // save key binds
     for (auto& i : keyBinds) {
-        ofs << "\t\t{\n";
-        ofs << "\t\t\t\"name\": \"" << i.first << "\",\n";
-        ofs << "\t\t\t\"key\": " << i.second << "\n";
-        // if last key bind
-        if (i.first == keyBinds.rbegin()->first) {
-            ofs << "\t\t}\n";
-        } else {
-            ofs << "\t\t},\n";
-        }
+        jk["key_binds"][i.first] = i.second;
     }
-    ofs << "\t]\n";
-    ofs << "}";
+    // save to json file
+    ofs << std::setw(4) << jk;
+    // close file
     ofs.close();
     return true;
 }
@@ -435,13 +406,12 @@ const bool parsJSON::saveGameData(const std::string& filename, Gamedata& data)
         printf("ERROR::PARSER::SAVE::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
+    json jk;
     // save to json file
-    ofs << "{\n";
-    ofs << "\t\"game_data\": {\n";
-    // save bool flag about is game has be started
-    ofs << "\t\t\"is_game_started\": " << data.game_started << "\n";
-    ofs << "\t}\n";
-    ofs << "}\n";
+    jk["game_data"];
+    jk["game_data"]["is_game_started"] = data.game_started;
+    // save to json file
+    ofs << std::setw(4) << jk;
     // close file
     ofs.close();
     return true;

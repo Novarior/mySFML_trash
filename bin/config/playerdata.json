@@ -1,17 +1,17 @@
 {
-	"player": {
-		"entity_uid":0,
-		"position": {
-			"x": 3094.06,
-			"y": 4445.3
-		},
-		"attributes": {
-			"hp": 151.296,
-			"max_hp": 200,
-			"current_exp": 0,
-			"exp_for_level": 200,
-			"level": 1,
-			"some_points": 0
-		}
-	}
+    "player": {
+        "attributes": {
+            "current_exp": 0,
+            "exp_for_level": 200,
+            "hp": 8.152443885803223,
+            "level": 1,
+            "max_hp": 200.0,
+            "some_points": 0
+        },
+        "entity_uid": 0,
+        "position": {
+            "x": 7664.0,
+            "y": 4272.0
+        }
+    }
 }

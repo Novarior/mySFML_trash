@@ -1,5 +1,5 @@
 {
-	"game_data": {
-		"is_game_started": 1
-	}
+    "game_data": {
+        "is_game_started": true
+    }
 }

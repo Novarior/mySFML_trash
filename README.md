@@ -7,5 +7,6 @@ and use as it is
 
 using libs:
 - SFML
+- nlohmann/JSON
 
 ```

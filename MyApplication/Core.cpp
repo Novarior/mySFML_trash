@@ -73,29 +73,27 @@ void Core::initStateData()
 
 void Core::initKeyBinds()
 {
-    // load supported keys from JSON file to map supportedKeys, check if file exist, create if not
-    if (!this->parsJSON->loadKeyBinds("config/supported_keys.json", this->supportedKeys)) {
-        // print error
-        std::cout << "ERROR::CORE::INITKEYBINDS::FAILED TO LOAD SUPPORTED KEYS FROM JSON FILE" << std::endl;
-        // init default keys
-        this->supportedKeys["Escape"] = sf::Keyboard::Escape;
-        this->supportedKeys["A"] = sf::Keyboard::A;
-        this->supportedKeys["C"] = sf::Keyboard::C;
-        this->supportedKeys["D"] = sf::Keyboard::D;
-        this->supportedKeys["E"] = sf::Keyboard::E;
-        this->supportedKeys["F"] = sf::Keyboard::F;
-        this->supportedKeys["Q"] = sf::Keyboard::Q;
-        this->supportedKeys["R"] = sf::Keyboard::R;
-        this->supportedKeys["S"] = sf::Keyboard::S;
-        this->supportedKeys["W"] = sf::Keyboard::W;
-        this->supportedKeys["X"] = sf::Keyboard::X;
-        this->supportedKeys["Z"] = sf::Keyboard::Z;
-        this->supportedKeys["Space"] = sf::Keyboard::Space;
-        this->supportedKeys["Tab"] = sf::Keyboard::Tab;
-        // save default keys to file
-        this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
-    }
-    // else do nothing
+
+    // init default keys
+    this->supportedKeys["Escape"] = sf::Keyboard::Escape;
+    this->supportedKeys["A"] = sf::Keyboard::A;
+    this->supportedKeys["C"] = sf::Keyboard::C;
+    this->supportedKeys["D"] = sf::Keyboard::D;
+    this->supportedKeys["E"] = sf::Keyboard::E;
+    this->supportedKeys["F"] = sf::Keyboard::F;
+    this->supportedKeys["Q"] = sf::Keyboard::Q;
+    this->supportedKeys["R"] = sf::Keyboard::R;
+    this->supportedKeys["S"] = sf::Keyboard::S;
+    this->supportedKeys["W"] = sf::Keyboard::W;
+    this->supportedKeys["X"] = sf::Keyboard::X;
+    this->supportedKeys["Z"] = sf::Keyboard::Z;
+    this->supportedKeys["Space"] = sf::Keyboard::Space;
+    this->supportedKeys["Tab"] = sf::Keyboard::Tab;
+    this->supportedKeys["F1"] = sf::Keyboard::F1;
+    this->supportedKeys["F2"] = sf::Keyboard::F2;
+    this->supportedKeys["F3"] = sf::Keyboard::F3;
+    // save default keys to file
+    this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
 }
 
 void Core::initState()

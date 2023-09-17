@@ -32,6 +32,7 @@ private:
     sf::FloatRect checkreck;
     std::vector<sf::Texture> listTrees;
     std::vector<sf::RectangleShape> trees;
+    sf::Image minimapImage;
 
     float keyTime;
     float keyTimeMax;
@@ -57,6 +58,8 @@ public:
     void updateAnimationTiles(const float& delta_time);
     void updateRenderArea(const sf::Vector2i& playerPosition_grid);
     void update(Entity* entity, const float& delta_time);
+
+    sf::Image getMinimapImage() { return this->minimapImage; }
 
     // get array with grassblock
     std::vector<sf::Vector2f> getSpawnPosArray();

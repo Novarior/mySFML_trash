@@ -42,7 +42,7 @@ private:
     void initTileMapData();
     void initPlayer();
     void initEntitys();
-
+    void initMiniMap();
 
     void intGUI();
 
@@ -58,6 +58,8 @@ public:
     void updateEntitys(const float& delta_time);
     void updateInput(const float& delta_time);
     void updatePlayerInputs(const float& delta_time);
+    void updateGUI(const float& delta_time);
+    void updateDebug(const float& delta_time);
     void update(const float& delta_time);
 
     // render functions

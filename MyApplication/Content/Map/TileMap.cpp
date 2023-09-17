@@ -104,6 +104,7 @@ void TileMap::generateMap()
 
     double writebuff;
     sf::Color buff;
+    this->minimapImage.create(this->maxSizeWorldGrid.x, this->maxSizeWorldGrid.y, sf::Color::Red);
 
     this->tilemap.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<BrickBlock*>>());
 
@@ -161,6 +162,7 @@ void TileMap::generateMap()
                     sf::Vector2f(x * this->m_dnoice.gridSize, y * this->m_dnoice.gridSize), buff,
                     true, this->m_TexturesList["OCEAN"], NAN_DEF));
             }
+            this->minimapImage.setPixel(x, y, this->tilemap[x][y].back()->getBlockColor());
         }
     }
 }

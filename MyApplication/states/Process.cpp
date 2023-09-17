@@ -43,6 +43,7 @@ void Process::initKeybinds()
 {
     this->Ikeybinds["KEY_CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["KEY_TAB"] = this->IsupportedKeys->at("Tab");
+    this->Ikeybinds["KEY_F1"] = this->IsupportedKeys->at("F1");
     this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");
     this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
@@ -64,6 +65,21 @@ void Process::initTileMap()
 {
     this->myGN = new ProcessGenerationNoice(this->noicedata);
     this->mapTiles = new TileMap(this->noicedata, myGN);
+}
+
+void Process::intGUI() // init GUI
+{
+    // init player HP bar on top right on screen math position using mmath::p2pX/X
+    this->playerBar["HP_BAR"] = new gui::ProgressBar(
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Color::Red, this->IstateData->characterSize_game_small, this->IstateData->font);
+    this->playerBar["MP_BAR"] = new gui::ProgressBar(
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
+        sf::Color::Blue, this->IstateData->characterSize_game_small, this->IstateData->font);
+
+    this->initMiniMap();
 }
 
 void Process::initView()
@@ -102,16 +118,21 @@ void Process::initPlayer()
     // set player position to random position getting from spawnPosArray
     this->player = new Player(spawnPosArray[rand() % spawnPosArray.size()]);
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
+}
 
-    // init player HP bar on top right on screen math position using mmath::p2pX/X
-    this->playerBar["HP_BAR"] = new gui::ProgressBar(
-        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Color::Red, this->IstateData->characterSize_game_small, this->IstateData->font);
-    this->playerBar["MP_BAR"] = new gui::ProgressBar(
-        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Color::Blue, this->IstateData->characterSize_game_small, this->IstateData->font);
+void Process::initMiniMap() // init minimap
+{
+    sf::IntRect worldBounds(
+        0, 0,
+        this->mapTiles->getMapSizeOnFloat().x,
+        this->mapTiles->getMapSizeOnFloat().y);
+
+    this->minimap = new gui::MiniMap(
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(20, this->IstateData->sWindow->getSize().y)),
+        worldBounds);
+
+    this->minimap->setImage(this->mapTiles->getMinimapImage());
 }
 
 // Defauld Init Data
@@ -158,6 +179,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
+    this->intGUI();
 }
 
 Process::~Process()
@@ -169,6 +191,7 @@ Process::~Process()
     delete this->pausemenu;
     delete this->player;
     delete this->t_inventory;
+    delete this->minimap;
 
     // clear bar
     for (auto& it : this->playerBar)
@@ -180,13 +203,18 @@ Process::~Process()
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+// sub update functions
 void Process::updateInput(const float& delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
         this->t_inventory->toggleSwitch();
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F1"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
 }
 
 void Process::updatePlayerInputs(const float& delta_time)
@@ -217,11 +245,28 @@ void Process::updateEntitys(const float& delta_time)
         this->entitys[i]->e_update(delta_time);
 }
 
+void Process::updateGUI(const float& delta_time)
+{
+    if (this->t_inventory->getIsOpened()) // update inventory
+        this->t_inventory->update(this->mousePosWindow);
+    if (this->minimap != nullptr) // update minimap
+        this->minimap->update(this->player->e_getPosition());
+
+    this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes()->health, this->player->getAttributes()->getAttributes()->max_health);
+    this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes()->mana, this->player->getAttributes()->getAttributes()->max_mana);
+}
+
+// main update function
 void Process::update(const float& delta_time)
 {
+    // always update mouse position, inputs, and keyTime
     this->updateMousePositions(&this->view);
     this->updateKeytime(delta_time);
     this->updateInput(delta_time);
+
+    // one more update
+    if (this->debugMode)
+        this->updateDebug(delta_time);
 
     if (m_gamedata.game_started == false) // update game data
         this->m_gamedata.game_started = true;
@@ -240,76 +285,81 @@ void Process::update(const float& delta_time)
     } else { // update game
         this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
-
         this->player->e_update(delta_time);
-        this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes()->health, this->player->getAttributes()->getAttributes()->max_health);
-        this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes()->mana, this->player->getAttributes()->getAttributes()->max_mana);
-
-        if (this->t_inventory->getIsOpened() && !this->Ipaused) // inventory  menu update
-            this->t_inventory->update(this->mousePosWindow);
+        this->updateGUI(delta_time);
     }
     this->updateTileMap(delta_time);
-    if (this->debugMode) { // update debug information
-        double fps = 1.0f / delta_time;
-        this->dString_Stream
-            << "FPS:\t" << fps
-            << "\nResolution: " << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
-            << "\nPlayer:"
-            << "\nComponents: "
-            << "\n\tvelX: " << this->player->e_getVelocity().x
-            << "\n\tvelY: " << this->player->e_getVelocity().y
-            << "\nPosition:"
-            << "\n\tx: " << this->player->e_getPosition().x
-            << "\n\ty: " << this->player->e_getPosition().y
-            << "\n\tSecected Cell ID: " << this->t_inventory->getCurrentCellID(this->mousePosWindow)
-            << "\n\tgrid x: " << this->player->e_getGridPositionFloat(this->IgridSize).x
-            << "\n\tgrid y: " << this->player->e_getGridPositionFloat(this->IgridSize).y
-            << "\nMap Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y
-            << "\nMap Area Render: "
-            << this->mapTiles->getRenderArea().fromX << ' '
-            << this->mapTiles->getRenderArea().fromY << ' '
-            << this->mapTiles->getRenderArea().toX << ' '
-            << this->mapTiles->getRenderArea().toY << '\n'
-            << "Pause:\t" << this->Ipaused
-            << "\nMemory Usage: "
-            // get memory usage enemys on bytes
-            << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
-            << "\n\tEntitys: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
-            << "\n\tTotal Entitys: " << Entity::count_entitys
-            << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
-            << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
-            << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
-            << "\n\tTotal usage: " << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes"
-            << "\nGenerator data:"
-            << "\n\tSeed:\t" << this->noicedata.seed
-            << "\n\tOctaves:\t" << this->noicedata.octaves
-            << "\n\tFrequency:\t" << this->noicedata.frequency
-            << "\n\tAmplifire:\t" << this->noicedata.amplifire
-            << "\n\tPersistence:\t" << this->noicedata.persistence
-            << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
-            << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
-            << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
-            << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY;
-
-        this->dText.setString(this->dString_Stream.str());
-        this->dString_Stream.str("");
-    }
 }
 
+void Process::updateDebug(const float& delta_time)
+{
+    double fps = 1.0f / delta_time;
+    this->dString_Stream
+        << "FPS:\t" << fps
+        << "\nResolution: " << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
+        << "\nPlayer:"
+        << "\nComponents: "
+        << "\n\tvelX: " << this->player->e_getVelocity().x
+        << "\n\tvelY: " << this->player->e_getVelocity().y
+        << "\nPosition:"
+        << "\n\tx: " << this->player->e_getPosition().x
+        << "\n\ty: " << this->player->e_getPosition().y
+        << "\n\tSecected Cell ID: " << this->t_inventory->getCurrentCellID(this->mousePosWindow)
+        << "\n\tgrid x: " << this->player->e_getGridPositionFloat(this->IgridSize).x
+        << "\n\tgrid y: " << this->player->e_getGridPositionFloat(this->IgridSize).y
+        << "\nMap Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y
+        << "\nMap Area Render: "
+        << this->mapTiles->getRenderArea().fromX << ' '
+        << this->mapTiles->getRenderArea().fromY << ' '
+        << this->mapTiles->getRenderArea().toX << ' '
+        << this->mapTiles->getRenderArea().toY << '\n'
+        << "Pause:\t" << this->Ipaused
+        << "\nMemory Usage: "
+        // get memory usage enemys on bytes
+        << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
+        << "\n\tEntitys: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
+        << "\n\tTotal Entitys: " << Entity::count_entitys
+        << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
+        << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
+        << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
+        << "\n\tTotal usage: " << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) + sizeof(this->mapTiles) + sizeof(*this->pausemenu) + sizeof(*this->t_inventory) << " bytes"
+        << "\nGenerator data:"
+        << "\n\tSeed:\t" << this->noicedata.seed
+        << "\n\tOctaves:\t" << this->noicedata.octaves
+        << "\n\tFrequency:\t" << this->noicedata.frequency
+        << "\n\tAmplifire:\t" << this->noicedata.amplifire
+        << "\n\tPersistence:\t" << this->noicedata.persistence
+        << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
+        << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
+        << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
+        << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY;
+
+    this->dText.setString(this->dString_Stream.str());
+    this->dString_Stream.str("");
+}
+
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////
 // sub render functions
 void Process::renderGUI(sf::RenderTarget& target)
 {
-    for (auto& it : this->playerBar) // render player bars
-        it.second->render(target);
-
     if (this->debugMode) // debuging text render
         target.draw(this->dText);
 
     if (this->Ipaused) // Pause menu render
-        this->pausemenu->render(target);
+    {
+        if (this->pausemenu != nullptr)
+            this->pausemenu->render(target);
+    } else {
+        if (this->t_inventory->getIsOpened()) // inventory  menu render
+            this->t_inventory->render(target);
+        for (auto& it : this->playerBar) // render player bars
+            it.second->render(target);
 
-    if (this->t_inventory->getIsOpened() && !this->Ipaused) // inventory  menu render
-        this->t_inventory->render(target);
+        if (this->minimap != nullptr)
+            this->minimap->render(target);
+    }
 }
 
 void Process::renderTileMap(sf::RenderTarget& target)
@@ -328,6 +378,7 @@ void Process::renderPlayer(sf::RenderTarget& target)
     this->player->e_render(target);
     this->playerView.setCenter(this->player->e_getPosition());
 }
+
 // main render function
 void Process::render(sf::RenderWindow& target)
 {

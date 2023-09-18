@@ -9,48 +9,48 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #include all files for build project
 set(RESOURCE_FILES
 #core includes
-    MyApplication/main.cpp 
-    MyApplication/Core.cpp 
-    MyApplication/states/gfx.cpp
-    MyApplication/math/mymath.cpp
-    MyApplication/math/simplex.cpp
-    MyApplication/math/LSystem.cpp
-    MyApplication/source/mypars/parsJSON.cpp
-    MyApplication/math/ProcessGenerationNoice.cpp
+    source/main.cpp 
+    source/Core.cpp 
+    source/states/gfx.cpp
+    source/math/mymath.cpp
+    source/math/simplex.cpp
+    source/math/LSystem.cpp
+    source/source/mypars/parsJSON.cpp
+    source/math/ProcessGenerationNoice.cpp
     #include states
-    MyApplication/states/State.cpp
-    MyApplication/states/Process.cpp
-    MyApplication/states/MainMenu.cpp
-    MyApplication/states/settings.cpp
-    MyApplication/states/NoiceView.cpp
-    MyApplication/states/PauseMenu.cpp
+    source/states/State.cpp
+    source/states/Process.cpp
+    source/states/MainMenu.cpp
+    source/states/settings.cpp
+    source/states/NoiceView.cpp
+    source/states/PauseMenu.cpp
     #gui includes
-    MyApplication/GUI/components/button.cpp
-    MyApplication/GUI/components/minimap.cpp
-    MyApplication/GUI/components/textbox.cpp
-    MyApplication/GUI/components/selector.cpp
-    MyApplication/GUI/components/ProgressBar.cpp
-    MyApplication/GUI/components/dropDownList.cpp
-    MyApplication/GUI/components/staticSelector.cpp
-    MyApplication/GUI/components/textureSelector.cpp
+    source/GUI/components/button.cpp
+    source/GUI/components/minimap.cpp
+    source/GUI/components/textbox.cpp
+    source/GUI/components/selector.cpp
+    source/GUI/components/ProgressBar.cpp
+    source/GUI/components/dropDownList.cpp
+    source/GUI/components/staticSelector.cpp
+    source/GUI/components/textureSelector.cpp
     #entitys includes
-    MyApplication/entitys/entity.cpp 
-    MyApplication/entitys/player.cpp 
-    MyApplication/entitys/Enemys/Slime.cpp 
+    source/entitys/entity.cpp 
+    source/entitys/player.cpp 
+    source/entitys/Enemys/Slime.cpp 
     #AI includes
-    MyApplication/entitys/AI/AIFollow.cpp 
-    MyApplication/entitys/AI/AIComponent.cpp 
+    source/entitys/AI/AIFollow.cpp 
+    source/entitys/AI/AIComponent.cpp 
     #properties includes
-    MyApplication/entitys/properties/hitbox.cpp 
-    MyApplication/entitys/properties/movement.cpp 
-    MyApplication/entitys/properties/attributes.cpp
+    source/entitys/properties/hitbox.cpp 
+    source/entitys/properties/movement.cpp 
+    source/entitys/properties/attributes.cpp
     #map includes
-    MyApplication/Content/Map/block.cpp 
-    MyApplication/Content/Map/TileMap.cpp
+    source/Content/Map/block.cpp 
+    source/Content/Map/TileMap.cpp
     #items includes
-    MyApplication/Content/ItemsStuff/Inventory.cpp
+    source/Content/ItemsStuff/Inventory.cpp
     #ect includes
-    MyApplication/Content/rotationCircle.cpp 
+    source/Content/rotationCircle.cpp 
 )
 
 #set outputs directorry
@@ -59,8 +59,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 #make a cmakever.h from template file and include on build
-set(Template_ver MyApplication/cmakever.h.in )
-configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../MyApplication/cmakever.h)
+set(Template_ver source/cmakever.h.in )
+configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
 
 #include SFML library on project
 set(SFML_DIR  "/usr/local/lib/cmake/SFML" )
@@ -95,7 +95,7 @@ if(WIN64)
     # Смена системы на Windows
     set(CMAKE_SYSTEM_NAME Windows)
 
-    try_compile(COMPILE_RESULT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ${CMAKE_CURRENT_SOURCE_DIR}/MyApplication/main.cpp)
+    try_compile(COMPILE_RESULT ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} ${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp)
     
     add_executable(GameProto_Windows ${RESOURCE_FILES})
 

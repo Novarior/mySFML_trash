@@ -29,64 +29,8 @@ const bool parsJSON::loadInventory(const std::string& filename, Inventory& inven
 // load  entitys
 const bool parsJSON::loadEntitys(const std::string& filename, std::vector<Entity*>& entitys)
 { // open json file
-    std::ifstream ifs(filename);
-    std::string line;
-    int value = 0;
-    // check open file
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::ENTITYS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
-        return false;
-    }
-    // load from json file
-    while (std::getline(ifs, line)) {
-        // check if line is not empty
-        if (line != "") {
-            // skip "entity list" and all special symbols
-            if (line.find("entity list") != std::string::npos)
-                continue;
-            if (line.find("{") != std::string::npos)
-                continue;
-            if (line.find("}") != std::string::npos)
-                continue;
-            if (line.find("[") != std::string::npos)
-                continue;
-            if (line.find("]") != std::string::npos)
-                continue;
 
-            if (line.find("ID_record") != std::string::npos) {
-                // get entity ID_record
-                value = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-            } else if (line.find("entity_uid") != std::string::npos) {
-                // get entity UID
-                value = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-            } else if (line.find("position") != std::string::npos) {
-                // get entity position
-                int x = std::stoi(line.substr(line.find("x") + 4, line.find(",") - line.find("x") - 4)),
-                    y = std::stoi(line.substr(line.find("y") + 4, line.find("}") - line.find("y") - 4));
-                entitys[value]->e_setPosition(sf::Vector2f(x, y));
-            } else if (line.find("attributes") != std::string::npos) {
-                // get entity attributes
-                int hp = std::stoi(line.substr(line.find("hp") + 4, line.find(",") - line.find("hp") - 4)),
-                    max_hp = std::stoi(line.substr(line.find("max_hp") + 8, line.find(",") - line.find("max_hp") - 8)),
-                    level = std::stoi(line.substr(line.find("level") + 6, line.find("}") - line.find("level") - 6));
-                entitys[value]->getAttributes()->getAttributes()->health = hp;
-                entitys[value]->getAttributes()->getAttributes()->max_health = max_hp;
-                entitys[value]->getAttributes()->getAttributes()->level = level;
-
-            } else {
-                // if line is not empty and not special symbols, then this is error
-                printf("ERROR::PARSER::LOAD::ENTITYS::UNKNOWN_LINE\n   %s\n", line.c_str());
-                return false;
-            }
-
-            // if entity is not null
-            if (entitys[value] != nullptr) {
-                // set entity ID_record
-                entitys[value]->e_setID(value);
-            }
-        }
-    }
-    return true;
+    return false;
 }
 // load keybinds
 const bool parsJSON::loadKeyBinds(const std::string& filename, std::map<std::string, int>& keyBinds)
@@ -210,31 +154,7 @@ const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
 // save player
 const bool parsJSON::savePlayer(const std::string& filename, Entity* player)
 {
-    // open json file
-    std::ofstream ofs(filename);
-    // check open file
-    if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", filename.c_str());
-        return false;
-    }
-    // save to json file
-    json jk;
-    jk["player"];
-    jk["player"]["entity_uid"] = player->e_getID();
-    jk["player"]["position"]["x"] = player->e_getPosition().x;
-    jk["player"]["position"]["y"] = player->e_getPosition().y;
-    // save player attributes
-    jk["player"]["attributes"];
-    jk["player"]["attributes"]["hp"] = player->getAttributes()->getAttributes()->health;
-    jk["player"]["attributes"]["max_hp"] = player->getAttributes()->getAttributes()->max_health;
-    jk["player"]["attributes"]["current_exp"] = player->getAttributes()->getAttributes()->experience;
-    jk["player"]["attributes"]["exp_for_level"] = player->getAttributes()->getAttributes()->experience_for_level;
-    jk["player"]["attributes"]["level"] = player->getAttributes()->getAttributes()->level;
-    jk["player"]["attributes"]["some_points"] = player->getAttributes()->getAttributes()->some_points;
-    // close file
-    ofs << std::setw(4) << jk;
-    ofs.close();
-    return true;
+    return false;
 }
 // save inventory
 const bool parsJSON::saveInventory(const std::string& filename, Inventory* inventory)
@@ -311,7 +231,7 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
     // save entitys
     for (size_t i = 0; i < entitys.size(); i++) {
         // check entity if null, is null continue
-        if (entitys[i] == nullptr || entitys[i]->e_getAlive() == false)
+        if (entitys[i] == nullptr || entitys[i]->e_isAlive() == false)
             continue;
 
         jk["entity list"][i];
@@ -321,9 +241,9 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
         jk["entity list"][i]["position"]["y"] = entitys[i]->e_getPosition().y;
         // save entity attributes
         jk["entity list"][i]["attributes"];
-        jk["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes()->health;
-        jk["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes()->max_health;
-        jk["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes()->level;
+        jk["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes().health;
+        jk["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes().max_health;
+        jk["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes().level;
     }
     // save to json file
     ofs << std::setw(4) << jk;

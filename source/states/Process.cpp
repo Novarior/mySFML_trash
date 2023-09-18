@@ -48,7 +48,9 @@ void Process::initKeybinds()
     this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
-
+    this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
+    this->Ikeybinds["KEY_Q"] = this->IsupportedKeys->at("Q");
+    this->Ikeybinds["KEY_SPACE"] = this->IsupportedKeys->at("Space");
     // debug moment
     // std::cout<<"sizeof keybinds: "<<this->Ikeybinds.size()<<'\n';
 }
@@ -229,6 +231,17 @@ void Process::updatePlayerInputs(const float& delta_time)
         this->player->e_move(0.f, 1.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
         this->player->e_move(0.f, -1.f, delta_time);
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime())
+        ;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
+        ;
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
+        for (auto& it : this->entitys)
+            this->player->e_attack(it, delta_time);
+    }
 }
 
 void Process::updateTileMap(const float& delta_time)
@@ -243,8 +256,12 @@ void Process::updateTileMap(const float& delta_time)
 
 void Process::updateEntitys(const float& delta_time)
 { // update entitys
-    for (size_t i = 0; i < this->entitys.size(); i++)
+    for (size_t i = 0; i < this->entitys.size(); i++) {
         this->entitys[i]->e_update(delta_time);
+
+        if (!this->entitys[i]->e_isAlive())
+            this->entitys.erase(this->entitys.begin() + i);
+    }
 }
 
 void Process::updateGUI(const float& delta_time)
@@ -254,8 +271,8 @@ void Process::updateGUI(const float& delta_time)
     if (this->minimap != nullptr) // update minimap
         this->minimap->update(this->player->e_getPosition());
 
-    this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes()->health, this->player->getAttributes()->getAttributes()->max_health);
-    this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes()->mana, this->player->getAttributes()->getAttributes()->max_mana);
+    this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes().health, this->player->getAttributes()->getAttributes().max_health);
+    this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes().mana, this->player->getAttributes()->getAttributes().max_mana);
 }
 
 // main update function
@@ -290,6 +307,8 @@ void Process::update(const float& delta_time)
         this->updateEntitys(delta_time);
         this->updatePlayerInputs(delta_time);
         this->player->e_update(delta_time);
+        if (this->player->e_isAlive() == false)
+            this->endState();
         this->updateGUI(delta_time);
     }
     this->updateTileMap(delta_time);
@@ -379,7 +398,7 @@ void Process::renderEntities(sf::RenderTarget& target)
 
 void Process::renderPlayer(sf::RenderTarget& target)
 {
-    this->player->e_render(target);
+    this->player->e_render(target, this->debugMode);
     this->playerView.setCenter(this->player->e_getPosition());
 }
 

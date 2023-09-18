@@ -15,6 +15,5 @@ public:
 
     void e_update(const float& delta_time);
     void e_render(sf::RenderTarget& target, const bool show_hitbox = false);
-    void e_render(sf::RenderTarget& target, sf::Shader& shader, const bool show_hitbox = false);
 };
 #endif

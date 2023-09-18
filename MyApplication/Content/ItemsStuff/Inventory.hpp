@@ -63,13 +63,15 @@ public:
 
     Item* getItem(unsigned int ID);
     Item* getItemFromNumSlot(unsigned int num_slot);
+    const int getNumSlot(Item* item);
+    std::vector<std::vector<Item*>>& getInventoryArray() { return this->InventoryArray; }
 
     // functions for manipulating with inventory
     void openInventory();
     void closeInventory();
     void toggleSwitch() { this->isOpened = !this->isOpened; }
     const bool getIsOpened() const { return this->isOpened; }
-    const int getSizeInventory() { return this->CellsInventory.size(); }
+    const int getSizeInventory() { return this->CellsInventory.size() * this->CellsInventory[0].size(); }
 
     // functions for manipulating with coins
     Coins& getCoins();
@@ -79,7 +81,7 @@ private:
 
     // containers for items and ect.
     Coins m_Coins;
-    std::vector<std::vector<std::map<unsigned int, Item*>>> InventoryArray;
+    std::vector<std::vector<Item*>> InventoryArray;
     std::vector<std::vector<Cell>> CellsInventory;
 
     // variables
@@ -89,5 +91,7 @@ private:
     sf::RectangleShape m_CellInvenrotyShape;
     sf::Texture m_CellInvTex;
     sf::RectangleShape m_background_inventory;
+
+    void clearInventory();
 };
 #endif

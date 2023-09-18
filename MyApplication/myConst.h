@@ -43,6 +43,11 @@ const char item_img_copper_nuggen[] = "resourses/Textures/Images/copper_nugget.p
 const char item_img_silver_nuggen[] = "resourses/Textures/Images/iron_nugget.png";
 const char item_img_someore[] = "resourses/Textures/Images/some_ore.png";
 
+// more items
+const char item_img_stone[] = "resourses/Textures/Images/stone.png";
+const char item_img_stone2[] = "resourses/Textures/Images/stone_01.png";
+const char item_img_poison_small_regeneration[] = "resourses/Textures/Images/poison_small_regeneration.png";
+
 // backgrounds
 const char texture_background_mainmenu_lay_1[] = "resourses/Textures/Images/Lay_1.png";
 const char texture_background_mainmenu_lay_2[] = "resourses/Textures/Images/Lay_2.png";

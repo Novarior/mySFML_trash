@@ -196,39 +196,14 @@ const bool parsJSON::loadNoiceData(const std::string& filename, noiceData& data)
 const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
 { // load game data
     std::ifstream ifs(filename);
-    std::string line;
     // check open file
     if (!ifs.is_open()) {
         printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
-    // load from json file
-    while (std::getline(ifs, line)) {
-        // check if line is not empty
-        if (line != "") {
-            // skip "game_data" and all special symbols
-            if (line.find("game_data") != std::string::npos)
-                continue;
-            if (line.find("{") != std::string::npos)
-                continue;
-            if (line.find("}") != std::string::npos)
-                continue;
-            if (line.find("[") != std::string::npos)
-                continue;
-            if (line.find("]") != std::string::npos)
-                continue;
-            // read game data
-            if (line.find("is_game_started") != std::string::npos) {
-                data.game_started = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
+    json js = json::parse(ifs);
+    js.at("game_data").at("is_game_started").get_to(data.game_started);
 
-        } else {
-            // if line is not empty and not special symbols, then this is error
-            printf("ERROR::PARSER::LOAD::GAMEDATA::UNKNOWN_LINE\n   %s\n", line.c_str());
-            return false;
-        }
-    }
     return true;
 }
 // SAVES
@@ -271,34 +246,44 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
         printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
-    json jk;
     // save to json file
+    // variables
+    json jk;
+    std::vector<std::vector<Item*>> iArr = inventory->getInventoryArray();
+
     jk["inventory"];
     jk["inventory"]["size"] = inventory->getSizeInventory();
     jk["inventory"]["items"];
-    for (size_t i = 0; i < inventory->getSizeInventory(); i++) {
-        jk["inventory"]["items"][i];
-        // check item if null
-        if (inventory->getItemFromNumSlot(i) != nullptr) {
-            // write "slot if is not empty
-            jk["inventory"]["items"][i]["slot"] = i;
-            jk["inventory"]["items"][i]["name"] = inventory->getItemFromNumSlot(i)->getName();
-            jk["inventory"]["items"][i]["count"] = inventory->getItemFromNumSlot(i)->getQuantity();
-            jk["inventory"]["items"][i]["price"] = inventory->getItemFromNumSlot(i)->getPrice();
-            jk["inventory"]["items"][i]["stackable"] = inventory->getItemFromNumSlot(i)->isStackable();
-            jk["inventory"]["items"][i]["usable"] = inventory->getItemFromNumSlot(i)->isUsable();
-            jk["inventory"]["items"][i]["unic ID"] = inventory->getItemFromNumSlot(i)->getID();
-        } else {
-            // write "slot" if is empty
-            jk["inventory"]["items"][i]["slot"] = i;
-            jk["inventory"]["items"][i]["name"] = nullptr;
-            jk["inventory"]["items"][i]["count"] = nullptr;
-            jk["inventory"]["items"][i]["price"] = nullptr;
-            jk["inventory"]["items"][i]["stackable"] = nullptr;
-            jk["inventory"]["items"][i]["usable"] = nullptr;
-            jk["inventory"]["items"][i]["unic ID"] = nullptr;
+    int slot = 0;
+    // save items
+    for (auto& row : iArr) {
+        for (auto& item : row) {
+            // check item if null
+            if (item != nullptr) { // write "slot if is not empty
+                jk["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
+                jk["inventory"]["items"][slot]["name"] = item->getName();
+                jk["inventory"]["items"][slot]["amount"] = item->getAmount();
+                jk["inventory"]["items"][slot]["price"];
+                jk["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
+                jk["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
+                jk["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
+                jk["inventory"]["items"][slot]["stackable"] = item->isStackable();
+                jk["inventory"]["items"][slot]["usable"] = item->isUsable();
+                jk["inventory"]["items"][slot]["unic ID"] = item->getID();
+            } else {
+                // write "slot" if is empty
+                jk["inventory"]["items"][slot]["slot"] = nullptr;
+                jk["inventory"]["items"][slot]["name"] = nullptr;
+                jk["inventory"]["items"][slot]["amount"] = nullptr;
+                jk["inventory"]["items"][slot]["price"] = nullptr;
+                jk["inventory"]["items"][slot]["stackable"] = nullptr;
+                jk["inventory"]["items"][slot]["usable"] = nullptr;
+                jk["inventory"]["items"][slot]["unic ID"] = nullptr;
+            }
+            slot++;
         }
     }
+
     jk["inventory"]["coins"];
     jk["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
     jk["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();

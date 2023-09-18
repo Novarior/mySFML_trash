@@ -30,9 +30,9 @@ public:
     void add_CopperCoinCound(const int value) { this->m_copper += value; }
 
     // Acsess
-    const int get_GoldCointCount() { return this->m_gold; }
-    const int get_SilverCointCount() { return this->m_silver; }
-    const int get_CopperCointCount() { return this->m_copper; }
+    inline const int get_GoldCointCount() { return this->m_gold; }
+    inline const int get_SilverCointCount() { return this->m_silver; }
+    inline const int get_CopperCointCount() { return this->m_copper; }
 
     // Update coins
     void updateCoins()

@@ -21,8 +21,9 @@ class TileMap {
 private:
     rectangleWithOffset m_renderArea;
     rectangleWithOffset m_colisionArea;
-    sf::Vector2u maxSizeWorldGrid;
-    sf::Vector2f maxSizeWorldFloat;
+
+    sf::Vector2i worldSizeGrid;
+    sf::Vector2f worldSizeFloat;
     noiceData m_dnoice;
     ProcessGenerationNoice mGen_noice;
     std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
@@ -50,8 +51,10 @@ public:
     TileMap(noiceData datanoice, ProcessGenerationNoice* noice);
     virtual ~TileMap();
 
-    const sf::Vector2u getMapSizeOnTiles();
-    const sf::Vector2f getMapSizeOnFloat();
+    inline const sf::Image& getMinimapImage() { return this->minimapImage; }
+    inline const sf::Vector2i& getMapSizeOnTiles() { return this->worldSizeGrid; }
+    inline const sf::Vector2f& getMapSizeOnFloat() { return this->worldSizeFloat; }
+    inline const rectangleWithOffset& getRenderArea() { return this->m_renderArea; }
 
     void updateWorldBoundsCollision(Entity* entity);
     void updateTileCollision(Entity* entity, const float& delta_time);
@@ -59,15 +62,12 @@ public:
     void updateRenderArea(const sf::Vector2i& playerPosition_grid);
     void update(Entity* entity, const float& delta_time);
 
-    sf::Image getMinimapImage() { return this->minimapImage; }
-
     // get array with grassblock
-    std::vector<sf::Vector2f> getSpawnPosArray();
+    std::vector<sf::Vector2f>& getSpawnPosArray() { return this->m_listGrassBlocks; }
 
     sf::FloatRect getGlobalBounds(const unsigned int x, const unsigned int Y) const;
     bool getCollision(const unsigned int x, const unsigned int y) const;
 
-    rectangleWithOffset getRenderArea();
     void render(sf::RenderTarget* target);
 };
 #endif

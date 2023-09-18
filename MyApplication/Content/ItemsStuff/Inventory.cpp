@@ -1,5 +1,16 @@
 #include "Inventory.hpp"
 
+void Inventory::clearInventory()
+{
+    // Clearing the inventory
+    for (std::vector<Item*>& row : InventoryArray) {
+        for (Item* slotMap : row) {
+            delete slotMap;
+            slotMap = nullptr;
+        }
+    }
+}
+
 Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& font, unsigned int character_size)
     : m_font(font)
 {
@@ -28,15 +39,15 @@ Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& fo
 
     // init cells inventory layout
     // Initialize the CellsInventory with rows and columns
-    unsigned int rows = 30; // for example
-    unsigned int cols = 4; // for example
+    unsigned int rows = 20; // for example
+    unsigned int cols = 10; // for example
     float cell_size = gridSize_cell;
     for (unsigned int row = 0; row < rows; ++row) {
         std::vector<Cell> rowCells;
         for (unsigned int col = 0; col < cols; ++col) {
             sf::Vector2f cellPos(
-                this->m_background_inventory.getPosition().x + (screen_2to3.x / 30) * row,
-                this->m_background_inventory.getPosition().y + (screen_2to3.x / 30) * col);
+                this->m_background_inventory.getPosition().x + (screen_2to3.x / 20) * row,
+                this->m_background_inventory.getPosition().y + (screen_2to3.x / 20) * col);
 
             rowCells.emplace_back(cellPos, screen_2to3.x / rows, this->m_CellInvTex, row * cols + col);
         }
@@ -46,21 +57,24 @@ Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& fo
     // init Coins GUI
     this->m_Coins = { 0, 0, 0 };
 
-    // initializing the inventory map (empty)
-    this->InventoryArray.resize(rows, std::vector<std::map<unsigned int, Item*>>(cols));
+    // initializing the inventory map with nullptr 30 rows and 4 columns
+    // array std::vector<std::vector<Item*>> InventoryArray;
+    this->clearInventory();
+    // resize 30x4
+    this->InventoryArray.resize(rows, std::vector<Item*>());
+    for (int i = 0; i < rows; i++)
+        this->InventoryArray[i].resize(cols, nullptr);
 }
 
 Inventory::~Inventory()
 {
     // clearing the inventory
-    for (std::vector<std::map<unsigned int, Item*>>& row : this->InventoryArray) {
-        for (std::map<unsigned int, Item*>& slotMap : row) {
-            for (auto& entry : slotMap) {
-                delete entry.second;
-                entry.second = nullptr;
-            }
-            slotMap.clear();
+    for (std::vector<Item*>& row : this->InventoryArray) {
+        for (Item* it : row) {
+            delete it;
+            it = nullptr;
         }
+        row.clear();
     }
     this->InventoryArray.clear();
 
@@ -72,35 +86,38 @@ Inventory::~Inventory()
 }
 
 bool Inventory::addItem(Item* item)
-{
-    // Made a check if the item is already in the inventory
-    if (item != nullptr) {
-        // Try to stack the item in existing slots
-        for (std::vector<std::map<unsigned int, Item*>>& row : InventoryArray) {
-            for (std::map<unsigned int, Item*>& slotMap : row) {
-                for (auto& entry : slotMap) {
-                    if (entry.second != nullptr && entry.second == item) {
-                        if (entry.second->isStackable()) {
-                            entry.second->addQuantity(item->getQuantity());
-                            return true;
-                        } else {
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
+{ // check if item is not null
+    if (item != nullptr) { // check if item is not nullptr
+        //  check if the item is stackable
+        if (item->isStackable()) { // if stackable
+            // find empty slot and add item to it
+            for (size_t row = 0; row < this->InventoryArray.size(); row++)
+                for (size_t col = 0; col < this->InventoryArray[row].size(); col++)
+                    // if slot is not empty
+                    if (this->InventoryArray[row][col] != nullptr) {
 
-        // If stacking is not possible, find an empty slot and add the item
-        for (std::vector<std::map<unsigned int, Item*>>& row : InventoryArray) {
-            for (std::map<unsigned int, Item*>& slotMap : row) {
-                for (auto& entry : slotMap) {
-                    if (entry.second == nullptr) {
-                        entry.second = item;
+                        // check if the amount of item is less than max amount
+                        if (this->InventoryArray[row][col]->getAmount() < this->InventoryArray[row][col]->getMaxAmount()) {
+                            this->InventoryArray[row][col]->addAmount(item->getAmount());
+                            return true;
+                        }
+                    } else if (this->InventoryArray[row][col] == nullptr) {
+                        // if slot is empty
+
+                        this->InventoryArray[row][col] = item;
+                        this->InventoryArray[row][col]->setPosistion(this->CellsInventory[row][col].getPosition());
+                        this->InventoryArray[row][col]->setSize(this->CellsInventory[row][col].getSize());
                         return true;
                     }
-                }
-            }
+
+        } else { // if not stackable
+            // find empty slot and add item to it
+            for (auto& row : this->InventoryArray)
+                for (auto& it : row)
+                    if (it == nullptr) {
+                        it = item;
+                        return true;
+                    }
         }
     }
     return false;
@@ -109,14 +126,12 @@ bool Inventory::addItem(Item* item)
 bool Inventory::removeItem(Item* item)
 {
     if (item != nullptr) {
-        for (std::vector<std::map<unsigned int, Item*>>& row : InventoryArray) {
-            for (std::map<unsigned int, Item*>& slotMap : row) {
-                for (auto& entry : slotMap) {
-                    if (entry.second == item) {
-                        delete entry.second;
-                        entry.second = nullptr;
-                        return true;
-                    }
+        for (std::vector<Item*>& row : InventoryArray) {
+            for (Item* slotMap : row) {
+                if (slotMap != nullptr && slotMap->getID() == item->getID()) {
+                    delete slotMap;
+                    slotMap = nullptr;
+                    return true;
                 }
             }
         }
@@ -126,28 +141,25 @@ bool Inventory::removeItem(Item* item)
 bool Inventory::removeItem(unsigned int ID)
 {
     // find item by using ID, if found delete it and set it to nullptr
-    for (std::vector<std::map<unsigned int, Item*>>& row : InventoryArray) {
-        for (std::map<unsigned int, Item*>& slotMap : row) {
-            for (auto& entry : slotMap) {
-                if (entry.second != nullptr && entry.second->getID() == ID) {
-                    delete entry.second;
-                    entry.second = nullptr;
-                    return true;
-                }
+    for (std::vector<Item*>& row : InventoryArray) {
+        for (Item* slotMap : row) {
+            if (slotMap != nullptr && slotMap->getID() == ID) {
+                delete slotMap;
+                slotMap = nullptr;
+                return true;
             }
         }
     }
     return false;
 }
+
 void Inventory::clear()
 {
     // Clearing the inventory
-    for (std::vector<std::map<unsigned int, Item*>>& row : InventoryArray) {
-        for (std::map<unsigned int, Item*>& slotMap : row) {
-            for (auto& entry : slotMap) {
-                delete entry.second;
-                entry.second = nullptr;
-            }
+    for (std::vector<Item*>& row : InventoryArray) {
+        for (Item* slotMap : row) {
+            delete slotMap;
+            slotMap = nullptr;
         }
     }
 }
@@ -172,6 +184,17 @@ const unsigned int Inventory::getCurrentCellID(sf::Vector2i mousePos)
     return 0;
 }
 
+const int Inventory::getNumSlot(Item* item)
+{
+    if (item != nullptr)
+        for (int x = 0; x < this->InventoryArray.size(); x++)
+            for (int y = 0; y < this->InventoryArray[x].size(); y++)
+                if (this->InventoryArray[x][y] != nullptr && this->InventoryArray[x][y]->getID() == item->getID())
+                    return y + (y * x);
+
+    return -1;
+}
+
 Coins& Inventory::getCoins()
 {
     return this->m_Coins;
@@ -181,31 +204,23 @@ Item* Inventory::getItem(unsigned int ID)
 {
     Item* foundItem = nullptr;
 
-    for (auto& x : this->InventoryArray)
-        for (auto y : x)
-            for (auto& item : y)
-                if (item.second->getID() == ID)
-                    foundItem = item.second;
+    for (std::vector<Item*>& row : this->InventoryArray)
+        for (Item* item : row)
+            if (item != nullptr && item->getID() == ID)
+                return item;
 
     return foundItem;
 }
 
 Item* Inventory::getItemFromNumSlot(unsigned int num_slot)
-{
-    // Check if the slot is within the valid range
-    if (num_slot < this->InventoryArray.size()) {
+{ // Check if the slot is within the valid range
+    if (0 <= num_slot < this->InventoryArray.size()) {
         // Get the row of the slot
-        std::vector<std::map<unsigned int, Item*>>& row = this->InventoryArray[num_slot];
-
         // Loop through each column in the row
-        for (std::map<unsigned int, Item*>& slotMap : row) {
-            // Check if the slot contains an item with the given ID
-            if (slotMap.find(num_slot) != slotMap.end() && slotMap[num_slot] != nullptr) {
-                return slotMap[num_slot];
-            }
-        }
+        for (int i = 0; i < this->InventoryArray.size(); ++i)
+            if (this->InventoryArray[i][i % 4] != nullptr)
+                return this->InventoryArray[num_slot][i];
     }
-
     return nullptr; // Item not found
 }
 
@@ -234,14 +249,10 @@ void Inventory::render(sf::RenderTarget& target)
                 target.draw(cell);
 
     // // draw items in inventory, if not empty and not null draw it, else continue
-    for (const auto& row : InventoryArray) {
-        for (const auto& column : row) {
-            for (const auto& entry : column) {
-                Item* item = entry.second;
-                if (item != nullptr) {
-                    item->render(target);
-                }
-            }
-        }
-    }
+    for (std::vector<Item*>& row : this->InventoryArray)
+        for (Item* item : row)
+            if (item != nullptr)
+                item->render(target);
+            else
+                continue;
 }

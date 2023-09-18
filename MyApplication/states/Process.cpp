@@ -118,6 +118,8 @@ void Process::initPlayer()
     // set player position to random position getting from spawnPosArray
     this->player = new Player(spawnPosArray[rand() % spawnPosArray.size()]);
     this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
+
+    this->t_inventory->addItem(new Items::Stone(this->IstateData->grid_size));
 }
 
 void Process::initMiniMap() // init minimap

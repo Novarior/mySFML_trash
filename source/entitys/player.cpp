@@ -60,11 +60,11 @@ void Player::e_render(sf::RenderTarget& target, const bool show_hitbox)
     }
 }
 
-void Player::e_attack(Entity* _entity, const float& delta_time)
+void Player::e_attack(Entity* target, const float& delta_time)
 { // chek if some entity is in range
 
-    if (this->m_radius.getGlobalBounds().intersects(_entity->getGlobalBounds())) {
+    if (this->m_radius.getGlobalBounds().intersects(target->getGlobalBounds())) {
         this->m_radius.setOutlineColor(sf::Color::Green);
-        _entity->e_takeDamage(this->e_attributes->getAttributes().damage);
+        target->e_takeDamage(this->e_attributes->getAttributes().damage);
     }
 }

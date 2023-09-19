@@ -138,7 +138,7 @@ public:
     /// @brief  attack function of entity (pure virtual function)
     /// @param _entity  Entity *
     /// @param delta_time   const float &
-     void e_attack(const Entity* _entity, const float& delta_time);
+    virtual void e_attack(Entity* target, const float& delta_time) { }
     /// @brief  take damage function of entity (pure virtual function)
     /// @param damage   const int &
     inline virtual void e_takeDamage(const int& damage) { this->e_attributes->takeDamage(damage); }

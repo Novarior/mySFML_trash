@@ -40,6 +40,7 @@ set(RESOURCE_FILES
     #AI includes
     source/entitys/AI/AIFollow.cpp 
     source/entitys/AI/AIComponent.cpp 
+    source/entitys/AI/AIAttack.cpp
     #properties includes
     source/entitys/properties/hitbox.cpp 
     source/entitys/properties/movement.cpp 

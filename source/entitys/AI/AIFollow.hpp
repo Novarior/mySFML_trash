@@ -1,5 +1,5 @@
-#ifndef AIFollow_H
-#define AIFollow_H
+#ifndef AI_FOLLOW_HPP
+#define AI_FOLLOW_HPP
 
 #include "AIOption.hpp"
 

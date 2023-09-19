@@ -1,9 +1,10 @@
 #ifndef CPP_TEST_CLASS_HPP
 #define CPP_TEST_CLASS_HPP
-#include "../AI/AIFollow.hpp"
+#include "../AI/AIComponent.hpp"
 class Slime : public Entity {
 private:
     AIFollow* m_AIFollow;
+    AIAttack* m_AIAttack;
 
 public:
     /// @brief Construct a new Slime object

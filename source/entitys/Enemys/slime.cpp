@@ -10,20 +10,18 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
     this->createAttributesComponent();
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);
-    this->m_AIFollow = new AIFollow(*this, targer_follow);
-    this->m_AIAttack = new AIAttack(*this, targer_follow);
+    this->ai_component->create_follow(new AIFollow(*this, targer_follow));
+    this->ai_component->create_attack(new AIAttack(*this, targer_follow));
 }
 
 Slime::~Slime()
 {
-    delete this->m_AIFollow;
-    delete this->m_AIAttack;
+    delete this->ai_component;
 }
 
 void Slime::e_update(const float& delta_time)
 {
-    this->m_AIFollow->update(delta_time);
-    this->m_AIAttack->update(delta_time);
+    this->ai_component->update(delta_time);
 
     this->e_movement->update(delta_time);
     this->e_attributes->update(delta_time);

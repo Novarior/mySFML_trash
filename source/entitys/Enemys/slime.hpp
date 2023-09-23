@@ -3,8 +3,7 @@
 #include "../AI/AIComponent.hpp"
 class Slime : public Entity {
 private:
-    AIFollow* m_AIFollow;
-    AIAttack* m_AIAttack;
+    AIComponent* ai_component;
 
 public:
     /// @brief Construct a new Slime object

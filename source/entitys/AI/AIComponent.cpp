@@ -4,6 +4,8 @@ AIComponent::AIComponent(Entity& self, Entity& entity)
     : self(self)
     , entity(entity)
 {
+    this->follow = nullptr;
+    this->attack = nullptr;
 }
 
 AIComponent::~AIComponent()

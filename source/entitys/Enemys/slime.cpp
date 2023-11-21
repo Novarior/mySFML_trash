@@ -10,6 +10,7 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
     this->createAttributesComponent();
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);
+    this->ai_component = new AIComponent(*this, targer_follow);
     this->ai_component->create_follow(new AIFollow(*this, targer_follow));
     this->ai_component->create_attack(new AIAttack(*this, targer_follow));
 }

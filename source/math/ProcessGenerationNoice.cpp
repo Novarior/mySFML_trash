@@ -50,7 +50,7 @@ double ProcessGenerationNoice::Noise(int i, int x, int y)
         b = (this->m_data.seed + y),
         c = (this->m_data.seed + x + y);
     int t = (n * (n * n * a + b) + c) & 0x7fffffff;
-    double ret = 1.0 - (double)(t) / 0x7fffffff;
+    double ret = 1.0 - (double)(t) / 1073741824.0;
     return ret;
 }
 
@@ -92,9 +92,10 @@ double ProcessGenerationNoice::InterpolatedNoise(int i, double x, double y)
     return Interpolate(i1, i2, fractional_Y);
 }
 
-ProcessGenerationNoice::ProcessGenerationNoice(noiceData data)
+ProcessGenerationNoice::ProcessGenerationNoice(mmath::noiceData& data)
+    : m_data(data)
+
 {
-    this->m_data = data;
 }
 
 ProcessGenerationNoice::~ProcessGenerationNoice()

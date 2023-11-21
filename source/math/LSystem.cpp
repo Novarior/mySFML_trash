@@ -93,7 +93,7 @@ void LSystem::applyRules()
             bufferShape.setPosition(this->data.pos + data.offsetPos);
             bufferShape.setRotation(this->data.currentAngle + randangle);
             // set random color in green range 80-255
-                        int randcolor = rand() % 175 + 80;
+            int randcolor = rand() % 175 + 80;
             bufferShape.setFillColor(sf::Color(0, randcolor, 0));
             this->line.push_back(bufferShape);
             // set pos to next pos

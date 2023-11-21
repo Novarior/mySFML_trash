@@ -24,7 +24,7 @@ private:
 
     sf::Vector2i worldSizeGrid;
     sf::Vector2f worldSizeFloat;
-    noiceData m_dnoice;
+    mmath::noiceData m_dnoice;
     ProcessGenerationNoice mGen_noice;
     std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
     std::vector<sf::Vector2f> m_listGrassBlocks;
@@ -48,7 +48,7 @@ private:
     void initTrees();
 
 public:
-    TileMap(noiceData datanoice, ProcessGenerationNoice* noice);
+    TileMap(mmath::noiceData datanoice, ProcessGenerationNoice* noice);
     virtual ~TileMap();
 
     inline const sf::Image& getMinimapImage() { return this->minimapImage; }

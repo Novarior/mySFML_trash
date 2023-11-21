@@ -167,7 +167,7 @@ void MainMenu::resetView()
 MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
-    this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
+    //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();

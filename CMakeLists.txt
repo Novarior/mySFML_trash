@@ -24,6 +24,7 @@ set(RESOURCE_FILES
     source/states/settings.cpp
     source/states/NoiceView.cpp
     source/states/PauseMenu.cpp
+    source/states/editModes/NoiceViewer.cpp
     #gui includes
     source/GUI/components/button.cpp
     source/GUI/components/minimap.cpp

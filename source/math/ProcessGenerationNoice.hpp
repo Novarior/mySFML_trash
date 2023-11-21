@@ -3,23 +3,9 @@
 
 #include "mymath.hpp"
 
-struct noiceData {
-    unsigned int mapSizeX;
-    unsigned int mapSizeY;
-    float gridSize;
-    long seed;
-    unsigned octaves;
-    double frequency;
-    float amplifire;
-    float persistence;
-    unsigned int RenderWindowX;
-    unsigned int RenderWindowY;
-    unsigned int smoothMode;
-};
-
 class ProcessGenerationNoice {
 private:
-    noiceData m_data;
+    mmath::noiceData& m_data;
 
 public:
     double InterpolatedNoise(int i, double x, double y);
@@ -27,13 +13,13 @@ public:
     double SmoothedNoise(int i, int x, int y);
     double Noise(int i, int x, int y);
 
-    ProcessGenerationNoice(noiceData data);
+    ProcessGenerationNoice(mmath::noiceData& data);
     virtual ~ProcessGenerationNoice();
 
-    void setNoiceData(noiceData data) { this->m_data = data; }
+    void setNoiceData(mmath::noiceData& data) { this->m_data = data; }
 
     void setSeed(double seed);
-    noiceData getNoiceData() { return this->m_data; }
+    mmath::noiceData& getNoiceData() { return this->m_data; }
     double getSeed();
     double getNoice(double x, double y);
 };

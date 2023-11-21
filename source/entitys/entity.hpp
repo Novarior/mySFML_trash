@@ -164,4 +164,5 @@ public:
     /// @param target   sf::RenderTarget &
     virtual void e_render(sf::RenderTarget& target, const bool show_hitbox = false) = 0;
 };
+
 #endif

@@ -4,68 +4,9 @@ void NoiceView::initKeybinds()
 {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["TAB_MENU"] = this->IsupportedKeys->at("Tab");
-}
-
-void NoiceView::createStepByStep(sf::Vector2f pos)
-{
-    double writebuff = 0;
-    double writebuff_biome = 0;
-
-    for (int x = pos.x * this->generateArea.x; x < (pos.x + 1) * this->generateArea.x; x++) {
-        for (int y = pos.y * this->generateArea.y; y < (pos.y + 1) * this->generateArea.y; y++) {
-            //  writebuff = myGN->getNoice(x, y);
-            writebuff = mySN->noise(x * 0.005, y * 0.005);
-            //  writebuff_biome = myGN_biome->getNoice(x, y);
-            int normalized_value = static_cast<int>((writebuff - -1.f) / (1.f - -1.f) * 255);
-            this->image.setPixel(x, y, sf::Color(normalized_value, normalized_value, normalized_value, 255));
-
-            /* Default
-            if (writebuff_biome < 55) { // sea biome
-                if (writebuff < 45) { // deep ocean
-                    this->image.setPixel(x, y, sf::Color(0, 10 + writebuff * 0.6, 100 + writebuff * 1.5, 255));
-                    this->m_BlocksCounter.deep_ocean++;
-                } else if (writebuff < 66) { // ocean
-                    this->image.setPixel(x, y, sf::Color(0, 20 + writebuff * 0.7, 100 + writebuff * 1.7, 255));
-                    this->m_BlocksCounter.ocean++;
-                } else if (writebuff < 66) { //  sand
-                    this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 120 + writebuff * 1.6, 90 + writebuff * 0.1, 255));
-                    this->m_BlocksCounter.sand++;
-                } else if (writebuff < 66) { // sea sand
-                    this->image.setPixel(x, y, sf::Color(150 + writebuff * 1.5, 140 + writebuff * 1.6, 120 + writebuff * 0.1, 255));
-                    this->m_BlocksCounter.seasand++;
-                } else if (writebuff < 210) { // desert
-                    this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.2, 255 - writebuff * 0.4, 150 - writebuff * 0.1, 255));
-                    this->m_BlocksCounter.beath++;
-                } else { // lava
-                    this->image.setPixel(x, y, sf::Color(255, 80 + writebuff * 0.3, 0, 255));
-                    this->m_BlocksCounter.lava++;
-                }
-            } else if (writebuff_biome < 160) { // Grassland
-                if (writebuff < 160) { // grass
-                    this->image.setPixel(x, y, sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255));
-                    this->m_BlocksCounter.grass++;
-                } else if (writebuff < 165) { // ground
-                    this->image.setPixel(x, y, sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255));
-                    this->m_BlocksCounter.dirt++;
-                } else if (writebuff < 175) { // cave
-                    this->image.setPixel(x, y, sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255));
-                    this->m_BlocksCounter.rock++;
-                }
-            } else if (writebuff_biome < 200) { // mountains
-                if (writebuff < 180) { // mountain
-                    this->image.setPixel(x, y, sf::Color(120 - writebuff * 0.2, 100 + writebuff * 0.2, 120 - writebuff * 0.2, 255));
-                    this->m_BlocksCounter.mountain++;
-                } else if (writebuff < 200) { // snow
-                    this->image.setPixel(x, y, sf::Color(255 - writebuff * 0.4, 255 - writebuff * 0.4, 255 - writebuff * 0.4, 255));
-                    this->m_BlocksCounter.snow++;
-                }
-            }
-
-            */
-        }
-        this->texture.update(this->image);
-        this->shape.setTexture(&this->texture);
-    }
+    this->Ikeybinds["KEY_F1"] = this->IsupportedKeys->at("F1");
+    this->Ikeybinds["KEY_F2"] = this->IsupportedKeys->at("F2");
+    this->Ikeybinds["KEY_F3"] = this->IsupportedKeys->at("F3");
 }
 
 void NoiceView::initTabMenu()
@@ -147,40 +88,33 @@ void NoiceView::initSelectors()
         this->IstateData->font, this->IstateData->characterSize_game_big, list.data(), list.size(), 0);
 
     // set default value for static selector
-    this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
-    this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
-    this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
-    this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
+    this->staticSelector["OCTAVES"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().octaves);
+    this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().frequency);
+    this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().amplifire);
+    this->staticSelector["PERSISTENCE"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().persistence);
 }
 
 void NoiceView::initNoice()
 {
-    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata)) { // init noise data
-        this->noicedata.octaves = 8;
-        this->noicedata.seed = std::rand();
-        this->noicedata.frequency = 8;
-        this->noicedata.amplifire = 1;
-        this->noicedata.persistence = 0.6f;
+
+    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->m_noiceData)) { // init noise data
+        this->m_noiceData.octaves = 8;
+        std::srand(std::time(nullptr));
+        this->m_noiceData.seed = std::rand();
+        this->m_noiceData.frequency = 8;
+        this->m_noiceData.amplifire = 1;
+        this->m_noiceData.persistence = 0.6f;
     }
-    this->noicedata.gridSize = this->IstateData->grid_size;
-    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
-    this->noicedata.mapSizeX = this->IstateData->gfxSettings->resolution.width;
-    this->noicedata.mapSizeY = this->IstateData->gfxSettings->resolution.height;
-    this->noicedata.smoothMode = 0;
-    // init noice generator
-    this->image.create(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY);
-    this->shape.setSize(sf::Vector2f(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY));
-    this->texture.create(this->noicedata.RenderWindowX, this->noicedata.RenderWindowY);
-    this->myGN = new ProcessGenerationNoice(this->noicedata);
-    this->myGN_biome = new ProcessGenerationNoice(this->noicedata);
-    this->myGN_biome->setSeed(this->myGN_biome->getSeed() + 1.f);
-    this->isGeneratorClosed = false;
+    this->m_noiceData.gridSize = this->IstateData->grid_size;
+    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
+    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->resolution.width;
+    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->resolution.height;
+    this->m_noiceData.smoothMode = 0;
 
-    this->generateArea.x = this->noicedata.RenderWindowX / this->numThreads;
-    this->generateArea.y = this->noicedata.RenderWindowY / this->numThreads;
-
-    this->closeGrid = sf::Vector2f();
+    // init data for noice viewer
+    this->m_NoiceViewer = new NoiceViewer(this->m_noiceData);
+    this->m_NoiceViewer->generateNoice();
 }
 
 void NoiceView::initDebugText()
@@ -203,8 +137,6 @@ NoiceView::NoiceView(StateData* statedata)
     this->initSelectors();
     this->initDebugText();
 
-    // init simple noise
-    this->mySN = new SimplexNoise();
     // init LSystem
     this->myLS = new LSystem();
     this->myLS->setRule('d', "qd");
@@ -215,8 +147,8 @@ NoiceView::NoiceView(StateData* statedata)
 
 NoiceView::~NoiceView()
 {
-    this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
-    delete this->myGN;
+    this->Iparser->saveNoiceData(myConst::config_noicedata, this->m_NoiceViewer->getNoiceData());
+
     for (auto& it : this->buttons)
         delete it.second;
 
@@ -224,21 +156,14 @@ NoiceView::~NoiceView()
         delete it.second;
 
     delete this->selector;
-    delete this->mySN;
+
     delete this->myLS;
-
-    this->freeThreads();
-}
-
-void NoiceView::freeThreads()
-{
-    for (std::thread& thread : this->threads)
-        if (thread.joinable())
-            thread.join();
 }
 
 sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
 {
+    // this function find non transparent pixels
+    // and return IntRect without this pixels
     sf::Vector2u size = image.getSize();
     sf::IntRect mrect(size.x, size.y, 0, 0);
 
@@ -291,9 +216,12 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
         for (int y = mrect.top; y < mrect.height; y++)
             simg.setPixel(x - mrect.left, y - mrect.top, image.getPixel(x, y));
 
+    // create name for image file
+    // add time to name for unique name
     std::stringstream ss;
     ss << myConst::f_Trees << "tree" << std::to_string(std::time(nullptr)) << ".png";
-    // Сохраняем изображение
+
+    // save image
     simg.saveToFile(ss.str());
 }
 
@@ -303,47 +231,38 @@ void NoiceView::updateInput(const float& delta_time)
         this->endState();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;
+
+    // update currentViewGenerator in a range from 0 to 2
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F1"))) && this->getKeytime())
+        this->m_NoiceViewer->swithNoiceModel();
+
+    // switch noice model
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F2"))) && this->getKeytime())
+        this->m_NoiceViewer->swithColorMode();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F3"))) && this->getKeytime())
+        if (this->current_View_Generator < 2)
+            this->current_View_Generator++;
+        else
+            this->current_View_Generator = 0;
 }
 
 void NoiceView::updateDebugText(const float& delta_time)
 {
+    // collect all data for debug text and update it
     double fps = 1.0f / delta_time;
     this->dString_Stream
         << "FPS:\t" << fps
-        << "\nBlock counter:"
-        << "\n\tdeep ocean: " << this->m_BlocksCounter.deep_ocean
-        << "\n\tocean: " << this->m_BlocksCounter.ocean
-        << "\n\tbeath: " << this->m_BlocksCounter.beath
-        << "\n\tseasand: " << this->m_BlocksCounter.seasand
-        << "\n\tsand: " << this->m_BlocksCounter.sand
-        << "\n\tgrass: " << this->m_BlocksCounter.grass
-        << "\n\tdirt: " << this->m_BlocksCounter.dirt
-        << "\n\trock: " << this->m_BlocksCounter.rock
-        << "\n\tmountain: " << this->m_BlocksCounter.mountain
-        << "\n\tsnow: " << this->m_BlocksCounter.snow
-        << "\n\tdesert: " << this->m_BlocksCounter.seasand
-        << "\n\tforest: " << this->m_BlocksCounter.forest
-        << "\n\tlava: " << this->m_BlocksCounter.lava
-        << "\n\tother " << this->m_BlocksCounter.other
-        << "\nGenerator data:"
-        << "\n\tGenerator closed:\t" << this->isGeneratorClosed
-        << "\n\tSeed:\t" << this->noicedata.seed
-        << "\n\tOctaves:\t" << this->noicedata.octaves
-        << "\n\tFrequency:\t" << this->noicedata.frequency
-        << "\n\tAmplifire:\t" << this->noicedata.amplifire
-        << "\n\tPersistence:\t" << this->noicedata.persistence
-        << "\n\tNoiceSizeBYWindowX:\t" << this->noicedata.RenderWindowX
-        << "\n\tNoiceSizeBYWindowY:\t" << this->noicedata.RenderWindowY
-        << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
-        << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY
-        << "\n\tGenerateAreaX:\t" << this->generateArea.x
-        << "\n\tGenerateAreaY:\t" << this->generateArea.y
-        << "\n\tSmoothMode:\t" << this->selector->getActiveElement() << ": " << this->selector->getActiveElementID()
+        << "\nCurent view generator:\t" << this->current_View_Generator
+        << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModel()
+        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorMode()
         << "\nTree Data:"
         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
         << "\nPause:\t" << this->Ipaused;
 
+    // update debug text
     this->dText.setString(this->dString_Stream.str());
+    // clear string stream
     this->dString_Stream.str("");
 }
 
@@ -357,73 +276,65 @@ void NoiceView::updateButtons(const float& delta_time)
 
     this->selector->update(delta_time, this->mousePosWindow);
 
-    if (this->staticSelector["OCTAVES"]->isValueChanged()) {
-        this->noicedata.octaves = this->staticSelector["OCTAVES"]->getCurrentValue();
-        this->staticSelector["OCTAVES"]->closeChangeValue();
-    }
-    if (this->staticSelector["FREQUENCY"]->isValueChanged()) {
-        this->noicedata.frequency = this->staticSelector["FREQUENCY"]->getCurrentValue();
-        this->staticSelector["FREQUENCY"]->closeChangeValue();
-    }
-    if (this->staticSelector["PERSISTENCE"]->isValueChanged()) {
-        this->noicedata.persistence = this->staticSelector["PERSISTENCE"]->getCurrentValue();
-        this->staticSelector["PERSISTENCE"]->closeChangeValue();
-    }
-    if (this->staticSelector["AMPLIFIRE"]->isValueChanged()) {
-        this->noicedata.amplifire = this->staticSelector["AMPLIFIRE"]->getCurrentValue();
-        this->staticSelector["AMPLIFIRE"]->closeChangeValue();
-    }
-    if (this->buttons["G_NOICE"]->isPressed()) {
-        this->myGN->setNoiceData(this->noicedata);
-        this->isGeneratorClosed = false;
-        this->closeGrid = sf::Vector2f();
-        this->m_BlocksCounter = { 0, 0, 0, 0, 0, 0, 0 };
-    }
-    if (this->buttons["G_TREE"]->isPressed()) {
-        this->myLS->generate();
-        this->saveTreeAsImage(*this->IstateData->sWindow);
-    }
-    if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-        this->Iparser->saveNoiceData(myConst::config_noicedata, this->noicedata);
-    }
-    if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-        this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata);
-        this->staticSelector["OCTAVES"]->setCurrentValue(this->noicedata.octaves);
-        this->staticSelector["FREQUENCY"]->setCurrentValue(this->noicedata.frequency);
-        this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->noicedata.amplifire);
-        this->staticSelector["PERSISTENCE"]->setCurrentValue(this->noicedata.persistence);
-        this->selector->setActiveElement(this->noicedata.smoothMode);
+    // update buttons using switch case for each button
+    switch (this->current_View_Generator) {
+    case 0: // noice case
+        if (this->staticSelector["OCTAVES"]->isValueChanged()) {
+            this->m_noiceData.octaves = this->staticSelector["OCTAVES"]->getCurrentValue();
+            this->staticSelector["OCTAVES"]->closeChangeValue();
+        }
+        if (this->staticSelector["FREQUENCY"]->isValueChanged()) {
+            this->m_noiceData.frequency = this->staticSelector["FREQUENCY"]->getCurrentValue();
+            this->staticSelector["FREQUENCY"]->closeChangeValue();
+        }
+        if (this->staticSelector["PERSISTENCE"]->isValueChanged()) {
+            this->m_noiceData.persistence = this->staticSelector["PERSISTENCE"]->getCurrentValue();
+            this->staticSelector["PERSISTENCE"]->closeChangeValue();
+        }
+        if (this->staticSelector["AMPLIFIRE"]->isValueChanged()) {
+            this->m_noiceData.amplifire = this->staticSelector["AMPLIFIRE"]->getCurrentValue();
+            this->staticSelector["AMPLIFIRE"]->closeChangeValue();
+        }
+        if (this->buttons["G_NOICE"]->isPressed()) {
+            this->m_NoiceViewer->generateNoice();
+        }
+        if (this->buttons["SAVE_GENDATA"]->isPressed()) {
+            this->Iparser->saveNoiceData(myConst::config_noicedata, this->m_noiceData);
+        }
+        if (this->buttons["LOAD_GENDATA"]->isPressed()) {
+            this->Iparser->loadNoiceData(myConst::config_noicedata, this->m_noiceData);
+            this->staticSelector["OCTAVES"]->setCurrentValue(this->m_noiceData.octaves);
+            this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_noiceData.frequency);
+            this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_noiceData.amplifire);
+            this->staticSelector["PERSISTENCE"]->setCurrentValue(this->m_noiceData.persistence);
+            this->selector->setActiveElement(this->m_noiceData.smoothMode);
+        }
+        this->m_NoiceViewer->setNoiceData(this->m_noiceData);
+        break;
+    case 1: // tree case
+        if (this->buttons["G_TREE"]->isPressed()) {
+            this->myLS->generate();
+            this->saveTreeAsImage(*this->IstateData->sWindow);
+        }
+        break;
+    default: // default case
+        break;
     }
     this->selector->update(delta_time, this->mousePosWindow);
-    this->noicedata.smoothMode = this->selector->getActiveElementID();
+    this->m_noiceData.smoothMode = this->selector->getActiveElementID();
 }
 
 void NoiceView::update(const float& delta_time)
 {
-    this->freeThreads();
+    // update keytime for next function used it for keypress delay
     this->updateKeytime(delta_time);
     this->updateInput(delta_time);
     this->updateMousePositions();
+    // if tab menu is open then update buttons
     if (this->showTabmenu)
         this->updateButtons(delta_time);
-    this->myLS->update(delta_time);
 
-    if (this->isGeneratorClosed == false) {
-        for (int i = 0; i < this->numThreads; ++i) {
-            int startX = i * this->generateArea.x;
-            int endX = (i + 1) * this->generateArea.y;
-
-            for (int j = 0; j < this->numThreads; ++j) {
-                int startY = j * this->generateArea.x;
-                int endY = (j + 1) * this->generateArea.x;
-
-                // Создаем поток и передаем ему функцию fillImage
-                this->threads.emplace_back(&NoiceView::createStepByStep, this, (sf::Vector2f(i, j)));
-            }
-        }
-        this->isGeneratorClosed = true;
-    }
-
+    // update debug text
     if (this->debugMode)
         this->updateDebugText(delta_time);
 }
@@ -443,14 +354,25 @@ void NoiceView::renderTabMenu(sf::RenderTarget& target)
 
 void NoiceView::render(sf::RenderWindow& target)
 {
-    target.draw(this->shape);
-
-    if (this->myLS != nullptr)
-        this->myLS->render(target);
-
-    if (this->debugMode)
-        target.draw(this->dText);
-
+    // layer 0 - noice render and tree render
+    switch (this->current_View_Generator) {
+    case 0: // call noice render
+        if (this->m_NoiceViewer != nullptr)
+            this->m_NoiceViewer->render(target);
+        break;
+    case 1: // call tree render
+        if (this->myLS != nullptr)
+            this->myLS->render(target);
+        break;
+    default:
+        break;
+    }
+    // layer 1 - tab menu render
     if (this->showTabmenu)
         this->renderTabMenu(target);
+
+    // layer 2 - debug text render
+    // render debug text
+    if (this->debugMode)
+        target.draw(this->dText);
 }

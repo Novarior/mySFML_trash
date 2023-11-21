@@ -26,7 +26,7 @@ private:
     Inventory* t_inventory;
     Player* player;
     TileMap* mapTiles;
-    noiceData noicedata;
+    mmath::noiceData noicedata;
     std::vector<Entity*> entitys;
     ProcessGenerationNoice* myGN;
     sf::Shader shader;

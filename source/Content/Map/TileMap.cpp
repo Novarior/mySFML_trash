@@ -167,7 +167,7 @@ void TileMap::generateMap()
     }
 }
 
-TileMap::TileMap(noiceData datanoice, ProcessGenerationNoice* noice)
+TileMap::TileMap(mmath::noiceData datanoice, ProcessGenerationNoice* noice)
     : keyTime(0.f)
     , keyTimeMax(0.5f)
     , m_dnoice(datanoice)

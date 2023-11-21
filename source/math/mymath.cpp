@@ -31,6 +31,33 @@ const float mmath::p2pX(const float perc, const float& i)
     return floor(static_cast<float>(i) * (perc / 100.f));
 }
 
+const float mmath::normalize(const float value, const float min, const float max)
+{
+    double buff = (value - min) / (max - min);
+    float result = static_cast<float>(buff * 255);
+
+    if (result < 0)
+        result = 0;
+    else if (result > 255)
+        result = 255;
+
+    return result;
+}
+
+const double mmath::Gradient(int hash, double x, double y)
+{
+    int h = hash & 15;
+    double grad = 1 + (h & 7);
+    if (h & 8)
+        grad = -grad;
+    return (grad * x + grad * y);
+}
+
+const double mmath::Rescale(double r_value, double minInput, double maxInput, double minOutput, double maxOutput)
+{
+    return minOutput + (r_value - minInput) * (maxOutput - minOutput) / (maxInput - minInput);
+}
+
 const unsigned int mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
 {
     //  Calculates the character size for text using the current resolution and a constant.

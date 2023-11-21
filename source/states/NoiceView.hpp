@@ -3,50 +3,26 @@
 
 #include "../GUI/GUISYS.hpp"
 #include "../math/LSystem.hpp"
-#include "../math/ProcessGenerationNoice.hpp"
-#include "../math/simplex.hpp"
 #include "State.hpp"
+#include "editModes/NoiceViewer.hpp"
 
 class NoiceView : public State {
 private:
-    struct {
-        int deep_ocean = 0;
-        int ocean = 0;
-        int seasand = 0;
-        int beath = 0;
-        int sand = 0;
-        int grass = 0;
-        int dirt = 0;
-        int rock = 0;
-        int other = 0;
-        int mountain = 0;
-        int snow = 0;
-        int forest = 0;
-        int lava = 0;
-    } m_BlocksCounter;
-
-    noiceData noicedata;
-    ProcessGenerationNoice* myGN;
-    ProcessGenerationNoice* myGN_biome;
-    SimplexNoise* mySN;
+    NoiceViewer* m_NoiceViewer;
+    mmath::noiceData m_noiceData;
+    // trees
     LSystem* myLS;
-    sf::Image image;
-    sf::Texture texture;
-    sf::RectangleShape shape;
-    std::map<std::string, gui::Button*> buttons;
+
+    // gui elements (buttons, selectors, etc)
     bool showTabmenu;
+    std::map<std::string, gui::Button*> buttons;
     sf::RectangleShape tabShape;
     std::map<std::string, gui::StaticSelector*> staticSelector;
     gui::Selector* selector;
 
-    // threads
-    std::vector<std::thread> threads;
-    const int numThreads = 2;
+    int current_View_Generator = 0;
 
-    sf::Vector2u generateArea;
-    sf::Vector2f closeGrid;
-    bool isGeneratorClosed;
-
+    // init functions
     void initKeybinds();
     void initButtons();
     void initSelectors();
@@ -54,8 +30,7 @@ private:
     void initNoice();
     void initDebugText();
 
-    void freeThreads();
-    void createStepByStep(sf::Vector2f pos);
+    // update functions
     void saveTreeAsImage(sf::RenderWindow& window);
     sf::IntRect findNonTransparentRect(const sf::Image& image);
 
@@ -63,6 +38,7 @@ private:
     void updateButtons(const float& delta_time);
     void updateDebugText(const float& delta_time);
 
+    // render functions
     void renderTabMenu(sf::RenderTarget& target);
 
 public:

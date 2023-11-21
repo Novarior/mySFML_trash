@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <ostream>
+#include <random>
 #include <sstream>
 #include <stack>
 #include <stdio.h>

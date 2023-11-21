@@ -76,7 +76,7 @@ const bool parsJSON::loadKeyBinds(const std::string& filename, std::map<std::str
     return true;
 }
 // load noice data
-const bool parsJSON::loadNoiceData(const std::string& filename, noiceData& data)
+const bool parsJSON::loadNoiceData(const std::string& filename, mmath::noiceData& data)
 { // load noice data
     std::ifstream ifs(filename);
     std::string line;
@@ -145,6 +145,7 @@ const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
         printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
+    //  this->m_js.clear();
     json js = json::parse(ifs);
     js.at("game_data").at("is_game_started").get_to(data.game_started);
 
@@ -168,48 +169,48 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
     }
     // save to json file
     // variables
-    json jk;
-    std::vector<std::vector<Item*>> iArr = inventory->getInventoryArray();
 
-    jk["inventory"];
-    jk["inventory"]["size"] = inventory->getSizeInventory();
-    jk["inventory"]["items"];
+    std::vector<std::vector<Item*>> iArr = inventory->getInventoryArray();
+    this->m_js.clear();
+    this->m_js["inventory"];
+    this->m_js["inventory"]["size"] = inventory->getSizeInventory();
+    this->m_js["inventory"]["items"];
     int slot = 0;
     // save items
     for (auto& row : iArr) {
         for (auto& item : row) {
             // check item if null
             if (item != nullptr) { // write "slot if is not empty
-                jk["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
-                jk["inventory"]["items"][slot]["name"] = item->getName();
-                jk["inventory"]["items"][slot]["amount"] = item->getAmount();
-                jk["inventory"]["items"][slot]["price"];
-                jk["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
-                jk["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
-                jk["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
-                jk["inventory"]["items"][slot]["stackable"] = item->isStackable();
-                jk["inventory"]["items"][slot]["usable"] = item->isUsable();
-                jk["inventory"]["items"][slot]["unic ID"] = item->getID();
+                this->m_js["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
+                this->m_js["inventory"]["items"][slot]["name"] = item->getName();
+                this->m_js["inventory"]["items"][slot]["amount"] = item->getAmount();
+                this->m_js["inventory"]["items"][slot]["price"];
+                this->m_js["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
+                this->m_js["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
+                this->m_js["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
+                this->m_js["inventory"]["items"][slot]["stackable"] = item->isStackable();
+                this->m_js["inventory"]["items"][slot]["usable"] = item->isUsable();
+                this->m_js["inventory"]["items"][slot]["unic ID"] = item->getID();
             } else {
                 // write "slot" if is empty
-                jk["inventory"]["items"][slot]["slot"] = nullptr;
-                jk["inventory"]["items"][slot]["name"] = nullptr;
-                jk["inventory"]["items"][slot]["amount"] = nullptr;
-                jk["inventory"]["items"][slot]["price"] = nullptr;
-                jk["inventory"]["items"][slot]["stackable"] = nullptr;
-                jk["inventory"]["items"][slot]["usable"] = nullptr;
-                jk["inventory"]["items"][slot]["unic ID"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["slot"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["name"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["amount"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["price"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["stackable"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["usable"] = nullptr;
+                this->m_js["inventory"]["items"][slot]["unic ID"] = nullptr;
             }
             slot++;
         }
     }
 
-    jk["inventory"]["coins"];
-    jk["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
-    jk["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
-    jk["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
+    this->m_js["inventory"]["coins"];
+    this->m_js["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
+    this->m_js["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
+    this->m_js["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
     // save to json file
-    ofs << std::setw(4) << jk;
+    ofs << std::setw(4) << this->m_js;
     // close file
     ofs.close();
     return true;
@@ -226,33 +227,33 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
     }
 
     // save to json file
-    json jk;
-    jk["entity list"];
+    this->m_js.clear();
+    this->m_js["entity list"];
     // save entitys
     for (size_t i = 0; i < entitys.size(); i++) {
         // check entity if null, is null continue
         if (entitys[i] == nullptr || entitys[i]->e_isAlive() == false)
             continue;
 
-        jk["entity list"][i];
-        jk["entity list"][i]["ID_record"] = i;
-        jk["entity list"][i]["entity_uid"] = entitys[i]->e_getID();
-        jk["entity list"][i]["position"]["x"] = entitys[i]->e_getPosition().x;
-        jk["entity list"][i]["position"]["y"] = entitys[i]->e_getPosition().y;
+        this->m_js["entity list"][i];
+        this->m_js["entity list"][i]["ID_record"] = i;
+        this->m_js["entity list"][i]["entity_uid"] = entitys[i]->e_getID();
+        this->m_js["entity list"][i]["position"]["x"] = entitys[i]->e_getPosition().x;
+        this->m_js["entity list"][i]["position"]["y"] = entitys[i]->e_getPosition().y;
         // save entity attributes
-        jk["entity list"][i]["attributes"];
-        jk["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes().health;
-        jk["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes().max_health;
-        jk["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes().level;
+        this->m_js["entity list"][i]["attributes"];
+        this->m_js["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes().health;
+        this->m_js["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes().max_health;
+        this->m_js["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes().level;
     }
     // save to json file
-    ofs << std::setw(4) << jk;
+    ofs << std::setw(4) << this->m_js;
     // close file
     ofs.close();
     return true;
 }
 // save noicedata
-const bool parsJSON::saveNoiceData(const std::string& filename, noiceData _dataNoice)
+const bool parsJSON::saveNoiceData(const std::string& filename, mmath::noiceData _dataNoice)
 {
     // open json file
     std::ofstream ofs(filename);
@@ -289,14 +290,14 @@ const bool parsJSON::saveKeyBinds(const std::string& filename, std::map<std::str
     }
 
     // save to json file
-    json jk;
-    jk["key_binds"];
+
+    this->m_js["key_binds"];
     // save key binds
     for (auto& i : keyBinds) {
-        jk["key_binds"][i.first] = i.second;
+        this->m_js["key_binds"][i.first] = i.second;
     }
     // save to json file
-    ofs << std::setw(4) << jk;
+    ofs << std::setw(4) << this->m_js;
     // close file
     ofs.close();
     return true;
@@ -311,12 +312,12 @@ const bool parsJSON::saveGameData(const std::string& filename, Gamedata& data)
         printf("ERROR::PARSER::SAVE::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
         return false;
     }
-    json jk;
+
     // save to json file
-    jk["game_data"];
-    jk["game_data"]["is_game_started"] = data.game_started;
+    this->m_js["game_data"];
+    this->m_js["game_data"]["is_game_started"] = data.game_started;
     // save to json file
-    ofs << std::setw(4) << jk;
+    ofs << std::setw(4) << this->m_js;
     // close file
     ofs.close();
     return true;

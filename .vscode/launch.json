@@ -1,0 +1,27 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Запустить",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/GameProto",
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "args": [
+            ],
+            "environment": [
+                {
+                    "name": "Test",
+                    "value": "Debug"
+                }
+            ],
+            "externalConsole": true,
+            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
+            "MIMode": "lldb",
+        }
+    ]
+}

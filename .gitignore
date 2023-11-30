@@ -1,8 +1,8 @@
-**/.vscode
-build/
-**/CMakeFiles/
-
-bin
+**/build
+**/CMakeFiles
+**/bin
 **/textures/Trees
 **/.DS_Store
-.DS_Store
+
+bin/.DS_Store
+bin/resourses/.DS_Store

@@ -35,6 +35,7 @@ private:
     sf::IntRect findNonTransparentRect(const sf::Image& image);
 
     void updateInput(const float& delta_time);
+    void NewFunction();
     void updateButtons(const float& delta_time);
     void updateDebugText(const float& delta_time);
 

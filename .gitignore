@@ -1,8 +1,6 @@
-**/build
-**/CMakeFiles
-**/bin
-**/textures/Trees
 **/.DS_Store
-
 bin/.DS_Store
-bin/resourses/.DS_Store
+bin/
+build/
+CMakeFiles/
+bin/.DS_Store

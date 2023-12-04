@@ -20,46 +20,26 @@
 */
 void Core::initDirectories()
 {
-    // directory Config and resourses
-
-    // make confing, resourses folder
-    std::filesystem::create_directory("config");
-    std::filesystem::create_directory("resourses");
-    // print error if not created
-    if (!std::filesystem::exists("config"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE CONFIG FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE resourses FOLDER" << std::endl;
-    // make resourses , textures, sprites, sounds, fonts, folder
-    std::filesystem::create_directory("resourses/textures");
-    std::filesystem::create_directory("resourses/sprites");
-    std::filesystem::create_directory("resourses/sounds");
-    std::filesystem::create_directory("resourses/fonts");
-    // print error if not created
-    if (!std::filesystem::exists("resourses/textures"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE TEXTURES FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses/sprites"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SPRITES FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses/sounds"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE SOUNDS FOLDER" << std::endl;
-    if (!std::filesystem::exists("resourses/fonts"))
-        std::cout << "ERROR::CORE::INITDIRECTORIES::FAILED TO CREATE FONTS FOLDER" << std::endl;
+    // check if app directory exists
+    if (!checkAppDirectoryExists(myConst::app_name))
+        createAppDirectoryAndConfigSubdirectory(myConst::app_name);
+    // check if config directory exists
 }
 
 // initialisations root data and build first frame app
 void Core::initVar()
 {
     this->mWindow = NULL;
-    if (!this->gfxSettings.loadFromFile("Config/window.json"))
-        this->gfxSettings.saveToFile("Config/window.json");
+    if (!this->gfxSettings.loadFromFile(get_app_dir()))
+        this->gfxSettings.saveToFile(get_app_dir());
 }
 
 void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(myConst::data_gameproces_font_path)) { }
-    if (!this->mStatedata.debugFont.loadFromFile(myConst::data_debugfont_path)) { }
+    if (!this->mStatedata.font.loadFromFile(std::string(get_resources_dir() + myConst::data_gameproces_font_path))) { }
+    if (!this->mStatedata.debugFont.loadFromFile(std::string(get_resources_dir() + myConst::data_debugfont_path))) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
@@ -72,9 +52,7 @@ void Core::initStateData()
 }
 
 void Core::initKeyBinds()
-{
-
-    // init default keys
+{ // init default keys
     this->supportedKeys["Escape"] = sf::Keyboard::Escape;
     this->supportedKeys["A"] = sf::Keyboard::A;
     this->supportedKeys["C"] = sf::Keyboard::C;

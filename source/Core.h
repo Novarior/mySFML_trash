@@ -1,9 +1,9 @@
 #ifndef CPP_COREPROGRAM_H
 #define CPP_COREPROGRAM_H
 
-
 #include "states/MainMenu.hpp"
 #include "states/gfx.hpp"
+#include "systemFunctionUNIX.hpp"
 
 class Core {
 private:

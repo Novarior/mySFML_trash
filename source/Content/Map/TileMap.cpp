@@ -200,8 +200,6 @@ TileMap::~TileMap()
     this->m_TexturesList.clear();
 }
 
-
-
 bool TileMap::getCollision(const unsigned int x, const unsigned int y) const
 {
     return this->tilemap[x][y][0]->getCollision();
@@ -211,7 +209,6 @@ sf::FloatRect TileMap::getGlobalBounds(const unsigned int x, const unsigned int 
 {
     return this->tilemap[x][y][0]->getGlobalBounds();
 }
-
 
 const bool TileMap::getKeyTime()
 {
@@ -282,7 +279,7 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
             if (this->tilemap[x][y][0]->getCollision() && this->tilemap[x][y][0]->intersects(nextPositionBounds)) {
                 // Bottom collision
                 if (playerBounds.top < wallBounds.top
-                    && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+                    && playerBounds.top + playerBounds.height > wallBounds.top
                     && playerBounds.left < wallBounds.left + wallBounds.width
                     && playerBounds.left + playerBounds.width > wallBounds.left) {
                     entity->getMovement()->stopVelocityY();

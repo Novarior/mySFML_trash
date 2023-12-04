@@ -17,8 +17,8 @@ public:
     float gridSize;
 
     // Functions
-    const bool saveToFile(const std::string path);
-    const bool loadFromFile(const std::string path);
+    const bool saveToFile(const std::string directoryPath);
+    const bool loadFromFile(std::string directoryPath);
 };
 
 #endif

@@ -245,7 +245,7 @@ void SettingsState::resetGui()
     delete this->selector_resolutions;
     delete this->selector_antialiasing;
 
-    this->IstateData->gfxSettings->saveToFile(myConst::config_window);
+    this->IstateData->gfxSettings->saveToFile(get_app_dir());
 
     this->reCaclulateCharacterSize();
 

@@ -15,6 +15,7 @@ set(SOURCE_PROJECT_FILES
     #core includes
     source/main.cpp 
     source/Core.cpp 
+    source/systemFunctionUNIX.cpp
     source/states/gfx.cpp
     source/math/mymath.cpp
     source/math/simplex.cpp

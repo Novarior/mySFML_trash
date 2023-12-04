@@ -2,7 +2,7 @@
 
 GraphicsSettings::GraphicsSettings()
 {
-    this->title = "DEFAULT";
+    this->title = "Ekzeckt";
     this->verticalSync = false;
     this->resolution = sf::VideoMode::getDesktopMode();
     this->fullscreen = false;
@@ -12,92 +12,76 @@ GraphicsSettings::GraphicsSettings()
     this->gridSize = 16.f;
 }
 
-// Functions
-const bool GraphicsSettings::saveToFile(const std::string path)
+// save to file
+const bool GraphicsSettings::saveToFile(const std::string directoryPath)
 {
-    // open json file
-    std::ofstream ofs(path);
-    // check if file is open
+    // Создаем объект JSON
+    json j;
+
+    // Заполняем объект данными
+    j["title"] = this->title;
+    j["resolution"]["width"] = this->resolution.width;
+    j["resolution"]["height"] = this->resolution.height;
+    j["fullscreen"] = this->fullscreen;
+    j["frameRateLimit"] = this->frameRateLimit;
+    j["verticalSync"] = this->verticalSync;
+    j["antialiasingLevel"] = this->contextSettings.antialiasingLevel;
+    j["gridSize"] = this->gridSize;
+
+    // Создаем путь к файлу
+    std::string filePath = directoryPath + "/config.json";
+
+    // Открываем файл для записи
+    std::ofstream ofs(filePath);
+
+    // Проверяем, открылся ли файл
     if (!ofs.is_open()) {
-        printf("ERROR::GRAPHICSSETTINGS::COULD NOT SAVE TO FILE: %s\n", path.c_str());
+        std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT SAVE TO FILE: " << filePath << std::endl;
         return false;
     }
-    // save to json file
-    ofs << "{\n";
-    ofs << "\t\"title\""
-        << ": "
-        << "\"" << this->title << "\""
-        << ",\n";
-    ofs << "\t\"resolution\": "
-        << "{\n";
-    ofs << "\t\t\"width\": "
-        << "\"" << this->resolution.width << "\""
-        << ",\n";
-    ofs << "\t\t\"height\": "
-        << "\"" << this->resolution.height << "\""
-        << "\n";
-    ofs << "\t},\n";
-    ofs << "\t\"fullscreen\""
-        << ": "
-        << "\"" << this->fullscreen << "\""
-        << ",\n";
-    ofs << "\t\"frameRateLimit\""
-        << ": "
-        << "\"" << this->frameRateLimit << "\""
-        << ",\n";
-    ofs << "\t\"verticalSync\""
-        << ": "
-        << "\"" << this->verticalSync << "\""
-        << ",\n";
-    ofs << "\t\"antialiasingLevel\""
-        << ": "
-        << "\"" << this->contextSettings.antialiasingLevel << "\""
-        << ",\n";
-    ofs << "\t\"gridSize\""
-        << ": "
-        << "\"" << this->gridSize << "\""
-        << "\n";
-    ofs << "}";
-    // close json file
+
+    // Записываем JSON в файл
+    ofs << j;
+
+    // Закрываем файл
     ofs.close();
+
     return true;
 }
 
-const bool GraphicsSettings::loadFromFile(const std::string path)
+// load from file
+const bool GraphicsSettings::loadFromFile(const std::string directoryPath)
 {
-    // load json file
-    std::ifstream ifs(path);
-    std::string line;
-    // chek if file is open
+    // Создаем путь к файлу
+    std::string filePath = directoryPath + "/config.json";
+
+    // Открываем файл для чтения
+    std::ifstream ifs(filePath);
+
+    // Проверяем, открылся ли файл
     if (!ifs.is_open()) {
-        printf("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: %s\n", path.c_str());
+        std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filePath << std::endl;
         return false;
     }
-    // load from json file
-    while (std::getline(ifs, line)) {
-        if (line == "{")
-            continue;
-        if (line == "}")
-            continue;
-        else if (line.find("\"title\":") != std::string::npos)
-            this->title = line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4);
-        else if (line.find("\"resolution\":") != std::string::npos) {
-            std::getline(ifs, line);
-            this->resolution.width = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-            std::getline(ifs, line);
-            this->resolution.height = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-        } else if (line.find("\"fullscreen\":") != std::string::npos)
-            this->fullscreen = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-        else if (line.find("\"frameRateLimit\":") != std::string::npos)
-            this->frameRateLimit = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-        else if (line.find("\"verticalSync\":") != std::string::npos)
-            this->verticalSync = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-        else if (line.find("\"antialiasingLevel\":") != std::string::npos)
-            this->contextSettings.antialiasingLevel = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-        else if (line.find("\"gridSize\":") != std::string::npos)
-            this->gridSize = std::stoi(line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4));
-    }
-    // close json file
+
+    // Создаем объект JSON
+    nlohmann::json j;
+
+    // Читаем JSON из файла
+    ifs >> j;
+
+    // Закрываем файл
     ifs.close();
+
+    // Заполняем данные из JSON
+    this->title = j["title"];
+    this->resolution.width = j["resolution"]["width"];
+    this->resolution.height = j["resolution"]["height"];
+    this->fullscreen = j["fullscreen"];
+    this->frameRateLimit = j["frameRateLimit"];
+    this->verticalSync = j["verticalSync"];
+    this->contextSettings.antialiasingLevel = j["antialiasingLevel"];
+    this->gridSize = j["gridSize"];
+
     return true;
 }

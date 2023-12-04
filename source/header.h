@@ -8,20 +8,27 @@
 #include <iostream>
 #include <map>
 #include <ostream>
+#include <pwd.h>
 #include <random>
 #include <sstream>
 #include <stack>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <thread>
+#include <sys/types.h>
 #include <time.h>
+#include <unistd.h>
 #include <vector>
+
+// system include
+#include <CoreFoundation/CoreFoundation.h>
 
 // include nlohmann/json libary
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 using namespace nlohmann;
+
+#include "systemFunctionUNIX.hpp"
 
 // include SFML libary
 #include <SFML/Audio.hpp>

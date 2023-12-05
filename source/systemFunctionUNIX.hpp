@@ -8,7 +8,7 @@
 std::string get_resources_dir();
 
 //get path to app directory
-std::string get_app_dir();
+std::string get_doc_app_dir();
 
 // create app directory and config subdirectory
 void createAppDirectoryAndConfigSubdirectory(const std::string& appName);

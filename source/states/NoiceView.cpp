@@ -130,6 +130,9 @@ void NoiceView::initDebugText()
 NoiceView::NoiceView(StateData* statedata)
     : State(statedata)
 {
+    // init logger
+    this->myLogger_noiceview.log("Start initilization NoiceView", "NoiceView::NoiceView()", true, 0);
+    // init keybinds
     this->initKeybinds();
     this->initTabMenu();
     this->initButtons();
@@ -143,10 +146,14 @@ NoiceView::NoiceView(StateData* statedata)
     this->myLS->setRule('s', "d[-qqs]+qqs");
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
+
+    myLogger_noiceview.log("End initilization NoiceView", "NoiceView::NoiceView()", true, 0);
 }
 
 NoiceView::~NoiceView()
 {
+    myLogger_noiceview.log("Start destruction NoiceView", "NoiceView::~NoiceView()", true, 0);
+
     this->Iparser->saveNoiceData(myConst::config_noicedata, this->m_NoiceViewer->getNoiceData());
 
     for (auto& it : this->buttons)
@@ -227,8 +234,11 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
 
 void NoiceView::updateInput(const float& delta_time)
 {
+    // if pressed key ESC then end state
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
+
+    // switch tab menu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;
 
@@ -240,11 +250,12 @@ void NoiceView::updateInput(const float& delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F2"))) && this->getKeytime())
         this->m_NoiceViewer->swithColorMode();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F3"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F3"))) && this->getKeytime()) {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
             this->current_View_Generator = 0;
+    }
 }
 
 void NoiceView::updateDebugText(const float& delta_time)

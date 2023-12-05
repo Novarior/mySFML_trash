@@ -19,19 +19,23 @@
 
 */
 void Core::initDirectories()
-{
-    // check if app directory exists
-    if (!checkAppDirectoryExists(myConst::app_name))
+{ // check if app directory exists
+    if (!checkAppDirectoryExists(myConst::app_name)) {
+        std::cout << "App directory does not exist" << std::endl;
+        std::cout << "Creating app directory" << std::endl;
         createAppDirectoryAndConfigSubdirectory(myConst::app_name);
-    // check if config directory exists
+    } else {
+        std::cout << "App directory exists" << std::endl;
+    }
 }
 
 // initialisations root data and build first frame app
 void Core::initVar()
 {
     this->mWindow = NULL;
-    if (!this->gfxSettings.loadFromFile(get_app_dir()))
-        this->gfxSettings.saveToFile(get_app_dir());
+
+    if (!this->gfxSettings.loadFromFile(get_doc_app_dir()))
+        this->gfxSettings.saveToFile(get_doc_app_dir());
 }
 
 void Core::initStateData()
@@ -101,13 +105,21 @@ void Core::initWindow()
 
 Core::Core()
 {
+    myLogger_core.log("Initilization core", "Core::Core()", true, 0);
     this->parsJSON = new mypars::parsJSON();
+    myLogger_core.log("Initilization parsJSON", "Core::Core()", true, 0);
     this->initDirectories();
+    myLogger_core.log("Initilization directories", "Core::Core()", true, 0);
     this->initKeyBinds();
+    myLogger_core.log("Initilization keybinds", "Core::Core()", true, 0);
     this->initVar();
+    myLogger_core.log("Initilization variables", "Core::Core()", true, 0);
     this->initWindow();
+    myLogger_core.log("Initilization window", "Core::Core()", true, 0);
     this->initStateData();
+    myLogger_core.log("Initilization state data", "Core::Core()", true, 0);
     this->initState();
+    myLogger_core.log("Initilization state", "Core::Core()", true, 0);
 }
 
 Core::~Core()
@@ -124,6 +136,8 @@ Core::~Core()
 
 void Core::run()
 {
+    myLogger_core.log("Start main loop", "Core::run()", true, 0);
+
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();
         this->update();

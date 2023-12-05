@@ -15,7 +15,7 @@ std::string get_resources_dir()
 }
 
 // get path to app directory
-std::string get_app_dir()
+std::string get_doc_app_dir()
 {
     struct passwd* pw = getpwuid(getuid());
     const char* homedir = pw->pw_dir;

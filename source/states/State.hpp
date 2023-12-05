@@ -5,6 +5,7 @@
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
 #include "gfx.hpp"
+
 namespace mypars {
 class parsJSON;
 };
@@ -48,6 +49,8 @@ public:
 /// @brief Abstract class for game states
 class State {
 private:
+    Logger myLogger_state;
+
 protected:
     // Variables
     StateData* IstateData;

@@ -171,6 +171,8 @@ void Process::initEntitys()
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
+    // logger
+    myLogger_process.log("Start initilization process", "Process::Process()", true, 0);
     // init Parser
     if (defaultLoad)
         this->loadGameData();
@@ -184,11 +186,18 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initPlayer();
     this->initEntitys();
     this->intGUI();
+
+    myLogger_process.log("End initilization process", "Process::Process()", true, 0);
 }
 
 Process::~Process()
 {
-    this->saveGameData();
+    myLogger_process.log("Process destructor", "Process::~Process()", true, 0);
+
+    if (this->saveGameData())
+        myLogger_process.log("Game Data has be saved", "Process::~Process()::saveGameData()", true, 0);
+    else
+        myLogger_process.log("Game Data has not be saved", "Process::~Process()::saveGameData()", true, 0);
 
     delete this->myGN;
     delete this->mapTiles;

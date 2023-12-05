@@ -8,6 +8,9 @@
 /// @retval None
 class SettingsState : public State {
 private:
+    // logger
+    Logger myLogger_settings;
+
     // Variables
     sf::Texture backgroundTexture;
     sf::RectangleShape background;

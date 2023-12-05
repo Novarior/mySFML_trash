@@ -39,6 +39,8 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGui()
 {
+    
+    // init background
     this->background.setSize(sf::Vector2f(
         static_cast<float>(this->Iwindow->getSize().x),
         static_cast<float>(this->Iwindow->getSize().y)));
@@ -245,7 +247,7 @@ void SettingsState::resetGui()
     delete this->selector_resolutions;
     delete this->selector_antialiasing;
 
-    this->IstateData->gfxSettings->saveToFile(get_app_dir());
+    this->IstateData->gfxSettings->saveToFile(get_doc_app_dir());
 
     this->reCaclulateCharacterSize();
 
@@ -255,14 +257,18 @@ void SettingsState::resetGui()
 SettingsState::SettingsState(StateData* state_data)
     : State(state_data)
 {
+    myLogger_settings.log("Initilization settings state", "SettingsState::SettingsState()", true, 0);
+    // init variables
     this->initVariables();
     this->initFonts();
     this->initGui();
     this->initKeybinds();
+    myLogger_settings.log("End initilization settings state", "SettingsState::SettingsState()", true, 0);
 }
 
 SettingsState::~SettingsState()
 {
+    myLogger_settings.log("SettingsState destructor", "SettingsState::~SettingsState()", true, 0);
     // clear buttons
     auto it = this->buttons.begin();
     for (it = this->buttons.begin(); it != this->buttons.end(); ++it)

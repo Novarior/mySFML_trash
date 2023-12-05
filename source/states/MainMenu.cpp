@@ -167,16 +167,22 @@ void MainMenu::resetView()
 MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
+    // logger
+    myLogger_mainmenu.log("MainMenu constructor", "MainMenu", true, 0);
     //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();
     this->initButtons();
     this->initStartProcces();
+
+    myLogger_mainmenu.log("End initilization MainMenu", "MainMenu::MainMenu()", true, 0);
 }
 
 MainMenu::~MainMenu()
 {
+    myLogger_mainmenu.log("MainMenu destructor", "MainMenu", true, 0);
+
     this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData);
 
     // delete buttons

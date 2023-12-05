@@ -41,7 +41,7 @@ const bool GraphicsSettings::saveToFile(const std::string directoryPath)
     }
 
     // Записываем JSON в файл
-    ofs << j;
+    ofs << j.dump(4) << std::endl;
 
     // Закрываем файл
     ofs.close();

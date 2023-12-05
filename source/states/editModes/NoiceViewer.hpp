@@ -20,6 +20,10 @@ enum colorMode {
 
 class NoiceViewer {
 private:
+    // logger
+    Logger myLogger_noiceview;
+
+    // Variables
     struct {
         int deep_ocean = 0;
         int ocean = 0;

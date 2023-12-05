@@ -16,6 +16,7 @@ set(SOURCE_PROJECT_FILES
     source/main.cpp 
     source/Core.cpp 
     source/systemFunctionUNIX.cpp
+    source/LOGGER.cpp
     source/states/gfx.cpp
     source/math/mymath.cpp
     source/math/simplex.cpp

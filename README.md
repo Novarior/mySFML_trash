@@ -9,4 +9,6 @@ using libs:
 - SFML
 - nlohmann/JSON
 
+- tested on MacOs
+
 ```

@@ -28,6 +28,8 @@ else()
 endif()
 
 #include SFML library on project
+set(SFML_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SFML_2.6.1_ARM)
+
 find_package(SFML 2.6.1 COMPONENTS graphics system window REQUIRED)
 #for bundle
 file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)

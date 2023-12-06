@@ -4,7 +4,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/opt/homebrew/Cellar/sfml/2.6.1/include",
+                "${workspaceFolder}/SFML_2.6.1_ARM/include/SFML",
                 "/opt/homebrew/Cellar/nlohmann-json/3.11.2/include",
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
             ],

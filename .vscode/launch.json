@@ -11,8 +11,7 @@
             "program": "${workspaceFolder}/bin/GameProto",
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/bin",
-            "args": [
-            ],
+            "args": [],
             "environment": [
                 {
                     "name": "Test",
@@ -22,6 +21,31 @@
             "externalConsole": true,
             "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
             "MIMode": "lldb",
+        },
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/Bundle/Ekzeckt.app",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin",
+            "environment": [
+                {
+                    "name": "Test",
+                    "value": "Debug"
+                }
+            ],
+            "externalConsole": true,
+            "MIMode": "lldb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
         }
     ]
 }

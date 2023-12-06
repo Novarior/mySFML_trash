@@ -14,6 +14,8 @@
 
 class Process : public State {
 private:
+    // logger
+    Logger myLogger_process;
     // flag for load data
     Gamedata m_gamedata;
     // view and window

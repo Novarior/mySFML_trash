@@ -33,13 +33,13 @@ void MainMenu::initBackground()
     for (int i = 0; i < 3; i++) {
         this->background_textures.push_back(sf::Texture());
     }
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_3);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_3));
     tx.setSmooth(true);
     this->background_textures[0] = tx;
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_2);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_2));
     tx.setSmooth(true);
     this->background_textures[1] = tx;
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_1);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_1));
     tx.setSmooth(true);
     this->background_textures[2] = tx;
 
@@ -167,16 +167,22 @@ void MainMenu::resetView()
 MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
+    // logger
+    myLogger_mainmenu.log("MainMenu constructor", "MainMenu", true, 0);
     //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();
     this->initButtons();
     this->initStartProcces();
+
+    myLogger_mainmenu.log("End initilization MainMenu", "MainMenu::MainMenu()", true, 0);
 }
 
 MainMenu::~MainMenu()
 {
+    myLogger_mainmenu.log("MainMenu destructor", "MainMenu", true, 0);
+
     this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData);
 
     // delete buttons

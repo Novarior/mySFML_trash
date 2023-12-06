@@ -19,27 +19,31 @@
 
 */
 void Core::initDirectories()
-{
-    // check if app directory exists
-    if (!checkAppDirectoryExists(myConst::app_name))
-        createAppDirectoryAndConfigSubdirectory(myConst::app_name);
-    // check if config directory exists
+{ // check if app directory exists
+    if (!sAppFunctions::checkAppDirectoryExists(myConst::app_name)) {
+        std::cout << "App directory does not exist" << std::endl;
+        std::cout << "Creating app directory" << std::endl;
+        sAppFunctions::createAppDirectories(myConst::app_name);
+    } else {
+        std::cout << "App directory exists" << std::endl;
+    }
 }
 
 // initialisations root data and build first frame app
 void Core::initVar()
 {
     this->mWindow = NULL;
-    if (!this->gfxSettings.loadFromFile(get_app_dir()))
-        this->gfxSettings.saveToFile(get_app_dir());
+
+    if (!this->gfxSettings.loadFromFile(sAppFunctions::get_doc_app_dir()))
+        this->gfxSettings.saveToFile(sAppFunctions::get_doc_app_dir());
 }
 
 void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(std::string(get_resources_dir() + myConst::data_gameproces_font_path))) { }
-    if (!this->mStatedata.debugFont.loadFromFile(std::string(get_resources_dir() + myConst::data_debugfont_path))) { }
+    if (!this->mStatedata.font.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_gameproces_font_path))) { }
+    if (!this->mStatedata.debugFont.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_debugfont_path))) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
@@ -101,13 +105,21 @@ void Core::initWindow()
 
 Core::Core()
 {
+    Logger::log("Initilization core", "Core::Core()", true, 0);
     this->parsJSON = new mypars::parsJSON();
+    Logger::log("Initilization parsJSON", "Core::Core()", true, 0);
     this->initDirectories();
+    Logger::log("Initilization directories", "Core::Core()", true, 0);
     this->initKeyBinds();
+    Logger::log("Initilization keybinds", "Core::Core()", true, 0);
     this->initVar();
+    Logger::log("Initilization variables", "Core::Core()", true, 0);
     this->initWindow();
+    Logger::log("Initilization window", "Core::Core()", true, 0);
     this->initStateData();
+    Logger::log("Initilization state data", "Core::Core()", true, 0);
     this->initState();
+    Logger::log("Initilization state", "Core::Core()", true, 0);
 }
 
 Core::~Core()
@@ -124,6 +136,8 @@ Core::~Core()
 
 void Core::run()
 {
+    Logger::log("Start main loop", "Core::run()", true, 0);
+
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();
         this->update();

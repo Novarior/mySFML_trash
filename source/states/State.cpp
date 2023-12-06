@@ -8,6 +8,8 @@
  */
 State::State(StateData* state_data)
 {
+    myLogger_state.log("Start initilization state", "State::State()", true, 0);
+
     this->IstateData = state_data;
     this->Iwindow = state_data->sWindow;
     this->Istates = state_data->sStates;
@@ -26,9 +28,14 @@ State::State(StateData* state_data)
     this->dText.setOutlineThickness(1);
     this->dText.setOutlineColor(sf::Color::Black);
     this->dText.setFont(this->IstateData->debugFont);
+
+    myLogger_state.log("End initilization state", "State::State()", true, 0);
 }
 
-State::~State() { }
+State::~State()
+{
+    myLogger_state.log("destroy state", "State::~State()", true, 0);
+}
 
 // Accessors
 const bool State::getKeytime()

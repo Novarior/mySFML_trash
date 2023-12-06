@@ -5,11 +5,11 @@ parsJSON::parsJSON() { }
 parsJSON::~parsJSON() { }
 
 // load playes
-const bool parsJSON::loadPlayer(const std::string& filename, Entity& player)
+const bool parsJSON::loadPlayer(Entity& player)
 { // open json file
-    std::ifstream ifs;
+    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_playerdata);
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
     }
     // load from json file
@@ -17,72 +17,57 @@ const bool parsJSON::loadPlayer(const std::string& filename, Entity& player)
     return true;
 }
 // load inventory
-const bool parsJSON::loadInventory(const std::string& filename, Inventory& inventory)
+const bool parsJSON::loadInventory(Inventory& inventory)
 { // open json file
-    std::ifstream ifs;
+    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_inventory);
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
     }
     return true;
 }
 // load  entitys
-const bool parsJSON::loadEntitys(const std::string& filename, std::vector<Entity*>& entitys)
+const bool parsJSON::loadEntitys(std::vector<Entity*>& entitys)
 { // open json file
 
     return false;
 }
 // load keybinds
-const bool parsJSON::loadKeyBinds(const std::string& filename, std::map<std::string, int>& keyBinds)
+const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
 { // load key binds from json file
-    std::ifstream ifs(filename);
-    std::string line;
-    std::string name = "";
-    int value = 0;
-    // check open file
+    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::KEYBINDS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("PARSER cant open file: %s\n", std::string(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds).c_str());
+        Logger::log("Parcer cant open file: " + sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds, "CORE->PARS", false, logType::ERROR);
         return false;
     }
-    // load from json file
-    while (std::getline(ifs, line)) {
-        // check if line is not empty
-        if (line != "") {
-            // skip "key_binds" and all special symbols
-            if (line.find("key_binds") != std::string::npos)
-                continue;
-            if (line.find("{") != std::string::npos)
-                continue;
-            if (line.find("}") != std::string::npos)
-                continue;
-            if (line.find("[") != std::string::npos)
-                continue;
-            if (line.find("]") != std::string::npos)
-                continue;
 
-            if (line.find("name") != std::string::npos) {
-                // get key bind name
-                name = line.substr(line.find(":") + 3, line.find(",") - line.find(":") - 4);
-            } else if (line.find("key") != std::string::npos) {
-                // get key bind key
-                value = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-            }
+    try {
+        json j;
+        ifs >> j;
+
+        for (auto& element : j["key_binds"].items()) {
+            std::string name = element.key();
+            int value = element.value();
             keyBinds[name] = value;
         }
+    } catch (json::parse_error& e) {
+        printf("ERROR::PARSER::JSON::PARSE_ERROR\n   %s\n", e.what());
+        Logger::log("JSON parse error: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        return false;
     }
 
-    // close file
     ifs.close();
     return true;
 }
 // load noice data
-const bool parsJSON::loadNoiceData(const std::string& filename, mmath::noiceData& data)
+const bool parsJSON::loadNoiceData(mmath::noiceData& data)
 { // load noice data
-    std::ifstream ifs(filename);
+    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_playerdata);
     std::string line;
     // check open file
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
     }
     // load from json file
@@ -137,12 +122,12 @@ const bool parsJSON::loadNoiceData(const std::string& filename, mmath::noiceData
     return true;
 }
 // load gameData
-const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
+const bool parsJSON::loadGameData(Gamedata data)
 { // load game data
-    std::ifstream ifs(filename);
+    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_game);
     // check open file
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_game);
         return false;
     }
     //  this->m_js.clear();
@@ -153,18 +138,18 @@ const bool parsJSON::loadGameData(const std::string& filename, Gamedata data)
 }
 // SAVES
 // save player
-const bool parsJSON::savePlayer(const std::string& filename, Entity* player)
+const bool parsJSON::savePlayer(Entity* player)
 {
     return false;
 }
 // save inventory
-const bool parsJSON::saveInventory(const std::string& filename, Inventory* inventory)
+const bool parsJSON::saveInventory(Inventory* inventory)
 {
     // save player inventory
-    std::ofstream ofs(filename);
+    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_inventory);
     // check open file
     if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
         return false;
     }
     // save to json file
@@ -216,13 +201,13 @@ const bool parsJSON::saveInventory(const std::string& filename, Inventory* inven
     return true;
 }
 // save entitys
-const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity*> entitys)
+const bool parsJSON::saveEntitys(std::vector<Entity*> entitys)
 {
     // open json file
-    std::ofstream ofs(filename);
+    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_entitydata);
     // check open file
     if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::ENTITYS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
         return false;
     }
 
@@ -253,13 +238,13 @@ const bool parsJSON::saveEntitys(const std::string& filename, std::vector<Entity
     return true;
 }
 // save noicedata
-const bool parsJSON::saveNoiceData(const std::string& filename, mmath::noiceData _dataNoice)
+const bool parsJSON::saveNoiceData(mmath::noiceData _dataNoice)
 {
     // open json file
-    std::ofstream ofs(filename);
+    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_noicedata);
     // check open file
     if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_noicedata);
         return false;
     }
     // save to json file
@@ -280,13 +265,16 @@ const bool parsJSON::saveNoiceData(const std::string& filename, mmath::noiceData
     return true;
 }
 // save keybinds
-const bool parsJSON::saveKeyBinds(const std::string& filename, std::map<std::string, int>& keyBinds)
+const bool parsJSON::saveKeyBinds(std::map<std::string, int>& keyBinds)
 {
-    // save key binds to json file on json format key : value
-    std::ofstream ofs(filename);
+    // save key binds to json file on json format [key : value]
+    std::ofstream ofs(std::string(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds));
     // check open file
     if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::KEYBINDS::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        std::stringstream ss;
+        ss << "Pars cant save keybinds" << sAppFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
+        Logger::log(ss.str(), "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::OPEN::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
     }
 
     // save to json file
@@ -303,13 +291,13 @@ const bool parsJSON::saveKeyBinds(const std::string& filename, std::map<std::str
     return true;
 }
 // save gamedata
-const bool parsJSON::saveGameData(const std::string& filename, Gamedata& data)
+const bool parsJSON::saveGameData(Gamedata& data)
 {
     // save game data
-    std::ofstream ofs(filename);
+    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_game);
     // check open file
     if (!ofs.is_open()) {
-        printf("ERROR::PARSER::SAVE::GAMEDATA::FILE_NOT_OPEN\n   %s\n", filename.c_str());
+        printf("ERROR::PARSER::SAVE::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_game);
         return false;
     }
 

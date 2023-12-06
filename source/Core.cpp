@@ -1,23 +1,5 @@
 #include "Core.h"
 
-// build folders for app
-/*
-            -ROOT
-            -Myapp.app
-            -Config/
-                -entitysdata.json
-                -gameconfig.cfg
-                -inventorydata.json
-                -playerdata.json
-                -Window.json
-                -supported_keys.json
-            -resourses/
-                -fonts
-                -sounds
-                -sprites
-                -textures
-
-*/
 void Core::initDirectories()
 { // check if app directory exists
     if (!sAppFunctions::checkAppDirectoryExists(myConst::app_name)) {
@@ -34,8 +16,8 @@ void Core::initVar()
 {
     this->mWindow = NULL;
 
-    if (!this->gfxSettings.loadFromFile(sAppFunctions::get_doc_app_dir()))
-        this->gfxSettings.saveToFile(sAppFunctions::get_doc_app_dir());
+    if (!this->gfxSettings.loadFromFile(sAppFunctions::getDocumentsAppFolder()))
+        this->gfxSettings.saveToFile(sAppFunctions::getDocumentsAppFolder());
 }
 
 void Core::initStateData()
@@ -75,7 +57,7 @@ void Core::initKeyBinds()
     this->supportedKeys["F2"] = sf::Keyboard::F2;
     this->supportedKeys["F3"] = sf::Keyboard::F3;
     // save default keys to file
-    this->parsJSON->saveKeyBinds("Config/supported_keys.json", this->supportedKeys);
+    this->parsJSON->saveKeyBinds(this->supportedKeys);
 }
 
 void Core::initState()
@@ -105,26 +87,26 @@ void Core::initWindow()
 
 Core::Core()
 {
-    Logger::log("Initilization core", "Core::Core()", true, 0);
+    Logger::log("Initilization core", "Core::Core()", true);
     this->parsJSON = new mypars::parsJSON();
-    Logger::log("Initilization parsJSON", "Core::Core()", true, 0);
+    Logger::log("Initilization parsJSON", "Core::Core()", true);
     this->initDirectories();
-    Logger::log("Initilization directories", "Core::Core()", true, 0);
+    Logger::log("Initilization directories", "Core::Core()", true);
     this->initKeyBinds();
-    Logger::log("Initilization keybinds", "Core::Core()", true, 0);
+    Logger::log("Initilization keybinds", "Core::Core()", true);
     this->initVar();
-    Logger::log("Initilization variables", "Core::Core()", true, 0);
+    Logger::log("Initilization variables", "Core::Core()", true);
     this->initWindow();
-    Logger::log("Initilization window", "Core::Core()", true, 0);
+    Logger::log("Initilization window", "Core::Core()", true);
     this->initStateData();
-    Logger::log("Initilization state data", "Core::Core()", true, 0);
+    Logger::log("Initilization state data", "Core::Core()", true);
     this->initState();
-    Logger::log("Initilization state", "Core::Core()", true, 0);
+    Logger::log("Initilization state", "Core::Core()", true);
 }
 
 Core::~Core()
 {
-    this->gfxSettings.saveToFile(myConst::config_window);
+    this->gfxSettings.saveToFile(sAppFunctions::getDocumentsAppFolder());
     delete this->parsJSON;
 
     while (!this->mState.empty()) {
@@ -136,7 +118,7 @@ Core::~Core()
 
 void Core::run()
 {
-    Logger::log("Start main loop", "Core::run()", true, 0);
+    Logger::log("Start main loop", "Core::run()", true);
 
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();

@@ -3,13 +3,17 @@
 #define SOURCE_LOGGER_HPP_
 
 #include "systemFunctionUNIX.hpp"
-// static member
 
+// enum value for log
+enum class logType {
+    INFO = 0,
+    WARNING = 1,
+    ERROR = 2
+};
 
 class Logger {
 private:
     std::ofstream logFile;
-
 
     static std::string getCurrentTime()
     {
@@ -24,10 +28,10 @@ private:
 public:
     Logger()
     {
-        logFile.open(sAppFunctions::get_doc_app_dir() + "/" + "log.log", std::ios::app);
+        logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {
             std::cerr << "Logger: Unable to open the log file. Creating a new one." << std::endl;
-            logFile.open(sAppFunctions::get_doc_app_dir() + "/backup_" + "log.log", std::ios::app);
+            logFile.open(sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
             if (!logFile) {
                 throw std::runtime_error("Logger: Unable to open the backup log file");
             }
@@ -39,20 +43,26 @@ public:
             logFile.close();
             // Создаем резервную копию лог-файла
 
-            std::filesystem::copy(sAppFunctions::get_doc_app_dir() + "/" + "log.log", sAppFunctions::get_doc_app_dir() + "/backup_" + "log.log", std::filesystem::copy_options::overwrite_existing);
+            std::filesystem::copy(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::filesystem::copy_options::overwrite_existing);
         }
     }
 
-    static void log(const std::string& message, const std::string& source, bool success, int level)
+    static void log(const std::string& message, const std::string& source, bool success, logType level = logType::INFO)
     {
-        std::string successString = success ? "Success" : "Failure";
-        std::string logEntry = "[" + getCurrentTime() + "]  _L: " + std::to_string(level) + "  " + successString + "  " + source + "  ->  " + message;
+        std::array<std::string, 3> logTypes = {
+            "INFO",
+            "WARNING",
+            "ERROR"
+        };
+        std::string typeString = logTypes[static_cast<int>(level)];
 
+        std::string successString = success ? "Success" : "Failure";
+        std::string logEntry = "[" + getCurrentTime() + "] _L: " + typeString + " " + successString + " " + source + " -> " + message;
         std::ofstream logFile;
-        logFile.open(sAppFunctions::get_doc_app_dir()  + "/" + "log.log", std::ios::app);
+        logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {
             std::cerr << "Logger: Unable to open the log file. Creating a new one." << std::endl;
-            logFile.open(sAppFunctions::get_doc_app_dir() + "/backup_" + "log.log", std::ios::app);
+            logFile.open(sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
             if (!logFile) {
                 throw std::runtime_error("Logger: Unable to open the backup log file");
             }

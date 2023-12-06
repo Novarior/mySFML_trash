@@ -4,9 +4,9 @@ void NoiceView::initKeybinds()
 {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["TAB_MENU"] = this->IsupportedKeys->at("Tab");
-    this->Ikeybinds["KEY_F1"] = this->IsupportedKeys->at("F1");
-    this->Ikeybinds["KEY_F2"] = this->IsupportedKeys->at("F2");
-    this->Ikeybinds["KEY_F3"] = this->IsupportedKeys->at("F3");
+    this->Ikeybinds["KEY_Q"] = this->IsupportedKeys->at("Q");
+    this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
+    this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
 }
 
 void NoiceView::initTabMenu()
@@ -78,7 +78,7 @@ void NoiceView::initSelectors()
     this->staticSelector["AMPLIFIRE"] = new gui::StaticSelector(
         sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sWindow->getSize().y)),
         sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 3, 0.1f, true, "Amplifire: ");
+        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 0.1f, true, "Amplifire: ");
 
     std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
 
@@ -97,7 +97,7 @@ void NoiceView::initSelectors()
 void NoiceView::initNoice()
 {
 
-    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->m_noiceData)) { // init noise data
+    if (!this->Iparser->loadNoiceData(this->m_noiceData)) { // init noise data
         this->m_noiceData.octaves = 8;
         std::srand(std::time(nullptr));
         this->m_noiceData.seed = std::rand();
@@ -131,7 +131,7 @@ NoiceView::NoiceView(StateData* statedata)
     : State(statedata)
 {
     // init logger
-    this->myLogger_noiceview.log("Start initilization NoiceView", "NoiceView::NoiceView()", true, 0);
+    Logger::log("Start initilization NoiceView", "NoiceView::NoiceView()", true);
     // init keybinds
     this->initKeybinds();
     this->initTabMenu();
@@ -147,14 +147,14 @@ NoiceView::NoiceView(StateData* statedata)
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
 
-    myLogger_noiceview.log("End initilization NoiceView", "NoiceView::NoiceView()", true, 0);
+    Logger::log("End initilization NoiceView", "NoiceView::NoiceView()", true);
 }
 
 NoiceView::~NoiceView()
 {
-    myLogger_noiceview.log("Start destruction NoiceView", "NoiceView::~NoiceView()", true, 0);
+    Logger::log("Start destruction NoiceView", "NoiceView::~NoiceView()", true);
 
-    this->Iparser->saveNoiceData(myConst::config_noicedata, this->m_NoiceViewer->getNoiceData());
+    this->Iparser->saveNoiceData(this->m_NoiceViewer->getNoiceData());
 
     for (auto& it : this->buttons)
         delete it.second;
@@ -235,22 +235,22 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
 void NoiceView::updateInput(const float& delta_time)
 {
     // if pressed key ESC then end state
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime()) {
         this->endState();
-
+    }
     // switch tab menu
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime()) {
         this->showTabmenu = !this->showTabmenu;
-
+    }
     // update currentViewGenerator in a range from 0 to 2
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F1"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime()) {
         this->m_NoiceViewer->swithNoiceModel();
-
+    }
     // switch noice model
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F2"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))) && this->getKeytime()) {
         this->m_NoiceViewer->swithColorMode();
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F3"))) && this->getKeytime()) {
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
@@ -265,8 +265,8 @@ void NoiceView::updateDebugText(const float& delta_time)
     this->dString_Stream
         << "FPS:\t" << fps
         << "\nCurent view generator:\t" << this->current_View_Generator
-        << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModel()
-        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorMode()
+        << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
+        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode()
         << "\nTree Data:"
         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
         << "\nPause:\t" << this->Ipaused;
@@ -310,10 +310,10 @@ void NoiceView::updateButtons(const float& delta_time)
             this->m_NoiceViewer->generateNoice();
         }
         if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-            this->Iparser->saveNoiceData(myConst::config_noicedata, this->m_noiceData);
+            this->Iparser->saveNoiceData(this->m_noiceData);
         }
         if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-            this->Iparser->loadNoiceData(myConst::config_noicedata, this->m_noiceData);
+            this->Iparser->loadNoiceData(this->m_noiceData);
             this->staticSelector["OCTAVES"]->setCurrentValue(this->m_noiceData.octaves);
             this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_noiceData.frequency);
             this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_noiceData.amplifire);

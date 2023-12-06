@@ -49,8 +49,6 @@ public:
 /// @brief Abstract class for game states
 class State {
 private:
-    Logger myLogger_state;
-
 protected:
     // Variables
     StateData* IstateData;

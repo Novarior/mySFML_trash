@@ -20,8 +20,17 @@ enum colorMode {
 
 class NoiceViewer {
 private:
-    // logger
-    Logger myLogger_noiceview;
+    std::array<std::string, 3> noiceModels = {
+        "Perlin Noice",
+        "Perlin Noice V2",
+        "Simplex Noice"
+    };
+
+    std::array<std::string, 3> colorModes = {
+        "Full Color",
+        "Noice Color",
+        "Biome Color"
+    };
 
     // Variables
     struct {
@@ -68,6 +77,9 @@ public:
 
     void swithNoiceModel();
     void swithColorMode();
+
+    const std::string getNoiceModelName();
+    const std::string getColorModeName();
 
     int getNoiceModel() { return this->current_Noice_Model; }
     int getColorMode() { return this->current_Color_Mode; }

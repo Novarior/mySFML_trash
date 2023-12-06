@@ -9,8 +9,6 @@
 
 class MainMenu : public State {
 private:
-    // logger
-    Logger myLogger_mainmenu;
     // render components
     sf::View view;
     sf::RenderTexture renderTexture;

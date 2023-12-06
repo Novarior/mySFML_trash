@@ -8,7 +8,7 @@
  */
 State::State(StateData* state_data)
 {
-    myLogger_state.log("Start initilization state", "State::State()", true, 0);
+    Logger::log("Start initilization state", "State::State()", true);
 
     this->IstateData = state_data;
     this->Iwindow = state_data->sWindow;
@@ -29,12 +29,12 @@ State::State(StateData* state_data)
     this->dText.setOutlineColor(sf::Color::Black);
     this->dText.setFont(this->IstateData->debugFont);
 
-    myLogger_state.log("End initilization state", "State::State()", true, 0);
+    Logger::log("End initilization state", "State::State()", true);
 }
 
 State::~State()
 {
-    myLogger_state.log("destroy state", "State::~State()", true, 0);
+    Logger::log("destroy state", "State::~State()", true);
 }
 
 // Accessors

@@ -6,8 +6,6 @@
 
 class PauseMenu {
 private:
-    // logger
-    Logger myLogger_pause;
     // Variables
     sf::Text menuText;
     sf::Font& font;

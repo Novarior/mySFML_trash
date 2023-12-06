@@ -8,13 +8,13 @@ namespace myConst {
 const char app_name[] = "Ekzeckt";
 
 // config
-const char config_game[] = "config/gamedata.json";
-const char config_entitydata[] = "config/entitysdata.json";
-const char config_inventory[] = "config/inventorydata.json";
-const char config_playerdata[] = "config/playerdata.json";
-const char config_window[] = "config/window.json";
-const char config_keybinds[] = "config/keybinds.json";
-const char config_noicedata[] = "config/noicedata.json";
+const char config_game[] = "/config/gamedata.json";
+const char config_entitydata[] = "/config/entitysdata.json";
+const char config_inventory[] = "/config/inventorydata.json";
+const char config_playerdata[] = "/config/playerdata.json";
+const char config_window[] = "/config/window.json";
+const char config_keybinds[] = "/config/keybinds.json";
+const char config_noicedata[] = "/config/noicedata.json";
 
 // fonst
 const char data_debugfont_path[] = "/fonts/Muli-Regular.ttf";

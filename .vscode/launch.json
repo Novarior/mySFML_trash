@@ -26,10 +26,10 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/bin/Bundle/Ekzeckt.app",
+            "program": "${workspaceFolder}/bin/Debug/Ekzeckt.app",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/bin",
+            "cwd": "${workspaceFolder}",
             "environment": [
                 {
                     "name": "Test",

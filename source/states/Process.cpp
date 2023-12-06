@@ -4,11 +4,11 @@ const bool Process::loadGameData()
 {
     // load game config
 
-    if (!this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData))
+    if (!this->Iparser->loadGameData(this->IstateData->gameData))
         printf("ERROR::PROCESS::LOAD::GAMEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_game);
 
     // load noice config
-    if (!this->Iparser->loadNoiceData(myConst::config_noicedata, this->noicedata))
+    if (!this->Iparser->loadNoiceData(this->noicedata))
         printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
     else {
         this->noicedata.mapSizeX = 1000;
@@ -23,17 +23,17 @@ const bool Process::loadGameData()
 const bool Process::saveGameData()
 {
     // save player to JSON file
-    if (!this->Iparser->savePlayer(myConst::config_playerdata, this->player))
-        printf("ERROR::PROCESS::PLAYERDATA::COULD_NOT_SAVE\n");
+    if (!this->Iparser->savePlayer(this->player))
+        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
     // save inventory to JSON file
-    if (!this->Iparser->saveInventory(myConst::config_inventory, this->t_inventory))
-        printf("ERROR::PROCESS::INVENTORYDATA::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveInventory(this->t_inventory))
+        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
     // save entitys pos and other data
-    if (!this->Iparser->saveEntitys(myConst::config_entitydata, this->entitys))
-        printf("ERROR::PROCESS::ENTITYSDATA::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveEntitys(this->entitys))
+        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
     // save game data to JSON file
-    if (!this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData))
-        printf("ERROR::PROCESS::GAMEDATA::COULD_NOT_SAVE\n");
+    if (!this->Iparser->saveGameData(this->IstateData->gameData))
+        Logger::log("Parser::saveGameData()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
 
     return true;
 }
@@ -172,7 +172,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
     // logger
-    myLogger_process.log("Start initilization process", "Process::Process()", true, 0);
+    Logger::log("Start initilization process", "Process::Process()", true);
     // init Parser
     if (defaultLoad)
         this->loadGameData();
@@ -187,17 +187,17 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initEntitys();
     this->intGUI();
 
-    myLogger_process.log("End initilization process", "Process::Process()", true, 0);
+    Logger::log("End initilization process", "Process::Process()", true);
 }
 
 Process::~Process()
 {
-    myLogger_process.log("Process destructor", "Process::~Process()", true, 0);
+    Logger::log("Process destructor", "Process::~Process()", true);
 
     if (this->saveGameData())
-        myLogger_process.log("Game Data has be saved", "Process::~Process()::saveGameData()", true, 0);
+        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()", true);
     else
-        myLogger_process.log("Game Data has not be saved", "Process::~Process()::saveGameData()", true, 0);
+        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", false, logType::ERROR);
 
     delete this->myGN;
     delete this->mapTiles;
@@ -240,12 +240,6 @@ void Process::updatePlayerInputs(const float& delta_time)
         this->player->e_move(0.f, 1.f, delta_time);
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
         this->player->e_move(0.f, -1.f, delta_time);
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime())
-        ;
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
-        ;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
         for (auto& it : this->entitys)

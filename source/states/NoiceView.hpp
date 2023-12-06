@@ -8,8 +8,6 @@
 
 class NoiceView : public State {
 private:
-    // logger
-    Logger myLogger_noiceview;
     // Variables
     NoiceViewer* m_NoiceViewer;
     mmath::noiceData m_noiceData;

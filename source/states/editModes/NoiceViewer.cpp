@@ -11,7 +11,7 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
     : m_noice_data(m_data)
 {
     // logger
-    myLogger_noiceview.log("NoiceViewer constructor", "NoiceViewer", true, 0);
+    Logger::log("NoiceViewer constructor", "NoiceViewer", true);
 
     this->m_prn_noice = new ProcessGenerationNoice(this->m_noice_data);
     this->m_perlin_noice = new PerlinNoise();
@@ -26,12 +26,12 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
 
     this->initvariables();
 
-    myLogger_noiceview.log("NoiceViewer constructor end", "NoiceViewer", true, 0);
+    Logger::log("NoiceViewer constructor end", "NoiceViewer", true);
 }
 
 NoiceViewer::~NoiceViewer()
 {
-    myLogger_noiceview.log("NoiceViewer destructor", "NoiceViewer", true, 0);
+    Logger::log("NoiceViewer destructor", "NoiceViewer", true);
 
     delete this->m_prn_noice;
     delete this->m_perlin_noice;
@@ -66,7 +66,7 @@ void NoiceViewer::generateNoice()
                 this->noiceMap[x][y] = h_buffer;
                 break;
             case SIMPLEX_NOICE:
-                h_buffer = this->m_simplex_noice->noise(x, y);
+                h_buffer = this->m_simplex_noice->noise(x / this->m_noice_data.amplifire / 10.f, y / this->m_noice_data.amplifire / 10.f);
                 this->noiceMap[x][y] = h_buffer;
                 break;
             default:
@@ -135,6 +135,11 @@ void NoiceViewer::swithNoiceModel()
     else
         this->current_Noice_Model++;
 }
+const std::string NoiceViewer::getNoiceModelName()
+{
+    return this->noiceModels[this->current_Noice_Model];
+}
+
 void NoiceViewer::swithColorMode()
 {
     // switch color mode to next
@@ -143,6 +148,10 @@ void NoiceViewer::swithColorMode()
         this->current_Color_Mode = FULL_COLOR;
     else
         this->current_Color_Mode++;
+}
+const std::string NoiceViewer::getColorModeName()
+{
+    return this->colorModes[this->current_Color_Mode];
 }
 
 void NoiceViewer::update(const float& dt)

@@ -168,7 +168,7 @@ MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
     // logger
-    myLogger_mainmenu.log("MainMenu constructor", "MainMenu", true, 0);
+    Logger::log("MainMenu constructor", "MainMenu", true);
     //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
     this->initGUI();
     this->initRenderDefines();
@@ -176,14 +176,14 @@ MainMenu::MainMenu(StateData* statedata)
     this->initButtons();
     this->initStartProcces();
 
-    myLogger_mainmenu.log("End initilization MainMenu", "MainMenu::MainMenu()", true, 0);
+    Logger::log("End initilization MainMenu", "MainMenu::MainMenu()", true);
 }
 
 MainMenu::~MainMenu()
 {
-    myLogger_mainmenu.log("MainMenu destructor", "MainMenu", true, 0);
+    Logger::log("MainMenu destructor", "MainMenu", true);
 
-    this->Iparser->saveGameData(myConst::config_game, this->IstateData->gameData);
+    this->Iparser->saveGameData(this->IstateData->gameData);
 
     // delete buttons
     if (!this->buttons.empty())

@@ -29,7 +29,7 @@ public:
     }
 
     // get path to app directory
-    static const std::string get_doc_app_dir()
+    static const std::string getDocumentsAppFolder()
     {
         struct passwd* pw = getpwuid(getuid());
         const char* homedir = pw->pw_dir;

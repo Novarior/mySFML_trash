@@ -8,13 +8,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set build type
 message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Debug) 
+else()
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle)
+endif()
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 #include all files for build project
 file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
 #set outputs directorry
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle) 
 
 # chek operation system
 if(WIN32)

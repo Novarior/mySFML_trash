@@ -12,12 +12,12 @@ int main()
 {
     Logger myLogger;
 
-    myLogger.log("Start program", "main", true, 0);
+    myLogger.log("Start program", "main", true);
     Core mc;
-    myLogger.log("Core has been successfully created", "main", true, 0);
-    myLogger.log("Start main loop", "main", true, 0);
+    myLogger.log("Core has been successfully created", "main", true);
+    myLogger.log("Start main loop", "main", true);
     mc.run();
-    myLogger.log("End main loop", "main", true, 0);
+    myLogger.log("End main loop", "main", true);
 
     return 0;
 }

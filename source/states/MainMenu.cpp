@@ -33,13 +33,13 @@ void MainMenu::initBackground()
     for (int i = 0; i < 3; i++) {
         this->background_textures.push_back(sf::Texture());
     }
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_3);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_3));
     tx.setSmooth(true);
     this->background_textures[0] = tx;
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_2);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_2));
     tx.setSmooth(true);
     this->background_textures[1] = tx;
-    tx.loadFromFile(myConst::texture_background_mainmenu_lay_1);
+    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_1));
     tx.setSmooth(true);
     this->background_textures[2] = tx;
 

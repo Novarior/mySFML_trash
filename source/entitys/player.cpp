@@ -24,7 +24,7 @@ Player::Player(sf::Vector2f pos)
     attributes.damage = 1 + (attributes.level * 1.25) + (attributes.some_points * 0.0625 / 2);
     attributes.isAlive = true;
 
-    this->m_texture.loadFromFile(myConst::slime_texture);
+    this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::slime_texture));
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale(0.02f, 0.02f);
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 64.f, 64.f);

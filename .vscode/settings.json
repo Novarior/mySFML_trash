@@ -97,7 +97,11 @@
         "__memory": "cpp",
         "memory_resource": "cpp",
         "__assert": "cpp",
-        "charconv": "cpp"
+        "charconv": "cpp",
+        "codecvt": "cpp",
+        "condition_variable": "cpp",
+        "numbers": "cpp",
+        "semaphore": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

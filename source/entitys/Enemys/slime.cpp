@@ -2,7 +2,7 @@
 
 Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
 {
-    this->m_texture.loadFromFile(myConst::slime_texture);
+    this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::slime_texture));
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale(0.02f, 0.02f);
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 32.f, 32.f);

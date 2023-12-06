@@ -29,8 +29,8 @@ using json = nlohmann::json;
 using namespace nlohmann;
 
 // include my libary
-#include "LOGGER.hpp"
 #include "systemFunctionUNIX.hpp"
+#include "LOGGER.hpp"
 
 // include SFML libary
 #include <SFML/Audio.hpp>
@@ -40,7 +40,7 @@ using namespace nlohmann;
 // include in program files
 #include "math/mymath.hpp"
 
-#include "ConfigurationProgram.h"
+#include "cmakever.h"
 #include "myConst.h"
 
 #endif

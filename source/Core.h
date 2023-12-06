@@ -18,8 +18,6 @@ private:
     sf::Event mEvents;
     std::map<std::string, int> supportedKeys;
 
-    Logger myLogger_core;
-
     // initilization functions
     void initDirectories();
     void initKeyBinds();

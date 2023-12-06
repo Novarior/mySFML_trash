@@ -11,35 +11,45 @@ message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 
 #include all files for build project
-file(GLOB_RECURSE SOURCE_PROJECT_FILES
-    source/*.cpp
-)
+file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
 #set outputs directorry
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle) 
 
-
-#make a cmakever.h from template file and include on build
-set(Template_ver source/cmakever.h.in )
-configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
+# chek operation system
+if(WIN32)
+    set(OPERATION_SYSTEM "Windows")
+elseif(APPLE)
+    set(OPERATION_SYSTEM "MacOS")
+elseif(UNIX)
+    set(OPERATION_SYSTEM "Unix")
+else()
+    set(OPERATION_SYSTEM "Other")
+endif()
 
 #include SFML library on project
 find_package(SFML 2.6.1 COMPONENTS graphics system window REQUIRED)
 #for bundle
+file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
 find_library(COREFOUNDATION_LIBRARY CoreFoundation)
 
-file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
 
 foreach(file IN LISTS MY_APP_RESOURCES)
-    file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/bin/resources ${file})
-    get_filename_component(dir ${relative_path} DIRECTORY)
-    set_source_files_properties(${file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${dir}")
+file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/bin/resources ${file})
+get_filename_component(dir ${relative_path} DIRECTORY)
+set_source_files_properties(${file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${dir}")
 endforeach()
 
 #meta data for bundle
 set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
-set(MY_APP_ICON ${CMAKE_SOURCE_DIR}/metadata/src/ico.icns)
+set(MY_APP_ICON ${CMAKE_SOURCE_DIR}/metadata/ico.icns)
 set_source_files_properties(${myApp_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
+#make a cmakever.h from template file and include on build
+set(Template_ver metadata/cmakever.h.in )
+configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
+
+
 
 #set bundle name
 set(MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
@@ -65,6 +75,7 @@ if(APPLE)
     #set name for bundle
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
     target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system)
+    target_link_libraries(Ekzeckt "-framework CoreFoundation")
 
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE TRUE)
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)

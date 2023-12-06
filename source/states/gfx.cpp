@@ -2,7 +2,7 @@
 
 GraphicsSettings::GraphicsSettings()
 {
-    this->title = "Ekzeckt";
+    this->title = myConst::app_name;
     this->verticalSync = false;
     this->resolution = sf::VideoMode::getDesktopMode();
     this->fullscreen = false;
@@ -19,7 +19,6 @@ const bool GraphicsSettings::saveToFile(const std::string directoryPath)
     json j;
 
     // Заполняем объект данными
-    j["title"] = this->title;
     j["resolution"]["width"] = this->resolution.width;
     j["resolution"]["height"] = this->resolution.height;
     j["fullscreen"] = this->fullscreen;
@@ -29,7 +28,7 @@ const bool GraphicsSettings::saveToFile(const std::string directoryPath)
     j["gridSize"] = this->gridSize;
 
     // Создаем путь к файлу
-    std::string filePath = directoryPath + "/config.json";
+    std::string filePath = directoryPath + "/Config/config.json";
 
     // Открываем файл для записи
     std::ofstream ofs(filePath);
@@ -53,7 +52,7 @@ const bool GraphicsSettings::saveToFile(const std::string directoryPath)
 const bool GraphicsSettings::loadFromFile(const std::string directoryPath)
 {
     // Создаем путь к файлу
-    std::string filePath = directoryPath + "/config.json";
+    std::string filePath = directoryPath + "/Config/config.json";
 
     // Открываем файл для чтения
     std::ifstream ifs(filePath);
@@ -74,7 +73,6 @@ const bool GraphicsSettings::loadFromFile(const std::string directoryPath)
     ifs.close();
 
     // Заполняем данные из JSON
-    this->title = j["title"];
     this->resolution.width = j["resolution"]["width"];
     this->resolution.height = j["resolution"]["height"];
     this->fullscreen = j["fullscreen"];

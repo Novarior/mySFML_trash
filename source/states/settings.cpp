@@ -39,7 +39,7 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGui()
 {
-    
+
     // init background
     this->background.setSize(sf::Vector2f(
         static_cast<float>(this->Iwindow->getSize().x),
@@ -247,7 +247,7 @@ void SettingsState::resetGui()
     delete this->selector_resolutions;
     delete this->selector_antialiasing;
 
-    this->IstateData->gfxSettings->saveToFile(get_doc_app_dir());
+    this->IstateData->gfxSettings->saveToFile(sAppFunctions::get_doc_app_dir());
 
     this->reCaclulateCharacterSize();
 

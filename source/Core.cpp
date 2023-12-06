@@ -20,10 +20,10 @@
 */
 void Core::initDirectories()
 { // check if app directory exists
-    if (!checkAppDirectoryExists(myConst::app_name)) {
+    if (!sAppFunctions::checkAppDirectoryExists(myConst::app_name)) {
         std::cout << "App directory does not exist" << std::endl;
         std::cout << "Creating app directory" << std::endl;
-        createAppDirectoryAndConfigSubdirectory(myConst::app_name);
+        sAppFunctions::createAppDirectories(myConst::app_name);
     } else {
         std::cout << "App directory exists" << std::endl;
     }
@@ -34,16 +34,16 @@ void Core::initVar()
 {
     this->mWindow = NULL;
 
-    if (!this->gfxSettings.loadFromFile(get_doc_app_dir()))
-        this->gfxSettings.saveToFile(get_doc_app_dir());
+    if (!this->gfxSettings.loadFromFile(sAppFunctions::get_doc_app_dir()))
+        this->gfxSettings.saveToFile(sAppFunctions::get_doc_app_dir());
 }
 
 void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(std::string(get_resources_dir() + myConst::data_gameproces_font_path))) { }
-    if (!this->mStatedata.debugFont.loadFromFile(std::string(get_resources_dir() + myConst::data_debugfont_path))) { }
+    if (!this->mStatedata.font.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_gameproces_font_path))) { }
+    if (!this->mStatedata.debugFont.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_debugfont_path))) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
@@ -105,21 +105,21 @@ void Core::initWindow()
 
 Core::Core()
 {
-    myLogger_core.log("Initilization core", "Core::Core()", true, 0);
+    Logger::log("Initilization core", "Core::Core()", true, 0);
     this->parsJSON = new mypars::parsJSON();
-    myLogger_core.log("Initilization parsJSON", "Core::Core()", true, 0);
+    Logger::log("Initilization parsJSON", "Core::Core()", true, 0);
     this->initDirectories();
-    myLogger_core.log("Initilization directories", "Core::Core()", true, 0);
+    Logger::log("Initilization directories", "Core::Core()", true, 0);
     this->initKeyBinds();
-    myLogger_core.log("Initilization keybinds", "Core::Core()", true, 0);
+    Logger::log("Initilization keybinds", "Core::Core()", true, 0);
     this->initVar();
-    myLogger_core.log("Initilization variables", "Core::Core()", true, 0);
+    Logger::log("Initilization variables", "Core::Core()", true, 0);
     this->initWindow();
-    myLogger_core.log("Initilization window", "Core::Core()", true, 0);
+    Logger::log("Initilization window", "Core::Core()", true, 0);
     this->initStateData();
-    myLogger_core.log("Initilization state data", "Core::Core()", true, 0);
+    Logger::log("Initilization state data", "Core::Core()", true, 0);
     this->initState();
-    myLogger_core.log("Initilization state", "Core::Core()", true, 0);
+    Logger::log("Initilization state", "Core::Core()", true, 0);
 }
 
 Core::~Core()
@@ -136,7 +136,7 @@ Core::~Core()
 
 void Core::run()
 {
-    myLogger_core.log("Start main loop", "Core::run()", true, 0);
+    Logger::log("Start main loop", "Core::run()", true, 0);
 
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();

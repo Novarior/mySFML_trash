@@ -29,8 +29,8 @@ using json = nlohmann::json;
 using namespace nlohmann;
 
 // include my libary
-#include "systemFunctionUNIX.hpp"
 #include "LOGGER.hpp"
+#include "systemFunctionUNIX.hpp"
 
 // include SFML libary
 #include <SFML/Audio.hpp>

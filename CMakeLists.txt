@@ -28,23 +28,28 @@ else()
 endif()
 
 #include SFML library on project
-set(SFML_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SFML_2.6.1_ARM)
+find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
+message("SFML_FOUND = ${SFML_FOUND}")
 
-find_package(SFML 2.6.1 COMPONENTS graphics system window REQUIRED)
+#find nlohmann json library
+find_package(nlohmann_json 3.11.2 REQUIRED)
+message("nlohmann_json_FOUND = ${nlohmann_json_FOUND}")
+
 #for bundle
-file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
 find_library(COREFOUNDATION_LIBRARY CoreFoundation)
 
-
+#search for all files in resources folder
+file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
+#loop for all files in resources folder
 foreach(file IN LISTS MY_APP_RESOURCES)
-file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/bin/resources ${file})
-get_filename_component(dir ${relative_path} DIRECTORY)
-set_source_files_properties(${file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${dir}")
+    file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/bin/resources ${file})
+    get_filename_component(dir ${relative_path} DIRECTORY)
+    set_source_files_properties(${file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${dir}")
 endforeach()
 
 #meta data for bundle
 set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
-set(MY_APP_ICON ${CMAKE_SOURCE_DIR}/metadata/ico.icns)
+set(MY_APP_ICON ${METADATA_DIR}/ico.icns)
 set_source_files_properties(${myApp_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 #make a cmakever.h from template file and include on build
@@ -74,11 +79,12 @@ if(APPLE)
     else()
         target_compile_options(Ekzeckt PUBLIC -O3)
     endif()
-    #set name for bundle
-    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
+    
     target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system)
+    target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
-
+    
+    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE TRUE)
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
     

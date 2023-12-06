@@ -3,10 +3,10 @@
         {
             "name": "Mac",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/SFML_2.6.1_ARM/include/SFML",
                 "/opt/homebrew/Cellar/nlohmann-json/3.11.2/include",
-                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+                "${workspaceFolder}/**",
+                "/opt/homebrew/Cellar/sfml/2.6.1/include",
+                "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
             ],
             "defines": [],
             "macFrameworkPath": [

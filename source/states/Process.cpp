@@ -2,11 +2,6 @@
 
 const bool Process::loadGameData()
 {
-    // load game config
-
-    if (!this->Iparser->loadGameData(this->IstateData->gameData))
-        printf("ERROR::PROCESS::LOAD::GAMEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_game);
-
     // load noice config
     if (!this->Iparser->loadNoiceData(this->noicedata))
         printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
@@ -31,9 +26,6 @@ const bool Process::saveGameData()
     // save entitys pos and other data
     if (!this->Iparser->saveEntitys(this->entitys))
         Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
-    // save game data to JSON file
-    if (!this->Iparser->saveGameData(this->IstateData->gameData))
-        Logger::log("Parser::saveGameData()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
 
     return true;
 }
@@ -168,6 +160,18 @@ void Process::initEntitys()
     }
 }
 
+void Process::registerItems()
+{
+    int size = this->IstateData->grid_size;
+
+    // register items to registry
+    ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
+    ItemRegistry::registerItem(1, std::make_unique<Items::PoisonSmallRegeneration>(size));
+
+    Logger::log("Items has been registered", "Process::registerItems()", true);
+    Logger::log("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()", true);
+}
+
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
 {
@@ -182,6 +186,7 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initKeybinds();
     this->initView();
     this->initPauseMenu();
+    this->registerItems();
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
@@ -289,9 +294,6 @@ void Process::update(const float& delta_time)
     // one more update
     if (this->debugMode)
         this->updateDebug(delta_time);
-
-    if (m_gamedata.game_started == false) // update game data
-        this->m_gamedata.game_started = true;
 
     if (this->Ipaused) { // update pause
         this->pausemenu->update(this->mousePosWindow);

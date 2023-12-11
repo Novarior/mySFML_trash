@@ -22,6 +22,7 @@ public:
         this->m_pickable = true;
         this->m_amount = 1;
         this->m_maxAmount = 2;
+        this->item_ID = 1;
     }
     virtual ~PoisonSmallRegeneration() { }
 

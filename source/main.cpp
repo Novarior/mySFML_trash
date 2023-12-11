@@ -2,10 +2,8 @@
 
 #include "Core.h"
 
-// some global variables
-// some static variables
+static std::map<int, std::shared_ptr<Item>> items;
 unsigned int Entity::count_entitys = 0;
-unsigned int Item::count_items = 0;
 unsigned BrickBlock::currentFrame = 0;
 
 int main()

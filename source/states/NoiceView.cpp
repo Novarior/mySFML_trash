@@ -7,6 +7,7 @@ void NoiceView::initKeybinds()
     this->Ikeybinds["KEY_Q"] = this->IsupportedKeys->at("Q");
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
     this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
+    this->Ikeybinds["KEY_R"] = this->IsupportedKeys->at("R");
 }
 
 void NoiceView::initTabMenu()
@@ -235,27 +236,30 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
 void NoiceView::updateInput(const float& delta_time)
 {
     // if pressed key ESC then end state
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
-    }
+
     // switch tab menu
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;
-    }
+
     // update currentViewGenerator in a range from 0 to 2
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
         this->m_NoiceViewer->swithNoiceModel();
-    }
+
     // switch noice model
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))) && this->getKeytime())
         this->m_NoiceViewer->swithColorMode();
-    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
             this->current_View_Generator = 0;
     }
+    // switch noice smooth mode (fast mode)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_R"))) && this->getKeytime())
+        this->m_noiceData.fastMode = !this->m_noiceData.fastMode;
 }
 
 void NoiceView::updateDebugText(const float& delta_time)
@@ -266,7 +270,13 @@ void NoiceView::updateDebugText(const float& delta_time)
         << "FPS:\t" << fps
         << "\nCurent view generator:\t" << this->current_View_Generator
         << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
-        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode()
+        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode();
+    if (this->m_NoiceViewer->getNoiceModel() == noiceType::PERLIN_NOICE_V2)
+        this->dString_Stream
+            << "\nCurent noice smooth mode:\t" << this->m_NoiceViewer->getNoiceSmouthName() << ":\t" << this->m_NoiceViewer->getNoiceData().smoothMode
+            << "\nSeed:\t" << this->m_NoiceViewer->getNoiceData().seed
+            << "\nFastMode" << this->m_NoiceViewer->getNoiceData().fastMode;
+    this->dString_Stream
         << "\nTree Data:"
         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
         << "\nPause:\t" << this->Ipaused;

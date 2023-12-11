@@ -17,6 +17,7 @@ public:
             std::cout << "ERROR::ITEM::COULD_NOT_LOAD_TEXTURE" << std::endl;
 
         this->m_stacable = true;
+        this->item_ID = 0;
         this->m_amount = 1;
         this->m_price = { 0, 0, 1 };
         this->m_pickable = true;

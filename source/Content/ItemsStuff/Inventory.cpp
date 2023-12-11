@@ -190,7 +190,7 @@ const int Inventory::getNumSlot(Item* item)
         for (int x = 0; x < this->InventoryArray.size(); x++)
             for (int y = 0; y < this->InventoryArray[x].size(); y++)
                 if (this->InventoryArray[x][y] != nullptr && this->InventoryArray[x][y]->getID() == item->getID())
-                    return y + (y * x);
+                    return x * this->InventoryArray.size() + y;
 
     return -1;
 }

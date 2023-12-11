@@ -5,6 +5,7 @@
 #include "State.hpp"
 
 #include "../Content/ItemsStuff/Inventory.hpp"
+#include "../Content/ItemsStuff/Items/itemlist.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../entitys/Enemys/slime.hpp"
@@ -14,8 +15,6 @@
 
 class Process : public State {
 private:
-    // flag for load data
-    Gamedata m_gamedata;
     // view and window
     sf::View view;
     sf::View playerView;
@@ -40,6 +39,7 @@ private:
     void initView();
     void initTileMap();
     void initTileMapData();
+    void registerItems();
     void initPlayer();
     void initEntitys();
     void initMiniMap();

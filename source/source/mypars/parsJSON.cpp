@@ -7,7 +7,7 @@ parsJSON::~parsJSON() { }
 // load playes
 const bool parsJSON::loadPlayer(Entity& player)
 { // open json file
-    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_playerdata);
+    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
     if (!ifs.is_open()) {
         printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
@@ -17,13 +17,51 @@ const bool parsJSON::loadPlayer(Entity& player)
     return true;
 }
 // load inventory
-const bool parsJSON::loadInventory(Inventory& inventory)
-{ // open json file
-    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_inventory);
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
+const bool parsJSON::loadInventory(Inventory* inventory)
+{ // Check if inventory is null
+    if (!inventory) {
+        printf("ERROR::PARSER::LOAD::INVENTORY::INVENTORY_IS_NULL\n");
         return false;
     }
+
+    // Open the file
+    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_inventory);
+
+    // Check if the file is open
+    if (!ifs.is_open()) {
+        printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
+        return false;
+    }
+
+    // Parse the JSON from the file
+    try {
+        json j;
+        ifs >> j;
+
+        // Load items
+        for (auto& item : j["inventory"]["items"]) {
+            if (item["slot"] != nullptr) {
+                // Create a new item
+                Item* newItem = ItemRegistry::getItem(item["unic ID"]);
+
+
+
+                // Add the item to the inventory
+                inventory->addItem(newItem);
+            }
+        }
+
+        // Load coins
+        inventory->getCoins().set_GoldCoinCouns(j["inventory"]["coins"]["gold"]);
+        inventory->getCoins().set_SilverCoinCouns(j["inventory"]["coins"]["silver"]);
+        inventory->getCoins().set_CopperCoinCouns(j["inventory"]["coins"]["copper"]);
+
+    } catch (const std::exception& e) {
+        Logger::log("Cant load inventory: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n", e.what());
+        return false;
+    }
+
     return true;
 }
 // load  entitys
@@ -60,253 +98,223 @@ const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
     ifs.close();
     return true;
 }
+
 // load noice data
 const bool parsJSON::loadNoiceData(mmath::noiceData& data)
-{ // load noice data
-    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_playerdata);
-    std::string line;
-    // check open file
+{
+    // Open the file
+    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
+
+    // Check if the file is open
     if (!ifs.is_open()) {
         printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
     }
-    // load from json file
-    while (std::getline(ifs, line)) {
-        // check if line is not empty
-        if (line != "") {
-            // skip "game_data" and all special symbols
-            if (line.find("game_data") != std::string::npos)
-                continue;
-            if (line.find("{") != std::string::npos)
-                continue;
-            if (line.find("}") != std::string::npos)
-                continue;
-            if (line.find("[") != std::string::npos)
-                continue;
-            if (line.find("]") != std::string::npos)
-                continue;
-            // read noise data
-            if (line.find("seed") != std::string::npos) {
-                data.seed = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
-            if (line.find("octaves") != std::string::npos) {
-                data.octaves = std::stoi(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
-            if (line.find("frequency") != std::string::npos) {
-                data.frequency = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
-            if (line.find("amplifire") != std::string::npos) {
-                data.amplifire = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
-            if (line.find("persistence") != std::string::npos) {
-                data.persistence = std::stof(line.substr(line.find(":") + 2, line.find(",") - line.find(":") - 2));
-                continue;
-            }
-            if (line.find("smooth") != std::string::npos) {
-                data.smoothMode = std::stoi(line.substr(line.find(":") + 2, line.find("}") - line.find(":") - 2));
-                continue;
-            }
 
-        } else {
-            // if line is not empty and not special symbols, then this is error
-            printf("ERROR::PARSER::LOAD::NOICEDATA::UNKNOWN_LINE\n   %s\n", line.c_str());
-            return false;
-        }
-        // set noice data
-    }
+    // Parse the JSON from the file
+    try {
+        json j;
+        ifs >> j;
 
-    return true;
-}
-// load gameData
-const bool parsJSON::loadGameData(Gamedata data)
-{ // load game data
-    std::ifstream ifs(sAppFunctions::get_resources_dir() + myConst::config_game);
-    // check open file
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_game);
+        // Read the noise data from the JSON
+        data.seed = j["noice"]["seed"];
+        data.octaves = j["noice"]["octaves"];
+        data.frequency = j["noice"]["frequency"];
+        data.amplifire = j["noice"]["amplifire"];
+        data.persistence = j["noice"]["persistence"];
+        data.smoothMode = j["noice"]["smooth"];
+    } catch (const std::exception& e) {
+        printf("ERROR::PARSER::LOAD::NOICEDATA::UNKNOWN_LINE\n   %s\n", e.what());
         return false;
     }
-    //  this->m_js.clear();
-    json js = json::parse(ifs);
-    js.at("game_data").at("is_game_started").get_to(data.game_started);
 
     return true;
 }
+
 // SAVES
 // save player
 const bool parsJSON::savePlayer(Entity* player)
 {
-    return false;
+    // check if player is not null
+    if (player == nullptr) {
+        Logger::log("Cant save player: player is null", "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::SAVE::PLAYER::PLAYER_IS_NULL\n");
+        return false;
+    }
+    // save player
+    json j;
+    j["player"]["attribute"]["damage"] = player->getAttributes()->getAttributes().damage;
+    j["player"]["attribute"]["experience"] = player->getAttributes()->getAttributes().experience;
+    j["player"]["attribute"]["experience_for_level"] = player->getAttributes()->getAttributes().experience_for_level;
+    j["player"]["attribute"]["health"] = player->getAttributes()->getAttributes().health;
+    j["player"]["attribute"]["level"] = player->getAttributes()->getAttributes().level;
+    j["player"]["attribute"]["mana"] = player->getAttributes()->getAttributes().mana;
+    j["player"]["attribute"]["max_health"] = player->getAttributes()->getAttributes().max_health;
+    j["player"]["attribute"]["max_mana"] = player->getAttributes()->getAttributes().max_mana;
+    j["player"]["attribute"]["regeneration_health"] = player->getAttributes()->getAttributes().regeneration_health;
+    j["player"]["attribute"]["regeneration_mana"] = player->getAttributes()->getAttributes().regeneration_mana;
+    j["player"]["attribute"]["some_points"] = player->getAttributes()->getAttributes().some_points;
+
+    j["player"]["position"]["x"] = player->e_getPosition().x;
+    j["player"]["position"]["y"] = player->e_getPosition().y;
+    j["player"]["entity_uid"] = player->e_getID();
+    j["player"]["isAlive"] = player->e_isAlive();
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::SAVE::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
+        return false;
+    }
+
+    return true;
 }
+
 // save inventory
 const bool parsJSON::saveInventory(Inventory* inventory)
 {
-    // save player inventory
-    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_inventory);
-    // check open file
-    if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
+    // Check if inventory is null
+    if (!inventory) {
+        printf("ERROR::PARSER::SAVE::INVENTORY::INVENTORY_IS_NULL\n");
         return false;
     }
-    // save to json file
-    // variables
 
-    std::vector<std::vector<Item*>> iArr = inventory->getInventoryArray();
-    this->m_js.clear();
-    this->m_js["inventory"];
-    this->m_js["inventory"]["size"] = inventory->getSizeInventory();
-    this->m_js["inventory"]["items"];
+    // Create a JSON object
+    json j;
+    j["inventory"]["size"] = inventory->getSizeInventory();
+    const std::vector<std::vector<Item*>>& iArr = inventory->getInventoryArray();
     int slot = 0;
-    // save items
-    for (auto& row : iArr) {
-        for (auto& item : row) {
-            // check item if null
-            if (item != nullptr) { // write "slot if is not empty
-                this->m_js["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
-                this->m_js["inventory"]["items"][slot]["name"] = item->getName();
-                this->m_js["inventory"]["items"][slot]["amount"] = item->getAmount();
-                this->m_js["inventory"]["items"][slot]["price"];
-                this->m_js["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
-                this->m_js["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
-                this->m_js["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
-                this->m_js["inventory"]["items"][slot]["stackable"] = item->isStackable();
-                this->m_js["inventory"]["items"][slot]["usable"] = item->isUsable();
-                this->m_js["inventory"]["items"][slot]["unic ID"] = item->getID();
+
+    // Save items
+    for (const auto& row : iArr) {
+        for (const auto& item : row) {
+            // Check item if null
+            if (item != nullptr) {
+                j["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
+                j["inventory"]["items"][slot]["name"] = item->getName();
+                j["inventory"]["items"][slot]["amount"] = item->getAmount();
+                j["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
+                j["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
+                j["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
+                j["inventory"]["items"][slot]["stackable"] = item->isStackable();
+                j["inventory"]["items"][slot]["usable"] = item->isUsable();
+                j["inventory"]["items"][slot]["unic ID"] = item->getID();
             } else {
-                // write "slot" if is empty
-                this->m_js["inventory"]["items"][slot]["slot"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["name"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["amount"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["price"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["stackable"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["usable"] = nullptr;
-                this->m_js["inventory"]["items"][slot]["unic ID"] = nullptr;
+                j["inventory"]["items"][slot]["slot"] = NULL;
             }
             slot++;
         }
     }
 
-    this->m_js["inventory"]["coins"];
-    this->m_js["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
-    this->m_js["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
-    this->m_js["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
-    // save to json file
-    ofs << std::setw(4) << this->m_js;
-    // close file
-    ofs.close();
+    j["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
+    j["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
+    j["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_inventory);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::SAVE::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
+    }
     return true;
 }
+
 // save entitys
 const bool parsJSON::saveEntitys(std::vector<Entity*> entitys)
 {
-    // open json file
-    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_entitydata);
-    // check open file
-    if (!ofs.is_open()) {
-        printf("ERROR::PARSER::OPEN::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
+    // Create a JSON object
+    json j;
+
+    // Save entities
+    size_t i = 0;
+    for (const auto& entity : entitys) {
+        // Check entity if null, is null continue
+        if (entity == nullptr || entity->e_isAlive() == false)
+            continue;
+
+        auto& entity_js = j["entity list"][i];
+        entity_js["ID_record"] = i;
+        entity_js["entity_uid"] = entity->e_getID();
+        entity_js["position"]["x"] = entity->e_getPosition().x;
+        entity_js["position"]["y"] = entity->e_getPosition().y;
+        // Save entity attributes
+        const auto& attributes = entity->getAttributes()->getAttributes();
+        entity_js["attributes"]["hp"] = attributes.health;
+        entity_js["attributes"]["max_hp"] = attributes.max_health;
+        entity_js["attributes"]["level"] = attributes.level;
+        i++;
+    }
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_entitydata);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        std::stringstream ss;
+        ss << "Pars can't save entities" << sAppFunctions::getDocumentsAppFolder() << myConst::config_entitydata;
+        Logger::log(ss.str(), "CORE->PARS", false, logType::ERROR);
+        printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
         return false;
     }
 
-    // save to json file
-    this->m_js.clear();
-    this->m_js["entity list"];
-    // save entitys
-    for (size_t i = 0; i < entitys.size(); i++) {
-        // check entity if null, is null continue
-        if (entitys[i] == nullptr || entitys[i]->e_isAlive() == false)
-            continue;
-
-        this->m_js["entity list"][i];
-        this->m_js["entity list"][i]["ID_record"] = i;
-        this->m_js["entity list"][i]["entity_uid"] = entitys[i]->e_getID();
-        this->m_js["entity list"][i]["position"]["x"] = entitys[i]->e_getPosition().x;
-        this->m_js["entity list"][i]["position"]["y"] = entitys[i]->e_getPosition().y;
-        // save entity attributes
-        this->m_js["entity list"][i]["attributes"];
-        this->m_js["entity list"][i]["attributes"]["hp"] = entitys[i]->getAttributes()->getAttributes().health;
-        this->m_js["entity list"][i]["attributes"]["max_hp"] = entitys[i]->getAttributes()->getAttributes().max_health;
-        this->m_js["entity list"][i]["attributes"]["level"] = entitys[i]->getAttributes()->getAttributes().level;
-    }
-    // save to json file
-    ofs << std::setw(4) << this->m_js;
-    // close file
-    ofs.close();
     return true;
 }
+
 // save noicedata
 const bool parsJSON::saveNoiceData(mmath::noiceData _dataNoice)
 {
-    // open json file
-    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_noicedata);
-    // check open file
-    if (!ofs.is_open()) {
+    // Create a JSON object
+    json j;
+    j["noice"] = {
+        { "seed", _dataNoice.seed },
+        { "octaves", _dataNoice.octaves },
+        { "frequency", _dataNoice.frequency },
+        { "amplifire", _dataNoice.amplifire },
+        { "persistence", _dataNoice.persistence },
+        { "smooth", _dataNoice.smoothMode },
+        { "mapSizeX", _dataNoice.mapSizeX },
+        { "mapSizeY", _dataNoice.mapSizeY },
+        { "fast Mode", _dataNoice.fastMode }
+    };
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
         printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_noicedata);
         return false;
     }
-    // save to json file
-    ofs << "{\n";
-    // noice section
-    ofs << "\t\"noice\": {\n";
-    ofs << "\t\t\"seed\": " << _dataNoice.seed << ",\n";
-    ofs << "\t\t\"octaves\": " << _dataNoice.octaves << ",\n";
-    ofs << "\t\t\"frequency\": " << _dataNoice.frequency << ",\n";
-    ofs << "\t\t\"amplifire\": " << _dataNoice.amplifire << ",\n";
-    ofs << "\t\t\"persistence\": " << _dataNoice.persistence << ",\n";
-    ofs << "\t\t\"smooth\": " << _dataNoice.smoothMode << "\n";
-    ofs << "\t}\n";
-    ofs << "}\n";
 
-    // close file
-    ofs.close();
     return true;
 }
+
 // save keybinds
 const bool parsJSON::saveKeyBinds(std::map<std::string, int>& keyBinds)
 {
-    // save key binds to json file on json format [key : value]
-    std::ofstream ofs(std::string(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds));
-    // check open file
-    if (!ofs.is_open()) {
+    // Create a JSON object
+    json j;
+    for (const auto& i : keyBinds) {
+        j["key_binds"][i.first] = i.second;
+    }
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars cant save keybinds" << sAppFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
+        ss << "Pars can't save keybinds" << sAppFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
         Logger::log(ss.str(), "CORE->PARS", false, logType::ERROR);
-        printf("ERROR::PARSER::OPEN::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
-    }
-
-    // save to json file
-
-    this->m_js["key_binds"];
-    // save key binds
-    for (auto& i : keyBinds) {
-        this->m_js["key_binds"][i.first] = i.second;
-    }
-    // save to json file
-    ofs << std::setw(4) << this->m_js;
-    // close file
-    ofs.close();
-    return true;
-}
-// save gamedata
-const bool parsJSON::saveGameData(Gamedata& data)
-{
-    // save game data
-    std::ofstream ofs(sAppFunctions::get_resources_dir() + myConst::config_game);
-    // check open file
-    if (!ofs.is_open()) {
-        printf("ERROR::PARSER::SAVE::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_game);
+        printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
         return false;
     }
 
-    // save to json file
-    this->m_js["game_data"];
-    this->m_js["game_data"]["is_game_started"] = data.game_started;
-    // save to json file
-    ofs << std::setw(4) << this->m_js;
-    // close file
-    ofs.close();
     return true;
 }

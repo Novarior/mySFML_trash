@@ -10,11 +10,6 @@ namespace mypars {
 class parsJSON;
 };
 
-struct Gamedata {
-    bool game_started;
-    sf::Vector2f currentPlayerPos;
-};
-
 /// @brief Forward declaration of State class
 class State;
 /// @brief Class for state data
@@ -43,7 +38,6 @@ public:
     unsigned int characterSize_game_medium;
     unsigned int characterSize_game_small;
     bool reserGUI;
-    Gamedata gameData;
 };
 
 /// @brief Abstract class for game states

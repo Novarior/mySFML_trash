@@ -4,6 +4,11 @@
 #include "../header.h"
 namespace mmath {
 
+enum eSmoothMode {
+    SMOOTH_MODE = 0,
+    FAST_MODE = 1
+};
+
 struct noiceData {
     unsigned int mapSizeX = 0;
     unsigned int mapSizeY = 0;
@@ -16,6 +21,7 @@ struct noiceData {
     unsigned int RenderWindowX = 0;
     unsigned int RenderWindowY = 0;
     unsigned int smoothMode = 0;
+    bool fastMode = false;
 };
 
 const double randZeroToOne();
@@ -39,8 +45,25 @@ static const double Fade(double t)
 {
     return t * t * t * (t * (t * 6 - 15) + 10);
 }
-// linear interpolation
-static const double Lerp(double t, double a, double b) { return a + t * (b - a); }
+// interpolations
+namespace interpolation {
+    // linear interpolation
+    static const double LinInter(double t, double a, double b) { return a + t * (b - a); }
+    // cosine interpolation
+    static const double CosInter(double t, double a, double b) { return a * (1 - (1 - cos(t * M_PI)) * 0.5) + b * (1 - cos(t * M_PI)) * 0.5; }
+    // cubic interpolation
+    static const double CubicInter(double t, double a, double b) { return (a - b) * (3.0 - t * 2.0) * t * t + b; }
+    // quintic interpolation
+    static const double QuinticInter(double t, double a, double b) { return (a - b) * ((t * (t * 6.0 - 15.0) + 10.0) * t * t * t) + b; }
+    // quartic interpolation
+    static const double QuarticInter(double t, double a, double b) { return (a - b) * (t * t * (t * (t * 6.0 - 15.0) + 10.0)) + b; }
+    // quadratic interpolation
+    static const double QuadraticInter(double t, double a, double b) { return (a - b) * (t * (t - 2.0) * t + 1.0) + b; }
+    // hermite interpolation
+    static const double HermiteInter(double t, double a, double b) { return (a - b) * (t * t * (3.0 - t * 2.0)) + b; }
+
+};
+
 // gradient
 const double Gradient(int hash, double x, double y);
 

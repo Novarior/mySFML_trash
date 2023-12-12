@@ -15,8 +15,8 @@ Player::Player(sf::Vector2f pos)
     attributes.experience = 0;
     attributes.experience_for_level = 200 + ((attributes.level - 1) * 200);
     // calculate new max health and max mana
-    attributes.max_health = 200 + std::floor(5 * (attributes.level - 1)) + (attributes.some_points * 18);
-    attributes.max_mana = 10 + std::floor(5 * (attributes.level * 0.25)) + (attributes.some_points / 16) * 10;
+    attributes.max_health = 10 + std::floor(5 * (attributes.level - 1)) + (attributes.some_points * 18);
+    attributes.max_mana = 5 + std::floor(5 * (attributes.level * 0.25)) + (attributes.some_points / 16) * 10;
     // calculate new regen and max health
     attributes.regeneration_health = 1 + (attributes.level * 0.15) + (attributes.some_points * 0.0625 / 2);
     attributes.regeneration_mana = 1 + (attributes.level + (attributes.some_points * 0.01 - 1)) * 0.1;
@@ -27,7 +27,7 @@ Player::Player(sf::Vector2f pos)
     this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::slime_texture));
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale(0.02f, 0.02f);
-    this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 64.f, 64.f);
+    this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 16.f, 16.f);
     this->createMovementComponent(10.f, 5.f, 3.f);
     this->createAttributesComponent(&attributes);
     this->e_setPosition(pos);

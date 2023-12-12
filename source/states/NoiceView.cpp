@@ -236,29 +236,29 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
 void NoiceView::updateInput(const float& delta_time)
 {
     // if pressed key ESC then end state
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
 
     // switch tab menu
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;
 
     // update currentViewGenerator in a range from 0 to 2
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
         this->m_NoiceViewer->swithNoiceModel();
 
     // switch noice model
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))) && this->getKeytime())
         this->m_NoiceViewer->swithColorMode();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
             this->current_View_Generator = 0;
     }
     // switch noice smooth mode (fast mode)
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_R"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_R"))) && this->getKeytime())
         this->m_noiceData.fastMode = !this->m_noiceData.fastMode;
 }
 

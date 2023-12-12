@@ -51,7 +51,7 @@ const char item_img_someore[] = "/textures/Images/some_ore.png";
 // more items
 const char item_img_stone[] = "/textures/Images/stone.png";
 const char item_img_stone2[] = "/textures/Images/stone_01.png";
-const char item_img_poison_small_regeneration[] = "/textures/Images/poison_small_regeneration.png";
+const char item_img_poison_small_regeneration[] = "/textures/Images/item/Potion_1_Original.png";
 
 // backgrounds
 const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";

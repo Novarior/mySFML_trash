@@ -1,23 +1,20 @@
 #ifndef ATTRIBUTES_HPP
 #define ATTRIBUTES_HPP
+
 #include "../../header.h"
+
 struct Atri {
     float health = 10;
     float max_health = 10;
     float regeneration_health = 0;
-
     float mana = 0;
     float max_mana = 0;
     float regeneration_mana = 0;
-
     int experience_for_level = 1;
     int experience = 0;
     int level = 1;
-
     int some_points = 0;
-
     bool isAlive = true;
-
     float damage = 1;
 };
 

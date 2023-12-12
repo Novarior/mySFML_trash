@@ -19,6 +19,8 @@ private:
     std::vector<int> antialiasing_list;
     std::vector<int> vsync_list;
     std::vector<int> fullscreen_list;
+    std::vector<sf::Text> keybindText;
+    
 
     std::vector<sf::Text> settings_list;
     std::vector<sf::RectangleShape> text_shapes;

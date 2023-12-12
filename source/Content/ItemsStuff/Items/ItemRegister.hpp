@@ -14,9 +14,7 @@ public:
     {
         if (items.find(id) == items.end()) {
             items[id] = item;
-
             Logger::log("Item with id: " + std::to_string(id) + " has been registered", "ItemRegistry", logType::INFO);
-
             return true;
         } else {
             Logger::log("Item with id: " + std::to_string(id) + " alredy was bew registered", "ItemRegistry", logType::WARNING);
@@ -26,27 +24,20 @@ public:
 
     static Item* getItem(int id)
     {
-        if (items.find(id) != items.end()) {
+        if (items.find(id) != items.end())
             return items[id].get();
-        } else {
+        else
             return nullptr;
-        }
     }
     static std::vector<Item*> getAllItems()
     {
         std::vector<Item*> allItems;
-        for (const auto& pair : items) {
+        for (const auto& pair : items)
             allItems.push_back(pair.second.get());
-        }
         return allItems;
     }
-    static void unregisterItem(int id)
-    {
-        items.erase(id);
-    }
-    static bool containsItem(int id)
-    {
-        return items.find(id) != items.end();
-    }
+    static void unregisterItem(int id) { items.erase(id); }
+
+    static bool containsItem(int id) { return items.find(id) != items.end(); }
 };
 #endif /* itemlist_hpp */

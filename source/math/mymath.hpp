@@ -34,9 +34,12 @@ const int randIntFromToNum(int Min_val, int Max_val);
 /// @param vm
 /// @return float
 const float p2pX(const float perc, const sf::VideoMode& vm);
-const float p2pY(const float perc, const sf::VideoMode& vm);
-const float p2pX(const float perc, const float& i);
 const float p2pX(const float perc, const unsigned int& i);
+const float p2pX(const float perc, const float& i);
+
+const float p2pY(const float perc, const sf::VideoMode& vm);
+const float p2pY(const float perc, const unsigned int& i);
+const float p2pY(const float perc, const float& i);
 
 const float normalize(const float value, const float min, const float max);
 
@@ -61,7 +64,6 @@ namespace interpolation {
     static const double QuadraticInter(double t, double a, double b) { return (a - b) * (t * (t - 2.0) * t + 1.0) + b; }
     // hermite interpolation
     static const double HermiteInter(double t, double a, double b) { return (a - b) * (t * t * (3.0 - t * 2.0)) + b; }
-
 };
 
 // gradient

@@ -35,7 +35,7 @@ void Process::initKeybinds()
 {
     this->Ikeybinds["KEY_CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["KEY_TAB"] = this->IsupportedKeys->at("Tab");
-    this->Ikeybinds["KEY_F1"] = this->IsupportedKeys->at("F1");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
     this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");
     this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
@@ -151,13 +151,13 @@ void Process::initEntitys()
     // get random position from map array
     std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
 
-    for (size_t i = 0; i < 32; i++) {
-        // call function to get random position
-        this->entitys.push_back(new Slime(
-            spawnPosArray[rand() % spawnPosArray.size()].x,
-            spawnPosArray[rand() % spawnPosArray.size()].y,
-            *this->player));
-    }
+    // for (size_t i = 0; i < 32; i++) {
+    //     // call function to get random position
+    //     this->entitys.push_back(new Slime(
+    //         spawnPosArray[rand() % spawnPosArray.size()].x,
+    //         spawnPosArray[rand() % spawnPosArray.size()].y,
+    //         *this->player));
+    // }
 }
 
 void Process::registerItems()
@@ -222,26 +222,26 @@ Process::~Process()
 // sub update functions
 void Process::updateInput(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
         this->t_inventory->toggleSwitch();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F1"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
         this->debugMode = !this->debugMode;
 }
 
 void Process::updatePlayerInputs(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_A"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_A"))))
         this->player->e_move(-1.f, 0.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_D"))))
         this->player->e_move(1.f, 0.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_S"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_S"))))
         this->player->e_move(0.f, 1.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))))
         this->player->e_move(0.f, -1.f, delta_time);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
         for (auto& it : this->entitys)
             this->player->e_attack(it, delta_time);
     }

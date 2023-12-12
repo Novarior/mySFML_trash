@@ -291,11 +291,12 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
             if (this->tilemap[x][y][0]->getCollision() && this->tilemap[x][y][0]->intersects(nextPositionBounds)) {
                 // Bottom collision
                 if (playerBounds.top < wallBounds.top
-                    && playerBounds.top + playerBounds.height > wallBounds.top
+                    && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
                     && playerBounds.left < wallBounds.left + wallBounds.width
                     && playerBounds.left + playerBounds.width > wallBounds.left) {
                     entity->getMovement()->stopVelocityY();
                     entity->e_setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+                    continue;
                 }
                 // Top collision
                 else if (playerBounds.top > wallBounds.top
@@ -304,6 +305,7 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
                     && playerBounds.left + playerBounds.width > wallBounds.left) {
                     entity->getMovement()->stopVelocityY();
                     entity->e_setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
+                    continue;
                 }
                 // Right collision
                 if (playerBounds.left < wallBounds.left
@@ -312,6 +314,7 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
                     && playerBounds.top + playerBounds.height > wallBounds.top) {
                     entity->getMovement()->stopVelocityX();
                     entity->e_setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
+                    continue;
                 }
                 // Left collision
                 else if (playerBounds.left > wallBounds.left
@@ -320,6 +323,7 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
                     && playerBounds.top + playerBounds.height > wallBounds.top) {
                     entity->getMovement()->stopVelocityX();
                     entity->e_setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                    continue;
                 }
             }
         }

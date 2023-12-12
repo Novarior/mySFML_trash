@@ -39,23 +39,26 @@ void Core::initStateData()
 
 void Core::initKeyBinds()
 { // init default keys
-    this->supportedKeys["Escape"] = sf::Keyboard::Escape;
-    this->supportedKeys["A"] = sf::Keyboard::A;
-    this->supportedKeys["C"] = sf::Keyboard::C;
-    this->supportedKeys["D"] = sf::Keyboard::D;
-    this->supportedKeys["E"] = sf::Keyboard::E;
-    this->supportedKeys["F"] = sf::Keyboard::F;
-    this->supportedKeys["Q"] = sf::Keyboard::Q;
-    this->supportedKeys["R"] = sf::Keyboard::R;
-    this->supportedKeys["S"] = sf::Keyboard::S;
-    this->supportedKeys["W"] = sf::Keyboard::W;
-    this->supportedKeys["X"] = sf::Keyboard::X;
-    this->supportedKeys["Z"] = sf::Keyboard::Z;
-    this->supportedKeys["Space"] = sf::Keyboard::Space;
-    this->supportedKeys["Tab"] = sf::Keyboard::Tab;
-    this->supportedKeys["F1"] = sf::Keyboard::F1;
-    this->supportedKeys["F2"] = sf::Keyboard::F2;
-    this->supportedKeys["F3"] = sf::Keyboard::F3;
+    this->supportedKeys["Escape"] = sf::Keyboard::Scancode::Escape;
+    this->supportedKeys["A"] = sf::Keyboard::Scancode::A;
+    this->supportedKeys["C"] = sf::Keyboard::Scancode::C;
+    this->supportedKeys["D"] = sf::Keyboard::Scancode::D;
+    this->supportedKeys["E"] = sf::Keyboard::Scancode::E;
+    this->supportedKeys["F"] = sf::Keyboard::Scancode::F;
+    this->supportedKeys["Q"] = sf::Keyboard::Scancode::Q;
+    this->supportedKeys["R"] = sf::Keyboard::Scancode::R;
+    this->supportedKeys["S"] = sf::Keyboard::Scancode::S;
+    this->supportedKeys["W"] = sf::Keyboard::Scancode::W;
+    this->supportedKeys["X"] = sf::Keyboard::Scancode::X;
+    this->supportedKeys["Z"] = sf::Keyboard::Scancode::Z;
+    this->supportedKeys["Space"] = sf::Keyboard::Scancode::Space;
+    this->supportedKeys["Enter"] = sf::Keyboard::Scancode::Enter;
+    this->supportedKeys["BackSpace"] = sf::Keyboard::Scancode::Backspace;
+    this->supportedKeys["Slash"] = sf::Keyboard::Scancode::Slash;
+    this->supportedKeys["Tab"] = sf::Keyboard::Scancode::Tab;
+    this->supportedKeys["F1"] = sf::Keyboard::Scancode::F1;
+    this->supportedKeys["F2"] = sf::Keyboard::Scancode::F2;
+    this->supportedKeys["F3"] = sf::Keyboard::Scancode::F3;
     // save default keys to file
     this->parsJSON->saveKeyBinds(this->supportedKeys);
 }
@@ -143,9 +146,14 @@ void Core::update()
 
 void Core::updateEventsWindow()
 {
-    while (this->mWindow->pollEvent(this->mEvents))
+    while (this->mWindow->pollEvent(this->mEvents)) {
         if (this->mEvents.type == sf::Event::Closed)
             this->mWindow->close();
+
+        if (this->mEvents.type == sf::Event::KeyPressed)
+            if (this->mEvents.key.scancode)
+                return;
+    }
 }
 
 void Core::render()

@@ -19,13 +19,13 @@ const bool Process::saveGameData()
 {
     // save player to JSON file
     if (!this->Iparser->savePlayer(this->player))
-        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save inventory to JSON file
     if (!this->Iparser->saveInventory(this->t_inventory))
-        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save entitys pos and other data
     if (!this->Iparser->saveEntitys(this->entitys))
-        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", logType::ERROR);
 
     return true;
 }
@@ -168,16 +168,13 @@ void Process::registerItems()
     ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
     ItemRegistry::registerItem(1, std::make_unique<Items::PoisonSmallRegeneration>(size));
 
-    Logger::log("Items has been registered", "Process::registerItems()", true);
-    Logger::log("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()", true);
+    Logger::log("Items has been registered", "Process::registerItems()");
+    Logger::log("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
-{
-    // logger
-    Logger::log("Start initilization process", "Process::Process()", true);
-    // init Parser
+{ // init Parser
     if (defaultLoad)
         this->loadGameData();
     else
@@ -192,17 +189,15 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initEntitys();
     this->intGUI();
 
-    Logger::log("End initilization process", "Process::Process()", true);
+    Logger::log("End initilization process", "Process::Process()");
 }
 
 Process::~Process()
 {
-    Logger::log("Process destructor", "Process::~Process()", true);
-
     if (this->saveGameData())
-        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()", true);
+        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()");
     else
-        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", false, logType::ERROR);
+        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", logType::ERROR);
 
     delete this->myGN;
     delete this->mapTiles;

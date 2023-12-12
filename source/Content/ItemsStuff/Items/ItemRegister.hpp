@@ -1,5 +1,7 @@
 #ifndef itemlist_hpp
 #define itemlist_hpp
+
+#include "../Item.hpp"
 #include "item_poison_small_regeneration.hpp"
 #include "item_stone.hpp"
 
@@ -12,8 +14,12 @@ public:
     {
         if (items.find(id) == items.end()) {
             items[id] = item;
+
+            Logger::log("Item with id: " + std::to_string(id) + " has been registered", "ItemRegistry", logType::INFO);
+
             return true;
         } else {
+            Logger::log("Item with id: " + std::to_string(id) + " alredy was bew registered", "ItemRegistry", logType::WARNING);
             return false; // Item with this ID already exists
         }
     }

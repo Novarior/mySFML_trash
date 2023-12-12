@@ -11,10 +11,10 @@ public:
         this->m_name = "Poison of Regeneration";
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
 
-        if (this->m_texture.loadFromFile(myConst::item_img_poison_small_regeneration))
+        if (this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::item_img_poison_small_regeneration)))
             this->m_shape.setTexture(&this->m_texture);
         else
-            std::cout << "ERROR::ITEM::COULD_NOT_LOAD_TEXTURE" << std::endl;
+            Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::PoisonSmallRegeneration", logType::WARNING);
 
         this->m_Usable = true;
         this->m_stacable = true;

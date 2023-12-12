@@ -11,11 +11,10 @@ public:
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
         this->m_Usable = false;
 
-        if (this->m_texture.loadFromFile(myConst::item_img_stone2))
+        if (this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::item_img_stone2)))
             this->m_shape.setTexture(&this->m_texture);
         else
-            std::cout << "ERROR::ITEM::COULD_NOT_LOAD_TEXTURE" << std::endl;
-
+            Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::Stone", logType::WARNING);
         this->m_stacable = true;
         this->item_ID = 0;
         this->m_amount = 1;

@@ -2,8 +2,6 @@
 #define PARSER_JSON_FILE_HPP
 
 #include "../../Content/ItemsStuff/Inventory.hpp"
-#include "../../Content/ItemsStuff/Item.hpp"
-#include "../../Content/ItemsStuff/Items/itemlist.hpp"
 #include "../../entitys/entity.hpp"
 #include "../../entitys/player.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"

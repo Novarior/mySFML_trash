@@ -132,7 +132,7 @@ NoiceView::NoiceView(StateData* statedata)
     : State(statedata)
 {
     // init logger
-    Logger::log("Start initilization NoiceView", "NoiceView::NoiceView()", true);
+    Logger::log("Start initilization NoiceView", "NoiceView::NoiceView()");
     // init keybinds
     this->initKeybinds();
     this->initTabMenu();
@@ -148,12 +148,12 @@ NoiceView::NoiceView(StateData* statedata)
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
 
-    Logger::log("End initilization NoiceView", "NoiceView::NoiceView()", true);
+    Logger::log("End initilization NoiceView", "NoiceView::NoiceView()");
 }
 
 NoiceView::~NoiceView()
 {
-    Logger::log("Start destruction NoiceView", "NoiceView::~NoiceView()", true);
+    Logger::log("Start destruction NoiceView", "NoiceView::~NoiceView()");
 
     this->Iparser->saveNoiceData(this->m_NoiceViewer->getNoiceData());
 

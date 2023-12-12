@@ -47,7 +47,7 @@ public:
         }
     }
 
-    static void log(const std::string& message, const std::string& source, bool success, logType level = logType::INFO)
+    static void log(const std::string& message, const std::string& source, logType level = logType::INFO)
     {
         std::array<std::string, 3> logTypes = {
             "INFO",
@@ -56,8 +56,7 @@ public:
         };
         std::string typeString = logTypes[static_cast<int>(level)];
 
-        std::string successString = success ? "Success" : "Failure";
-        std::string logEntry = "[" + getCurrentTime() + "] _L: " + typeString + " " + successString + " " + source + " -> " + message;
+        std::string logEntry = "[" + getCurrentTime() + "] _L: " + typeString + "\t_S: " + source + " -> " + message;
         std::ofstream logFile;
         logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {

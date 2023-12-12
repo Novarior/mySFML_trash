@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-static std::map<int, std::shared_ptr<Item>> items;
+std::map<int, std::shared_ptr<Item>> ItemRegistry::items = {};
 unsigned int Entity::count_entitys = 0;
 unsigned BrickBlock::currentFrame = 0;
 
@@ -10,12 +10,12 @@ int main()
 {
     Logger myLogger;
 
-    myLogger.log("Start program", "main", true);
+    myLogger.log("Start program", "main");
     Core mc;
-    myLogger.log("Core has been successfully created", "main", true);
-    myLogger.log("Start main loop", "main", true);
+    myLogger.log("Core has been successfully created", "main");
+    myLogger.log("Start main loop", "main");
     mc.run();
-    myLogger.log("End main loop", "main", true);
+    myLogger.log("End main loop", "main");
 
     return 0;
 }

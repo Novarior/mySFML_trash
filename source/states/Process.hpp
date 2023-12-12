@@ -1,17 +1,15 @@
 #ifndef CPP_PROCESS_CORESTATE_HPP
 #define CPP_PROCESS_CORESTATE_HPP
 
-#include "../header.h"
-#include "State.hpp"
-
 #include "../Content/ItemsStuff/Inventory.hpp"
-#include "../Content/ItemsStuff/Items/itemlist.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../entitys/Enemys/slime.hpp"
 #include "../entitys/player.hpp"
+#include "../header.h"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
+#include "State.hpp"
 
 class Process : public State {
 private:

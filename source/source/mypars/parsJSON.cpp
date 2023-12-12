@@ -42,9 +42,7 @@ const bool parsJSON::loadInventory(Inventory* inventory)
         for (auto& item : j["inventory"]["items"]) {
             if (item["slot"] != nullptr) {
                 // Create a new item
-                Item* newItem = ItemRegistry::getItem(item["unic ID"]);
-
-
+                Item* newItem = static_cast<Item*>(ItemRegistry::getItem(item["unic ID"]));
 
                 // Add the item to the inventory
                 inventory->addItem(newItem);
@@ -57,7 +55,7 @@ const bool parsJSON::loadInventory(Inventory* inventory)
         inventory->getCoins().set_CopperCoinCouns(j["inventory"]["coins"]["copper"]);
 
     } catch (const std::exception& e) {
-        Logger::log("Cant load inventory: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        Logger::log("Cant load inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n", e.what());
         return false;
     }
@@ -76,7 +74,7 @@ const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
     std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
     if (!ifs.is_open()) {
         printf("PARSER cant open file: %s\n", std::string(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds).c_str());
-        Logger::log("Parcer cant open file: " + sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds, "CORE->PARS", false, logType::ERROR);
+        Logger::log("Parcer cant open file: " + sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds, "CORE->PARS", logType::ERROR);
         return false;
     }
 
@@ -91,7 +89,7 @@ const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
         }
     } catch (json::parse_error& e) {
         printf("ERROR::PARSER::JSON::PARSE_ERROR\n   %s\n", e.what());
-        Logger::log("JSON parse error: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        Logger::log("JSON parse error: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         return false;
     }
 
@@ -137,7 +135,7 @@ const bool parsJSON::savePlayer(Entity* player)
 {
     // check if player is not null
     if (player == nullptr) {
-        Logger::log("Cant save player: player is null", "CORE->PARS", false, logType::ERROR);
+        Logger::log("Cant save player: player is null", "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::PLAYER::PLAYER_IS_NULL\n");
         return false;
     }
@@ -165,7 +163,7 @@ const bool parsJSON::savePlayer(Entity* player)
         std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
-        Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
         return false;
     }
@@ -218,7 +216,7 @@ const bool parsJSON::saveInventory(Inventory* inventory)
         std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_inventory);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
-        Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
     }
     return true;
@@ -257,7 +255,7 @@ const bool parsJSON::saveEntitys(std::vector<Entity*> entitys)
     } catch (const std::exception& e) {
         std::stringstream ss;
         ss << "Pars can't save entities" << sAppFunctions::getDocumentsAppFolder() << myConst::config_entitydata;
-        Logger::log(ss.str(), "CORE->PARS", false, logType::ERROR);
+        Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
         return false;
     }
@@ -287,7 +285,7 @@ const bool parsJSON::saveNoiceData(mmath::noiceData _dataNoice)
         std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
-        Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", false, logType::ERROR);
+        Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_noicedata);
         return false;
     }
@@ -311,7 +309,7 @@ const bool parsJSON::saveKeyBinds(std::map<std::string, int>& keyBinds)
     } catch (const std::exception& e) {
         std::stringstream ss;
         ss << "Pars can't save keybinds" << sAppFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
-        Logger::log(ss.str(), "CORE->PARS", false, logType::ERROR);
+        Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
         return false;
     }

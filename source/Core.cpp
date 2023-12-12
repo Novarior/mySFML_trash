@@ -87,21 +87,14 @@ void Core::initWindow()
 
 Core::Core()
 {
-    Logger::log("Initilization core", "Core::Core()", true);
     this->parsJSON = new mypars::parsJSON();
-    Logger::log("Initilization parsJSON", "Core::Core()", true);
     this->initDirectories();
-    Logger::log("Initilization directories", "Core::Core()", true);
     this->initKeyBinds();
-    Logger::log("Initilization keybinds", "Core::Core()", true);
     this->initVar();
-    Logger::log("Initilization variables", "Core::Core()", true);
     this->initWindow();
-    Logger::log("Initilization window", "Core::Core()", true);
     this->initStateData();
-    Logger::log("Initilization state data", "Core::Core()", true);
     this->initState();
-    Logger::log("Initilization state", "Core::Core()", true);
+    Logger::log("Core Inited", "Core::Core()");
 }
 
 Core::~Core()
@@ -118,7 +111,7 @@ Core::~Core()
 
 void Core::run()
 {
-    Logger::log("Start main loop", "Core::run()", true);
+    Logger::log("Start main loop", "Core::run()");
 
     while (this->mWindow->isOpen()) {
         this->updateDeltaTime();

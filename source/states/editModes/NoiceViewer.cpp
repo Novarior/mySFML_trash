@@ -11,7 +11,7 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
     : m_noice_data(m_data)
 {
     // logger
-    Logger::log("NoiceViewer constructor", "NoiceViewer", true);
+    Logger::log("NoiceViewer constructor", "NoiceViewer");
 
     this->m_prn_noice = new ProcessGenerationNoice(this->m_noice_data);
     this->m_perlin_noice = new PerlinNoise();
@@ -25,13 +25,11 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
         this->noiceMap[i].resize(this->m_noice_data.mapSizeY);
 
     this->initvariables();
-
-    Logger::log("NoiceViewer constructor end", "NoiceViewer", true);
 }
 
 NoiceViewer::~NoiceViewer()
 {
-    Logger::log("NoiceViewer destructor", "NoiceViewer", true);
+    Logger::log("NoiceViewer destructor", "NoiceViewer");
 
     delete this->m_prn_noice;
     delete this->m_perlin_noice;

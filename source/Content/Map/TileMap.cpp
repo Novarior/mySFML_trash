@@ -30,7 +30,7 @@ void TileMap::initTrees()
             texture.setSmooth(true);
             this->listTrees.push_back(texture);
         } else
-            Logger::log("Trees Could not load %s", "TILEMAP", false, logType::WARNING);
+            Logger::log("Trees Could not load %s", "TILEMAP", logType::WARNING);
     }
     std::cout << this->listTrees.size() << " trees loaded\n";
 }
@@ -38,7 +38,7 @@ void TileMap::initTrees()
 void TileMap::loadTextuteMap()
 {
     if (!this->m_TexturesList["GRASS"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_DIRT)) {
-        Logger::log("TileMap::initTextures()::GRASS::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::GRASS::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);
@@ -48,7 +48,7 @@ void TileMap::loadTextuteMap()
         this->m_TexturesList["GRASS"].loadFromImage(img);
     };
     if (!this->m_TexturesList["STONE"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_STONE)) {
-        Logger::log("TileMap::initTextures()::STONE::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::STONE::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);
@@ -58,7 +58,7 @@ void TileMap::loadTextuteMap()
         this->m_TexturesList["STONE"].loadFromImage(img);
     };
     if (!this->m_TexturesList["OCEAN"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_OCEAN)) {
-        Logger::log("TileMap::initTextures()::OCEAN::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::OCEAN::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);
@@ -68,7 +68,7 @@ void TileMap::loadTextuteMap()
         this->m_TexturesList["OCEAN"].loadFromImage(img);
     };
     if (!this->m_TexturesList["OCEAN_ANIM"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_OCEAN_ANIM)) {
-        Logger::log("TileMap::initTextures()::OCEAN_ANIM::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::OCEAN_ANIM::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);
@@ -78,7 +78,7 @@ void TileMap::loadTextuteMap()
         this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img);
     };
     if (!this->m_TexturesList["SAND"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_SAND)) {
-        Logger::log("TileMap::initTextures()::SAND::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::SAND::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);
@@ -88,7 +88,7 @@ void TileMap::loadTextuteMap()
         this->m_TexturesList["SAND"].loadFromImage(img);
     };
     if (!this->m_TexturesList["DIRT"].loadFromFile(sAppFunctions::get_resources_dir() + myConst::texture_DIRT)) {
-        Logger::log("TileMap::initTextures()::DIRT::ERROR::COULD_NOT_LOAD", "TILEMAP", false, logType::WARNING);
+        Logger::log("TileMap::initTextures()::DIRT::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
         sf::Image img;
         img.create(32, 32);

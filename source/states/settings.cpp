@@ -256,19 +256,17 @@ void SettingsState::resetGui()
 
 SettingsState::SettingsState(StateData* state_data)
     : State(state_data)
-{
-    Logger::log("Initilization settings state", "SettingsState::SettingsState()", true, logType::INFO);
-    // init variables
+{   // init variables
     this->initVariables();
     this->initFonts();
     this->initGui();
     this->initKeybinds();
-    Logger::log("End initilization settings state", "SettingsState::SettingsState()", true, logType::INFO);
+    Logger::log("End initilization settings state", "SettingsState::SettingsState()",  logType::INFO);
 }
 
 SettingsState::~SettingsState()
 {
-    Logger::log("SettingsState destructor", "SettingsState::~SettingsState()", true, logType::INFO);
+    Logger::log("SettingsState destructor", "SettingsState::~SettingsState()",  logType::INFO);
     // clear buttons
     auto it = this->buttons.begin();
     for (it = this->buttons.begin(); it != this->buttons.end(); ++it)

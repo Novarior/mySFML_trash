@@ -98,7 +98,7 @@ void NoiceView::initSelectors()
 void NoiceView::initNoice()
 {
 
-    if (!this->Iparser->loadNoiceData(this->m_noiceData)) { // init noise data
+    if (ParserJson::loadNoiceData(this->m_noiceData)) { // init noise data
         this->m_noiceData.octaves = 8;
         std::srand(std::time(nullptr));
         this->m_noiceData.seed = std::rand();
@@ -155,7 +155,7 @@ NoiceView::~NoiceView()
 {
     Logger::log("Start destruction NoiceView", "NoiceView::~NoiceView()");
 
-    this->Iparser->saveNoiceData(this->m_NoiceViewer->getNoiceData());
+    ParserJson::saveNoiceData(this->m_NoiceViewer->getNoiceData());
 
     for (auto& it : this->buttons)
         delete it.second;
@@ -320,10 +320,10 @@ void NoiceView::updateButtons(const float& delta_time)
             this->m_NoiceViewer->generateNoice();
         }
         if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-            this->Iparser->saveNoiceData(this->m_noiceData);
+            ParserJson::saveNoiceData(this->m_noiceData);
         }
         if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-            this->Iparser->loadNoiceData(this->m_noiceData);
+            ParserJson::loadNoiceData(this->m_noiceData);
             this->staticSelector["OCTAVES"]->setCurrentValue(this->m_noiceData.octaves);
             this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_noiceData.frequency);
             this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_noiceData.amplifire);

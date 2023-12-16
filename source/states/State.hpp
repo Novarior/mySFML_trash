@@ -20,9 +20,7 @@ public:
         this->sWindow = NULL;
         this->supportedKeys = NULL;
         this->sStates = NULL;
-
         this->gfxSettings = NULL;
-        this->parser = NULL;
     }
 
     float grid_size;
@@ -30,7 +28,7 @@ public:
     sf::Font font;
     sf::Font debugFont;
     GraphicsSettings* gfxSettings;
-    mypars::parsJSON* parser;
+
     std::stack<State*>* sStates;
     std::map<std::string, int>* supportedKeys;
     unsigned int characterSize_debug;
@@ -50,7 +48,6 @@ protected:
     sf::RenderWindow* Iwindow;
     std::map<std::string, int>* IsupportedKeys;
     std::map<std::string, int> Ikeybinds;
-    mypars::parsJSON* Iparser;
 
     // Resources
     bool Iquit;

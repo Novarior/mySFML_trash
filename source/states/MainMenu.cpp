@@ -168,7 +168,6 @@ MainMenu::MainMenu(StateData* statedata)
 {
     // logger
     Logger::log("MainMenu constructor", "MainMenu");
-    //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();

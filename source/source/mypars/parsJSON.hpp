@@ -9,25 +9,24 @@
 
 class Gamedata;
 
-namespace mypars {
-class parsJSON {
+class ParserJson {
 public:
-    parsJSON();
-    virtual ~parsJSON();
+    ParserJson() { }
+    virtual ~ParserJson() { }
 
     // load functions from json file
-    const bool loadPlayer(Entity& player);
-    const bool loadNoiceData(mmath::noiceData& data);
-    const bool loadInventory(Inventory* inventory);
-    const bool loadEntitys(std::vector<Entity*>& entitys);
-    const bool loadKeyBinds(std::map<std::string, int>& keyBinds);
+    static const bool loadPlayer(Entity& player);
+    static const bool loadNoiceData(mmath::noiceData& data);
+    static const bool loadInventory(Inventory* inventory);
+    static const bool loadEntitys(std::vector<Entity*>& entitys);
+    static const bool loadKeyBinds(std::map<std::string, int>& keyBinds);
 
     // save functions to json file
-    const bool savePlayer(Entity* player);
-    const bool saveNoiceData(mmath::noiceData data);
-    const bool saveInventory(Inventory* inventory);
-    const bool saveEntitys(std::vector<Entity*> entitys);
-    const bool saveKeyBinds(std::map<std::string, int>& keyBinds);
+    static const bool savePlayer(Entity* player);
+    static const bool saveNoiceData(mmath::noiceData data);
+    static const bool saveInventory(Inventory* inventory);
+    static const bool saveEntitys(std::vector<Entity*> entitys);
+    static const bool saveKeyBinds(std::map<std::string, int>& keyBinds);
 };
-}; // namespace mypars
+
 #endif // PARSER_JSON_FILE_HPP

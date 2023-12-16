@@ -3,7 +3,7 @@
 const bool Process::loadGameData()
 {
     // load noice config
-    if (!this->Iparser->loadNoiceData(this->noicedata))
+    if (ParserJson::loadNoiceData(this->noicedata))
         printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
     else {
         this->noicedata.mapSizeX = 1000;
@@ -18,13 +18,13 @@ const bool Process::loadGameData()
 const bool Process::saveGameData()
 {
     // save player to JSON file
-    if (!this->Iparser->savePlayer(this->player))
+    if (ParserJson::savePlayer(this->player))
         Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save inventory to JSON file
-    if (!this->Iparser->saveInventory(this->t_inventory))
+    if (ParserJson::saveInventory(this->t_inventory))
         Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save entitys pos and other data
-    if (!this->Iparser->saveEntitys(this->entitys))
+    if (ParserJson::saveEntitys(this->entitys))
         Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", logType::ERROR);
 
     return true;
@@ -302,6 +302,7 @@ void Process::update(const float& delta_time)
             this->initTileMapData();
             this->initTileMap();
             this->initMiniMap();
+            this->reCaclulateCharacterSize();
         }
     } else { // update game
         this->updateEntitys(delta_time);

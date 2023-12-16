@@ -29,7 +29,6 @@ void Core::initStateData()
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings.gridSize;
-    this->mStatedata.parser = this->parsJSON;
     this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
     this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
     this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
@@ -60,7 +59,7 @@ void Core::initKeyBinds()
     this->supportedKeys["F2"] = sf::Keyboard::Scancode::F2;
     this->supportedKeys["F3"] = sf::Keyboard::Scancode::F3;
     // save default keys to file
-    this->parsJSON->saveKeyBinds(this->supportedKeys);
+    ParserJson::saveKeyBinds(this->supportedKeys);
 }
 
 void Core::initState()
@@ -90,7 +89,6 @@ void Core::initWindow()
 
 Core::Core()
 {
-    this->parsJSON = new mypars::parsJSON();
     this->initDirectories();
     this->initKeyBinds();
     this->initVar();
@@ -103,7 +101,6 @@ Core::Core()
 Core::~Core()
 {
     this->gfxSettings.saveToFile(sAppFunctions::getDocumentsAppFolder());
-    delete this->parsJSON;
 
     while (!this->mState.empty()) {
         delete this->mState.top();

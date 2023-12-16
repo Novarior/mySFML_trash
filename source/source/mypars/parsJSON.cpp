@@ -1,11 +1,7 @@
 #include "parsJSON.hpp"
-using namespace mypars;
-
-parsJSON::parsJSON() { }
-parsJSON::~parsJSON() { }
 
 // load playes
-const bool parsJSON::loadPlayer(Entity& player)
+const bool ParserJson::loadPlayer(Entity& player)
 { // open json file
     std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
     if (!ifs.is_open()) {
@@ -17,7 +13,7 @@ const bool parsJSON::loadPlayer(Entity& player)
     return true;
 }
 // load inventory
-const bool parsJSON::loadInventory(Inventory* inventory)
+const bool ParserJson::loadInventory(Inventory* inventory)
 { // Check if inventory is null
     if (!inventory) {
         printf("ERROR::PARSER::LOAD::INVENTORY::INVENTORY_IS_NULL\n");
@@ -63,13 +59,13 @@ const bool parsJSON::loadInventory(Inventory* inventory)
     return true;
 }
 // load  entitys
-const bool parsJSON::loadEntitys(std::vector<Entity*>& entitys)
+const bool ParserJson::loadEntitys(std::vector<Entity*>& entitys)
 { // open json file
 
     return false;
 }
 // load keybinds
-const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
+const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
 { // load key binds from json file
     std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
     if (!ifs.is_open()) {
@@ -98,7 +94,7 @@ const bool parsJSON::loadKeyBinds(std::map<std::string, int>& keyBinds)
 }
 
 // load noice data
-const bool parsJSON::loadNoiceData(mmath::noiceData& data)
+const bool ParserJson::loadNoiceData(mmath::noiceData& data)
 {
     // Open the file
     std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
@@ -131,7 +127,7 @@ const bool parsJSON::loadNoiceData(mmath::noiceData& data)
 
 // SAVES
 // save player
-const bool parsJSON::savePlayer(Entity* player)
+const bool ParserJson::savePlayer(Entity* player)
 {
     // check if player is not null
     if (player == nullptr) {
@@ -172,7 +168,7 @@ const bool parsJSON::savePlayer(Entity* player)
 }
 
 // save inventory
-const bool parsJSON::saveInventory(Inventory* inventory)
+const bool ParserJson::saveInventory(Inventory* inventory)
 {
     // Check if inventory is null
     if (!inventory) {
@@ -223,7 +219,7 @@ const bool parsJSON::saveInventory(Inventory* inventory)
 }
 
 // save entitys
-const bool parsJSON::saveEntitys(std::vector<Entity*> entitys)
+const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
 {
     // Create a JSON object
     json j;
@@ -264,7 +260,7 @@ const bool parsJSON::saveEntitys(std::vector<Entity*> entitys)
 }
 
 // save noicedata
-const bool parsJSON::saveNoiceData(mmath::noiceData _dataNoice)
+const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
 {
     // Create a JSON object
     json j;
@@ -294,7 +290,7 @@ const bool parsJSON::saveNoiceData(mmath::noiceData _dataNoice)
 }
 
 // save keybinds
-const bool parsJSON::saveKeyBinds(std::map<std::string, int>& keyBinds)
+const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
 {
     // Create a JSON object
     json j;

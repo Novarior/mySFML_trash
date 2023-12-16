@@ -3,8 +3,6 @@
 void SettingsState::initVariables()
 {
     // init variables
-    // init parser for some reason
-    this->Iparser = this->IstateData->parser;
     // init video modes like all supported modes
     this->video_modes = sf::VideoMode::getFullscreenModes();
     // init framerates list

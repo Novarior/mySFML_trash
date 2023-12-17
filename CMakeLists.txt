@@ -19,8 +19,6 @@ message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 #include all files for build project
 file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
-#set outputs directorry
-
 # chek operation system
 if(WIN32)
     set(OPERATION_SYSTEM "Windows")

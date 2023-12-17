@@ -73,13 +73,12 @@ void MainMenu::initButtons()
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    if (this->IstateData->gameData.game_started != true)
-        this->buttons["START_BTN"] = new gui::Button(
-            sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(70, this->Iwindow->getSize().y) - offsetY), // pos
-            sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-            this->IstateData->font, "Play", this->IstateData->characterSize_game_big,
-            sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-            sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+    this->buttons["START_BTN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(70, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Play", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
     this->buttons["SETTINGS_BTN"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(80, this->Iwindow->getSize().y) - offsetY), // pos
@@ -125,34 +124,6 @@ void MainMenu::resetGUI()
     this->IstateData->reserGUI = false;
 }
 
-void MainMenu::initStartProcces()
-{
-    this->isstatred = false;
-    this->fadeShape.setFillColor(sf::Color(0, 0, 0, 0));
-    this->fadeShape.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
-}
-
-void MainMenu::updateStartProcces()
-{
-    sf::Color buff = this->fadeShape.getFillColor();
-
-    if (buff.a < 255)
-        buff.a += 1;
-    else {
-        this->Istates->push(new Process(this->IstateData, false));
-
-        this->isstatred = false;
-        this->resetView();
-
-        buff = sf::Color(0, 0, 0, 0);
-    }
-    this->fadeShape.setFillColor(buff);
-
-    sf::Vector2f vSize = this->view.getSize();
-    vSize -= sf::Vector2f(1, 1);
-    this->view.setSize(vSize);
-}
-
 void MainMenu::resetView()
 {
     this->view.setSize(sf::Vector2f(
@@ -168,22 +139,16 @@ MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
     // logger
-    Logger::log("MainMenu constructor", "MainMenu", true);
-    //  this->Iparser->loadGameData(myConst::config_game, this->IstateData->gameData);
+    Logger::log("MainMenu constructor", "MainMenu");
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();
     this->initButtons();
-    this->initStartProcces();
-
-    Logger::log("End initilization MainMenu", "MainMenu::MainMenu()", true);
 }
 
 MainMenu::~MainMenu()
 {
-    Logger::log("MainMenu destructor", "MainMenu", true);
-
-    this->Iparser->saveGameData(this->IstateData->gameData);
+    Logger::log("MainMenu destructor", "MainMenu");
 
     // delete buttons
     if (!this->buttons.empty())
@@ -203,12 +168,9 @@ void MainMenu::update(const float& delta_time)
 
     this->updateGUI(delta_time);
 
-    if (!this->isstatred) {
-        this->updateMousePositions(&this->view);
-        this->updateInput(delta_time);
-        this->updateButtons();
-    } else
-        this->updateStartProcces();
+    this->updateMousePositions(&this->view);
+    this->updateInput(delta_time);
+    this->updateButtons();
 }
 
 void MainMenu::updateInput(const float& delta_time)
@@ -224,11 +186,9 @@ void MainMenu::updateButtons()
         if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime())
             this->endState();
 
-        if (this->IstateData->gameData.game_started != true)
-            if (this->buttons["START_BTN"]->isPressed() && this->getKeytime()) {
-                this->Istates->push(new Process(this->IstateData, false));
-                this->IstateData->gameData.game_started = true;
-            }
+        if (this->buttons["START_BTN"]->isPressed() && this->getKeytime()) {
+            this->Istates->push(new Process(this->IstateData, false));
+        }
 
         if (this->buttons["CONT_BTN"]->isPressed() && this->getKeytime()) {
             this->Istates->push(new Process(this->IstateData, true));
@@ -238,7 +198,7 @@ void MainMenu::updateButtons()
             this->Istates->push(new SettingsState(this->IstateData));
 
         if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-            this->Istates->push(new NoiceView(this->IstateData));
+            this->Istates->push(new EditorState(this->IstateData));
     }
 }
 
@@ -268,8 +228,6 @@ void MainMenu::render(sf::RenderWindow& target)
     this->renderTexture.clear();
     this->renderTexture.setView(this->view);
 
-    // render background
-    // renderTexture.draw(this->background);
     // render background shapes
     for (auto& it : this->backgrond_shapes)
         renderTexture.draw(it);
@@ -278,13 +236,7 @@ void MainMenu::render(sf::RenderWindow& target)
         for (auto& it : this->buttons)
             it.second->render(renderTexture);
     // fadeout fx
-    if (this->isstatred)
-        renderTexture.draw(this->fadeShape);
 
-    // // debug shapes
-    // if (!this->debug_shapes.empty())
-    //     for (auto& it : this->debug_shapes)
-    //         this->renderTexture.draw(it);
     // debug text
     if (this->debugMode)
         this->renderTexture.draw(this->dText);

@@ -1,15 +1,16 @@
-#include "NoiceView.hpp"
+#include "EditorState.hpp"
 
-void NoiceView::initKeybinds()
+void EditorState::initKeybinds()
 {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["TAB_MENU"] = this->IsupportedKeys->at("Tab");
     this->Ikeybinds["KEY_Q"] = this->IsupportedKeys->at("Q");
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
     this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
+    this->Ikeybinds["KEY_R"] = this->IsupportedKeys->at("R");
 }
 
-void NoiceView::initTabMenu()
+void EditorState::initTabMenu()
 { // tab menu
     this->tabShape.setPosition(sf::Vector2f(
         mmath::p2pX(70, this->IstateData->sWindow->getSize().x), 0));
@@ -23,7 +24,7 @@ void NoiceView::initTabMenu()
     this->showTabmenu = false;
 }
 
-void NoiceView::initButtons()
+void EditorState::initButtons()
 { // init buttons
     this->buttons["G_NOICE"] = new gui::Button(
         sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
@@ -58,7 +59,7 @@ void NoiceView::initButtons()
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 }
 
-void NoiceView::initSelectors()
+void EditorState::initSelectors()
 { // init static selector in tab menu
     this->staticSelector["OCTAVES"] = new gui::StaticSelector(
         sf::Vector2f(this->tabShape.getPosition()),
@@ -94,10 +95,10 @@ void NoiceView::initSelectors()
     this->staticSelector["PERSISTENCE"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().persistence);
 }
 
-void NoiceView::initNoice()
+void EditorState::initNoice()
 {
 
-    if (!this->Iparser->loadNoiceData(this->m_noiceData)) { // init noise data
+    if (ParserJson::loadNoiceData(this->m_noiceData)) { // init noise data
         this->m_noiceData.octaves = 8;
         std::srand(std::time(nullptr));
         this->m_noiceData.seed = std::rand();
@@ -117,7 +118,7 @@ void NoiceView::initNoice()
     this->m_NoiceViewer->generateNoice();
 }
 
-void NoiceView::initDebugText()
+void EditorState::initDebugText()
 { // init debug text
     this->dText.setFont(this->IstateData->debugFont);
     this->dText.setCharacterSize(this->IstateData->characterSize_debug);
@@ -127,11 +128,11 @@ void NoiceView::initDebugText()
     this->dText.setOutlineThickness(2.f);
 }
 
-NoiceView::NoiceView(StateData* statedata)
+EditorState::EditorState(StateData* statedata)
     : State(statedata)
 {
     // init logger
-    Logger::log("Start initilization NoiceView", "NoiceView::NoiceView()", true);
+    Logger::log("Start initilization EditorState", "EditorState::EditorState()");
     // init keybinds
     this->initKeybinds();
     this->initTabMenu();
@@ -147,14 +148,14 @@ NoiceView::NoiceView(StateData* statedata)
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
     this->myLS->generate();
 
-    Logger::log("End initilization NoiceView", "NoiceView::NoiceView()", true);
+    Logger::log("End initilization EditorState", "EditorState::EditorState()");
 }
 
-NoiceView::~NoiceView()
+EditorState::~EditorState()
 {
-    Logger::log("Start destruction NoiceView", "NoiceView::~NoiceView()", true);
+    Logger::log("Start destruction EditorState", "EditorState::~EditorState()");
 
-    this->Iparser->saveNoiceData(this->m_NoiceViewer->getNoiceData());
+    ParserJson::saveNoiceData(this->m_NoiceViewer->getNoiceData());
 
     for (auto& it : this->buttons)
         delete it.second;
@@ -167,7 +168,7 @@ NoiceView::~NoiceView()
     delete this->myLS;
 }
 
-sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
+sf::IntRect EditorState::findNonTransparentRect(const sf::Image& image)
 {
     // this function find non transparent pixels
     // and return IntRect without this pixels
@@ -190,7 +191,7 @@ sf::IntRect NoiceView::findNonTransparentRect(const sf::Image& image)
     return mrect;
 }
 
-void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
+void EditorState::saveTreeAsImage(sf::RenderWindow& window)
 {
     // create texture with window size
     sf::Texture texture;
@@ -232,33 +233,36 @@ void NoiceView::saveTreeAsImage(sf::RenderWindow& window)
     simg.saveToFile(ss.str());
 }
 
-void NoiceView::updateInput(const float& delta_time)
+void EditorState::updateInput(const float& delta_time)
 {
     // if pressed key ESC then end state
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("CLOSE"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
-    }
+
     // switch tab menu
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;
-    }
+
     // update currentViewGenerator in a range from 0 to 2
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_Q"))) && this->getKeytime())
         this->m_NoiceViewer->swithNoiceModel();
-    }
+
     // switch noice model
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))) && this->getKeytime())
         this->m_NoiceViewer->swithColorMode();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
             this->current_View_Generator = 0;
     }
+    // switch noice smooth mode (fast mode)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_R"))) && this->getKeytime())
+        this->m_noiceData.fastMode = !this->m_noiceData.fastMode;
 }
 
-void NoiceView::updateDebugText(const float& delta_time)
+void EditorState::updateDebugText(const float& delta_time)
 {
     // collect all data for debug text and update it
     double fps = 1.0f / delta_time;
@@ -266,7 +270,13 @@ void NoiceView::updateDebugText(const float& delta_time)
         << "FPS:\t" << fps
         << "\nCurent view generator:\t" << this->current_View_Generator
         << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
-        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode()
+        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode();
+    if (this->m_NoiceViewer->getNoiceModel() == noiceType::PERLIN_NOICE_V2)
+        this->dString_Stream
+            << "\nCurent noice smooth mode:\t" << this->m_NoiceViewer->getNoiceSmouthName() << ":\t" << this->m_NoiceViewer->getNoiceData().smoothMode
+            << "\nSeed:\t" << this->m_NoiceViewer->getNoiceData().seed
+            << "\nFastMode" << this->m_NoiceViewer->getNoiceData().fastMode;
+    this->dString_Stream
         << "\nTree Data:"
         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
         << "\nPause:\t" << this->Ipaused;
@@ -277,7 +287,7 @@ void NoiceView::updateDebugText(const float& delta_time)
     this->dString_Stream.str("");
 }
 
-void NoiceView::updateButtons(const float& delta_time)
+void EditorState::updateButtons(const float& delta_time)
 {
     for (auto& it : this->buttons)
         it.second->update(this->mousePosWindow);
@@ -310,10 +320,10 @@ void NoiceView::updateButtons(const float& delta_time)
             this->m_NoiceViewer->generateNoice();
         }
         if (this->buttons["SAVE_GENDATA"]->isPressed()) {
-            this->Iparser->saveNoiceData(this->m_noiceData);
+            ParserJson::saveNoiceData(this->m_noiceData);
         }
         if (this->buttons["LOAD_GENDATA"]->isPressed()) {
-            this->Iparser->loadNoiceData(this->m_noiceData);
+            ParserJson::loadNoiceData(this->m_noiceData);
             this->staticSelector["OCTAVES"]->setCurrentValue(this->m_noiceData.octaves);
             this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_noiceData.frequency);
             this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_noiceData.amplifire);
@@ -335,7 +345,7 @@ void NoiceView::updateButtons(const float& delta_time)
     this->m_noiceData.smoothMode = this->selector->getActiveElementID();
 }
 
-void NoiceView::update(const float& delta_time)
+void EditorState::update(const float& delta_time)
 {
     // update keytime for next function used it for keypress delay
     this->updateKeytime(delta_time);
@@ -350,7 +360,7 @@ void NoiceView::update(const float& delta_time)
         this->updateDebugText(delta_time);
 }
 
-void NoiceView::renderTabMenu(sf::RenderTarget& target)
+void EditorState::renderTabMenu(sf::RenderTarget& target)
 {
     target.draw(this->tabShape);
 
@@ -363,7 +373,7 @@ void NoiceView::renderTabMenu(sf::RenderTarget& target)
     this->selector->render(target);
 }
 
-void NoiceView::render(sf::RenderWindow& target)
+void EditorState::render(sf::RenderWindow& target)
 {
     // layer 0 - noice render and tree render
     switch (this->current_View_Generator) {

@@ -1,8 +1,7 @@
 #ifndef ITEMSTUFF_INVENTORY_H
 #define ITEMSTUFF_INVENTORY_H
 #include "Coins.hpp"
-#include "Item.hpp"
-#include "Items/itemlist.hpp"
+#include "Items/ItemRegister.hpp"
 
 class Cell : public sf::Drawable {
 public:

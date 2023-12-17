@@ -3,8 +3,6 @@
 void SettingsState::initVariables()
 {
     // init variables
-    // init parser for some reason
-    this->Iparser = this->IstateData->parser;
     // init video modes like all supported modes
     this->video_modes = sf::VideoMode::getFullscreenModes();
     // init framerates list
@@ -214,6 +212,25 @@ void SettingsState::initGui()
             this->text_shapes[x].getPosition().x + (this->text_shapes[x].getGlobalBounds().width / 2) - (this->settings_list[x].getGlobalBounds().width / 2),
             this->text_shapes[x].getPosition().y + (this->text_shapes[x].getGlobalBounds().height / 2) - (this->settings_list[x].getGlobalBounds().height / 2)));
     }
+
+    //=====================================================================================================
+    //=====================================   KEY BINDS    ================================================
+    //=====================================================================================================
+
+    // init keybinds text
+    sf::Text text;
+    text.setFont(this->IstateData->font); // Установите шрифт, который вы хотите использовать
+    text.setCharacterSize(24); // Установите размер шрифта
+
+    int i = 0;
+    for (const auto& keybind : *this->IstateData->supportedKeys) {
+        text.setString(keybind.first + ": " + std::to_string(keybind.second));
+        text.setPosition(
+            mmath::p2pX(12.f * (i % 3), this->IstateData->sWindow->getSize().x),
+            mmath::p2pY(40.f, this->IstateData->sWindow->getSize().y) + mmath::p2pY(3 * (i / 3), this->IstateData->sWindow->getSize().y)); // Расположите текст по сетке
+        this->keybindText.push_back(text);
+        i++;
+    }
 }
 
 void SettingsState::resetGui()
@@ -256,19 +273,17 @@ void SettingsState::resetGui()
 
 SettingsState::SettingsState(StateData* state_data)
     : State(state_data)
-{
-    Logger::log("Initilization settings state", "SettingsState::SettingsState()", true, logType::INFO);
-    // init variables
+{ // init variables
     this->initVariables();
     this->initFonts();
     this->initGui();
     this->initKeybinds();
-    Logger::log("End initilization settings state", "SettingsState::SettingsState()", true, logType::INFO);
+    Logger::log("End initilization settings state", "SettingsState::SettingsState()", logType::INFO);
 }
 
 SettingsState::~SettingsState()
 {
-    Logger::log("SettingsState destructor", "SettingsState::~SettingsState()", true, logType::INFO);
+    Logger::log("SettingsState destructor", "SettingsState::~SettingsState()", logType::INFO);
     // clear buttons
     auto it = this->buttons.begin();
     for (it = this->buttons.begin(); it != this->buttons.end(); ++it)
@@ -287,7 +302,7 @@ SettingsState::~SettingsState()
 void SettingsState::updateInput(const float& delta_time)
 {
     // update esc key
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_BACK"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_BACK"))) && this->getKeytime())
         this->endState();
 }
 
@@ -351,6 +366,9 @@ void SettingsState::renderGui(sf::RenderTarget& target)
     // draw this->text_shapes
     for (auto& ts : this->text_shapes)
         target.draw(ts);
+
+    for (const auto& text : this->keybindText)
+        target.draw(text);
 }
 
 void SettingsState::render(sf::RenderWindow& target)

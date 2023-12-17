@@ -5,37 +5,14 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Запустить",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/bin/GameProto",
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/bin",
-            "args": [],
-            "environment": [
-                {
-                    "name": "Test",
-                    "value": "Debug"
-                }
-            ],
-            "externalConsole": true,
-            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
-            "MIMode": "lldb",
-        },
-        {
-            "name": "(lldb) Launch",
+            "name": "(lldb) Debug run",
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/bin/Debug/Ekzeckt.app",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [
-                {
-                    "name": "Test",
-                    "value": "Debug"
-                }
-            ],
+            "environment": [],
             "externalConsole": true,
             "MIMode": "lldb",
             "setupCommands": [
@@ -45,7 +22,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols",
+            "additionalSOLibSearchPath": "/path/to/symbols;/another/path/to/symbols"
         }
     ]
 }

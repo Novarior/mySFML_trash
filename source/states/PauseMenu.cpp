@@ -4,7 +4,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font)
     : font(font)
 {
     // logger
-    Logger::log("PauseMenu constructor", "PauseMenu", true);
+    Logger::log("PauseMenu constructor", "PauseMenu");
     // Init background
     this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
     this->background.setFillColor(sf::Color(30, 30, 30, 100));
@@ -30,7 +30,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font)
 PauseMenu::~PauseMenu()
 {
     // logger
-    Logger::log("PauseMenu destructor", "PauseMenu", true);
+    Logger::log("PauseMenu destructor", "PauseMenu");
 
     auto it = this->buttons.begin();
     for (it = this->buttons.begin(); it != this->buttons.end(); ++it) {

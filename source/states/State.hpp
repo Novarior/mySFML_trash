@@ -10,11 +10,6 @@ namespace mypars {
 class parsJSON;
 };
 
-struct Gamedata {
-    bool game_started;
-    sf::Vector2f currentPlayerPos;
-};
-
 /// @brief Forward declaration of State class
 class State;
 /// @brief Class for state data
@@ -25,9 +20,7 @@ public:
         this->sWindow = NULL;
         this->supportedKeys = NULL;
         this->sStates = NULL;
-
         this->gfxSettings = NULL;
-        this->parser = NULL;
     }
 
     float grid_size;
@@ -35,7 +28,7 @@ public:
     sf::Font font;
     sf::Font debugFont;
     GraphicsSettings* gfxSettings;
-    mypars::parsJSON* parser;
+
     std::stack<State*>* sStates;
     std::map<std::string, int>* supportedKeys;
     unsigned int characterSize_debug;
@@ -43,7 +36,6 @@ public:
     unsigned int characterSize_game_medium;
     unsigned int characterSize_game_small;
     bool reserGUI;
-    Gamedata gameData;
 };
 
 /// @brief Abstract class for game states
@@ -56,7 +48,6 @@ protected:
     sf::RenderWindow* Iwindow;
     std::map<std::string, int>* IsupportedKeys;
     std::map<std::string, int> Ikeybinds;
-    mypars::parsJSON* Iparser;
 
     // Resources
     bool Iquit;

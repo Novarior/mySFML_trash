@@ -2,13 +2,8 @@
 
 const bool Process::loadGameData()
 {
-    // load game config
-
-    if (!this->Iparser->loadGameData(this->IstateData->gameData))
-        printf("ERROR::PROCESS::LOAD::GAMEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_game);
-
     // load noice config
-    if (!this->Iparser->loadNoiceData(this->noicedata))
+    if (ParserJson::loadNoiceData(this->noicedata))
         printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
     else {
         this->noicedata.mapSizeX = 1000;
@@ -23,17 +18,14 @@ const bool Process::loadGameData()
 const bool Process::saveGameData()
 {
     // save player to JSON file
-    if (!this->Iparser->savePlayer(this->player))
-        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+    if (ParserJson::savePlayer(this->player))
+        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save inventory to JSON file
-    if (!this->Iparser->saveInventory(this->t_inventory))
-        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+    if (ParserJson::saveInventory(this->t_inventory))
+        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save entitys pos and other data
-    if (!this->Iparser->saveEntitys(this->entitys))
-        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
-    // save game data to JSON file
-    if (!this->Iparser->saveGameData(this->IstateData->gameData))
-        Logger::log("Parser::saveGameData()::ERROR::", "Process::saveGameData()", false, logType::ERROR);
+    if (ParserJson::saveEntitys(this->entitys))
+        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", logType::ERROR);
 
     return true;
 }
@@ -43,7 +35,7 @@ void Process::initKeybinds()
 {
     this->Ikeybinds["KEY_CLOSE"] = this->IsupportedKeys->at("Escape");
     this->Ikeybinds["KEY_TAB"] = this->IsupportedKeys->at("Tab");
-    this->Ikeybinds["KEY_F1"] = this->IsupportedKeys->at("F1");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
     this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");
     this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
     this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
@@ -159,21 +151,30 @@ void Process::initEntitys()
     // get random position from map array
     std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
 
-    for (size_t i = 0; i < 32; i++) {
-        // call function to get random position
-        this->entitys.push_back(new Slime(
-            spawnPosArray[rand() % spawnPosArray.size()].x,
-            spawnPosArray[rand() % spawnPosArray.size()].y,
-            *this->player));
-    }
+    // for (size_t i = 0; i < 32; i++) {
+    //     // call function to get random position
+    //     this->entitys.push_back(new Slime(
+    //         spawnPosArray[rand() % spawnPosArray.size()].x,
+    //         spawnPosArray[rand() % spawnPosArray.size()].y,
+    //         *this->player));
+    // }
+}
+
+void Process::registerItems()
+{
+    int size = this->IstateData->grid_size;
+
+    // register items to registry
+    ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
+    ItemRegistry::registerItem(1, std::make_unique<Items::PoisonSmallRegeneration>(size));
+
+    Logger::log("Items has been registered", "Process::registerItems()");
+    Logger::log("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad)
     : State(state_data)
-{
-    // logger
-    Logger::log("Start initilization process", "Process::Process()", true);
-    // init Parser
+{ // init Parser
     if (defaultLoad)
         this->loadGameData();
     else
@@ -182,22 +183,21 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initKeybinds();
     this->initView();
     this->initPauseMenu();
+    this->registerItems();
     this->initTileMap();
     this->initPlayer();
     this->initEntitys();
     this->intGUI();
 
-    Logger::log("End initilization process", "Process::Process()", true);
+    Logger::log("End initilization process", "Process::Process()");
 }
 
 Process::~Process()
 {
-    Logger::log("Process destructor", "Process::~Process()", true);
-
     if (this->saveGameData())
-        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()", true);
+        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()");
     else
-        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", false, logType::ERROR);
+        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", logType::ERROR);
 
     delete this->myGN;
     delete this->mapTiles;
@@ -222,26 +222,26 @@ Process::~Process()
 // sub update functions
 void Process::updateInput(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
         this->t_inventory->toggleSwitch();
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_F1"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
         this->debugMode = !this->debugMode;
 }
 
 void Process::updatePlayerInputs(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_A"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_A"))))
         this->player->e_move(-1.f, 0.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_D"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_D"))))
         this->player->e_move(1.f, 0.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_S"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_S"))))
         this->player->e_move(0.f, 1.f, delta_time);
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_W"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))))
         this->player->e_move(0.f, -1.f, delta_time);
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SPACE"))) && this->getKeytime()) {
         for (auto& it : this->entitys)
             this->player->e_attack(it, delta_time);
     }
@@ -290,9 +290,6 @@ void Process::update(const float& delta_time)
     if (this->debugMode)
         this->updateDebug(delta_time);
 
-    if (m_gamedata.game_started == false) // update game data
-        this->m_gamedata.game_started = true;
-
     if (this->Ipaused) { // update pause
         this->pausemenu->update(this->mousePosWindow);
 
@@ -305,6 +302,7 @@ void Process::update(const float& delta_time)
             this->initTileMapData();
             this->initTileMap();
             this->initMiniMap();
+            this->reCaclulateCharacterSize();
         }
     } else { // update game
         this->updateEntitys(delta_time);

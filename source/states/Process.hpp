@@ -1,21 +1,18 @@
 #ifndef CPP_PROCESS_CORESTATE_HPP
 #define CPP_PROCESS_CORESTATE_HPP
 
-#include "../header.h"
-#include "State.hpp"
-
 #include "../Content/ItemsStuff/Inventory.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
 #include "../entitys/Enemys/slime.hpp"
 #include "../entitys/player.hpp"
+#include "../header.h"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
+#include "State.hpp"
 
 class Process : public State {
 private:
-    // flag for load data
-    Gamedata m_gamedata;
     // view and window
     sf::View view;
     sf::View playerView;
@@ -40,6 +37,7 @@ private:
     void initView();
     void initTileMap();
     void initTileMapData();
+    void registerItems();
     void initPlayer();
     void initEntitys();
     void initMiniMap();

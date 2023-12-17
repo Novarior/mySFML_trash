@@ -49,7 +49,7 @@ public:
 
         // Проверяем, открылся ли файл
         if (!ofs.is_open()) {
-            Logger::log("GFX::COULD NOT SAVE TO FILE: " + filePath, "GFX()", false, logType::ERROR);
+            Logger::log("GFX::COULD NOT SAVE TO FILE: " + filePath, "GFX()",  logType::ERROR);
             return false;
         }
 

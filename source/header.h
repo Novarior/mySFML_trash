@@ -2,6 +2,7 @@
 #define CPP_CUSTOMHEADER_H
 
 // including stl lib
+#include <algorithm>
 #include <cmath>
 #include <filesystem>
 #include <fstream>

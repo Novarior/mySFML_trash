@@ -101,7 +101,8 @@
         "codecvt": "cpp",
         "condition_variable": "cpp",
         "numbers": "cpp",
-        "semaphore": "cpp"
+        "semaphore": "cpp",
+        "*.in": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",

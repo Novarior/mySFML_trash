@@ -83,6 +83,7 @@ public:
 
     int getNoiceModel() { return this->current_Noice_Model; }
     int getColorMode() { return this->current_Color_Mode; }
+    const std::string getNoiceSmouthName();
 
     void generateNoice();
     void setNoiceData(mmath::noiceData& noicedata) { this->m_noice_data = noicedata; }

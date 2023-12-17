@@ -2,7 +2,7 @@
 #define CPP_MAINMENU_CORESTATE_HPP
 
 #include "../GUI/GUISYS.hpp"
-#include "NoiceView.hpp"
+#include "EditorState.hpp"
 #include "Process.hpp"
 #include "State.hpp"
 #include "settings.hpp"
@@ -27,10 +27,7 @@ private:
     void resetGUI();
 
     // elements for start
-    sf::RectangleShape fadeShape;
-    bool isstatred;
-    void initStartProcces();
-    void updateStartProcces();
+
     void resetView();
 
 public:

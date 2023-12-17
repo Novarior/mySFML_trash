@@ -7,7 +7,6 @@
 
 class Core {
 private:
-    mypars::parsJSON* parsJSON;
     float deltaTime;
     sf::Clock deltaClock;
 

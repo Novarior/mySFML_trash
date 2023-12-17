@@ -52,66 +52,64 @@ sf::Vector2f LSystem::rotate(sf::Vector2f v, float angle)
 
 void LSystem::applyRules()
 {
-    // add litle random to angles and length
-    // rangom angle from 0 to 45
-    // random length from 10 to 30
-    srand(std::time(NULL));
-
-    int randangle = 0;
-    int randlength = 0;
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, 100);
+    std::uniform_int_distribution<> dis_angle(0, 25);
+    std::uniform_int_distribution<> dis_color(80, 255);
 
     sf::Vector2f nextPos;
-    sf::Vector2f localoffsetPos = { 2.0f, 2.0f };
     sf::RectangleShape bufferShape;
+    float half_length = this->data.length / 2;
 
-    for (int i = 0; i < this->sentence.length(); i++) {
-
-        int chance = rand() % 100;
-        char current = sentence[i];
-        // charset s, d, q, [, ], +, -
-        if (current == 'd' || current == 'q') { // red segment
+    for (char current : this->sentence) {
+        int chance = dis(gen);
+        if (current == 'd' || current == 'q') {
             if (chance < this->data.chanceSkip)
                 continue;
-            // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle + randangle);
-            // push shape
+            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle + dis_angle(gen));
             bufferShape.setSize(sf::Vector2f(this->data.length, this->data.width));
-            bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
+            bufferShape.setOrigin(sf::Vector2f(half_length, 0));
             bufferShape.setPosition(nextPos + data.offsetPos);
-            bufferShape.setRotation(this->data.currentAngle + randangle);
+            bufferShape.setRotation(this->data.currentAngle + dis_angle(gen));
             bufferShape.setFillColor(sf::Color(80, 35, 25, this->data.alpha));
             this->line.push_back(bufferShape);
-            // set pos to next pos
             this->data.pos = nextPos;
 
-        } else if (current == 's') { // green segment leafs
-            // calculate next pos
-            nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle + randangle);
-            // push shape
-            bufferShape.setSize(sf::Vector2f(this->data.length + std::rand() % 3 + 1, this->data.width - 2));
-            bufferShape.setOrigin(sf::Vector2f(this->data.length / 2, 0));
-            bufferShape.setPosition(this->data.pos + data.offsetPos);
-            bufferShape.setRotation(this->data.currentAngle + randangle);
-            // set random color in green range 80-255
-            int randcolor = rand() % 175 + 80;
-            bufferShape.setFillColor(sf::Color(0, randcolor, 0));
-            this->line.push_back(bufferShape);
-            // set pos to next pos
-            this->data.pos = nextPos;
-        } else if (current == '+') {
-            randangle = rand() % 25;
-            this->data.currentAngle += (data.angle + randangle);
-        } else if (current == '-') {
-            randangle = rand() % 25;
-            this->data.currentAngle -= (data.angle + randangle);
-        } else if (current == '[') {
-            this->data.length *= 0.80;
-            this->data.alpha *= 0.98;
-            this->stack.push(this->data);
-        } else if (current == ']') {
-            this->data = this->stack.top();
-            this->stack.pop();
-        }
+        } else
+            switch (current) {
+            case 's': { // green segment leafs
+                // calculate next pos
+                nextPos = this->data.pos + this->rotate(sf::Vector2f(0, -this->data.width), this->data.currentAngle + dis_angle(gen));
+                // push shape
+                bufferShape.setSize(sf::Vector2f(this->data.length + dis_angle(gen) % 3 + 1, this->data.width - 2));
+                bufferShape.setOrigin(sf::Vector2f(half_length, 0));
+                bufferShape.setPosition(this->data.pos + data.offsetPos);
+                bufferShape.setRotation(this->data.currentAngle + dis_angle(gen));
+                // set random color in green range 80-255
+                int randcolor = dis_color(gen);
+                bufferShape.setFillColor(sf::Color(0, randcolor, 0));
+                this->line.push_back(bufferShape);
+                // set pos to next pos
+                this->data.pos = nextPos;
+                break;
+            }
+            case '+': // rotate right
+                this->data.currentAngle += (data.angle + dis_angle(gen));
+                break;
+            case '-':
+                this->data.currentAngle -= (data.angle + dis_angle(gen));
+                break;
+            case '[':
+                this->data.length *= 0.80;
+                this->data.alpha *= 0.98;
+                this->stack.push(this->data);
+                break;
+            case ']':
+                this->data = this->stack.top();
+                this->stack.pop();
+                break;
+            };
     }
 }
 

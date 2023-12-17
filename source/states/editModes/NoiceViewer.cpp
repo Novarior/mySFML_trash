@@ -11,7 +11,7 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
     : m_noice_data(m_data)
 {
     // logger
-    Logger::log("NoiceViewer constructor", "NoiceViewer", true);
+    Logger::log("NoiceViewer constructor", "NoiceViewer");
 
     this->m_prn_noice = new ProcessGenerationNoice(this->m_noice_data);
     this->m_perlin_noice = new PerlinNoise();
@@ -25,13 +25,11 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
         this->noiceMap[i].resize(this->m_noice_data.mapSizeY);
 
     this->initvariables();
-
-    Logger::log("NoiceViewer constructor end", "NoiceViewer", true);
 }
 
 NoiceViewer::~NoiceViewer()
 {
-    Logger::log("NoiceViewer destructor", "NoiceViewer", true);
+    Logger::log("NoiceViewer destructor", "NoiceViewer");
 
     delete this->m_prn_noice;
     delete this->m_perlin_noice;
@@ -63,7 +61,8 @@ void NoiceViewer::generateNoice()
                 break;
             case PERLIN_NOICE_V2:
                 h_buffer = this->m_prn_noice->getNoice(x, y);
-                this->noiceMap[x][y] = h_buffer;
+                // normalise noice from -1 to 1 to 0 to 255
+                this->noiceMap[x][y] = (h_buffer + 1) * 127.5;
                 break;
             case SIMPLEX_NOICE:
                 h_buffer = this->m_simplex_noice->noise(x / this->m_noice_data.amplifire / 10.f, y / this->m_noice_data.amplifire / 10.f);
@@ -138,6 +137,22 @@ void NoiceViewer::swithNoiceModel()
 const std::string NoiceViewer::getNoiceModelName()
 {
     return this->noiceModels[this->current_Noice_Model];
+}
+
+const std::string NoiceViewer::getNoiceSmouthName()
+{
+
+    std::array<std::string, 7> smoothModes = {
+        "Linear",
+        "Cosine",
+        "Cubic",
+        "Quintic",
+        "Quartic",
+        "Quadratic",
+        "Hermite"
+    };
+
+    return smoothModes[this->m_noice_data.smoothMode];
 }
 
 void NoiceViewer::swithColorMode()

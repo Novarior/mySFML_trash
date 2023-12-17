@@ -38,9 +38,9 @@ public:
         int BA = p[B];
         int BB = p[B + 1];
 
-        double res = mmath::Lerp(v,
-            mmath::Lerp(u, mmath::Gradient(p[AA], x_cord, y_cord), mmath::Gradient(p[BA], x_cord - 1, y_cord)),
-            mmath::Lerp(u, mmath::Gradient(p[AB], x_cord, y_cord - 1), mmath::Gradient(p[BB], x_cord - 1, y_cord - 1)));
+        double res = mmath::interpolation::LinInter(v,
+            mmath::interpolation::LinInter(u, mmath::Gradient(p[AA], x_cord, y_cord), mmath::Gradient(p[BA], x_cord - 1, y_cord)),
+            mmath::interpolation::LinInter(u, mmath::Gradient(p[AB], x_cord, y_cord - 1), mmath::Gradient(p[BB], x_cord - 1, y_cord - 1)));
 
         return mmath::normalize(res, minValue, maxValue);
     }

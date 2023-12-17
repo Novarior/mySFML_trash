@@ -13,23 +13,15 @@ const double mmath::randZeroToOne()
 {
     return rand() / (RAND_MAX + 1.);
 }
-// precent to X and Y
-const float mmath::p2pX(const float perc, const sf::VideoMode& vm)
-{
-    return floor(static_cast<float>(vm.width) * (perc / 100.f));
-}
-const float mmath::p2pY(const float perc, const sf::VideoMode& vm)
-{
-    return floor(static_cast<float>(vm.height) * (perc / 100.f));
-}
-const float mmath::p2pX(const float perc, const unsigned int& i)
-{
-    return floor(static_cast<float>(i) * (perc / 100.f));
-}
-const float mmath::p2pX(const float perc, const float& i)
-{
-    return floor(static_cast<float>(i) * (perc / 100.f));
-}
+// precent to X
+const float mmath::p2pX(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.width) * (perc / 100.f)); }
+const float mmath::p2pX(const float perc, const unsigned int& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
+const float mmath::p2pX(const float perc, const float& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
+
+// precent to Y
+const float mmath::p2pY(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.height) * (perc / 100.f)); }
+const float mmath::p2pY(const float perc, const unsigned int& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
+const float mmath::p2pY(const float perc, const float& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
 
 const float mmath::normalize(const float value, const float min, const float max)
 {
@@ -58,29 +50,27 @@ const double mmath::Rescale(double r_value, double minInput, double maxInput, do
     return minOutput + (r_value - minInput) * (maxOutput - minOutput) / (maxInput - minInput);
 }
 
+//  Calculates the character size for text using the current resolution and a constant.
+//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
+//  @param		unsigned modifier		Used to modify the character size in a more custom way.
+//  @return		unsigned int			The calculated character size value.
 const unsigned int mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
 {
-    //  Calculates the character size for text using the current resolution and a constant.
-    //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-    //  @param		unsigned modifier		Used to modify the character size in a more custom way.
-    //  @return		unsigned int			The calculated character size value.
     return static_cast<unsigned int>((vm.width + vm.height) / modifier);
 }
-
+//  Calculates the character size for text using the current resolution and a constant.
+//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
+//  @param		unsigned modifier		Used to modify the character size in a more custom way.
+//  @return		unsigned int			The calculated character size value.
 const unsigned int mmath::calcCharSize(const sf::Vector2u resolution, const unsigned modifier)
 {
-    //  Calculates the character size for text using the current resolution and a constant.
-    //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-    //  @param		unsigned modifier		Used to modify the character size in a more custom way.
-    //  @return		unsigned int			The calculated character size value.
     return static_cast<unsigned int>((resolution.x + resolution.y) / modifier);
 }
-
+//  Calculates the character size for text using the current resolution and a constant.
+//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
+//  @param		unsigned modifier		Used to modify the character size in a more custom way.
+//  @return		unsigned int			The calculated character size value.
 const unsigned int mmath::calcCharSize(const sf::Vector2f resolution, const unsigned modifier)
 {
-    //  Calculates the character size for text using the current resolution and a constant.
-    //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-    //  @param		unsigned modifier		Used to modify the character size in a more custom way.
-    //  @return		unsigned int			The calculated character size value.
     return static_cast<unsigned int>((resolution.x + resolution.y) / modifier);
 }

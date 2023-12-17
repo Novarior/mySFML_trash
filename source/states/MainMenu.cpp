@@ -124,34 +124,6 @@ void MainMenu::resetGUI()
     this->IstateData->reserGUI = false;
 }
 
-void MainMenu::initStartProcces()
-{
-    this->isstatred = false;
-    this->fadeShape.setFillColor(sf::Color(0, 0, 0, 0));
-    this->fadeShape.setSize(sf::Vector2f(this->IstateData->sWindow->getSize()));
-}
-
-void MainMenu::updateStartProcces()
-{
-    sf::Color buff = this->fadeShape.getFillColor();
-
-    if (buff.a < 255)
-        buff.a += 1;
-    else {
-        this->Istates->push(new Process(this->IstateData, false));
-
-        this->isstatred = false;
-        this->resetView();
-
-        buff = sf::Color(0, 0, 0, 0);
-    }
-    this->fadeShape.setFillColor(buff);
-
-    sf::Vector2f vSize = this->view.getSize();
-    vSize -= sf::Vector2f(1, 1);
-    this->view.setSize(vSize);
-}
-
 void MainMenu::resetView()
 {
     this->view.setSize(sf::Vector2f(
@@ -172,7 +144,6 @@ MainMenu::MainMenu(StateData* statedata)
     this->initRenderDefines();
     this->initKeybinds();
     this->initButtons();
-    this->initStartProcces();
 }
 
 MainMenu::~MainMenu()
@@ -197,12 +168,9 @@ void MainMenu::update(const float& delta_time)
 
     this->updateGUI(delta_time);
 
-    if (!this->isstatred) {
-        this->updateMousePositions(&this->view);
-        this->updateInput(delta_time);
-        this->updateButtons();
-    } else
-        this->updateStartProcces();
+    this->updateMousePositions(&this->view);
+    this->updateInput(delta_time);
+    this->updateButtons();
 }
 
 void MainMenu::updateInput(const float& delta_time)
@@ -230,7 +198,7 @@ void MainMenu::updateButtons()
             this->Istates->push(new SettingsState(this->IstateData));
 
         if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
-            this->Istates->push(new NoiceView(this->IstateData));
+            this->Istates->push(new EditorState(this->IstateData));
     }
 }
 
@@ -260,8 +228,6 @@ void MainMenu::render(sf::RenderWindow& target)
     this->renderTexture.clear();
     this->renderTexture.setView(this->view);
 
-    // render background
-    // renderTexture.draw(this->background);
     // render background shapes
     for (auto& it : this->backgrond_shapes)
         renderTexture.draw(it);
@@ -270,13 +236,7 @@ void MainMenu::render(sf::RenderWindow& target)
         for (auto& it : this->buttons)
             it.second->render(renderTexture);
     // fadeout fx
-    if (this->isstatred)
-        renderTexture.draw(this->fadeShape);
 
-    // // debug shapes
-    // if (!this->debug_shapes.empty())
-    //     for (auto& it : this->debug_shapes)
-    //         this->renderTexture.draw(it);
     // debug text
     if (this->debugMode)
         this->renderTexture.draw(this->dText);

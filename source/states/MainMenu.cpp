@@ -94,10 +94,17 @@ void MainMenu::initButtons()
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    this->buttons["PERLIN"] = new gui::Button(
+    this->buttons["NOICE_BNT"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(10, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
         this->IstateData->font, "Noice", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
+    this->buttons["NODE_BTN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(20, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Node Viewer", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
@@ -197,8 +204,11 @@ void MainMenu::updateButtons()
         if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
             this->Istates->push(new SettingsState(this->IstateData));
 
-        if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
+        if (this->buttons["NOICE_BNT"]->isPressed() && this->getKeytime())
             this->Istates->push(new EditorState(this->IstateData));
+
+        if (this->buttons["NODE_BTN"]->isPressed() && this->getKeytime())
+            this->Istates->push(new NodeViewer(this->IstateData));
     }
 }
 

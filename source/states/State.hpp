@@ -6,10 +6,6 @@
 #include "../source/mypars/parsJSON.hpp"
 #include "gfx.hpp"
 
-namespace mypars {
-class parsJSON;
-};
-
 /// @brief Forward declaration of State class
 class State;
 /// @brief Class for state data
@@ -17,10 +13,11 @@ class StateData {
 public:
     StateData()
     {
-        this->sWindow = NULL;
-        this->supportedKeys = NULL;
-        this->sStates = NULL;
-        this->gfxSettings = NULL;
+        this->sWindow = nullptr;
+        this->supportedKeys = nullptr;
+        this->sStates = nullptr;
+        this->gfxSettings = nullptr;
+        this->sEvent = nullptr;
     }
 
     float grid_size;
@@ -36,6 +33,8 @@ public:
     unsigned int characterSize_game_medium;
     unsigned int characterSize_game_small;
     bool reserGUI;
+
+    sf::Event* sEvent;
 };
 
 /// @brief Abstract class for game states
@@ -46,6 +45,7 @@ protected:
     StateData* IstateData;
     std::stack<State*>* Istates;
     sf::RenderWindow* Iwindow;
+    sf::Event* Ievent;
     std::map<std::string, int>* IsupportedKeys;
     std::map<std::string, int> Ikeybinds;
 

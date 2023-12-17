@@ -34,6 +34,7 @@ void Core::initStateData()
     this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
     this->mStatedata.characterSize_game_small = mmath::calcCharSize(this->mWindow->getSize(), 100);
     this->mStatedata.reserGUI = false;
+    this->mStatedata.sEvent = &this->mEvents;
 }
 
 void Core::initKeyBinds()

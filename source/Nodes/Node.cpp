@@ -1,5 +1,84 @@
 #include "Node.hpp"
 
+void NodePort::connect(Node* _node, NodePort* _connectedPort)
+{
+    if (this->isConnected)
+        return; // Если этот порт уже подключен, пропускаем подключение
+
+    this->isConnected = true;
+    this->linkNode = _node;
+    this->connectedPort = _connectedPort;
+
+    if (!this->connectedPort->isConnected) // Если подключаемый порт еще не подключен
+        this->connectedPort->connect(_node, this); // Подключаем его
+}
+void NodePort::disconnect()
+{
+    this->isConnected = false;
+    this->linkNode = nullptr;
+}
+
+void NodePort::update(const sf::Vector2f _mousePosWindow, sf::Event* _event, std::vector<Node*> _nodes)
+{
+    if (isConnected)
+        shape.setFillColor(sf::Color(0, 255, 0));
+    else
+        shape.setFillColor(sf::Color(255, 255, 255));
+
+    if (shape.getGlobalBounds().contains(_mousePosWindow.x, _mousePosWindow.y)) {
+        if (!isInput())
+            if (_event->type == sf::Event::MouseButtonPressed && _event->mouseButton.button == sf::Mouse::Left) {
+                this->mIsDragging = true;
+                this->line[0].position = shape.getPosition() + sf::Vector2f(shape.getRadius(), shape.getRadius());
+                this->line[1].position = _mousePosWindow;
+            }
+    }
+
+    if (mIsDragging) {
+        this->line[0].position = shape.getPosition() + sf::Vector2f(shape.getRadius(), shape.getRadius());
+        this->line[1].position = _mousePosWindow;
+
+        // Проверяем, находится ли курсор мыши на другой ноде или порту
+        Node* otherNode = nullptr;
+        NodePort* otherPort = nullptr;
+        for (Node* node : _nodes) {
+            if (node != this->seflNode && node->is_Contains(_mousePosWindow)) {
+                otherNode = node;
+                for (NodePort* port : node->get_InputPorts()) {
+                    if (port->getGlobalBounds().contains(_mousePosWindow)) {
+                        otherPort = port;
+
+                        if (_event->type == sf::Event::MouseButtonReleased && _event->mouseButton.button == sf::Mouse::Left) {
+                            // link ports
+                            this->mIsDragging = false;
+                            this->line[1].position = otherPort->getPosPort() + sf::Vector2f(otherPort->shape.getRadius(), otherPort->shape.getRadius());
+
+                            this->mLines.push_back(std::make_pair(this->line, true));
+                            this->connect(otherNode, otherPort);
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        // Меняем цвет линии в зависимости от того, на что указывает курсор мыши
+        if (otherPort) {
+            this->line[0].color = sf::Color::Green;
+            this->line[1].color = sf::Color::Green;
+        } else if (otherNode) {
+            this->line[0].color = sf::Color::Yellow;
+            this->line[1].color = sf::Color::Yellow;
+        } else {
+            this->line[0].color = sf::Color::Red;
+            this->line[1].color = sf::Color::Red;
+        }
+    }
+
+    this->updateLines();
+}
+
 Node::Node(std::string _name, unsigned int _id, sf::Font& font, sf::Vector2f _pos, sf::Vector2f _size)
     : mName(_name)
     , mId(_id)
@@ -32,7 +111,27 @@ Node::Node(std::string _name, unsigned int _id, sf::Font& font, sf::Vector2f _po
     }
 }
 
+void NodePort::updateLines()
+{
+    for (auto& line : mLines) {
+        if (line.second) { // Если флаг shouldDraw установлен в true
+            line.first[0].position = shape.getPosition() + sf::Vector2f(shape.getRadius(), shape.getRadius()); // Обновляем начальную позицию линии
+            // Обновляем конечную позицию линии. Здесь вам нужно будет установить позицию соответствующего порта.
+            // Это зависит от того, как вы храните ссылку на соединенный порт.
+            line.first[1].position = connectedPort->getPosPortCenter();
+        }
+    }
+}
+
 Node::~Node() { }
+const sf::FloatRect Node::get_GlobalBounds() const
+{
+    return this->mShape.getGlobalBounds();
+}
+bool Node::is_Contains(sf::Vector2f _mousePosWindow)
+{
+    return this->mShape.getGlobalBounds().contains(_mousePosWindow);
+}
 
 void Node::onMousePressed(const sf::Vector2f _mousePos)
 {
@@ -72,7 +171,11 @@ void Node::onMouseMoved(const sf::Vector2f _mousePos)
     }
 }
 
-void Node::update(const sf::Vector2f _mousePosWindow, sf::Event* _event)
+void connectToPort(NodePort* _outPort, NodePort* _inPort)
+{
+}
+
+void Node::update(const sf::Vector2f _mousePosWindow, sf::Event* _event, std::vector<Node*> _nodes)
 {
 
     // update Node state
@@ -90,19 +193,19 @@ void Node::update(const sf::Vector2f _mousePosWindow, sf::Event* _event)
         }
     }
 
-    if (_event->type == sf::Event::MouseButtonPressed)
+    if (_event->type == sf::Event::MouseButtonPressed && _event->mouseButton.button == sf::Mouse::Left)
         this->onMousePressed(sf::Vector2f(_event->mouseButton.x, _event->mouseButton.y));
-    if (_event->type == sf::Event::MouseButtonReleased)
+    else if (_event->type == sf::Event::MouseButtonReleased && _event->mouseButton.button == sf::Mouse::Left)
         this->onMouseReleased();
     else if (_event->type == sf::Event::MouseMoved)
         this->onMouseMoved(sf::Vector2f(_event->mouseMove.x, _event->mouseMove.y));
 
     // update NodePort
     for (auto& i : mInputPort)
-        i->update(_mousePosWindow, _event);
+        i->update(_mousePosWindow, _event, _nodes);
 
     for (auto& i : mOutputPort)
-        i->update(_mousePosWindow, _event);
+        i->update(_mousePosWindow, _event, _nodes);
 }
 
 // render the node

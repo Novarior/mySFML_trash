@@ -239,6 +239,9 @@ void EditorState::updateInput(const float& delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
+
     // switch tab menu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
         this->showTabmenu = !this->showTabmenu;

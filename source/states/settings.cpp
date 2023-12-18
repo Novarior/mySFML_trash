@@ -304,6 +304,8 @@ void SettingsState::updateInput(const float& delta_time)
     // update esc key
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_BACK"))) && this->getKeytime())
         this->endState();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
 }
 
 void SettingsState::updateGui(const float& delta_time)

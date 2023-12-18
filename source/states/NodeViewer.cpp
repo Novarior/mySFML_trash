@@ -34,12 +34,29 @@ NodeViewer::NodeViewer(StateData* state_data)
     this->mBackground.setFillColor(sf::Color::Black);
 }
 
-NodeViewer::~NodeViewer() { }
+NodeViewer::~NodeViewer()
+{
+    Logger::log("NodeViewer", "destructor", logType::INFO);
+    ParserJson::saveNodesdata(this->mNode);
+
+    for (auto& i : this->mNode)
+        delete i;
+}
 
 void NodeViewer::updateInput(const float& delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->endState();
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
+}
+
+void NodeViewer::startConnection(NodePort* startPort)
+{
+}
+
+void NodeViewer::endConnection(NodePort* endPort)
+{
 }
 
 void NodeViewer::update(const float& delta_time)
@@ -51,8 +68,27 @@ void NodeViewer::update(const float& delta_time)
     bool isMoved = false;
     bool isPressed = false;
 
-    for (auto& node : this->mNode)
-        node->update(static_cast<sf::Vector2f>(this->mousePosWindow), this->Ievent);
+    for (auto& node : this->mNode) {
+        node->update(static_cast<sf::Vector2f>(this->mousePosWindow), this->Ievent, this->mNode);
+        for (auto& port : node->get_InputPorts()) {
+            if (port->isContains(static_cast<sf::Vector2f>(this->mousePosWindow))) {
+                if (Ievent->type == sf::Event::MouseButtonPressed && Ievent->mouseButton.button == sf::Mouse::Left) {
+                    startConnection(port);
+                } else if (Ievent->type == sf::Event::MouseButtonReleased && Ievent->mouseButton.button == sf::Mouse::Left) {
+                    endConnection(port);
+                }
+            }
+        }
+        for (auto& port : node->get_OutputPorts()) {
+            if (port->isContains(static_cast<sf::Vector2f>(this->mousePosWindow))) {
+                if (Ievent->type == sf::Event::MouseButtonPressed && Ievent->mouseButton.button == sf::Mouse::Left) {
+                    startConnection(port);
+                } else if (Ievent->type == sf::Event::MouseButtonReleased && Ievent->mouseButton.button == sf::Mouse::Left) {
+                    endConnection(port);
+                }
+            }
+        }
+    }
 
     this->dString_Stream.str("");
     this->dString_Stream << "Mouse Pos: " << this->mousePosView.x << " " << this->mousePosView.y << "\n"

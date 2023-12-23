@@ -8,6 +8,7 @@ void EditorState::initKeybinds()
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
     this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
     this->Ikeybinds["KEY_R"] = this->IsupportedKeys->at("R");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
 }
 
 void EditorState::initTabMenu()

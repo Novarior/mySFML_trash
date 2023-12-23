@@ -1,5 +1,5 @@
-#ifndef GUI_TEXTBOX_H
-#define GUI_TEXTBOX_H
+#ifndef GUI_SIMPLE_TEXTBOX_H
+#define GUI_SIMPLE_TEXTBOX_H
 #include "../../header.h"
 
 namespace gui {

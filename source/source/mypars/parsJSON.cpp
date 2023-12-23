@@ -333,15 +333,6 @@ const bool ParserJson::saveNodesdata(std::vector<Node*> mNode)
                 nodeJson["ports"].push_back(portJson);
             }
         }
-        for (const auto& port : node->get_OutputPorts()) {
-            json portJson;
-            if (port->getLinkNode() != nullptr) {
-                portJson["id"] = port->getIndex();
-                portJson["type"] = port->getPortType();
-                portJson["connectedTo"] = port->getLinkNode()->getName() + ": " + std::to_string(port->getIndex());
-                nodeJson["ports"].push_back(portJson);
-            }
-        }
 
         j.push_back(nodeJson);
     }

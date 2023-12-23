@@ -5,6 +5,7 @@
 std::map<int, std::shared_ptr<Item>> ItemRegistry::items = {};
 unsigned int Entity::count_entitys = 0;
 unsigned BrickBlock::currentFrame = 0;
+Node* Node::_currentDraggingNode = nullptr;
 
 int main()
 {

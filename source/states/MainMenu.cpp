@@ -24,6 +24,7 @@ void MainMenu::initRenderDefines()
 void MainMenu::initKeybinds()
 {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
 }
 
 void MainMenu::initBackground()

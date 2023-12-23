@@ -113,7 +113,7 @@
     "editor.minimap.scale": 1,
     "editor.minimap.enabled": true,
     "editor.minimap.renderCharacters": true,
-    "editor.minimap.size": "fit",
+    "editor.minimap.size": "fill",
     "files.autoSave": "afterDelay",
     "window.autoDetectColorScheme": false,
     "window.title": "${activeEditorShort}${separator}${rootName}${separation}${appName}",

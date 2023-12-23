@@ -33,11 +33,11 @@ void SettingsState::initKeybinds()
 {
     // init key escape like defoult back button
     this->Ikeybinds["KEY_BACK"] = this->IsupportedKeys->at("Escape");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
 }
 
 void SettingsState::initGui()
 {
-
     // init background
     this->background.setSize(sf::Vector2f(
         static_cast<float>(this->Iwindow->getSize().x),

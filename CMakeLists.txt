@@ -15,6 +15,7 @@ else()
     set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle)
 endif()
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
+message("Debug build = ${CMAKE_BUILD_TYPE}")
 
 #include all files for build project
 file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
@@ -40,6 +41,7 @@ message("nlohmann_json_FOUND = ${nlohmann_json_FOUND}")
 
 #for bundle
 find_library(COREFOUNDATION_LIBRARY CoreFoundation)
+message("COREFOUNDATION_LIBRARY = ${COREFOUNDATION_LIBRARY}")
 
 #search for all files in resources folder
 file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
@@ -87,8 +89,8 @@ if(APPLE)
     target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
     
-    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE TRUE)
+    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
     
 endif()

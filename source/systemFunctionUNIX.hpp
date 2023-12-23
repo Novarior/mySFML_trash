@@ -27,6 +27,9 @@ public:
         }
         return "";
     }
+    void s(){
+        
+    }
 
     // get path to app directory
     static const std::string getDocumentsAppFolder()

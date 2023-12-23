@@ -1,6 +1,10 @@
 #ifndef GUI_H
 #define GUI_H
+
+// main header will clang some files ikd
 #include "../header.h"
+
+// Simple GUI components, like buttons, sliders, etc.
 #include "components/button.hpp"
 // #include "components/checkbox.hpp"
 #include "components/dropDownList.hpp"
@@ -13,5 +17,10 @@
 #include "components/textbox.hpp"
 #include "components/textureSelector.hpp"
 
+// include complex GUI components, like sidebars, toolbars, etc.
+// #include "complex/sidebar.hpp"
+// #include "complex/toolbar.hpp"
+// #include "complex/panel.hpp"
+// #include "complex/scrollbar.hpp"
 
 #endif

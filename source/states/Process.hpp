@@ -11,61 +11,64 @@
 #include "PauseMenu.hpp"
 #include "State.hpp"
 
+// The Process class represents the main game state
 class Process : public State {
 private:
-    // view and window
+    // View and window variables
     sf::View view;
     sf::View playerView;
     PauseMenu* pausemenu;
     sf::Sprite renderSprite;
     sf::RenderTexture renderTexture;
-    // game elements
-    Inventory* t_inventory;
-    Player* player;
-    TileMap* mapTiles;
-    mmath::noiceData noicedata;
-    std::vector<Entity*> entitys;
-    ProcessGenerationNoice* myGN;
-    sf::Shader shader;
+
+    // Game elements
+    Inventory* t_inventory; // Inventory
+    Player* player; // Player
+    TileMap* mapTiles; // Tile map
+    mmath::noiceData noicedata; // Noise data
+    std::vector<Entity*> entitys; // Entities
+    ProcessGenerationNoice* myGN; // Noise generation
+    sf::Shader shader; // Shader
+
     // GUI
-    std::map<std::string, gui::ProgressBar*> playerBar;
-    gui::MiniMap* minimap;
+    std::map<std::string, gui::ProgressBar*> playerBar; // Player's progress bar
+    gui::MiniMap* minimap; // Minimap
 
-    // init data who dont use loaded dates
-    void initKeybinds();
-    void initPauseMenu();
-    void initView();
-    void initTileMap();
-    void initTileMapData();
-    void registerItems();
-    void initPlayer();
-    void initEntitys();
-    void initMiniMap();
+    // Initialization functions that don't use loaded data
+    void initKeybinds(); // Initialize key bindings
+    void initPauseMenu(); // Initialize pause menu
+    void initView(); // Initialize view
+    void initTileMap(); // Initialize tile map
+    void initTileMapData(); // Initialize tile map data
+    void registerItems(); // Register items
+    void initPlayer(); // Initialize player
+    void initEntitys(); // Initialize entities
+    void initMiniMap(); // Initialize minimap
 
-    void intGUI();
+    void intGUI(); // Initialize GUI
 
-    const bool loadGameData();
-    const bool saveGameData();
+    const bool loadGameData(); // Load game data
+    const bool saveGameData(); // Save game data
 
 public:
-    Process(StateData* state_data, const bool defaultLoad);
-    virtual ~Process();
+    Process(StateData* state_data, const bool defaultLoad); // Constructor
+    virtual ~Process(); // Destructor
 
-    // update functions
-    void updateTileMap(const float& delta_time);
-    void updateEntitys(const float& delta_time);
-    void updateInput(const float& delta_time);
-    void updatePlayerInputs(const float& delta_time);
-    void updateGUI(const float& delta_time);
-    void updateDebug(const float& delta_time);
-    void update(const float& delta_time);
+    // Update functions
+    void updateTileMap(const float& delta_time); // Update tile map
+    void updateEntitys(const float& delta_time); // Update entities
+    void updateInput(const float& delta_time); // Update input
+    void updatePlayerInputs(const float& delta_time); // Update player inputs
+    void updateGUI(const float& delta_time); // Update GUI
+    void updateDebug(const float& delta_time); // Update debug
+    void update(const float& delta_time); // Update state
 
-    // render functions
-    void renderPlayer(sf::RenderTarget& target);
-    void renderGUI(sf::RenderTarget& target);
-    void renderTileMap(sf::RenderTarget& target);
-    void renderEntities(sf::RenderTarget& target);
-    // main render function
+    // Render functions
+    void renderPlayer(sf::RenderTarget& target); // Render player
+    void renderGUI(sf::RenderTarget& target); // Render GUI
+    void renderTileMap(sf::RenderTarget& target); // Render tile map
+    void renderEntities(sf::RenderTarget& target); // Render entities
+    // Main render function
     void render(sf::RenderWindow& target);
 };
 #endif

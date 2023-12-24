@@ -9,34 +9,35 @@
 class SettingsState : public State {
 private:
     // Variables
-    sf::Texture backgroundTexture;
-    sf::RectangleShape background;
-    sf::Font font;
-    std::map<std::string, gui::Button*> buttons;
-    // Resouses for settings
-    std::vector<sf::VideoMode> video_modes;
-    std::vector<int> framerates_list;
-    std::vector<int> antialiasing_list;
-    std::vector<int> vsync_list;
-    std::vector<int> fullscreen_list;
-    std::vector<sf::Text> keybindText;
-    
+    sf::Texture backgroundTexture; // Texture for the background
+    sf::RectangleShape background; // Shape for the background
+    sf::Font font; // Font used in the settings state
+    std::map<std::string, gui::Button*> buttons; // Map of buttons
 
-    std::vector<sf::Text> settings_list;
-    std::vector<sf::RectangleShape> text_shapes;
+    // Resources for settings
+    std::vector<sf::VideoMode> video_modes; // List of video modes
+    std::vector<int> framerates_list; // List of frame rates
+    std::vector<int> antialiasing_list; // List of antialiasing levels
+    std::vector<int> vsync_list; // List of VSync options
+    std::vector<int> fullscreen_list; // List of fullscreen options
+    std::vector<sf::Text> keybindText; // List of keybind texts
+
+    std::vector<sf::Text> settings_list; // List of settings texts
+    std::vector<sf::RectangleShape> text_shapes; // List of text shapes
+
     // Gui selectors
-    gui::Selector* selector_resolutions;
-    gui::Selector* selector_framerates;
-    gui::Selector* selector_antialiasing;
-    gui::Selector* selector_vsync;
-    gui::Selector* selector_fullscreen;
+    gui::Selector* selector_resolutions; // Selector for resolutions
+    gui::Selector* selector_framerates; // Selector for frame rates
+    gui::Selector* selector_antialiasing; // Selector for antialiasing levels
+    gui::Selector* selector_vsync; // Selector for VSync options
+    gui::Selector* selector_fullscreen; // Selector for fullscreen options
 
     // Initializer functions
-    void initVariables();
-    void initFonts();
-    void initKeybinds();
-    void initGui();
-    void resetGui();
+    void initVariables(); // Initialize variables
+    void initFonts(); // Initialize fonts
+    void initKeybinds(); // Initialize key bindings
+    void initGui(); // Initialize GUI
+    void resetGui(); // Reset GUI
 
 public:
     /// @brief Constructor for SettingsState
@@ -45,11 +46,11 @@ public:
     virtual ~SettingsState();
 
     // Functions
-    void updateInput(const float& delta_time);
-    void updateGui(const float& delta_time);
-    void update(const float& delta_time);
-    void renderGui(sf::RenderTarget& target);
-    void render(sf::RenderWindow& target);
+    void updateInput(const float& delta_time); // Update input
+    void updateGui(const float& delta_time); // Update GUI
+    void update(const float& delta_time); // Update the state
+    void renderGui(sf::RenderTarget& target); // Render the GUI
+    void render(sf::RenderWindow& target); // Render the state
 };
 
 #endif // CPP_SETTINGS_STATE_HPP

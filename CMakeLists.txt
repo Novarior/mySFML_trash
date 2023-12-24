@@ -54,7 +54,7 @@ endforeach()
 
 #meta data for bundle
 set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
-set(MY_APP_ICON ${METADATA_DIR}/ico.icns)
+set(MY_APP_ICON ${CMAKE_SOURCE_DIR}/metadata/ico.png)
 set_source_files_properties(${myApp_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
 #make a cmakever.h from template file and include on build
@@ -63,34 +63,34 @@ configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
 
 
 
-#set bundle name
-set(MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
-#set bundle version
-set(MACOSX_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}")
-#set bundle version as string
-string(CONCAT MACOSX_BUNDLE_SHORT_VERSION_STRING "v" ${CMAKE_PROJECT_VERSION_MINOR} "." ${CMAKE_PROJECT_VERSION_PATCH})
-#set bundle icon
-set(MACOSX_BUNDLE_ICON_FILE "ico.icns")
-#configure plist file for bundle
+#Configure plist file for bundle
+set(DATA_BUNDLE_BUNDLE_NAME "Ekzeckt")
+set(DATA_BUNDLE_GUI_IDENTIFIER "com.ekzeckt")
+set(DATA_BUNDLE_COPYRIGHT "© 2023 GitHub: Novarior")
+set(DATA_BUNDLE_INFO_STRING "Ekzeckt")
+set(DATA_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}")
+string(CONCAT DATA_BUNDLE_SHORT_VERSION_STRING "v" ${CMAKE_PROJECT_VERSION_MINOR} "." ${CMAKE_PROJECT_VERSION_PATCH})
+
+set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
+set(DATA_BUNDLE_ICON_NAME "ico.png")
+set(DATA_BUNDLE_ICON_FILE ${CMAKE_SOURCE_DIR}/metadata/ico.png)
+set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
 configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
 
 ##build bundle for macos
 if(APPLE)
-    #BUNDLE BUILD
-    add_executable(Ekzeckt ${SOURCE_PROJECT_FILES} ${MY_APP_RESOURCES} ${MY_APP_ICON} ${Template_ver})
-    #check for debug or release build
-     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    add_executable(Ekzeckt MACOSX_BUNDLE ${SOURCE_PROJECT_FILES} ${MY_APP_RESOURCES} ${Template_ver} ${DATA_BUNDLE_ICON_FILE})
+#check for debug or release build
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         target_compile_options(Ekzeckt PUBLIC -g)
     else()
         target_compile_options(Ekzeckt PUBLIC -O3)
-    endif()
-    
+    endif() 
+
     target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system)
     target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
-    
-    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE TRUE)
-    set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_BUNDLE_NAME "Ekzeckt")
+
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
-    
 endif()

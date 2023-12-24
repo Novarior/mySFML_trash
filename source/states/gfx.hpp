@@ -30,7 +30,7 @@ public:
     const bool saveToFile(const std::string directoryPath)
     {
         // Создаем объект JSON
-        json j;
+        json j; 
 
         // Заполняем объект данными
         j["resolution"]["width"] = this->resolution.width;

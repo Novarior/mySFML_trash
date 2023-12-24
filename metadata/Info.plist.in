@@ -3,12 +3,18 @@
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>@MACOSX_BUNDLE_BUNDLE_NAME@</string>
+    <string>@DATA_BUNDLE_BUNDLE_NAME@</string>
     <key>CFBundleShortVersionString</key>
-    <string>@MACOSX_BUNDLE_SHORT_VERSION_STRING@</string>
+    <string>@DATA_BUNDLE_SHORT_VERSION_STRING@</string>
     <key>CFBundleVersion</key>
-    <string>@MACOSX_BUNDLE_BUNDLE_VERSION@</string>
+    <string>@DATA_BUNDLE_BUNDLE_VERSION@</string>
+    <key>CFBundleHelpBookName</key>
+	<string>@DATA_BUNDLE_GUI_IDENTIFIER@</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>@DATA_BUNDLE_COPYRIGHT@</string>
     <key>CFBundleIconFile</key>
-    <string>@MACOSX_BUNDLE_ICON_FILE@</string>
+    <string>@DATA_BUNDLE_ICON_NAME@</string>
+    <key>CFBundleIdentifier</key>
+    <string>@DATA_BUNDLE_GUI_IDENTIFIER@</string>    
 </dict>
 </plist>

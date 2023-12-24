@@ -9,28 +9,28 @@
 #include "../../states/State.hpp"
 
 class Gamedata;
-
 class NodeViewer;
 
+// The ParserJson class provides methods for loading and saving game data to/from a JSON file
 class ParserJson {
 public:
     ParserJson() { }
     virtual ~ParserJson() { }
 
-    // load functions from json file
-    static const bool loadPlayer(Entity& player);
-    static const bool loadNoiceData(mmath::noiceData& data);
-    static const bool loadInventory(Inventory* inventory);
-    static const bool loadEntitys(std::vector<Entity*>& entitys);
-    static const bool loadKeyBinds(std::map<std::string, int>& keyBinds);
+    // Load functions from JSON file
+    static const bool loadPlayer(Entity& player); // Load player data
+    static const bool loadNoiceData(mmath::noiceData& data); // Load noise data
+    static const bool loadInventory(Inventory* inventory); // Load inventory data
+    static const bool loadEntitys(std::vector<Entity*>& entitys); // Load entities data
+    static const bool loadKeyBinds(std::map<std::string, int>& keyBinds); // Load key bindings
 
-    // save functions to json file
-    static const bool savePlayer(Entity* player);
-    static const bool saveNoiceData(mmath::noiceData data);
-    static const bool saveInventory(Inventory* inventory);
-    static const bool saveEntitys(std::vector<Entity*> entitys);
-    static const bool saveKeyBinds(std::map<std::string, int>& keyBinds);
-    static const bool saveNodesdata(std::vector<Node*> mNode);
+    // Save functions to JSON file
+    static const bool savePlayer(Entity* player); // Save player data
+    static const bool saveNoiceData(mmath::noiceData data); // Save noise data
+    static const bool saveInventory(Inventory* inventory); // Save inventory data
+    static const bool saveEntitys(std::vector<Entity*> entitys); // Save entities data
+    static const bool saveKeyBinds(std::map<std::string, int>& keyBinds); // Save key bindings
+    static const bool saveNodesdata(std::vector<Node*> mNode); // Save nodes data
 };
 
 #endif // PARSER_JSON_FILE_HPP

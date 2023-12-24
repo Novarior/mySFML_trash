@@ -30,9 +30,6 @@ NodePort::NodePort(Node* selfNode, sf::FloatRect rectNode, NodeEnum::NodePortDir
 NodePort::~NodePort()
 {
     disconnect();
-    for (size_t i = 0; i < _mLines.size(); i++)
-        _mLines.erase(_mLines.begin() + i);
-
     _mLines.clear();
 }
 
@@ -63,7 +60,7 @@ void NodePort::update(const sf::Vector2f mousePosWindow, sf::Event& event, std::
 
     if (_shape.getGlobalBounds().contains(mousePosWindow.x, mousePosWindow.y)) {
         if (!isInput())
-            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+            if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
                 _mIsDragging = true;
                 _line[0].position = _shape.getPosition() + sf::Vector2f(_shape.getRadius(), _shape.getRadius());
                 _line[1].position = mousePosWindow;
@@ -156,7 +153,7 @@ Node::Node(std::string name, unsigned int id, sf::Font& font, sf::Vector2f pos, 
 void NodePort::updateLines()
 {
     for (auto& line : _mLines) {
-        if (line.second) { // Если флаг shouldDraw установлен в true
+        if (line.second && _connectedPort != nullptr) { // Если флаг shouldDraw установлен в true
             // Проверяем, что типы портов разные
             if (_mPortType != _connectedPort->_mPortType) {
                 line.first[0].position = _shape.getPosition() + sf::Vector2f(_shape.getRadius(), _shape.getRadius()); // Обновляем начальную позицию линии
@@ -234,15 +231,13 @@ void Node::update(const sf::Vector2f mousePosWindow, sf::Event& event, std::vect
         if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             _mNode_state = NodeEnum::NodeStateAction::ACTIVED;
             _mShapeHeader.setFillColor(sf::Color(70, 84, 81));
-        }
-    }
+            this->onMousePressed(sf::Vector2f(mousePosWindow));
 
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        this->onMousePressed(sf::Vector2f(event.mouseButton.x, event.mouseButton.y));
-    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+        } else if (event.type == sf::Event::MouseMoved)
+            this->onMouseMoved(sf::Vector2f(mousePosWindow));
+    }
+    if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
         this->onMouseReleased();
-    else if (event.type == sf::Event::MouseMoved)
-        this->onMouseMoved(sf::Vector2f(mousePosWindow));
 
     // update NodePort
     for (auto& i : _mInputPort)

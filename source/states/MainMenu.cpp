@@ -183,8 +183,10 @@ void MainMenu::update(const float& delta_time)
 
 void MainMenu::updateInput(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime()) {
         this->debugMode = !this->debugMode;
+        this->Iwindow->setMouseCursorVisible(this->debugMode);
+    }
 }
 
 void MainMenu::updateButtons()

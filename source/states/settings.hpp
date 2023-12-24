@@ -24,6 +24,7 @@ private:
 
     std::vector<sf::Text> settings_list; // List of settings texts
     std::vector<sf::RectangleShape> text_shapes; // List of text shapes
+    std::vector<sf::RectangleShape> keybindBackground; // List of keybind backgrounds
 
     // Gui selectors
     gui::Selector* selector_resolutions; // Selector for resolutions

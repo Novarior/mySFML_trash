@@ -12,33 +12,31 @@ private:
         AUDIO,
         GRAPHICS,
         CONTROLS,
-        ECT
+        ECT,
+        PAGE_COUNT
     };
     // Variables
     sf::Texture backgroundTexture; // Texture for the background
     sf::RectangleShape background; // Shape for the background
     sf::Font font; // Font used in the settings state
-    std::map<std::string, gui::Button*> buttons; // Map of buttons
+    std::map<std::string, std::unique_ptr<gui::Button>> _pageButtons; // Map of buttons, used for change current settings page
+    std::string pageName; // Name of the current page
 
     // Resources for GraphicsSettings
-    std::vector<sf::VideoMode> video_modes; // List of video modes
-    // Resources
+    std::vector<sf::VideoMode> _video_modes; // List of video modes
     std::map<std::string, std::vector<int>> _gfxResource; // Map case for Resolutions, FPS, Antialiasing, VSync, Fullscreen
 
-    // Keybinds
-    std::vector<sf::Text> keybindText; // List of keybind texts
+    // Resources for Keybinds
+    std::vector<sf::Text> _keybindText; // List of keybind texts
+    std::vector<sf::Text> _settings_list; // List of settings texts
+    std::vector<sf::RectangleShape> _text_shapes; // List of text shapes
+    std::vector<sf::RectangleShape> _keybindBackground; // List of keybind backgrounds
 
-    std::vector<sf::Text> settings_list; // List of settings texts
-    std::vector<sf::RectangleShape> text_shapes; // List of text shapes
-    std::vector<sf::RectangleShape> keybindBackground; // List of keybind backgrounds
+    // Resources for AudioSettings
+    std::map<std::string, std::unique_ptr<gui::SliderInt>> _myTest; // Map case for Master, Music, Sound, Ambient, Voice
 
     // Gui selectors
     std::map<std::string, std::unique_ptr<gui::Selector>> _selectors; // Map of selectors
-    // gui::Selector* selector_resolutions; // Selector for resolutions
-    //  gui::Selector* selector_framerates; // Selector for frame rates
-    //  gui::Selector* selector_antialiasing; // Selector for antialiasing levels
-    //  gui::Selector* selector_vsync; // Selector for VSync options
-    //  gui::Selector* selector_fullscreen; // Selector for fullscreen options
 
     settingPage page; // Current page of settings
 
@@ -55,7 +53,13 @@ public:
     SettingsState(StateData* state_data);
     virtual ~SettingsState();
 
+
     // Functions
+    void updateAudioPage(const float& delta_time); // Update audio page
+    void updateGraphicsPage(const float& delta_time); // Update graphics page
+    void updateControlsPage(const float& delta_time); // Update controls page
+    void updateEctPage(const float& delta_time); // Update ect page
+
     void updateInput(const float& delta_time); // Update input
     void updateGui(const float& delta_time); // Update GUI
     void update(const float& delta_time); // Update the state

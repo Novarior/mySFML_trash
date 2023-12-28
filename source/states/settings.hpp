@@ -53,7 +53,6 @@ public:
     SettingsState(StateData* state_data);
     virtual ~SettingsState();
 
-
     // Functions
     void updateAudioPage(const float& delta_time); // Update audio page
     void updateGraphicsPage(const float& delta_time); // Update graphics page

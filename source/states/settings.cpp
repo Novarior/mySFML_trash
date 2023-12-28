@@ -6,22 +6,10 @@ void SettingsState::initVariables()
     // init video modes like all supported modes
     this->video_modes = sf::VideoMode::getFullscreenModes();
     // init framerates list
-    this->framerates_list.push_back(30);
-    this->framerates_list.push_back(60);
-    this->framerates_list.push_back(90);
-    this->framerates_list.push_back(120);
-    // init antialiasing list
-    this->antialiasing_list.push_back(0);
-    this->antialiasing_list.push_back(2);
-    this->antialiasing_list.push_back(4);
-    this->antialiasing_list.push_back(8);
-    this->antialiasing_list.push_back(16);
-    // init vsync list
-    this->vsync_list.push_back(0);
-    this->vsync_list.push_back(1);
-    // init fullcreen list
-    this->fullscreen_list.push_back(0);
-    this->fullscreen_list.push_back(1);
+    _gfxResource["GFX_FPS"] = std::vector<int> { 30, 60, 90, 120 };
+    _gfxResource["GFX_AAL"] = std::vector<int> { 0, 2, 4, 8, 16 };
+    _gfxResource["GFX_VSYNC"] = std::vector<int> { 0, 1 };
+    _gfxResource["GFX_FULLSCREEN"] = std::vector<int> { 0, 1 };
 }
 
 void SettingsState::initFonts()
@@ -72,13 +60,13 @@ void SettingsState::initGui()
     // chek current resolution and set it to selector like active element
     int id = 0;
     for (int i = 0; i < modes_str.size(); i++)
-        if (modes_str[i] == std::to_string(this->IstateData->gfxSettings->resolution.width) + 'x' + std::to_string(this->IstateData->gfxSettings->resolution.height)) {
+        if (modes_str[i] == std::to_string(this->IstateData->gfxSettings->_struct.resolution.width) + 'x' + std::to_string(this->IstateData->gfxSettings->_struct.resolution.height)) {
             id = i;
             break;
         }
 
     // init selector with video modes
-    this->selector_resolutions = new gui::Selector(
+    _selectors["SELEC_VMODE"] = std::make_unique<gui::Selector>(
         sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(10, window_size.y)),
         sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
         font, this->IstateData->characterSize_game_medium, modes_str.data(), modes_str.size(), id);
@@ -89,19 +77,19 @@ void SettingsState::initGui()
 
     // int vector with fps limit
     std::vector<std::string> fps_limits;
-    for (auto& x : this->framerates_list)
+    for (auto& x : _gfxResource["GFX_FPS"])
         fps_limits.push_back(std::to_string(x));
 
     // check current fps limit and set it to selector like active element
     int fpls = 0;
     for (int i = 0; i < fps_limits.size(); i++)
-        if (fps_limits[i] == std::to_string(this->IstateData->gfxSettings->frameRateLimit)) {
+        if (fps_limits[i] == std::to_string(this->IstateData->gfxSettings->_struct.frameRateLimit)) {
             fpls = i;
             break;
         }
 
     // init selector resolution
-    this->selector_framerates = new gui::Selector(
+    _selectors["SELEC_FPS"] = std::make_unique<gui::Selector>(
         sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(30, window_size.y)),
         sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
         font, this->IstateData->characterSize_game_medium, fps_limits.data(), fps_limits.size(), fpls);
@@ -121,13 +109,13 @@ void SettingsState::initGui()
     // check current antialiasing and set it to selector like active element
     unsigned AAS = 0;
     for (int i = 0; i < antialiasing_list.size(); i++)
-        if (antialiasing_list[i] == "x" + std::to_string(this->IstateData->gfxSettings->contextSettings.antialiasingLevel)) {
+        if (antialiasing_list[i] == "x" + std::to_string(this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel)) {
             AAS = i;
             break;
         }
 
     // init selector antialiasing
-    this->selector_antialiasing = new gui::Selector(
+    _selectors["SELEC_AAL"] = std::make_unique<gui::Selector>(
         sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(25, window_size.y)),
         sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
         font, this->IstateData->characterSize_game_medium, antialiasing_list.data(), antialiasing_list.size(), AAS);
@@ -144,13 +132,13 @@ void SettingsState::initGui()
     // check current vsync and set it to selector like active element
     unsigned vs = 0;
     for (int i = 0; i < vsync_list.size(); i++)
-        if (vsync_list[i] == (this->IstateData->gfxSettings->verticalSync ? "ON" : "OFF")) {
+        if (vsync_list[i] == (this->IstateData->gfxSettings->_struct.verticalSync ? "ON" : "OFF")) {
             vs = i;
             break;
         }
 
     // init selector vsync
-    this->selector_vsync = new gui::Selector(
+    _selectors["SELEC_VSYNC"] = std::make_unique<gui::Selector>(
         sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(20, window_size.y)),
         sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
         font, this->IstateData->characterSize_game_medium, vsync_list.data(), vsync_list.size(), vs);
@@ -167,13 +155,13 @@ void SettingsState::initGui()
     // check current fullscreen and set it to selector like active element
     unsigned fs = 0;
     for (int i = 0; i < fullscreen_list.size(); i++)
-        if (fullscreen_list[i] == (this->IstateData->gfxSettings->fullscreen ? "Fullscreen" : "Windowed")) {
+        if (fullscreen_list[i] == (this->IstateData->gfxSettings->_struct.fullscreen ? "Fullscreen" : "Windowed")) {
             fs = i;
             break;
         }
 
     // init selector fullscreen
-    this->selector_fullscreen = new gui::Selector(
+    _selectors["SELEC_FULLSCREEN"] = std::make_unique<gui::Selector>(
         sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(15, window_size.y)),
         sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
         font, this->IstateData->characterSize_game_medium, fullscreen_list.data(), fullscreen_list.size(), fs);
@@ -245,18 +233,23 @@ void SettingsState::resetGui()
 {
     // reser to new resolution and save it to file
     // reset gui
-    this->IstateData->gfxSettings->resolution = this->video_modes[this->selector_resolutions->getActiveElementID()];
-    this->IstateData->gfxSettings->frameRateLimit = this->framerates_list[this->selector_framerates->getActiveElementID()];
-    this->IstateData->gfxSettings->contextSettings.antialiasingLevel = this->antialiasing_list[this->selector_antialiasing->getActiveElementID()];
-    this->IstateData->gfxSettings->fullscreen = this->fullscreen_list[this->selector_fullscreen->getActiveElementID()];
-    this->IstateData->gfxSettings->verticalSync = this->vsync_list[this->selector_vsync->getActiveElementID()];
+    myGFXStruct gfx = this->IstateData->gfxSettings->getgfxsettings();
+    
+    gfx.resolution = this->video_modes[_selectors["SELEC_VMODE"]->getActiveElementID()];
+    gfx.frameRateLimit = _gfxResource["GFX_FPS"][_selectors["SELEC_FPS"].get()->getActiveElementID()];
+    gfx.contextSettings.antialiasingLevel = _gfxResource["GFX_ALL"][_selectors["SELEC_AAL"].get()->getActiveElementID()];
+    gfx.fullscreen = _gfxResource["GFX_FULLSCREEN"][_selectors["SELEC_FULLSCREEN"]->getActiveElementID()];
+    gfx.verticalSync = _gfxResource["GFX_VSYNC"][_selectors["SELEC_VSYNC"].get()->getActiveElementID()];
+
+    this->IstateData->gfxSettings->setgfxsettings(gfx);
+
 
     // reset window
-    if (this->IstateData->gfxSettings->fullscreen)
-        this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Fullscreen, this->IstateData->gfxSettings->contextSettings);
+    if (gfx.fullscreen)
+        this->Iwindow->create(gfx.resolution, gfx.title, sf::Style::Fullscreen, gfx.contextSettings);
     else
-        this->Iwindow->create(this->IstateData->gfxSettings->resolution, this->IstateData->gfxSettings->title, sf::Style::Titlebar | sf::Style::Close, this->IstateData->gfxSettings->contextSettings);
-    this->Iwindow->setFramerateLimit(this->framerates_list[this->selector_framerates->getActiveElementID()]);
+        this->Iwindow->create(gfx.resolution, gfx.title, sf::Style::Titlebar | sf::Style::Close, gfx.contextSettings);
+    this->Iwindow->setFramerateLimit(gfx.frameRateLimit);
 
     // clear buttons
     auto it = this->buttons.begin();
@@ -266,11 +259,7 @@ void SettingsState::resetGui()
     this->IstateData->reserGUI = true;
 
     // delete selector
-    delete this->selector_vsync;
-    delete this->selector_framerates;
-    delete this->selector_fullscreen;
-    delete this->selector_resolutions;
-    delete this->selector_antialiasing;
+    _selectors.clear();
 
     this->IstateData->gfxSettings->saveToFile(sAppFunctions::getDocumentsAppFolder());
 
@@ -299,11 +288,7 @@ SettingsState::~SettingsState()
     this->buttons.clear();
 
     // delete selector
-    delete this->selector_vsync;
-    delete this->selector_framerates;
-    delete this->selector_fullscreen;
-    delete this->selector_resolutions;
-    delete this->selector_antialiasing;
+    _selectors.clear();
 }
 
 // Functions
@@ -328,20 +313,18 @@ void SettingsState::updateGui(const float& delta_time)
     if (this->buttons["APPLY_BTN"]->isPressed() && this->getKeytime())
         this->resetGui();
     // update selector
-    this->selector_vsync->update(delta_time, this->mousePosWindow);
-    this->selector_framerates->update(delta_time, this->mousePosWindow);
-    this->selector_fullscreen->update(delta_time, this->mousePosWindow);
-    this->selector_resolutions->update(delta_time, this->mousePosWindow);
-    this->selector_antialiasing->update(delta_time, this->mousePosWindow);
+
+    for (auto& it : _selectors)
+        it.second->update(delta_time, this->mousePosWindow);
 
     if (this->debugMode) {
         this->dString_Stream
             << "Ver: " << CMAKE_PROJECT_VERSION
             << "\nFPS:\t" << 1 / delta_time
             << "\nResolution: " << this->IstateData->sWindow->getSize().x << "x" << this->IstateData->sWindow->getSize().y
-            << "\nAntialiasing: " << this->IstateData->gfxSettings->contextSettings.antialiasingLevel
-            << "\nvSync: " << this->IstateData->gfxSettings->verticalSync
-            << "\nFullscreen: " << this->IstateData->gfxSettings->fullscreen
+            << "\nAntialiasing: " << this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel
+            << "\nvSync: " << this->IstateData->gfxSettings->_struct.verticalSync
+            << "\nFullscreen: " << this->IstateData->gfxSettings->_struct.fullscreen
             << "\nSize of state: " << sizeof(*this) << " bytes"
             << "\nkeytime: " << this->Ikeytime
             << "\nMouse pos: " << this->mousePosWindow.x << " " << this->mousePosWindow.y;
@@ -367,12 +350,8 @@ void SettingsState::renderGui(sf::RenderTarget& target)
     for (auto& t : this->settings_list)
         target.draw(t);
     // draw selector
-    this->selector_resolutions->render(target);
-    this->selector_framerates->render(target);
-    this->selector_antialiasing->render(target);
-    this->selector_vsync->render(target);
-    this->selector_fullscreen->render(target);
-    // debug
+    for (auto& it : _selectors)
+        it.second->render(target);
     // draw this->text_shapes
     for (auto& ts : this->text_shapes)
         target.draw(ts);

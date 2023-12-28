@@ -108,10 +108,10 @@ void EditorState::initNoice()
         this->m_noiceData.persistence = 0.6f;
     }
     this->m_noiceData.gridSize = this->IstateData->grid_size;
-    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
-    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->resolution.width;
-    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->resolution.height;
+    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
+    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
+    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->_struct.resolution.width;
+    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->_struct.resolution.height;
     this->m_noiceData.smoothMode = 0;
 
     // init data for noice viewer

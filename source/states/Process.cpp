@@ -8,8 +8,8 @@ const bool Process::loadGameData()
     else {
         this->noicedata.mapSizeX = 1000;
         this->noicedata.mapSizeY = 1000;
-        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
+        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
         this->noicedata.gridSize = this->IstateData->grid_size;
     }
     return true;
@@ -49,8 +49,8 @@ void Process::initKeybinds()
 
 void Process::initPauseMenu()
 {
-    const sf::VideoMode& vm = this->IstateData->gfxSettings->resolution;
-    this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->resolution, this->IstateData->font);
+    const sf::VideoMode& vm = this->IstateData->gfxSettings->_struct.resolution;
+    this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->_struct.resolution, this->IstateData->font);
     this->pausemenu->addButton("EXIT_BUTTON", mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::p2pY(6.f, vm), mmath::calcCharSize(vm), "Quit");
     this->pausemenu->addButton("GEN", mmath::p2pX(20, vm), mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::calcCharSize(vm), "Generate");
 }
@@ -139,8 +139,8 @@ void Process::initTileMapData()
     this->noicedata.octaves = 8;
     this->noicedata.frequency = 8;
     this->noicedata.amplifire = 0.5f;
-    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
+    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
+    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
     this->noicedata.mapSizeX = 620;
     this->noicedata.mapSizeY = 430;
     this->noicedata.persistence = 0.6f;

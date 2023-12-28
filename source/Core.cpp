@@ -28,7 +28,7 @@ void Core::initStateData()
     if (!this->mStatedata.debugFont.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_debugfont_path))) { }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
-    this->mStatedata.grid_size = this->gfxSettings.gridSize;
+    this->mStatedata.grid_size = this->gfxSettings._struct.gridSize;
     this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
     this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
     this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
@@ -70,21 +70,21 @@ void Core::initState()
 
 void Core::initWindow()
 {
-    if (this->gfxSettings.fullscreen)
+    if (this->gfxSettings._struct.fullscreen)
         this->mWindow = new sf::RenderWindow(
-            this->gfxSettings.resolution,
-            this->gfxSettings.title,
+            this->gfxSettings._struct.resolution,
+            this->gfxSettings._struct.title,
             sf::Style::Fullscreen,
-            this->gfxSettings.contextSettings);
+            this->gfxSettings._struct.contextSettings);
     else
         this->mWindow = new sf::RenderWindow(
-            this->gfxSettings.resolution,
-            this->gfxSettings.title,
+            this->gfxSettings._struct.resolution,
+            this->gfxSettings._struct.title,
             sf::Style::Titlebar | sf::Style::Close,
-            this->gfxSettings.contextSettings);
+            this->gfxSettings._struct.contextSettings);
 
-    this->mWindow->setFramerateLimit(this->gfxSettings.frameRateLimit);
-    this->mWindow->setVerticalSyncEnabled(this->gfxSettings.verticalSync);
+    this->mWindow->setFramerateLimit(this->gfxSettings._struct.frameRateLimit);
+    this->mWindow->setVerticalSyncEnabled(this->gfxSettings._struct.verticalSync);
     this->mWindow->setKeyRepeatEnabled(false);
 }
 

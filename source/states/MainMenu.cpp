@@ -224,11 +224,11 @@ void MainMenu::updateGUI(const float& delta_time)
         this->dString_Stream
             << "\nver:\t" << CMAKE_PROJECT_VERSION
             << "\nFPS:\t" << 1 / delta_time
-            << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
+            << "\nFPS limit:\t" << this->IstateData->gfxSettings->_struct.frameRateLimit
             << "\nDelta Time:\t" << delta_time
             << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing:\t" << this->IstateData->sWindow->getSettings().antialiasingLevel
-            << "\nvSync:\t" << this->IstateData->gfxSettings->verticalSync
+            << "\nvSync:\t" << this->IstateData->gfxSettings->_struct.verticalSync
             << "\nMouse Pos:\t" << this->mousePosWindow.x << " x " << this->mousePosWindow.y;
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

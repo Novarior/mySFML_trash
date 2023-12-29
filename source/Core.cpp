@@ -74,7 +74,7 @@ void Core::initWindow()
         this->mWindow = new sf::RenderWindow(
             this->gfxSettings._struct.resolution,
             this->gfxSettings._struct.title,
-            sf::Style::Fullscreen,
+            sf::Style::Default,
             this->gfxSettings._struct.contextSettings);
     else
         this->mWindow = new sf::RenderWindow(
@@ -82,6 +82,9 @@ void Core::initWindow()
             this->gfxSettings._struct.title,
             sf::Style::Titlebar | sf::Style::Close,
             this->gfxSettings._struct.contextSettings);
+
+    if (gfxSettings.getgfxsettings().fullscreen)
+        mWindow->create(this->gfxSettings._struct.resolution, this->gfxSettings._struct.title, sf::Style::Fullscreen, this->gfxSettings._struct.contextSettings);
 
     this->mWindow->setFramerateLimit(this->gfxSettings._struct.frameRateLimit);
     this->mWindow->setVerticalSyncEnabled(this->gfxSettings._struct.verticalSync);
@@ -96,6 +99,8 @@ Core::Core()
     this->initWindow();
     this->initStateData();
     this->initState();
+
+    FPS::reset();
     Logger::log("Core Inited", "Core::Core()");
 }
 
@@ -168,4 +173,5 @@ void Core::updateDeltaTime()
 {
     this->deltaTime = 0;
     this->deltaTime = this->deltaClock.restart().asSeconds();
+    FPS::update();
 }

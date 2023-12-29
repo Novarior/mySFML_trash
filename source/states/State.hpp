@@ -4,6 +4,7 @@
 #include "../GUI/GUISYS.hpp"
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
+#include "../staticFPSMetter.hpp"
 #include "gfx.hpp"
 
 // Forward declaration of State class

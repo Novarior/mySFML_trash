@@ -183,10 +183,10 @@ void MainMenu::update(const float& delta_time)
 
 void MainMenu::updateInput(const float& delta_time)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
         this->debugMode = !this->debugMode;
-        this->Iwindow->setMouseCursorVisible(this->debugMode);
-    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Slash) && this->getKeytime())
+        this->debugMode = !this->debugMode;
 }
 
 void MainMenu::updateButtons()
@@ -223,7 +223,8 @@ void MainMenu::updateGUI(const float& delta_time)
     if (this->debugMode) {
         this->dString_Stream
             << "\nver:\t" << CMAKE_PROJECT_VERSION
-            << "\nFPS:\t" << 1 / delta_time
+            << "\nFPS delta:\t" << 1 / delta_time
+            << "\nFPS Clock:\t" << FPS::getFPS()
             << "\nFPS limit:\t" << this->IstateData->gfxSettings->_struct.frameRateLimit
             << "\nDelta Time:\t" << delta_time
             << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y

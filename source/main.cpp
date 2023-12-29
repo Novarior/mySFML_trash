@@ -6,6 +6,9 @@ std::map<int, std::shared_ptr<Item>> ItemRegistry::items = {};
 unsigned int Entity::count_entitys = 0;
 unsigned BrickBlock::currentFrame = 0;
 Node* Node::_currentDraggingNode = nullptr;
+unsigned int FPS::mFrame = 0;
+unsigned int FPS::mFps = 0;
+sf::Clock FPS::mClock = sf::Clock();
 
 int main()
 {

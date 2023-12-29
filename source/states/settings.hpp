@@ -22,18 +22,22 @@ private:
     std::map<std::string, std::unique_ptr<gui::Button>> _pageButtons; // Map of buttons, used for change current settings page
     std::string pageName; // Name of the current page
 
+    // resources for page layout
+    std::vector<sf::Text> _pageText; // List of page texts
+    sf::RectangleShape _pageBackground; // List of page backgrounds
+
     // Resources for GraphicsSettings
     std::vector<sf::VideoMode> _video_modes; // List of video modes
     std::map<std::string, std::vector<int>> _gfxResource; // Map case for Resolutions, FPS, Antialiasing, VSync, Fullscreen
+    std::vector<std::pair<sf::Text, sf::RectangleShape>> _graphic_list; // List of graphics texts
 
     // Resources for Keybinds
     std::vector<sf::Text> _keybindText; // List of keybind texts
-    std::vector<sf::Text> _settings_list; // List of settings texts
-    std::vector<sf::RectangleShape> _text_shapes; // List of text shapes
     std::vector<sf::RectangleShape> _keybindBackground; // List of keybind backgrounds
 
     // Resources for AudioSettings
-    std::map<std::string, std::unique_ptr<gui::SliderInt>> _myTest; // Map case for Master, Music, Sound, Ambient, Voice
+    std::map<std::string, std::unique_ptr<gui::SliderInt>>
+        _myTest; // Map case for Master, Music, Sound, Ambient, Voice
 
     // Gui selectors
     std::map<std::string, std::unique_ptr<gui::Selector>> _selectors; // Map of selectors
@@ -45,6 +49,7 @@ private:
     void initFonts(); // Initialize fonts
     void initKeybinds(); // Initialize key bindings
     void initGui(); // Initialize GUI
+    void initPageLayout(); // Initialize page layout
     void resetGui(); // Reset GUI
 
 public:
@@ -62,6 +67,8 @@ public:
     void updateInput(const float& delta_time); // Update input
     void updateGui(const float& delta_time); // Update GUI
     void update(const float& delta_time); // Update the state
+
+    void renderPageLayout(sf::RenderTarget& target); // Render page layout
     void renderGui(sf::RenderTarget& target); // Render the GUI
     void render(sf::RenderWindow& target); // Render the state
 };

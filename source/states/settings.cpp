@@ -7,7 +7,7 @@ void SettingsState::initVariables()
     _video_modes = sf::VideoMode::getFullscreenModes();
     // init framerates list
     _gfxResource["GFX_FPS"] = std::vector<int> { 30, 60, 90, 120 };
-    _gfxResource["GFX_AAL"] = std::vector<int> { 0, 2, 4, 8, 16 };
+    _gfxResource["GFX_ALL"] = std::vector<int> { 0, 2, 4, 8, 16 };
     _gfxResource["GFX_VSYNC"] = std::vector<int> { 0, 1 };
     _gfxResource["GFX_FULLSCREEN"] = std::vector<int> { 0, 1 };
 }
@@ -35,6 +35,17 @@ void SettingsState::initGui()
     this->background.setSize(sf::Vector2f(window_size.x, window_size.y));
     // darkest blue color
     this->background.setFillColor(sf::Color(3, 3, 30, 100));
+
+    // init page background
+    _pageBackground.setSize(sf::Vector2f( // size of page background
+        mmath::p2pX(60, this->Iwindow->getSize().x),
+        mmath::p2pY(60, this->Iwindow->getSize().y)));
+    _pageBackground.setPosition(sf::Vector2f( // position of page background
+        mmath::p2pX(20, this->Iwindow->getSize().x),
+        mmath::p2pY(20, this->Iwindow->getSize().y)));
+    _pageBackground.setFillColor(sf::Color(140, 140, 140, 140));
+
+    sf::Vector2f button_size = sf::Vector2f(mmath::p2pX(16, window_size.x), mmath::p2pY(5, window_size.y));
 
     //=====================================================================================================
     //=====================================   BUTTONS    ==================================================
@@ -95,99 +106,51 @@ void SettingsState::initGui()
         sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250), sf::Color(255, 255, 255, 50), 0);
 
     //=====================================================================================================
+    //=======================================   TEXT    ===================================================
+    //=====================================================================================================
+
+    // init shapes for textbox
+    std::vector<std::string> settingsNames = { "Resolution", "Fullscreen", "Vsync", "Antialiasing", "Framerate limit" };
+
+    for (int i = 0; i < 5; i++) {
+        sf::RectangleShape shape;
+        shape.setFillColor(sf::Color::Transparent);
+        shape.setOutlineColor(sf::Color::Transparent);
+        shape.setOutlineThickness(-1);
+        shape.setPosition(sf::Vector2f(
+            _pageBackground.getPosition().x,
+            _pageBackground.getPosition().y + mmath::p2pX(5, window_size.y) + i * mmath::p2pX(5, window_size.y)));
+        shape.setSize(sf::Vector2f(mmath::p2pX(20, window_size.x), mmath::p2pX(5, window_size.y)));
+        sf::Text text;
+        text.setString(settingsNames[i]);
+        text.setFillColor(sf::Color::White);
+        text.setFont(this->font);
+        text.setCharacterSize(this->IstateData->characterSize_game_medium);
+        text.setPosition(sf::Vector2f(
+            shape.getPosition().x + (shape.getGlobalBounds().width / 2) - (text.getGlobalBounds().width / 2),
+            shape.getPosition().y + (shape.getGlobalBounds().height / 2) - (text.getGlobalBounds().height / 2)));
+
+        _graphic_list.push_back(std::make_pair(text, shape));
+    }
+
+    //=====================================================================================================
     //=====================================   RESOLUTION    ===============================================
     //=====================================================================================================
 
     // init dropdown list with video modes
     std::vector<std::string> modes_str;
-    for (auto& i : _video_modes)
-        modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
-
-    // chek current resolution and set it to selector like active element
-    int id = 0;
-    for (int i = 0; i < modes_str.size(); i++)
-        if (modes_str[i] == std::to_string(this->IstateData->gfxSettings->_struct.resolution.width) + 'x' + std::to_string(this->IstateData->gfxSettings->_struct.resolution.height)) {
-            id = i;
-            break;
-        }
+    int index = 0;
+    for (auto& i : _video_modes) {
+        modes_str.push_back(std::to_string(i.width) + " x " + std::to_string(i.height));
+        if (i.width == this->IstateData->gfxSettings->_struct.resolution.width
+            && i.height == this->IstateData->gfxSettings->_struct.resolution.height)
+            index = modes_str.size() - 1;
+    }
 
     // init selector with video modes
     _selectors["SELEC_VMODE"] = std::make_unique<gui::Selector>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(10, window_size.y)),
-        sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, this->IstateData->characterSize_game_medium, modes_str.data(), modes_str.size(), id);
-
-    //=====================================================================================================
-    //=========================================   FPS    ==================================================
-    //=====================================================================================================
-
-    // int vector with fps limit
-    std::vector<std::string> fps_limits;
-    for (auto& x : _gfxResource["GFX_FPS"])
-        fps_limits.push_back(std::to_string(x));
-
-    // check current fps limit and set it to selector like active element
-    int fpls = 0;
-    for (int i = 0; i < fps_limits.size(); i++)
-        if (fps_limits[i] == std::to_string(this->IstateData->gfxSettings->_struct.frameRateLimit)) {
-            fpls = i;
-            break;
-        }
-
-    // init selector resolution
-    _selectors["SELEC_FPS"] = std::make_unique<gui::Selector>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(30, window_size.y)),
-        sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, this->IstateData->characterSize_game_medium, fps_limits.data(), fps_limits.size(), fpls);
-
-    //=====================================================================================================
-    //===================================   ANTIALIASING     ==============================================
-    //=====================================================================================================
-
-    // init antialiasing list
-    std::vector<std::string> antialiasing_list;
-    antialiasing_list.push_back("OFF");
-    antialiasing_list.push_back("x2");
-    antialiasing_list.push_back("x4");
-    antialiasing_list.push_back("x8");
-    antialiasing_list.push_back("x16");
-
-    // check current antialiasing and set it to selector like active element
-    unsigned AAS = 0;
-    for (int i = 0; i < antialiasing_list.size(); i++)
-        if (antialiasing_list[i] == "x" + std::to_string(this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel)) {
-            AAS = i;
-            break;
-        }
-
-    // init selector antialiasing
-    _selectors["SELEC_AAL"] = std::make_unique<gui::Selector>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(25, window_size.y)),
-        sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, this->IstateData->characterSize_game_medium, antialiasing_list.data(), antialiasing_list.size(), AAS);
-
-    //=====================================================================================================
-    //=======================================   VSYNC    ==================================================
-    //=====================================================================================================
-
-    // init vsync list
-    std::vector<std::string> vsync_list;
-    vsync_list.push_back("OFF");
-    vsync_list.push_back("ON");
-
-    // check current vsync and set it to selector like active element
-    unsigned vs = 0;
-    for (int i = 0; i < vsync_list.size(); i++)
-        if (vsync_list[i] == (this->IstateData->gfxSettings->_struct.verticalSync ? "ON" : "OFF")) {
-            vs = i;
-            break;
-        }
-
-    // init selector vsync
-    _selectors["SELEC_VSYNC"] = std::make_unique<gui::Selector>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(20, window_size.y)),
-        sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, this->IstateData->characterSize_game_medium, vsync_list.data(), vsync_list.size(), vs);
+        sf::Vector2f(_pageBackground.getPosition().x + mmath::p2pX(15, window_size.x), _pageBackground.getPosition().y + mmath::p2pX(5, window_size.y)),
+        button_size, font, this->IstateData->characterSize_game_medium, modes_str.data(), modes_str.size(), index);
 
     //=====================================================================================================
     //===================================   FULLSCREEN    =================================================
@@ -200,52 +163,66 @@ void SettingsState::initGui()
 
     // check current fullscreen and set it to selector like active element
     unsigned fs = 0;
-    for (int i = 0; i < fullscreen_list.size(); i++)
-        if (fullscreen_list[i] == (this->IstateData->gfxSettings->_struct.fullscreen ? "Fullscreen" : "Windowed")) {
-            fs = i;
+    for (; fs < fullscreen_list.size(); fs++)
+        if (fullscreen_list[fs] == (this->IstateData->gfxSettings->_struct.fullscreen ? "Fullscreen" : "Windowed"))
             break;
-        }
 
     // init selector fullscreen
     _selectors["SELEC_FULLSCREEN"] = std::make_unique<gui::Selector>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(15, window_size.y)),
-        sf::Vector2f(mmath::p2pX(15, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, this->IstateData->characterSize_game_medium, fullscreen_list.data(), fullscreen_list.size(), fs);
+        sf::Vector2f(_pageBackground.getPosition().x + mmath::p2pX(15, window_size.x), _pageBackground.getPosition().y + mmath::p2pX(10, window_size.y)),
+        button_size, font, this->IstateData->characterSize_game_medium, fullscreen_list.data(), fullscreen_list.size(), fs);
 
     //=====================================================================================================
-    //=======================================   TEXT    ===================================================
+    //=======================================   VSYNC    ==================================================
     //=====================================================================================================
 
-    // init shapes for textbox
-    for (int i = 0; i < 5; i++) {
-        _text_shapes.push_back(sf::RectangleShape());
-        _text_shapes[i].setFillColor(sf::Color::Transparent);
-        _text_shapes[i].setOutlineColor(sf::Color::Transparent);
-        _text_shapes[i].setOutlineThickness(-1);
-        _text_shapes[i].setPosition(sf::Vector2f(
-            mmath::p2pX(5, window_size.x),
-            mmath::p2pX(5 + (i * 5), window_size.y) + mmath::p2pX(5, window_size.y)));
-        _text_shapes[i].setSize(sf::Vector2f(mmath::p2pX(20, window_size.x), mmath::p2pX(5, window_size.y)));
-    }
+    // init vsync list
+    std::vector<std::string> vsync_list;
+    vsync_list.push_back("OFF");
+    vsync_list.push_back("ON");
 
-    // init text for settings
-    for (int x = 0; x < 5; x++)
-        _settings_list.push_back(sf::Text());
+    // check current vsync and set it to selector like active element
+    unsigned vs = 0;
+    for (; vs < vsync_list.size(); vs++)
+        if (vsync_list[vs] == (this->IstateData->gfxSettings->_struct.verticalSync ? "ON" : "OFF"))
+            break;
 
-    _settings_list[0].setString("Resolution");
-    _settings_list[1].setString("Fullscreen");
-    _settings_list[2].setString("Vsync");
-    _settings_list[3].setString("Antialiasing");
-    _settings_list[4].setString("Framerate limit");
+    // init selector vsync
+    _selectors["SELEC_VSYNC"] = std::make_unique<gui::Selector>(
+        sf::Vector2f(_pageBackground.getPosition().x + mmath::p2pX(15, window_size.x), _pageBackground.getPosition().y + mmath::p2pX(15, window_size.y)),
+        button_size, font, this->IstateData->characterSize_game_medium, vsync_list.data(), vsync_list.size(), vs);
 
-    for (int x = 0; x < 5; x++) {
-        _settings_list[x].setFillColor(sf::Color::White);
-        _settings_list[x].setFont(this->font);
-        _settings_list[x].setCharacterSize(this->IstateData->characterSize_game_medium);
-        _settings_list[x].setPosition(sf::Vector2f(
-            _text_shapes[x].getPosition().x + (_text_shapes[x].getGlobalBounds().width / 2) - (_settings_list[x].getGlobalBounds().width / 2),
-            _text_shapes[x].getPosition().y + (_text_shapes[x].getGlobalBounds().height / 2) - (_settings_list[x].getGlobalBounds().height / 2)));
-    }
+    //=====================================================================================================
+    //===================================   ANTIALIASING     ==============================================
+    //=====================================================================================================
+
+    // init antialiasing list
+    std::vector<std::string> antialiasing_list = { "OFF", "x2", "x4", "x8", "x16" };
+
+    std::string currentAA = "x" + std::to_string(this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel);
+    auto aalit = std::find(antialiasing_list.begin(), antialiasing_list.end(), currentAA);
+    unsigned AAS = (aalit != antialiasing_list.end()) ? std::distance(antialiasing_list.begin(), aalit) : 0;
+
+    // init selector antialiasing
+    _selectors["SELEC_AAL"] = std::make_unique<gui::Selector>(
+        sf::Vector2f(_pageBackground.getPosition().x + mmath::p2pX(15, window_size.x), _pageBackground.getPosition().y + mmath::p2pX(20, window_size.y)),
+        button_size, font, this->IstateData->characterSize_game_medium, antialiasing_list.data(), antialiasing_list.size(), AAS);
+
+    //=====================================================================================================
+    //=========================================   FPS    ==================================================
+    //=====================================================================================================
+
+    std::vector<std::string> fps_limits;
+    std::transform(_gfxResource["GFX_FPS"].begin(), _gfxResource["GFX_FPS"].end(), std::back_inserter(fps_limits),
+        [](const auto& x) { return std::to_string(x); });
+
+    std::string currentFPS = std::to_string(this->IstateData->gfxSettings->_struct.frameRateLimit);
+    auto fpsit = std::find(fps_limits.begin(), fps_limits.end(), currentFPS);
+    int fpls = (fpsit != fps_limits.end()) ? std::distance(fps_limits.begin(), fpsit) : 0;
+
+    _selectors["SELEC_FPS"] = std::make_unique<gui::Selector>(
+        sf::Vector2f(_pageBackground.getPosition().x + mmath::p2pX(15, window_size.x), _pageBackground.getPosition().y + mmath::p2pX(25, window_size.y)),
+        button_size, font, this->IstateData->characterSize_game_medium, fps_limits.data(), fps_limits.size(), fpls);
 
     //=====================================================================================================
     //=====================================   KEY BINDS    ================================================
@@ -254,24 +231,25 @@ void SettingsState::initGui()
     // init text of the keybinds
 
     sf::Text text;
-    text.setFont(this->IstateData->font); // Set the font you want to use
-    text.setCharacterSize(24); // Set the font size
+    text.setFont(this->IstateData->font);
+    text.setCharacterSize(24);
 
-    sf::RectangleShape rectangle; // Create a rectangle for background
-    rectangle.setFillColor(sf::Color(200, 200, 200, 150)); // Set the rectangle color to semi-transparent black
+    sf::RectangleShape rectangle;
+    rectangle.setFillColor(sf::Color(200, 200, 200, 150));
 
     int i = 0;
     for (const auto& keybind : *this->IstateData->supportedKeys) {
         text.setString(keybind.first + ": " + std::to_string(keybind.second));
-        text.setPosition(
-            mmath::p2pX(12.f * (i % 3), window_size.x),
-            mmath::p2pY(40.f, window_size.y) + mmath::p2pY(3 * (i / 3), window_size.y)); // Position the text in a grid
 
-        rectangle.setSize(sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height)); // Set the rectangle size to match the text
-        rectangle.setPosition(text.getPosition()); // Position the rectangle at the same position as the text
+        float posX = mmath::p2pX(12.f * (i % 3), window_size.x);
+        float posY = mmath::p2pY(40.f, window_size.y) + mmath::p2pY(3 * (i / 3), window_size.y);
+        text.setPosition(posX, posY);
+
+        rectangle.setSize(sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height));
+        rectangle.setPosition(text.getPosition());
 
         _keybindText.push_back(text);
-        _keybindBackground.push_back(rectangle); // Add the rectangle to the vector
+        _keybindBackground.push_back(rectangle);
         i++;
     }
 
@@ -321,11 +299,16 @@ void SettingsState::resetGui()
     this->initGui();
 }
 
+void SettingsState::initPageLayout()
+{
+}
+
 SettingsState::SettingsState(StateData* state_data)
     : State(state_data)
     , page(settingPage::GRAPHICS)
     , pageName("GRAPHICS")
 { // init variables
+    this->initPageLayout();
     this->initVariables();
     this->initFonts();
     this->initGui();
@@ -346,17 +329,10 @@ SettingsState::~SettingsState()
     // clear keybinds
     _keybindText.clear();
 
-    // clear text shapes
-    _text_shapes.clear();
-
     // clear keybind background
     _keybindBackground.clear();
 
-    // clear settings list
-    _settings_list.clear();
-
     // clear video modes
-
     _video_modes.clear();
 
     // clear gfx resource
@@ -494,16 +470,15 @@ void SettingsState::renderGui(sf::RenderTarget& target)
     switch (this->page) {
     case settingPage::GRAPHICS:
         // draw text
-        for (auto& t : _settings_list)
-            target.draw(t);
+        for (auto& it : _graphic_list)
+            target.draw(it.first);
         // draw selector
         for (auto& it : _selectors)
             it.second->render(target);
         break;
     case settingPage::CONTROLS:
         // draw _text_shapes
-        for (auto& ts : _text_shapes)
-            target.draw(ts);
+
         // draw shapes for keybinds like background layer
         // FIXME: fix layering of keybinds
         for (auto& it : _keybindBackground)
@@ -526,10 +501,17 @@ void SettingsState::renderGui(sf::RenderTarget& target)
         break;
     }
 }
+void SettingsState::renderPageLayout(sf::RenderTarget& target) // Render page layout
+{
+    // render page layout
+    target.draw(_pageBackground);
+}
 
 void SettingsState::render(sf::RenderWindow& target)
 {
     target.draw(this->background);
+
+    this->renderPageLayout(target);
     this->renderGui(target);
 
     if (this->debugMode)

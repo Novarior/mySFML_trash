@@ -47,7 +47,7 @@ message("COREFOUNDATION_LIBRARY = ${COREFOUNDATION_LIBRARY}")
 file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
 #loop for all files in resources folder
 foreach(file IN LISTS MY_APP_RESOURCES)
-    file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/bin/resources ${file})
+    file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/source/res ${file})
     get_filename_component(dir ${relative_path} DIRECTORY)
     set_source_files_properties(${file} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources/${dir}")
 endforeach()

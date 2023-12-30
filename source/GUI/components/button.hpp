@@ -1,5 +1,5 @@
-#ifndef GUI_BUTTON_HPP
-#define GUI_BUTTON_HPP
+#ifndef GUI_SIMPLE_BUTTON_HPP
+#define GUI_SIMPLE_BUTTON_HPP
 #include "../../header.h"
 namespace gui {
 enum button_states {

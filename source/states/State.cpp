@@ -16,9 +16,10 @@ State::State(StateData* state_data)
     this->Iquit = false;
     this->Ipaused = false;
     this->Ikeytime = 0.f;
-    this->IkeytimeMax = 0.5f;
+    this->IkeytimeMax = 0.3f;
     this->IgridSize = state_data->grid_size;
     this->IsupportedKeys = state_data->supportedKeys;
+    this->Ievent = state_data->sEvent;
 
     this->dString_Stream.str("");
     this->debugMode = true;

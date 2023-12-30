@@ -24,6 +24,7 @@ void MainMenu::initRenderDefines()
 void MainMenu::initKeybinds()
 {
     this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
 }
 
 void MainMenu::initBackground()
@@ -94,10 +95,17 @@ void MainMenu::initButtons()
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 
-    this->buttons["PERLIN"] = new gui::Button(
+    this->buttons["NOICE_BNT"] = new gui::Button(
         sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(10, this->Iwindow->getSize().y) - offsetY), // pos
         sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
         this->IstateData->font, "Noice", this->IstateData->characterSize_game_big,
+        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
+
+    this->buttons["NODE_BTN"] = new gui::Button(
+        sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX, mmath::p2pX(20, this->Iwindow->getSize().y) - offsetY), // pos
+        sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x), mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+        this->IstateData->font, "Node Viewer", this->IstateData->characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90));
 }
@@ -175,6 +183,10 @@ void MainMenu::update(const float& delta_time)
 
 void MainMenu::updateInput(const float& delta_time)
 {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Slash) && this->getKeytime())
+        this->debugMode = !this->debugMode;
 }
 
 void MainMenu::updateButtons()
@@ -197,8 +209,11 @@ void MainMenu::updateButtons()
         if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
             this->Istates->push(new SettingsState(this->IstateData));
 
-        if (this->buttons["PERLIN"]->isPressed() && this->getKeytime())
+        if (this->buttons["NOICE_BNT"]->isPressed() && this->getKeytime())
             this->Istates->push(new EditorState(this->IstateData));
+
+        if (this->buttons["NODE_BTN"]->isPressed() && this->getKeytime())
+            this->Istates->push(new NodeViewer(this->IstateData));
     }
 }
 
@@ -208,12 +223,13 @@ void MainMenu::updateGUI(const float& delta_time)
     if (this->debugMode) {
         this->dString_Stream
             << "\nver:\t" << CMAKE_PROJECT_VERSION
-            << "\nFPS:\t" << 1 / delta_time
-            << "\nFPS limit:\t" << this->IstateData->gfxSettings->frameRateLimit
+            << "\nFPS delta:\t" << 1 / delta_time
+            << "\nFPS Clock:\t" << FPS::getFPS()
+            << "\nFPS limit:\t" << this->IstateData->gfxSettings->_struct.frameRateLimit
             << "\nDelta Time:\t" << delta_time
             << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing:\t" << this->IstateData->sWindow->getSettings().antialiasingLevel
-            << "\nvSync:\t" << this->IstateData->gfxSettings->verticalSync
+            << "\nvSync:\t" << this->IstateData->gfxSettings->_struct.verticalSync
             << "\nMouse Pos:\t" << this->mousePosWindow.x << " x " << this->mousePosWindow.y;
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

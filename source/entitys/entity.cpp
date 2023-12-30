@@ -2,37 +2,37 @@
 
 void Entity::createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height)
 {
-    this->e_hitbox = new HitboxComponent(sprite, offset_x, offset_y, width, height);
+    this->e_hitbox = std::make_unique<HitboxComponent>(sprite, offset_x, offset_y, width, height);
 }
 
 void Entity::createMovementComponent(const float acceleration, const float deceleration, const float maxVelocity)
 {
-    this->e_movement = new MovementComponent(this->m_sprite, acceleration,
-        deceleration, maxVelocity);
+    this->e_movement = std::make_unique<MovementComponent>(this->m_sprite, acceleration, deceleration, maxVelocity);
 }
 
 void Entity::createAttributesComponent(Atri* attributes)
 {
     if (attributes != nullptr)
-        this->e_attributes = new Attributes(attributes);
+        this->e_attributes = std::make_unique<Attributes>(attributes);
     else
-        this->e_attributes = new Attributes();
+        this->e_attributes = std::make_unique<Attributes>();
 }
 
 Entity::Entity()
+    : e_movement(nullptr)
+    , e_hitbox(nullptr)
+    , e_attributes(nullptr)
+    , _enumBehavior(entityEnum::entityBehaviorClass::VOID)
+    , _enumMovementState(entityEnum::entityMovementState::VOID)
+    , _enumState(entityEnum::entityState::VOID)
+    , _enumDirection(entityEnum::entityDirection::VOID)
 {
-    this->e_movement = NULL;
-    this->e_hitbox = NULL;
-    this->e_attributes = NULL;
     this->ID_entity = this->count_entitys;
     this->count_entitys++;
 }
 
 Entity::~Entity()
 {
-    delete this->e_hitbox;
-    delete this->e_movement;
-    delete this->e_attributes;
     this->count_entitys--;
 }
 

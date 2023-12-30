@@ -8,6 +8,7 @@ void EditorState::initKeybinds()
     this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
     this->Ikeybinds["KEY_E"] = this->IsupportedKeys->at("E");
     this->Ikeybinds["KEY_R"] = this->IsupportedKeys->at("R");
+    this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
 }
 
 void EditorState::initTabMenu()
@@ -107,10 +108,10 @@ void EditorState::initNoice()
         this->m_noiceData.persistence = 0.6f;
     }
     this->m_noiceData.gridSize = this->IstateData->grid_size;
-    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->resolution.width;
-    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->resolution.height;
-    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->resolution.width;
-    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->resolution.height;
+    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
+    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
+    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->_struct.resolution.width;
+    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->_struct.resolution.height;
     this->m_noiceData.smoothMode = 0;
 
     // init data for noice viewer
@@ -238,6 +239,9 @@ void EditorState::updateInput(const float& delta_time)
     // if pressed key ESC then end state
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
         this->endState();
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
+        this->debugMode = !this->debugMode;
 
     // switch tab menu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())

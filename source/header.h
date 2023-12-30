@@ -9,7 +9,6 @@
 #include <iostream>
 #include <map>
 #include <ostream>
-#include <pwd.h>
 #include <random>
 #include <sstream>
 #include <stack>
@@ -19,10 +18,14 @@
 #include <sys/types.h>
 #include <time.h>
 #include <unistd.h>
+#include <utility>
 #include <vector>
 
 // system include
+#ifdef __APPLE__
 #include <CoreFoundation/CoreFoundation.h>
+#include <pwd.h>
+#endif
 
 // include nlohmann/json libary
 #include <nlohmann/json.hpp>

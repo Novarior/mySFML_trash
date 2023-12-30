@@ -1,5 +1,5 @@
-#ifndef GUI_STATIC_SELECTOR_HPP
-#define GUI_STATIC_SELECTOR_HPP
+#ifndef GUI_SIMPLE_STATIC_SELECTOR_HPP
+#define GUI_SIMPLE_STATIC_SELECTOR_HPP
 
 #include "button.hpp"
 namespace gui {

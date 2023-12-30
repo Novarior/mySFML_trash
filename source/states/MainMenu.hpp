@@ -3,41 +3,46 @@
 
 #include "../GUI/GUISYS.hpp"
 #include "EditorState.hpp"
+#include "NodeViewer.hpp"
 #include "Process.hpp"
 #include "State.hpp"
 #include "settings.hpp"
 
+// The MainMenu class represents the game's main menu
 class MainMenu : public State {
 private:
-    // render components
+    // Render components
     sf::View view;
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
+    // Menu buttons
     std::map<std::string, gui::Button*> buttons;
 
+    // Background textures and shapes
     std::vector<sf::Texture> background_textures;
     std::vector<sf::RectangleShape> backgrond_shapes;
 
-    void initRenderDefines();
-    void initKeybinds();
-    void initButtons();
-    void initBackground();
-    void initGUI();
-    void resetGUI();
+    // Initialization methods
+    void initRenderDefines(); // Initialize render settings
+    void initKeybinds(); // Initialize key bindings
+    void initButtons(); // Initialize buttons
+    void initBackground(); // Initialize background
+    void initGUI(); // Initialize GUI
+    void resetGUI(); // Reset GUI
 
-    // elements for start
-
-    void resetView();
+    // Elements for start
+    void resetView(); // Reset view
 
 public:
-    MainMenu(StateData* sDate);
-    virtual ~MainMenu();
+    MainMenu(StateData* sDate); // Constructor
+    virtual ~MainMenu(); // Destructor
 
-    void updateInput(const float& delta_time);
-    void updateButtons();
-    void updateGUI(const float& delta_time);
-    void update(const float& delta_time);
-    void render(sf::RenderWindow& target);
+    // Update methods
+    void updateInput(const float& delta_time); // Update input
+    void updateButtons(); // Update buttons
+    void updateGUI(const float& delta_time); // Update GUI
+    void update(const float& delta_time); // Update state
+    void render(sf::RenderWindow& target); // Render
 };
 #endif

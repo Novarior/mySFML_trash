@@ -312,3 +312,42 @@ const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
 
     return true;
 }
+
+const bool ParserJson::saveNodesdata(std::vector<Node*> mNode)
+{
+    json j;
+
+    for (const auto& node : mNode) {
+        json nodeJson;
+        nodeJson["id"] = node->getId();
+        // nodeJson["type"] = node->getType();
+        nodeJson["position"]["x"] = node->getPosition().x;
+        nodeJson["position"]["y"] = node->getPosition().y;
+
+        for (const auto& port : node->get_InputPorts()) {
+            json portJson;
+            if (port->getLinkNode() != nullptr) {
+                portJson["id"] = port->getIndex();
+                portJson["type"] = port->getPortType();
+                portJson["connectedTo"] = port->getLinkNode()->getName() + ": " + std::to_string(port->getIndex());
+                nodeJson["ports"].push_back(portJson);
+            }
+        }
+
+        j.push_back(nodeJson);
+    }
+
+    // Write the JSON object to the file
+    try {
+        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_nodesdata);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        std::stringstream ss;
+        ss << "Parser can't save nodes" << sAppFunctions::getDocumentsAppFolder() << myConst::config_nodesdata;
+        Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
+        printf("ERROR::PARSER::SAVE::NODES::FILE_NOT_OPEN\n   %s\n", myConst::config_nodesdata);
+        return false;
+    }
+
+    return true;
+}

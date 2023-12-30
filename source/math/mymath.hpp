@@ -44,10 +44,7 @@ const float p2pY(const float perc, const float& i);
 const float normalize(const float value, const float min, const float max);
 
 // fade function
-static const double Fade(double t)
-{
-    return t * t * t * (t * (t * 6 - 15) + 10);
-}
+static const double Fade(double t) { return t * t * t * (t * (t * 6 - 15) + 10); }
 // interpolations
 namespace interpolation {
     // linear interpolation
@@ -77,6 +74,7 @@ const double Gradient(int hash, double x, double y);
 /// @param maxOutput max value from output
 /// @return rescaled value
 const double Rescale(double r_value, double minInput, double maxInput, double minOutput, double maxOutput);
+
 const unsigned int calcCharSize(const sf::VideoMode& vm, const unsigned modifier = 60);
 const unsigned int calcCharSize(const sf::Vector2u resolution, const unsigned modifier = 60);
 const unsigned int calcCharSize(const sf::Vector2f resolution, const unsigned modifier = 60);

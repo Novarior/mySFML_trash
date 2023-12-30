@@ -1,5 +1,5 @@
-#ifndef GUI_TEXTURESELECTOR_HPP
-#define GUI_TEXTURESELECTOR_HPP
+#ifndef GUI_SIMPLE_TEXTURESELECTOR_HPP
+#define GUI_SIMPLE_TEXTURESELECTOR_HPP
 #include "button.hpp"
 
 namespace gui {

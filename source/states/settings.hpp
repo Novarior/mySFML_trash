@@ -8,35 +8,48 @@
 /// @retval None
 class SettingsState : public State {
 private:
+    enum settingPage {
+        AUDIO,
+        GRAPHICS,
+        CONTROLS,
+        ECT,
+        PAGE_COUNT
+    };
     // Variables
-    sf::Texture backgroundTexture;
-    sf::RectangleShape background;
-    sf::Font font;
-    std::map<std::string, gui::Button*> buttons;
-    // Resouses for settings
-    std::vector<sf::VideoMode> video_modes;
-    std::vector<int> framerates_list;
-    std::vector<int> antialiasing_list;
-    std::vector<int> vsync_list;
-    std::vector<int> fullscreen_list;
-    std::vector<sf::Text> keybindText;
-    
+    sf::Texture backgroundTexture; // Texture for the background
+    sf::RectangleShape background; // Shape for the background
+    sf::Font font; // Font used in the settings state
+    std::map<std::string, std::unique_ptr<gui::Button>> _pageButtons; // Map of buttons, used for change current settings page
+    std::string pageName; // Name of the current page
 
-    std::vector<sf::Text> settings_list;
-    std::vector<sf::RectangleShape> text_shapes;
+    // resources for page layout
+    std::vector<sf::Text> _pageText; // List of page texts
+    sf::RectangleShape _pageBackground; // List of page backgrounds
+
+    // Resources for GraphicsSettings
+    std::vector<sf::VideoMode> _video_modes; // List of video modes
+    std::map<std::string, std::vector<int>> _gfxResource; // Map case for Resolutions, FPS, Antialiasing, VSync, Fullscreen
+    std::vector<std::pair<sf::Text, sf::RectangleShape>> _graphic_list; // List of graphics texts
+
+    // Resources for Keybinds
+    std::vector<sf::Text> _keybindText; // List of keybind texts
+    std::vector<sf::RectangleShape> _keybindBackground; // List of keybind backgrounds
+
+    // Resources for AudioSettings
+    std::map<std::string, std::unique_ptr<gui::SliderInt>> _myTest; // Map case for Master, Music, Sound, Ambient, Voice
+
     // Gui selectors
-    gui::Selector* selector_resolutions;
-    gui::Selector* selector_framerates;
-    gui::Selector* selector_antialiasing;
-    gui::Selector* selector_vsync;
-    gui::Selector* selector_fullscreen;
+    std::map<std::string, std::unique_ptr<gui::Selector>> _selectors; // Map of selectors
+
+    settingPage page; // Current page of settings
 
     // Initializer functions
-    void initVariables();
-    void initFonts();
-    void initKeybinds();
-    void initGui();
-    void resetGui();
+    void initVariables(); // Initialize variables
+    void initFonts(); // Initialize fonts
+    void initKeybinds(); // Initialize key bindings
+    void initGui(); // Initialize GUI
+    void initPageLayout(); // Initialize page layout
+    void resetGui(); // Reset GUI
 
 public:
     /// @brief Constructor for SettingsState
@@ -45,11 +58,18 @@ public:
     virtual ~SettingsState();
 
     // Functions
-    void updateInput(const float& delta_time);
-    void updateGui(const float& delta_time);
-    void update(const float& delta_time);
-    void renderGui(sf::RenderTarget& target);
-    void render(sf::RenderWindow& target);
+    void updateAudioPage(const float& delta_time); // Update audio page
+    void updateGraphicsPage(const float& delta_time); // Update graphics page
+    void updateControlsPage(const float& delta_time); // Update controls page
+    void updateEctPage(const float& delta_time); // Update ect page
+
+    void updateInput(const float& delta_time); // Update input
+    void updateGui(const float& delta_time); // Update GUI
+    void update(const float& delta_time); // Update the state
+
+    void renderPageLayout(sf::RenderTarget& target); // Render page layout
+    void renderGui(sf::RenderTarget& target); // Render the GUI
+    void render(sf::RenderWindow& target); // Render the state
 };
 
 #endif // CPP_SETTINGS_STATE_HPP

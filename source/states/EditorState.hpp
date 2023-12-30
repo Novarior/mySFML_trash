@@ -6,47 +6,48 @@
 #include "State.hpp"
 #include "editModes/NoiceViewer.hpp"
 
+// The EditorState class represents the state of the game editor
 class EditorState : public State {
 private:
     // Variables
-    NoiceViewer* m_NoiceViewer;
-    mmath::noiceData m_noiceData;
+    NoiceViewer* m_NoiceViewer; // Noise viewer
+    mmath::noiceData m_noiceData; // Noise data
     // trees
-    LSystem* myLS;
+    LSystem* myLS; // L-system for generating trees
 
-    // gui elements (buttons, selectors, etc)
-    bool showTabmenu;
-    std::map<std::string, gui::Button*> buttons;
-    sf::RectangleShape tabShape;
-    std::map<std::string, gui::StaticSelector*> staticSelector;
-    gui::Selector* selector;
+    // GUI elements (buttons, selectors, etc)
+    bool showTabmenu; // Flag to show or hide the tab menu
+    std::map<std::string, gui::Button*> buttons; // Map of buttons
+    sf::RectangleShape tabShape; // Shape of the tab
+    std::map<std::string, gui::StaticSelector*> staticSelector; // Map of static selectors
+    gui::Selector* selector; // Current selector
 
-    int current_View_Generator = 0;
+    int current_View_Generator = 0; // Current view generator
 
-    // init functions
-    void initKeybinds();
-    void initButtons();
-    void initSelectors();
-    void initTabMenu();
-    void initNoice();
-    void initDebugText();
+    // Initialization functions
+    void initKeybinds(); // Initialize key bindings
+    void initButtons(); // Initialize buttons
+    void initSelectors(); // Initialize selectors
+    void initTabMenu(); // Initialize tab menu
+    void initNoice(); // Initialize noise
+    void initDebugText(); // Initialize debug text
 
-    // update functions
-    void saveTreeAsImage(sf::RenderWindow& window);
-    sf::IntRect findNonTransparentRect(const sf::Image& image);
+    // Update functions
+    void saveTreeAsImage(sf::RenderWindow& window); // Save tree as image
+    sf::IntRect findNonTransparentRect(const sf::Image& image); // Find non-transparent rectangle in an image
 
-    void updateInput(const float& delta_time);
-    void updateButtons(const float& delta_time);
-    void updateDebugText(const float& delta_time);
+    void updateInput(const float& delta_time); // Update input
+    void updateButtons(const float& delta_time); // Update buttons
+    void updateDebugText(const float& delta_time); // Update debug text
 
-    // render functions
-    void renderTabMenu(sf::RenderTarget& target);
+    // Render functions
+    void renderTabMenu(sf::RenderTarget& target); // Render tab menu
 
 public:
-    EditorState(StateData* statedata);
-    virtual ~EditorState();
+    EditorState(StateData* statedata); // Constructor
+    virtual ~EditorState(); // Destructor
 
-    void update(const float& delta_time);
-    void render(sf::RenderWindow& target);
+    void update(const float& delta_time); // Update state
+    void render(sf::RenderWindow& target); // Render state
 };
 #endif

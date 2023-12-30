@@ -2,8 +2,7 @@
 #define GRAPHICSSETTINGS_H
 #include "../header.h"
 
-class GraphicsSettings {
-public:
+struct myGFXStruct {
     // Variables
     std::string title;
     sf::VideoMode resolution;
@@ -13,33 +12,42 @@ public:
     sf::ContextSettings contextSettings;
     std::vector<sf::VideoMode> videoModes;
     float gridSize;
+};
+
+class GraphicsSettings {
+public:
+    myGFXStruct _struct;
 
     GraphicsSettings()
     {
-        this->title = myConst::app_name;
-        this->verticalSync = false;
-        this->resolution = sf::VideoMode::getDesktopMode();
-        this->fullscreen = false;
-        this->frameRateLimit = 120;
-        this->contextSettings.antialiasingLevel = 0;
-        this->videoModes = sf::VideoMode::getFullscreenModes();
-        this->gridSize = 16.f;
+        _struct.title = myConst::app_name;
+        _struct.verticalSync = false;
+        _struct.resolution = sf::VideoMode::getDesktopMode();
+        _struct.fullscreen = false;
+        _struct.frameRateLimit = 120;
+        _struct.contextSettings.antialiasingLevel = 0;
+        _struct.videoModes = sf::VideoMode::getFullscreenModes();
+        _struct.gridSize = 16.f;
     }
 
+    void setgfxsettings(const myGFXStruct gfx) { _struct = gfx; }
+    const myGFXStruct getgfxsettings() { return _struct; }
+
     // save to file
-    const bool saveToFile(const std::string directoryPath)
+    const bool
+    saveToFile(const std::string directoryPath)
     {
         // Создаем объект JSON
         json j;
 
         // Заполняем объект данными
-        j["resolution"]["width"] = this->resolution.width;
-        j["resolution"]["height"] = this->resolution.height;
-        j["fullscreen"] = this->fullscreen;
-        j["frameRateLimit"] = this->frameRateLimit;
-        j["verticalSync"] = this->verticalSync;
-        j["antialiasingLevel"] = this->contextSettings.antialiasingLevel;
-        j["gridSize"] = this->gridSize;
+        j["resolution"]["width"] = _struct.resolution.width;
+        j["resolution"]["height"] = _struct.resolution.height;
+        j["fullscreen"] = _struct.fullscreen;
+        j["frameRateLimit"] = _struct.frameRateLimit;
+        j["verticalSync"] = _struct.verticalSync;
+        j["antialiasingLevel"] = _struct.contextSettings.antialiasingLevel;
+        j["gridSize"] = _struct.gridSize;
 
         // Создаем путь к файлу
         std::string filePath = directoryPath + "/Config/config.json";
@@ -49,7 +57,7 @@ public:
 
         // Проверяем, открылся ли файл
         if (!ofs.is_open()) {
-            Logger::log("GFX::COULD NOT SAVE TO FILE: " + filePath, "GFX()",  logType::ERROR);
+            Logger::log("GFX::COULD NOT SAVE TO FILE: " + filePath, "GFX()", logType::ERROR);
             return false;
         }
 
@@ -87,13 +95,13 @@ public:
         ifs.close();
 
         // Заполняем данные из JSON
-        this->resolution.width = j["resolution"]["width"];
-        this->resolution.height = j["resolution"]["height"];
-        this->fullscreen = j["fullscreen"];
-        this->frameRateLimit = j["frameRateLimit"];
-        this->verticalSync = j["verticalSync"];
-        this->contextSettings.antialiasingLevel = j["antialiasingLevel"];
-        this->gridSize = j["gridSize"];
+        _struct.resolution.width = j["resolution"]["width"];
+        _struct.resolution.height = j["resolution"]["height"];
+        _struct.fullscreen = j["fullscreen"];
+        _struct.frameRateLimit = j["frameRateLimit"];
+        _struct.verticalSync = j["verticalSync"];
+        _struct.contextSettings.antialiasingLevel = j["antialiasingLevel"];
+        _struct.gridSize = j["gridSize"];
 
         return true;
     }

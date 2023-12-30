@@ -2,16 +2,10 @@
 #define CPP_ENTITYCLASS_HPP
 
 #include "../header.h"
+#include "entityEnum.hpp"
 #include "properties/attributes.hpp"
 #include "properties/hitbox.hpp"
 #include "properties/movement.hpp"
-
-enum movementState {
-    IDLE = 0,
-    WALK,
-    JUMP,
-    DUCK
-};
 
 /**
  * @class Entity
@@ -31,17 +25,20 @@ protected:
     // The sprite that applies the texture and can be manipulated to move, rotate, scale the entity.
     sf::Sprite m_sprite;
     // The component that handles the movement logic of the entity (speed, direction, etc.).
-    MovementComponent* e_movement;
+    std::unique_ptr<MovementComponent> e_movement;
     // The component that handles the collision detection for the entity.
-    HitboxComponent* e_hitbox;
+    std::unique_ptr<HitboxComponent> e_hitbox;
     // The component that handles the entity's attributes (health, strength, etc.).
-    Attributes* e_attributes;
+    std::unique_ptr<Attributes> e_attributes;
 
     bool isCollision; // A flag indicating whether the entity is currently in a state of collision with another entity or not.
     float gridSizeF; // The size of a single grid cell in the game world. Used for positioning and movement calculations.
     unsigned int ID_entity; // A unique identifier for each entity instance. Useful for entity management and referencing.
 
-    movementState mState; // The current movement state of the entity (idle, walking, running, etc.).
+    entityEnum::entityBehaviorClass _enumBehavior;
+    entityEnum::entityMovementState _enumMovementState; // The current movement state of the entity (idle, walking, running, etc.).
+    entityEnum::entityState _enumState;
+    entityEnum::entityDirection _enumDirection;
 
     // Method to create a hitbox component for the entity.
     // The hitbox is defined by an offset from the entity's position and a width and height.
@@ -67,15 +64,15 @@ public:
 
     /// @brief Returns a pointer to the HitboxComponent of the entity.
     /// The HitboxComponent is used for collision detection in the game.
-    inline HitboxComponent* getHitbox() { return this->e_hitbox; }
+    inline HitboxComponent* getHitbox() { return this->e_hitbox.get(); }
 
     /// @brief Returns a pointer to the MovementComponent of the entity.
     /// The MovementComponent is used for controlling the movement of the entity in the game world.
-    inline MovementComponent* getMovement() { return this->e_movement; }
+    inline MovementComponent* getMovement() { return this->e_movement.get(); }
 
     /// @brief Returns a pointer to the AttributesComponent of the entity.
     /// The AttributesComponent is used for managing the attributes (like health, strength, etc.) of the entity.
-    inline Attributes* getAttributes() { return this->e_attributes; }
+    inline Attributes* getAttributes() { return this->e_attributes.get(); }
 
     /// @brief Returns the unique identifier (ID) of the entity.
     /// The ID is used for distinguishing between different entities in the game.

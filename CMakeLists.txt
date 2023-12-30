@@ -44,7 +44,7 @@ find_library(COREFOUNDATION_LIBRARY CoreFoundation)
 message("COREFOUNDATION_LIBRARY = ${COREFOUNDATION_LIBRARY}")
 
 #search for all files in resources folder
-file(GLOB_RECURSE MY_APP_RESOURCES bin/resources/*)
+file(GLOB_RECURSE MY_APP_RESOURCES source/res/*)
 #loop for all files in resources folder
 foreach(file IN LISTS MY_APP_RESOURCES)
     file(RELATIVE_PATH relative_path ${CMAKE_CURRENT_SOURCE_DIR}/source/res ${file})

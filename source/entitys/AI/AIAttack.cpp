@@ -9,10 +9,10 @@ AIAttack::~AIAttack() { }
 
 void AIAttack::update(const float& delta_time)
 {
-    this->updateCooldown(delta_time);
+    updateCooldown(delta_time);
 
-    this->rad.setPosition(this->self.e_getPosition());
-    if (this->getCooldown())
-        if (this->rad.getGlobalBounds().intersects(this->entity.getGlobalBounds()))
-            this->entity.e_takeDamage(this->self.getAttributes()->getAttributes().damage);
+    _ai_rad.setPosition(_ai_self.e_getPosition());
+    if (getCooldown())
+        if (_ai_rad.getGlobalBounds().intersects(_ai_entity.getGlobalBounds()))
+            _ai_entity.e_takeDamage(_ai_self.getAttributes()->getAttributes().damage);
 }

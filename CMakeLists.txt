@@ -61,8 +61,12 @@ set_source_files_properties(${myApp_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Re
 set(Template_ver metadata/cmakever.h.in )
 configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
 
+if(WIN32)
+
+endif()
 
 
+if(APPLE)
 #Configure plist file for bundle
 set(DATA_BUNDLE_BUNDLE_NAME "Ekzeckt")
 set(DATA_BUNDLE_GUI_IDENTIFIER "com.ekzeckt")
@@ -73,13 +77,13 @@ string(CONCAT DATA_BUNDLE_SHORT_VERSION_STRING "v" ${CMAKE_PROJECT_VERSION_MINOR
 
 set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
 set(DATA_BUNDLE_ICON_NAME "ico.png")
-set(DATA_BUNDLE_ICON_FILE ${CMAKE_SOURCE_DIR}/metadata/ico.png)
 set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+set(DATA_BUNDLE_ICON_FILE ${CMAKE_SOURCE_DIR}/metadata/ico.png)
 
 configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
 
 ##build bundle for macos
-if(APPLE)
+
     add_executable(Ekzeckt MACOSX_BUNDLE ${SOURCE_PROJECT_FILES} ${MY_APP_RESOURCES} ${Template_ver} ${DATA_BUNDLE_ICON_FILE})
 #check for debug or release build
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")

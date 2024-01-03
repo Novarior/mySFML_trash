@@ -40,7 +40,7 @@ enum class entityState {
     VOID,
     ALIVE,
     DEAD,
-    DISABLE,
+    DISABLED,
     MAXENUM
 };
 

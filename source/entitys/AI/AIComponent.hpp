@@ -7,18 +7,18 @@
 
 class AIComponent {
 private:
-    Entity& entity;
-    Entity& self;
+    Entity& _entity;
+    Entity& _self;
 
-    AIFollow* follow;
-    AIAttack* attack;
+    std::unique_ptr<AIFollow> _follow;
+    std::unique_ptr<AIAttack> _attack;
 
 public:
     AIComponent(Entity& self, Entity& entity);
     ~AIComponent();
 
-    void create_follow(AIFollow* follow);
-    void create_attack(AIAttack* attack);
+    void create_follow(int stopDistance);
+    void create_attack();
 
     void update(const float& delta_time);
 };

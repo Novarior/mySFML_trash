@@ -35,10 +35,10 @@ protected:
     float gridSizeF; // The size of a single grid cell in the game world. Used for positioning and movement calculations.
     unsigned int ID_entity; // A unique identifier for each entity instance. Useful for entity management and referencing.
 
-    entityEnum::entityBehaviorClass _enumBehavior;
-    entityEnum::entityMovementState _enumMovementState; // The current movement state of the entity (idle, walking, running, etc.).
-    entityEnum::entityState _enumState;
-    entityEnum::entityDirection _enumDirection;
+    entityEnum::entityBehaviorClass e_enumBehavior;
+    entityEnum::entityMovementState e_enumMovementState; // The current movement state of the entity (idle, walking, running, etc.).
+    entityEnum::entityState e_enumState;
+    entityEnum::entityDirection e_enumDirection;
 
     // Method to create a hitbox component for the entity.
     // The hitbox is defined by an offset from the entity's position and a width and height.
@@ -57,7 +57,10 @@ public:
     static unsigned int count_entitys;
 
     // Default constructor for the Entity class
-    Entity();
+    Entity(entityEnum::entityBehaviorClass enumBehavior,
+        entityEnum::entityMovementState enumMovementState,
+        entityEnum::entityState enumState,
+        entityEnum::entityDirection enumDirection);
 
     // Virtual destructor for the Entity class
     virtual ~Entity();

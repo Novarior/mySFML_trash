@@ -11,7 +11,7 @@ public:
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
         this->m_Usable = false;
 
-        if (this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::item_img_stone2)))
+        if (this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + itemTextures::item_img_stone2)))
             this->m_shape.setTexture(&this->m_texture);
         else
             Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::Stone", logType::WARNING);

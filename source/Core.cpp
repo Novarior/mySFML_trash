@@ -1,15 +1,12 @@
 #include "Core.h"
 
+#if __APPLE__
 void Core::initDirectories()
 { // check if app directory exists
-    if (!sAppFunctions::checkAppDirectoryExists(myConst::app_name)) {
-        std::cout << "App directory does not exist" << std::endl;
-        std::cout << "Creating app directory" << std::endl;
-        sAppFunctions::createAppDirectories(myConst::app_name);
-    } else {
-        std::cout << "App directory exists" << std::endl;
-    }
+    if (sAppFunctions::checkAppDirectoryExists())
+        Logger::log("App directory not exists, Create...", "Core::initDirectories()");
 }
+#endif
 
 // initialisations root data and build first frame app
 void Core::initVar()

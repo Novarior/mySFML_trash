@@ -2,6 +2,7 @@
 #define ITEMSTUFF_ITEM_H
 #include "../../header.h"
 #include "Coins.hpp"
+#include "itemtextures.hpp"
 
 class Item {
 private:

@@ -12,8 +12,11 @@ enum eSmoothMode {
 struct noiceData {
     unsigned int mapSizeX = 0;
     unsigned int mapSizeY = 0;
+    unsigned int mapSizeZ = 0;
     float gridSize = 0;
-    long seed = 0;
+    unsigned long seed = 0;
+    int offsetSeed = 0xffffffff;
+    float chanceToSpawnTree = 0.0f;
     unsigned octaves = 0;
     double frequency = 0;
     float amplifire = 0;

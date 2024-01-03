@@ -1,6 +1,10 @@
 #include "slime.hpp"
 
 Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
+    : Entity(entityEnum::entityBehaviorClass::ENEMY,
+        entityEnum::entityMovementState::IDLE,
+        entityEnum::entityState::DISABLED,
+        entityEnum::entityDirection::VOID)
 {
     this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::slime_texture));
     this->m_sprite.setTexture(this->m_texture);
@@ -10,15 +14,12 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
     this->createAttributesComponent();
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);
-    this->ai_component = new AIComponent(*this, targer_follow);
-    this->ai_component->create_follow(new AIFollow(*this, targer_follow));
-    this->ai_component->create_attack(new AIAttack(*this, targer_follow));
+    this->ai_component = std::make_unique<AIComponent>(*this, targer_follow);
+    this->ai_component.get()->create_follow(150);
+    this->ai_component.get()->create_attack();
 }
 
-Slime::~Slime()
-{
-    delete this->ai_component;
-}
+Slime::~Slime() { }
 
 void Slime::e_update(const float& delta_time)
 {

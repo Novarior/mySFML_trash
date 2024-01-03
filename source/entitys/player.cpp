@@ -2,7 +2,11 @@
 // Initializer functions
 
 // Constructors / Destructors
-Player::Player(sf::Vector2f pos)
+Player::Player(sf::Vector2f pos):
+    Entity(entityEnum::entityBehaviorClass::PLAYER,
+    entityEnum::entityMovementState::IDLE,
+    entityEnum::entityState::ALIVE,
+    entityEnum::entityDirection::VOID)
 {
     Atri attributes;
     // initialaize attributes for new entity

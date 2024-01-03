@@ -6,6 +6,7 @@ namespace myConst {
 
 // data
 const char app_name[] = "Ekzeckt";
+const char app_doc_folder[] = "f_Ekzeckt";
 
 // config
 const char config_game[] = "/config/gamedata.json";
@@ -49,10 +50,7 @@ const char item_img_copper_nuggen[] = "/textures/Images/copper_nugget.png";
 const char item_img_silver_nuggen[] = "/textures/Images/iron_nugget.png";
 const char item_img_someore[] = "/textures/Images/some_ore.png";
 
-// more items
-const char item_img_stone[] = "/textures/Images/stone.png";
-const char item_img_stone2[] = "/textures/Images/stone_01.png";
-const char item_img_poison_small_regeneration[] = "/textures/Images/item/Potion_1_Original.png";
+
 
 // backgrounds
 const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";

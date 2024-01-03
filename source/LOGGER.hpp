@@ -14,17 +14,6 @@ enum class logType {
 class Logger {
 private:
     std::ofstream logFile;
-
-    static std::string getCurrentTime()
-    {
-        auto now = std::chrono::system_clock::now();
-        auto in_time_t = std::chrono::system_clock::to_time_t(now);
-
-        std::stringstream ss;
-        ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
-        return ss.str();
-    }
-
 public:
     Logger()
     {
@@ -56,7 +45,7 @@ public:
         };
         std::string typeString = logTypes[static_cast<int>(level)];
 
-        std::string logEntry = "[" + getCurrentTime() + "] _L: " + typeString + "\t_S: " + source + " -> " + message;
+        std::string logEntry = "[" + sAppFunctions::getCurrentTime() + "] _L: " + typeString + "\t_S: " + source + " -> " + message;
         std::ofstream logFile;
         logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {

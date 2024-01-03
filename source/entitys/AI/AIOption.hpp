@@ -2,37 +2,37 @@
 #define AI_OPTIONS_HPP
 #include "../entity.hpp"
 
-enum FollowTargetEnum { NONE,
+enum class FollowTargetEnum { NONE,
     T_PLAYER,
     T_ENTITY,
     T_POINT };
 
 class AIOption {
 protected:
-    Entity& entity;
-    Entity& self;
-    sf::CircleShape rad;
-    float m_cooldown_attack = 0.f;
-    float m_cooldown_attack_max = 1.f;
+    Entity& _ai_entity;
+    Entity& _ai_self;
+    sf::CircleShape _ai_rad;
+    float _ai_cooldown_attack = 0.f;
+    float _ai_cooldown_attack_max = 1.f;
 
 public:
     AIOption(Entity& self, Entity& entity)
-        : self(self)
-        , entity(entity)
+        : _ai_self(self)
+        , _ai_entity(entity)
     {
-        rad = sf::CircleShape(25);
-        rad.setOrigin(25, 25);
+        _ai_rad = sf::CircleShape(25);
+        _ai_rad.setOrigin(25, 25);
     }
     virtual ~AIOption() { }
     inline void updateCooldown(const float& delta_time)
     {
-        if (this->m_cooldown_attack < this->m_cooldown_attack_max)
-            this->m_cooldown_attack += 1.f * delta_time;
+        if (_ai_cooldown_attack < _ai_cooldown_attack_max)
+            _ai_cooldown_attack += 1.f * delta_time;
     }
     inline const bool getCooldown()
     {
-        if (this->m_cooldown_attack >= this->m_cooldown_attack_max) {
-            this->m_cooldown_attack = 0.f;
+        if (_ai_cooldown_attack >= _ai_cooldown_attack_max) {
+            _ai_cooldown_attack = 0.f;
             return true;
         }
         return false;

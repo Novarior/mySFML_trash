@@ -3,7 +3,7 @@
 #include "../AI/AIComponent.hpp"
 class Slime : public Entity {
 private:
-    AIComponent* ai_component;
+    std::unique_ptr<AIComponent> ai_component;
 
 public:
     /// @brief Construct a new Slime object

@@ -14,12 +14,10 @@ int main()
 {
     Logger myLogger;
 
-    myLogger.log("Start program", "main");
+    Logger::log("\n=====================\n=====================\n=====================", "main.cpp");
     Core mc;
-    myLogger.log("Core has been successfully created", "main");
-    myLogger.log("Start main loop", "main");
+
     mc.run();
-    myLogger.log("End main loop", "main");
 
     return 0;
 }

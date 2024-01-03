@@ -28,7 +28,7 @@ public:
     virtual ~BrickBlock();
 
     const sf::FloatRect getGlobalBounds();
-    const bool intersects(sf::FloatRect rect);
+    const bool intersects(sf::IntRect rect);
     inline const bool& getCollision() { return this->m_collision; }
     void updateFrame();
     sf::Color getBlockColor() { return this->m_sprite.getColor(); }

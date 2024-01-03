@@ -18,14 +18,17 @@ void Entity::createAttributesComponent(Atri* attributes)
         this->e_attributes = std::make_unique<Attributes>();
 }
 
-Entity::Entity()
+Entity::Entity(entityEnum::entityBehaviorClass enumBehavior,
+    entityEnum::entityMovementState enumMovementState,
+    entityEnum::entityState enumState,
+    entityEnum::entityDirection enumDirection)
     : e_movement(nullptr)
     , e_hitbox(nullptr)
     , e_attributes(nullptr)
-    , _enumBehavior(entityEnum::entityBehaviorClass::VOID)
-    , _enumMovementState(entityEnum::entityMovementState::VOID)
-    , _enumState(entityEnum::entityState::VOID)
-    , _enumDirection(entityEnum::entityDirection::VOID)
+    , e_enumBehavior(enumBehavior)
+    , e_enumMovementState(enumMovementState)
+    , e_enumState(enumState)
+    , e_enumDirection(enumDirection)
 {
     this->ID_entity = this->count_entitys;
     this->count_entitys++;

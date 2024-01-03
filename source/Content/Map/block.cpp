@@ -34,9 +34,9 @@ const sf::FloatRect BrickBlock::getGlobalBounds()
     return this->m_sprite.getGlobalBounds();
 }
 
-const bool BrickBlock::intersects(sf::FloatRect rect)
+const bool BrickBlock::intersects(sf::IntRect rect)
 {
-    return this->m_sprite.getGlobalBounds().intersects(rect);
+    return this->m_sprite.getGlobalBounds().intersects(static_cast<sf::FloatRect>(rect));
 }
 
 void BrickBlock::updateAnimation()

@@ -23,7 +23,7 @@ public:
         _struct.title = myConst::app_name;
         _struct.verticalSync = false;
         _struct.resolution = sf::VideoMode::getDesktopMode();
-        _struct.fullscreen = false;
+        _struct.fullscreen = true;
         _struct.frameRateLimit = 120;
         _struct.contextSettings.antialiasingLevel = 0;
         _struct.videoModes = sf::VideoMode::getFullscreenModes();

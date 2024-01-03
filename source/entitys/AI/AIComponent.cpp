@@ -1,31 +1,26 @@
 #include "AIComponent.hpp"
 
 AIComponent::AIComponent(Entity& self, Entity& entity)
-    : self(self)
-    , entity(entity)
+    : _self(self)
+    , _entity(entity)
 {
-    this->follow = nullptr;
-    this->attack = nullptr;
+    _follow = nullptr;
+    _attack = nullptr;
 }
 
-AIComponent::~AIComponent()
-{
-    delete this->follow;
-    delete this->attack;
-}
+AIComponent::~AIComponent() { }
 
 void AIComponent::update(const float& delta_time)
 {
-    this->follow->update(delta_time);
-    this->attack->update(delta_time);
+    _follow->update(delta_time);
+    _attack->update(delta_time);
 }
 
-void AIComponent::create_follow(AIFollow* follow)
+void AIComponent::create_follow(int stopDistance)
 {
-    this->follow = follow;
+    _follow = std::make_unique<AIFollow>(_self, _entity, stopDistance);
 }
-
-void AIComponent::create_attack(AIAttack* attack)
+void AIComponent::create_attack()
 {
-    this->attack = attack;
+    _attack = std::make_unique<AIAttack>(_self, _entity);
 }

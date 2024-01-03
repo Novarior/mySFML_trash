@@ -9,7 +9,28 @@
 
 class sAppFunctions {
 private:
-    /* data */
+    /// @brief create app directory in documents folder
+    static void createAppDirectories()
+    {
+        // some system functions
+        struct passwd* pw = getpwuid(getuid());
+        const char* homedir = pw->pw_dir;
+
+        // make str for path to app dir and create it
+        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_doc_folder;
+
+        // Function to create directory and handle errors
+        auto createDirectory = [](const std::string& directoryPath) {
+            bool isCreated = std::filesystem::create_directories(directoryPath);
+            if (!isCreated && !std::filesystem::exists(directoryPath)) {
+                std::cerr << "Failed to create directory: " << directoryPath << std::endl;
+            }
+        };
+
+        createDirectory(appDirectory);
+        createDirectory(appDirectory + "/config");
+    }
+
 public:
     sAppFunctions() { }
     ~sAppFunctions() { }
@@ -27,11 +48,12 @@ public:
         }
         return "";
     }
-    void s(){
-        
+    void s()
+    {
     }
 
-    // get path to app directory
+    /// @brief return path to app directory to documents folder
+    /// @return     path to app directory
     static const std::string getDocumentsAppFolder()
     {
         struct passwd* pw = getpwuid(getuid());
@@ -42,36 +64,31 @@ public:
         return appDirectory;
     }
 
-    static void createAppDirectories(const std::string& appName)
+    /// @brief Check if app directory exists
+    /// @return true if app directory exists
+    static const bool checkAppDirectoryExists()
     {
-        // some system functions
         struct passwd* pw = getpwuid(getuid());
         const char* homedir = pw->pw_dir;
 
-        // make str for path to app dir and create it
-        std::string appDirectory = std::string(homedir) + "/Documents/" + appName;
+        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_doc_folder;
 
-        // Function to create directory and handle errors
-        auto createDirectory = [](const std::string& directoryPath) {
-            bool isCreated = std::filesystem::create_directories(directoryPath);
-            if (!isCreated && !std::filesystem::exists(directoryPath)) {
-                std::cerr << "Failed to create directory: " << directoryPath << std::endl;
-            }
-        };
-
-        createDirectory(appDirectory);
-        createDirectory(appDirectory + "/config");
+        if (std::filesystem::exists(appDirectory))
+            return true;
+        else {
+            createAppDirectories();
+            return false;
+        }
     }
 
-    // check if app directory exists
-    static const bool checkAppDirectoryExists(const std::string& appName)
+    static std::string getCurrentTime()
     {
-        struct passwd* pw = getpwuid(getuid());
-        const char* homedir = pw->pw_dir;
+        auto now = std::chrono::system_clock::now();
+        auto in_time_t = std::chrono::system_clock::to_time_t(now);
 
-        std::string appDirectory = std::string(homedir) + "/Documents/" + appName;
-
-        return std::filesystem::exists(appDirectory);
+        std::stringstream ss;
+        ss << std::put_time(std::localtime(&in_time_t), "%Y-%m-%d %X");
+        return ss.str();
     }
 };
 #endif

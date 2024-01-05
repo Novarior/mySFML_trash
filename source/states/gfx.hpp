@@ -12,6 +12,12 @@ struct myGFXStruct {
     sf::ContextSettings contextSettings;
     std::vector<sf::VideoMode> videoModes;
     float gridSize;
+
+    // sound variables
+    float _sound_master_vol;
+    float _sound_music_vol;
+    float _sound_sfx_vol;
+    float _sound_player_vol;
 };
 
 class GraphicsSettings {
@@ -28,6 +34,11 @@ public:
         _struct.contextSettings.antialiasingLevel = 0;
         _struct.videoModes = sf::VideoMode::getFullscreenModes();
         _struct.gridSize = 16.f;
+        _struct._sound_master_vol = 50.f;
+        _struct._sound_music_vol = 50.f;
+        _struct._sound_sfx_vol = 50.f;
+        _struct._sound_player_vol = 50.f;
+        
     }
 
     void setgfxsettings(const myGFXStruct gfx) { _struct = gfx; }

@@ -257,10 +257,63 @@ void SettingsState::initGui()
     //=====================================   AUDIO SETTINGS    ===========================================
     //=====================================================================================================
 
-    _myTest["SLIDER_TEST"] = std::make_unique<gui::SliderInt>(
-        sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(15, window_size.y)),
-        sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
-        font, 20, 0, 100, 1);
+    {
+
+        _sound_SliderMap[SoundCategory::vol_MASTER] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(15, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_MASTER), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_SFX] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(20, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_SFX), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_MUSIC] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(25, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_MUSIC), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_AMBIENT] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(30, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_AMBIENT), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_PLAYER] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(35, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_PLAYER), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_ENTITY] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(40, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_ENTITY), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_UI] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(45, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_UI), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_DIALOGUE] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(50, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_DIALOGUE), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_FOLEY] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(55, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_FOLEY), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_WEAPON] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(60, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pX(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_WEAPON), 0, 100, 1);
+
+        _sound_SliderMap[SoundCategory::vol_ENVIRONMENT] = std::make_unique<gui::SliderInt>(
+            sf::Vector2f(mmath::p2pX(30, window_size.x), mmath::p2pX(65, window_size.y)),
+            sf::Vector2f(mmath::p2pX(25, window_size.x), mmath::p2pY(5, window_size.y)),
+            font, this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_ENVIRONMENT), 0, 100, 1);
+    }
 }
 
 void SettingsState::resetGui()
@@ -291,6 +344,29 @@ void SettingsState::resetGui()
 
     // clear page buttons
     _pageButtons.clear();
+
+    // clear keybinds
+    _keybindText.clear();
+
+    // clear keybind background
+    _keybindBackground.clear();
+
+    // clear page buttons
+    _pageButtons.clear();
+
+    // clear video modes
+    _video_modes.clear();
+
+    // clear gfx resource
+    _gfxResource.clear();
+
+    // clear myTest
+    _sound_SliderMap.clear();
+
+    // init variables
+    this->initVariables();
+
+    // init fonts
 
     this->IstateData->gfxSettings->saveToFile(sAppFunctions::getDocumentsAppFolder());
 
@@ -339,7 +415,7 @@ SettingsState::~SettingsState()
     _gfxResource.clear();
 
     // clear myTest
-    _myTest.clear();
+    _sound_SliderMap.clear();
 }
 
 // Functions
@@ -363,7 +439,7 @@ void SettingsState::updateInput(const float& delta_time)
 
 void SettingsState::updateAudioPage(const float& delta_time) // Update audio page
 {
-    for (auto& it : _myTest)
+    for (auto& it : _sound_SliderMap)
         it.second->update(this->mousePosView);
 }
 
@@ -436,7 +512,21 @@ void SettingsState::updateGui(const float& delta_time)
             << "Ver: " << CMAKE_PROJECT_VERSION
             << "\nFPS:\t" << 1 / delta_time
             << "\nPage: " << pageName << " " << static_cast<int>(this->page)
-            << "\nSlider: " << _myTest["SLIDER_TEST"]->getValue()
+            << "\nSliders: "
+            << "\n\tMASTER: " << _sound_SliderMap[SoundCategory::vol_MASTER].get()->getValue()
+            << "\n\tSFX: " << _sound_SliderMap[SoundCategory::vol_SFX].get()->getValue()
+            << "\n\tMUSIC: " << _sound_SliderMap[SoundCategory::vol_MUSIC].get()->getValue()
+            << "\n\tAMBIENT: " << _sound_SliderMap[SoundCategory::vol_AMBIENT].get()->getValue()
+            << "\n\tPLAYER: " << _sound_SliderMap[SoundCategory::vol_PLAYER].get()->getValue()
+            << "\n\tENTITY: " << _sound_SliderMap[SoundCategory::vol_ENTITY].get()->getValue()
+            << "\n\tUI: " << _sound_SliderMap[SoundCategory::vol_UI].get()->getValue()
+            << "\n\tDIALOGUE: " << _sound_SliderMap[SoundCategory::vol_DIALOGUE].get()->getValue()
+            << "\n\tFOLEY: " << _sound_SliderMap[SoundCategory::vol_FOLEY].get()->getValue()
+            << "\n\tWEAPON: " << _sound_SliderMap[SoundCategory::vol_WEAPON].get()->getValue()
+            << "\n\tENVIRONMENT: " << _sound_SliderMap[SoundCategory::vol_ENVIRONMENT].get()->getValue()
+            << "\nVideo modes: " << _video_modes.size()
+            << "\nVideo mode: " << this->IstateData->gfxSettings->_struct.resolution.width << "x" << this->IstateData->gfxSettings->_struct.resolution.height
+            << "\nFramerate limit: " << this->IstateData->gfxSettings->_struct.frameRateLimit
             << "\nResolution: " << this->IstateData->sWindow->getSize().x << "x" << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing: " << this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel
             << "\nvSync: " << this->IstateData->gfxSettings->_struct.verticalSync
@@ -489,8 +579,8 @@ void SettingsState::renderGui(sf::RenderTarget& target)
         break;
     case settingPage::AUDIO:
         // TODO add content
-        // draw _myTest
-        for (auto& it : _myTest)
+        // draw _sound_SliderMap
+        for (auto& it : _sound_SliderMap)
             it.second->render(target);
 
         break;

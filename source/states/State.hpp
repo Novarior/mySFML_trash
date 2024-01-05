@@ -5,6 +5,7 @@
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
 #include "../staticFPSMetter.hpp"
+#include "VolumeManager.hpp"
 #include "gfx.hpp"
 
 // Forward declaration of State class
@@ -38,6 +39,7 @@ public:
     unsigned int characterSize_game_small; // Character size for small game text
     bool reserGUI; // Flag to reset GUI
 
+    
     sf::Event* sEvent; // Pointer to the SFML event
 };
 
@@ -52,6 +54,7 @@ protected:
     sf::Event* Ievent; // Pointer to the SFML event
     std::map<std::string, int>* IsupportedKeys; // Map of supported keys
     std::map<std::string, int> Ikeybinds; // Map of key bindings
+    std::unique_ptr<VolumeManager> IvolumeManager; // Volume manager
 
     // Resources
     bool Iquit; // Flag to quit the state

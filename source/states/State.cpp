@@ -10,25 +10,27 @@ State::State(StateData* state_data)
 {
     Logger::log("Start initilization state", "State::State()");
 
-    this->IstateData = state_data;
-    this->Iwindow = state_data->sWindow;
-    this->Istates = state_data->sStates;
-    this->Iquit = false;
-    this->Ipaused = false;
-    this->Ikeytime = 0.f;
-    this->IkeytimeMax = 0.3f;
-    this->IgridSize = state_data->grid_size;
-    this->IsupportedKeys = state_data->supportedKeys;
-    this->Ievent = state_data->sEvent;
+    IstateData = state_data;
+    Iwindow = state_data->sWindow;
+    Istates = state_data->sStates;
+    Iquit = false;
+    Ipaused = false;
+    Ikeytime = 0.f;
+    IkeytimeMax = 0.3f;
+    IgridSize = state_data->grid_size;
+    IsupportedKeys = state_data->supportedKeys;
+    Ievent = state_data->sEvent;
 
-    this->dString_Stream.str("");
-    this->debugMode = true;
+    IvolumeManager = std::make_unique<VolumeManager>();
 
-    this->dText.setFillColor(sf::Color::White);
-    this->dText.setCharacterSize(this->IstateData->characterSize_debug);
-    this->dText.setOutlineThickness(1);
-    this->dText.setOutlineColor(sf::Color::Black);
-    this->dText.setFont(this->IstateData->debugFont);
+    dString_Stream.str("");
+    debugMode = true;
+
+    dText.setFillColor(sf::Color::White);
+    dText.setCharacterSize(IstateData->characterSize_debug);
+    dText.setOutlineThickness(1);
+    dText.setOutlineColor(sf::Color::Black);
+    dText.setFont(IstateData->debugFont);
 
     Logger::log("End initilization state", "State::State()");
 }
@@ -41,8 +43,8 @@ State::~State()
 // Accessors
 const bool State::getKeytime()
 {
-    if (this->Ikeytime >= this->IkeytimeMax) {
-        this->Ikeytime = 0.f;
+    if (Ikeytime >= IkeytimeMax) {
+        Ikeytime = 0.f;
         return true;
     }
     return false;
@@ -50,30 +52,30 @@ const bool State::getKeytime()
 
 void State::updateKeytime(const float& delta_time)
 {
-    if (this->Ikeytime < this->IkeytimeMax)
-        this->Ikeytime += delta_time;
+    if (Ikeytime < IkeytimeMax)
+        Ikeytime += delta_time;
 }
 
 void State::reCaclulateCharacterSize()
 {
-    this->IstateData->characterSize_debug = mmath::calcCharSize(this->Iwindow->getSize(), 150);
-    this->IstateData->characterSize_game_big = mmath::calcCharSize(this->Iwindow->getSize(), 75);
-    this->IstateData->characterSize_game_medium = mmath::calcCharSize(this->Iwindow->getSize(), 85);
-    this->IstateData->characterSize_game_small = mmath::calcCharSize(this->Iwindow->getSize(), 95);
+    IstateData->characterSize_debug = mmath::calcCharSize(Iwindow->getSize(), 150);
+    IstateData->characterSize_game_big = mmath::calcCharSize(Iwindow->getSize(), 75);
+    IstateData->characterSize_game_medium = mmath::calcCharSize(Iwindow->getSize(), 85);
+    IstateData->characterSize_game_small = mmath::calcCharSize(Iwindow->getSize(), 95);
 }
 
 void State::updateMousePositions(sf::View* view)
 {
-    this->mousePosScreen = sf::Mouse::getPosition();
-    this->mousePosWindow = sf::Mouse::getPosition(*this->Iwindow);
+    mousePosScreen = sf::Mouse::getPosition();
+    mousePosWindow = sf::Mouse::getPosition(*Iwindow);
 
     if (view)
-        this->Iwindow->setView(*view);
+        Iwindow->setView(*view);
 
-    this->mousePosView = this->Iwindow->mapPixelToCoords(sf::Mouse::getPosition(*this->Iwindow));
-    this->mousePosGrid = sf::Vector2i(
-        static_cast<int>(this->mousePosView.x) / static_cast<int>(this->IgridSize),
-        static_cast<int>(this->mousePosView.y) / static_cast<int>(this->IgridSize));
+    mousePosView = Iwindow->mapPixelToCoords(sf::Mouse::getPosition(*Iwindow));
+    mousePosGrid = sf::Vector2i(
+        static_cast<int>(mousePosView.x) / static_cast<int>(IgridSize),
+        static_cast<int>(mousePosView.y) / static_cast<int>(IgridSize));
 
-    this->Iwindow->setView(this->Iwindow->getDefaultView());
+    Iwindow->setView(Iwindow->getDefaultView());
 }

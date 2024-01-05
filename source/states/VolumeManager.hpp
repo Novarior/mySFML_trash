@@ -35,30 +35,16 @@ private:
         { SoundCategory::vol_WEAPON, 100.f },
         { SoundCategory::vol_ENVIRONMENT, 100.f }
     };
-
 public:
-    // Конструктор
-    VolumeManager()
-    {
-    }
+    VolumeManager() { }
 
-    // Установка громкости
-    void setMasterVolume(float volume)
-    {
-        categoryVolumes[SoundCategory::vol_MASTER] = volume;
-    }
-
-    void setCategoryVolume(SoundCategory category, float volume)
-    {
-        categoryVolumes[category] = volume;
-    }
-
-    // Получение громкости
-    float getMasterVolume() const
-    {
-        return categoryVolumes.at(SoundCategory::vol_MASTER);
-    }
-
+    /// @brief set master volume
+    void setMasterVolume(float volume) { categoryVolumes[SoundCategory::vol_MASTER] = volume; }
+    /// @brief set volume using category
+    void setCategoryVolume(SoundCategory category, float volume) { categoryVolumes[category] = volume; }
+    /// @brief  get master volume
+    float getMasterVolume() const { return categoryVolumes.at(SoundCategory::vol_MASTER); }
+    /// @brief get volume using category
     float getCategoryVolume(SoundCategory category) const
     {
         auto it = categoryVolumes.find(category);

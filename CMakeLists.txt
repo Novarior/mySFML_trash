@@ -6,6 +6,8 @@ project(Ekzeckt VERSION 0.0.6)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_OSX_SYSROOT /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk)
+
 #set build type
 message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 

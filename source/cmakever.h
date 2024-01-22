@@ -4,8 +4,8 @@
 const char CMAKE_PROJECT_VERSION[] = "0.0.6";
 const char CMAKE_PROJECT_VERSION_MAJOR[] = "0";
 const char CMAKE_PROJECT_VERSION_MINOR[] = "0";
-const char CMAKE_PROJECT_VERSION_PATCH[] = "6";
+const char CMAKE_PROJECT_VERSION_PATCH[] = "7";
 
-const char OPERATION_SYSTEM[] = "MacOS";
+const char OPERATION_SYSTEM[] = "";
 
 #endif

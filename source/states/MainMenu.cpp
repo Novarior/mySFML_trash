@@ -13,12 +13,12 @@ void MainMenu::initRenderDefines()
         this->IstateData->sWindow->getSize().y));
 
     this->view.setSize(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x),
-        static_cast<float>(this->IstateData->sWindow->getSize().y)));
+        this->IstateData->sWindow->getSize().x,
+        this->IstateData->sWindow->getSize().y));
 
     this->view.setCenter(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
+        this->IstateData->sWindow->getSize().x / 2,
+        this->IstateData->sWindow->getSize().y / 2));
 }
 
 void MainMenu::initKeybinds()

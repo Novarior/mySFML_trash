@@ -122,7 +122,7 @@ void gui::Textbox::typedOn(sf::Event* input)
                 if (this->limit) {
                     if (this->str.length() <= this->limitChar) {
                         this->inputLogic(charTyped);
-                    } else if (this->str.length() > this->limitChar && charTyped == sf::Keyboard::Delete) {
+                    } else if (this->str.length() > this->limitChar && charTyped == sf::Keyboard::Key::Delete) {
                         this->deleteLastChar();
                     }
                 } else {
@@ -135,9 +135,9 @@ void gui::Textbox::typedOn(sf::Event* input)
 
 void gui::Textbox::inputLogic(int charTyped)
 { // if not presse some keys
-    if (charTyped != sf::Keyboard::Delete && charTyped != sf::Keyboard::Enter && charTyped != sf::Keyboard::Escape) {
-        if (charTyped != sf::Keyboard::BackSpace && charTyped != sf::Keyboard::LAlt)
-            if (charTyped != sf::Keyboard::LControl && charTyped != sf::Keyboard::LShift && charTyped != sf::Keyboard::Tab) {
+    if (charTyped != sf::Keyboard::Key::Delete && charTyped != sf::Keyboard::Key::Enter && charTyped != sf::Keyboard::Key::Escape) {
+        if (charTyped != sf::Keyboard::Key::BackSpace && charTyped != sf::Keyboard::LAlt)
+            if (charTyped != sf::Keyboard::Key::LControl && charTyped != sf::Keyboard::Key::LShift && charTyped != sf::Keyboard::Key::Tab) {
 
                 this->str += static_cast<char>(charTyped);
                 if (this->str.length() > 0) {

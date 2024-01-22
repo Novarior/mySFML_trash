@@ -238,11 +238,12 @@ void SettingsState::initGui()
     rectangle.setFillColor(sf::Color(200, 200, 200, 150));
 
     int i = 0;
+    float i2 = i;
     for (const auto& keybind : *this->IstateData->supportedKeys) {
         text.setString(keybind.first + ": " + std::to_string(keybind.second));
 
         float posX = mmath::p2pX(12.f * (i % 3), window_size.x);
-        float posY = mmath::p2pY(40.f, window_size.y) + mmath::p2pY(3 * (i / 3), window_size.y);
+        float posY = mmath::p2pY(40.f, window_size.y) + mmath::p2pY(3.f * (i2 / 3), window_size.y);
         text.setPosition(posX, posY);
 
         rectangle.setSize(sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height));
@@ -251,6 +252,7 @@ void SettingsState::initGui()
         _keybindText.push_back(text);
         _keybindBackground.push_back(rectangle);
         i++;
+        i2 = i;
     }
 
     //=====================================================================================================
@@ -339,35 +341,22 @@ void SettingsState::resetGui()
 
     this->IstateData->reserGUI = true;
 
-    // delete selector
-    _selectors.clear();
-
-    // clear page buttons
-    _pageButtons.clear();
-
-    // clear keybinds
-    _keybindText.clear();
-
-    // clear keybind background
     _keybindBackground.clear();
-
-    // clear page buttons
-    _pageButtons.clear();
-
-    // clear video modes
-    _video_modes.clear();
-
-    // clear gfx resource
-    _gfxResource.clear();
-
-    // clear myTest
+    _keybindBackground.clear();
     _sound_SliderMap.clear();
+    _graphic_list.clear();
+    _pageButtons.clear();
+    _keybindText.clear();
+    _pageButtons.clear();
+    _video_modes.clear();
+    _gfxResource.clear();
+    _keybindText.clear();
+    _selectors.clear();
 
     // init variables
     this->initVariables();
 
     // init fonts
-
     this->IstateData->gfxSettings->saveToFile(sAppFunctions::getDocumentsAppFolder());
 
     this->reCaclulateCharacterSize();
@@ -416,6 +405,9 @@ SettingsState::~SettingsState()
 
     // clear myTest
     _sound_SliderMap.clear();
+
+    // clear text
+    _graphic_list.clear();
 }
 
 // Functions
@@ -509,31 +501,42 @@ void SettingsState::updateGui(const float& delta_time)
 
     if (this->debugMode) {
         this->dString_Stream
-            << "Ver: " << CMAKE_PROJECT_VERSION
-            << "\nFPS:\t" << 1 / delta_time
+            << "Ver: " << CMAKE_PROJECT_VERSION << "\nFPS:\t" << 1 / delta_time
             << "\nPage: " << pageName << " " << static_cast<int>(this->page)
             << "\nSliders: "
-            << "\n\tMASTER: " << _sound_SliderMap[SoundCategory::vol_MASTER].get()->getValue()
-            << "\n\tSFX: " << _sound_SliderMap[SoundCategory::vol_SFX].get()->getValue()
-            << "\n\tMUSIC: " << _sound_SliderMap[SoundCategory::vol_MUSIC].get()->getValue()
-            << "\n\tAMBIENT: " << _sound_SliderMap[SoundCategory::vol_AMBIENT].get()->getValue()
-            << "\n\tPLAYER: " << _sound_SliderMap[SoundCategory::vol_PLAYER].get()->getValue()
-            << "\n\tENTITY: " << _sound_SliderMap[SoundCategory::vol_ENTITY].get()->getValue()
-            << "\n\tUI: " << _sound_SliderMap[SoundCategory::vol_UI].get()->getValue()
-            << "\n\tDIALOGUE: " << _sound_SliderMap[SoundCategory::vol_DIALOGUE].get()->getValue()
-            << "\n\tFOLEY: " << _sound_SliderMap[SoundCategory::vol_FOLEY].get()->getValue()
-            << "\n\tWEAPON: " << _sound_SliderMap[SoundCategory::vol_WEAPON].get()->getValue()
-            << "\n\tENVIRONMENT: " << _sound_SliderMap[SoundCategory::vol_ENVIRONMENT].get()->getValue()
+            << "\n\tMASTER: " + std::to_string(_sound_SliderMap[SoundCategory::vol_MASTER].get()->getValue())
+            << "\n\tSFX: " + std::to_string(_sound_SliderMap[SoundCategory::vol_SFX].get()->getValue())
+            << "\n\tMUSIC: " + std::to_string(_sound_SliderMap[SoundCategory::vol_MUSIC].get()->getValue())
+            << "\n\tAMBIENT: " + std::to_string(_sound_SliderMap[SoundCategory::vol_AMBIENT].get()->getValue())
+            << "\n\tPLAYER: " + std::to_string(_sound_SliderMap[SoundCategory::vol_PLAYER].get()->getValue())
+            << "\n\tENTITY: " + std::to_string(_sound_SliderMap[SoundCategory::vol_ENTITY].get()->getValue())
+            << "\n\tUI: " + std::to_string(_sound_SliderMap[SoundCategory::vol_UI].get()->getValue())
+            << "\n\tDIALOGUE: " + std::to_string(_sound_SliderMap[SoundCategory::vol_DIALOGUE].get()->getValue())
+            << "\n\tFOLEY: " + std::to_string(_sound_SliderMap[SoundCategory::vol_FOLEY].get()->getValue())
+            << "\n\tWEAPON: " + std::to_string(_sound_SliderMap[SoundCategory::vol_WEAPON].get()->getValue())
+            << "\n\tENVIRONMENT: " + std::to_string(_sound_SliderMap[SoundCategory::vol_ENVIRONMENT].get()->getValue())
             << "\nVideo modes: " << _video_modes.size()
-            << "\nVideo mode: " << this->IstateData->gfxSettings->_struct.resolution.width << "x" << this->IstateData->gfxSettings->_struct.resolution.height
-            << "\nFramerate limit: " << this->IstateData->gfxSettings->_struct.frameRateLimit
+            << "\nVideo mode: "
+            << std::to_string(this->IstateData->gfxSettings->_struct.resolution.width)
+            << std::to_string(this->IstateData->gfxSettings->_struct.resolution.height)
+            << "\nFramerate limit: " + std::to_string(this->IstateData->gfxSettings->_struct.frameRateLimit)
             << "\nResolution: " << this->IstateData->sWindow->getSize().x << "x" << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing: " << this->IstateData->gfxSettings->_struct.contextSettings.antialiasingLevel
             << "\nvSync: " << this->IstateData->gfxSettings->_struct.verticalSync
             << "\nFullscreen: " << this->IstateData->gfxSettings->_struct.fullscreen
             << "\nSize of state: " << sizeof(*this) << " bytes"
             << "\nkeytime: " << this->Ikeytime
-            << "\nMouse pos: " << this->mousePosWindow.x << " " << this->mousePosWindow.y;
+            << "\nMouse pos: " << this->mousePosWindow.x << " " << this->mousePosWindow.y
+            << "\narrays info:"
+            << "\n\tvideo_modes: " << _video_modes.size()
+            << "\n\tgfxResource: " << _gfxResource.size()
+            << "\n\tkeybindText: " << _keybindText.size()
+            << "\n\tkeybindBackground: " << _keybindBackground.size()
+            << "\n\tpageButtons: " << _pageButtons.size()
+            << "\n\tkeybindText: " << _keybindText.size()
+            << "\n\tselectors: " << _selectors.size()
+            << "\n\tgraphic_list: " << _graphic_list.size()
+            << "\n\tsound_SliderMap: " << _sound_SliderMap.size();
 
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");

@@ -20,7 +20,9 @@ public:
     void setImage(sf::Image image)
     {
         this->m_image = image;
-        this->m_texture.loadFromImage(this->m_image);
+
+        if (!this->m_texture.loadFromImage(this->m_image))
+            Logger::log("Failed to load texture from image", "MiniMap::setImage()");
         this->m_background.setTexture(&this->m_texture);
     }
 

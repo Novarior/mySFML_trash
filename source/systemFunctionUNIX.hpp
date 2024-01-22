@@ -3,7 +3,15 @@
 #define GETPATH_H
 
 // include head
-#include "header.h"
+// system include
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#ifdef __APPLE__
+#include <CoreFoundation/CoreFoundation.h>
+#include <pwd.h>
+#endif
 // include consts
 #include "myConst.h"
 
@@ -17,7 +25,7 @@ private:
         const char* homedir = pw->pw_dir;
 
         // make str for path to app dir and create it
-        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_doc_folder;
+        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_name;
 
         // Function to create directory and handle errors
         auto createDirectory = [](const std::string& directoryPath) {
@@ -71,7 +79,7 @@ public:
         struct passwd* pw = getpwuid(getuid());
         const char* homedir = pw->pw_dir;
 
-        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_doc_folder;
+        std::string appDirectory = std::string(homedir) + "/Documents/" + myConst::app_name + "/config";
 
         if (std::filesystem::exists(appDirectory))
             return true;

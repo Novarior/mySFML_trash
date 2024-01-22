@@ -122,57 +122,15 @@
     "debug.internalConsoleOptions": "neverOpen",
     "debug.openDebug": "openOnDebugBreak",
     "debug.onTaskErrors": "showErrors",
-    "C_Cpp.clang_format_fallbackStyle": "file",
+    "C_Cpp.clang_format_fallbackStyle": "none",
     "C_Cpp.autocompleteAddParentheses": true,
     "C_Cpp.codeAnalysis.clangTidy.codeAction.formatFixes": true,
     "editor.formatOnPaste": true,
-    "editor.formatOnType": true,
+    "editor.formatOnType": false,
+    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
     "clang-format.executable": "clang-format",
-    "glsllint.languageSettings": {
-        "LANGID": {
-            "parser": "TSAST|REGEX",
-            "patternStart": "[START_REGEX_PATTERN]", // only used when parser: REGEX
-            "patternEnd": "[END_REGEX_PATTERN]" // only used when parser: REGEX
-        },
-        "javascript": {
-            "parser": "TSAST"
-        },
-        "javascriptreact": {
-            "parser": "TSAST"
-        },
-        "typescript": {
-            "parser": "TSAST"
-        },
-        "typescriptreact": {
-            "parser": "TSAST"
-        },
-        "elm": {
-            "parser": "REGEX",
-            "patternStart": "\\[glsl",
-            "patternEnd": "\\|\\]"
-        }
-    },
-    "glsllint.glslangValidatorArgs": "true -l --stdin -S -I/Users/nova/Documents/c++ repo/mySFML_trash/bin/resourses/shaders",
-    "glsllint.additionalStageAssociations": {
-        ".vert": "vert", // for a vertex shader
-        ".vs": "vert", // for a vertex shader
-        ".frag": "frag", // for a fragment shader
-        ".fs": "frag", // for a fragment shader
-        ".gs": "geom", // for a geometry shader
-        ".geom": "geom", // for a geometry shader
-        ".comp": "comp", // for a compute shader
-        ".tesc": "tesc", // for a tessellation control shader
-        ".tese": "tese", // for a tessellation evaluation shader
-        ".rgen": "rgen", // for a ray generation shader
-        ".rint": "rint", // for a ray intersection shader
-        ".rahit": "rahit", // for a ray any hit shader
-        ".rchit": "rchit", // for a ray closest shader
-        ".rmiss": "rmiss", // for a ray miss shader
-        ".rcall": "rcall", // for a ray callable shader
-        ".mesh": "mesh", // for a mesh shader
-        ".task": "task" // for a task shader
-    },
     "todo-tree.tree.showBadges": true,
     "todo-tree.tree.disableCompactFolders": false,
-    "todo-tree.tree.showCountsInTree": false
+    "todo-tree.tree.showCountsInTree": false,
+    "todo-tree.tree.scanMode": "workspace only"
 }

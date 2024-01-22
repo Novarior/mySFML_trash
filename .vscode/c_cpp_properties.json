@@ -3,8 +3,9 @@
         {
             "name": "Mac",
             "includePath": [
-                "/opt/homebrew/Cellar/nlohmann-json/3.11.3/include",
-                "/opt/homebrew/Cellar/sfml/2.6.1/include",
+                "${workspaceFolder}/**",
+                "/opt/homebrew/Cellar/sfml/2.6.1/include/SFML",
+                "/opt/homebrew/Cellar/nlohmann-json/3.11.3/include/nlohmann",
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
             ],
             "defines": [],

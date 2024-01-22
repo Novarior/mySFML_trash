@@ -36,26 +36,26 @@ void Core::initStateData()
 
 void Core::initKeyBinds()
 { // init default keys
-    this->supportedKeys["Escape"] = sf::Keyboard::Scancode::Escape;
-    this->supportedKeys["A"] = sf::Keyboard::Scancode::A;
-    this->supportedKeys["C"] = sf::Keyboard::Scancode::C;
-    this->supportedKeys["D"] = sf::Keyboard::Scancode::D;
-    this->supportedKeys["E"] = sf::Keyboard::Scancode::E;
-    this->supportedKeys["F"] = sf::Keyboard::Scancode::F;
-    this->supportedKeys["Q"] = sf::Keyboard::Scancode::Q;
-    this->supportedKeys["R"] = sf::Keyboard::Scancode::R;
-    this->supportedKeys["S"] = sf::Keyboard::Scancode::S;
-    this->supportedKeys["W"] = sf::Keyboard::Scancode::W;
-    this->supportedKeys["X"] = sf::Keyboard::Scancode::X;
-    this->supportedKeys["Z"] = sf::Keyboard::Scancode::Z;
-    this->supportedKeys["Space"] = sf::Keyboard::Scancode::Space;
-    this->supportedKeys["Enter"] = sf::Keyboard::Scancode::Enter;
-    this->supportedKeys["BackSpace"] = sf::Keyboard::Scancode::Backspace;
-    this->supportedKeys["Slash"] = sf::Keyboard::Scancode::Slash;
-    this->supportedKeys["Tab"] = sf::Keyboard::Scancode::Tab;
-    this->supportedKeys["F1"] = sf::Keyboard::Scancode::F1;
-    this->supportedKeys["F2"] = sf::Keyboard::Scancode::F2;
-    this->supportedKeys["F3"] = sf::Keyboard::Scancode::F3;
+    supportedKeys["Escape"] = sf::Keyboard::Scancode::Escape;
+    supportedKeys["A"] = sf::Keyboard::Scancode::A;
+    supportedKeys["C"] = sf::Keyboard::Scancode::C;
+    supportedKeys["D"] = sf::Keyboard::Scancode::D;
+    supportedKeys["E"] = sf::Keyboard::Scancode::E;
+    supportedKeys["F"] = sf::Keyboard::Scancode::F;
+    supportedKeys["Q"] = sf::Keyboard::Scancode::Q;
+    supportedKeys["R"] = sf::Keyboard::Scancode::R;
+    supportedKeys["S"] = sf::Keyboard::Scancode::S;
+    supportedKeys["W"] = sf::Keyboard::Scancode::W;
+    supportedKeys["X"] = sf::Keyboard::Scancode::X;
+    supportedKeys["Z"] = sf::Keyboard::Scancode::Z;
+    supportedKeys["Space"] = sf::Keyboard::Scancode::Space;
+    supportedKeys["Enter"] = sf::Keyboard::Scancode::Enter;
+    supportedKeys["BackSpace"] = sf::Keyboard::Scancode::Backspace;
+    supportedKeys["Slash"] = sf::Keyboard::Scancode::Slash;
+    supportedKeys["Tab"] = sf::Keyboard::Scancode::Tab;
+    supportedKeys["F1"] = sf::Keyboard::Scancode::F1;
+    supportedKeys["F2"] = sf::Keyboard::Scancode::F2;
+    supportedKeys["F3"] = sf::Keyboard::Scancode::F3;
     // save default keys to file
     ParserJson::saveKeyBinds(this->supportedKeys);
 }
@@ -67,25 +67,23 @@ void Core::initState()
 
 void Core::initWindow()
 {
-    if (this->gfxSettings._struct.fullscreen)
-        this->mWindow = new sf::RenderWindow(
-            this->gfxSettings._struct.resolution,
-            this->gfxSettings._struct.title,
-            sf::Style::Default,
-            this->gfxSettings._struct.contextSettings);
-    else
-        this->mWindow = new sf::RenderWindow(
-            this->gfxSettings._struct.resolution,
-            this->gfxSettings._struct.title,
-            sf::Style::Titlebar | sf::Style::Close,
-            this->gfxSettings._struct.contextSettings);
+    mWindow = new sf::RenderWindow(
+        gfxSettings._struct.resolution,
+        gfxSettings._struct.title,
+        sf::Style::Titlebar | sf::Style::Close,
+        gfxSettings._struct.contextSettings);
 
-    if (gfxSettings.getgfxsettings().fullscreen)
-        mWindow->create(this->gfxSettings._struct.resolution, this->gfxSettings._struct.title, sf::Style::Fullscreen, this->gfxSettings._struct.contextSettings);
+    if (gfxSettings._struct.fullscreen && mWindow->isOpen()) {
 
-    this->mWindow->setFramerateLimit(this->gfxSettings._struct.frameRateLimit);
-    this->mWindow->setVerticalSyncEnabled(this->gfxSettings._struct.verticalSync);
-    this->mWindow->setKeyRepeatEnabled(false);
+        gfxSettings._struct._winResolutions = mWindow->getSize();
+        mWindow->create(
+            sf::VideoMode(gfxSettings._struct._winResolutions.x, gfxSettings._struct._winResolutions.y),
+            gfxSettings._struct.title, sf::Style::Fullscreen, gfxSettings._struct.contextSettings);
+    }
+
+    mWindow->setFramerateLimit(gfxSettings._struct.frameRateLimit);
+    mWindow->setVerticalSyncEnabled(gfxSettings._struct.verticalSync);
+    mWindow->setKeyRepeatEnabled(false);
 }
 
 Core::Core()

@@ -14,6 +14,7 @@ enum class logType {
 class Logger {
 private:
     std::ofstream logFile;
+
 public:
     Logger()
     {

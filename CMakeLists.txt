@@ -9,29 +9,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_OSX_SYSROOT /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk)
 
 #set build type
-message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Debug) 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Debug) 
 else()
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle)
 endif()
+message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 message("Debug build = ${CMAKE_BUILD_TYPE}")
 
 #include all files for build project
 file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
-# chek operation system
-if(WIN32)
-    set(OPERATION_SYSTEM "Windows")
-elseif(APPLE)
-    set(OPERATION_SYSTEM "MacOS")
-elseif(UNIX)
-    set(OPERATION_SYSTEM "Unix")
-else()
-    set(OPERATION_SYSTEM "Other")
-endif()
 
 #include SFML library on project
 find_package(SFML 2.6.1 COMPONENTS graphics window system REQUIRED)
@@ -63,11 +53,6 @@ set_source_files_properties(${myApp_ICON} PROPERTIES MACOSX_PACKAGE_LOCATION "Re
 set(Template_ver metadata/cmakever.h.in )
 configure_file(${Template_ver} ${CMAKE_CURRENT_BINARY_DIR}/../source/cmakever.h)
 
-if(WIN32)
-
-endif()
-
-
 if(APPLE)
 #Configure plist file for bundle
 set(DATA_BUNDLE_BUNDLE_NAME "Ekzeckt")
@@ -77,9 +62,8 @@ set(DATA_BUNDLE_INFO_STRING "Ekzeckt")
 set(DATA_BUNDLE_BUNDLE_VERSION "${CMAKE_PROJECT_VERSION}")
 string(CONCAT DATA_BUNDLE_SHORT_VERSION_STRING "v" ${CMAKE_PROJECT_VERSION_MINOR} "." ${CMAKE_PROJECT_VERSION_PATCH})
 
-set(METADATA_DIR ${CMAKE_SOURCE_DIR}/metadata)
+
 set(DATA_BUNDLE_ICON_NAME "ico.png")
-set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 set(DATA_BUNDLE_ICON_FILE ${CMAKE_SOURCE_DIR}/metadata/ico.png)
 
 configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
@@ -97,6 +81,8 @@ configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Inf
     target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system)
     target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
+    set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
+
 
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
 endif()

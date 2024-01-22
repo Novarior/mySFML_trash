@@ -6,6 +6,7 @@ struct myGFXStruct {
     // Variables
     std::string title;
     sf::VideoMode resolution;
+    sf::Vector2u _winResolutions;
     bool fullscreen;
     bool verticalSync;
     unsigned frameRateLimit;
@@ -29,16 +30,15 @@ public:
         _struct.title = myConst::app_name;
         _struct.verticalSync = false;
         _struct.resolution = sf::VideoMode::getDesktopMode();
+        _struct.videoModes = sf::VideoMode::getFullscreenModes();
         _struct.fullscreen = true;
         _struct.frameRateLimit = 120;
         _struct.contextSettings.antialiasingLevel = 0;
-        _struct.videoModes = sf::VideoMode::getFullscreenModes();
         _struct.gridSize = 16.f;
         _struct._sound_master_vol = 50.f;
         _struct._sound_music_vol = 50.f;
         _struct._sound_sfx_vol = 50.f;
         _struct._sound_player_vol = 50.f;
-        
     }
 
     void setgfxsettings(const myGFXStruct gfx) { _struct = gfx; }

@@ -21,12 +21,6 @@
 #include <utility>
 #include <vector>
 
-// system include
-#ifdef __APPLE__
-#include <CoreFoundation/CoreFoundation.h>
-#include <pwd.h>
-#endif
-
 // include nlohmann/json libary
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;

@@ -2,11 +2,10 @@
 #define PARSER_JSON_FILE_HPP
 
 #include "../../Content/ItemsStuff/Inventory.hpp"
-#include "../../Nodes/Node.hpp"
 #include "../../entitys/entity.hpp"
 #include "../../entitys/player.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"
-#include "../../states/State.hpp"
+
 
 class Gamedata;
 class NodeViewer;
@@ -30,7 +29,6 @@ public:
     static const bool saveInventory(Inventory* inventory); // Save inventory data
     static const bool saveEntitys(std::vector<Entity*> entitys); // Save entities data
     static const bool saveKeyBinds(std::map<std::string, int>& keyBinds); // Save key bindings
-    static const bool saveNodesdata(std::vector<Node*> mNode); // Save nodes data
 };
 
 #endif // PARSER_JSON_FILE_HPP

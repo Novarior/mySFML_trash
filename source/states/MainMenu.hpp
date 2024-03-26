@@ -3,7 +3,6 @@
 
 #include "../GUI/GUISYS.hpp"
 #include "EditorState.hpp"
-#include "NodeViewer.hpp"
 #include "Process.hpp"
 #include "State.hpp"
 #include "settings.hpp"

@@ -13,12 +13,12 @@ void MainMenu::initRenderDefines()
         this->IstateData->sWindow->getSize().y));
 
     this->view.setSize(sf::Vector2f(
-        this->IstateData->sWindow->getSize().x,
-        this->IstateData->sWindow->getSize().y));
+        static_cast<float>(this->IstateData->sWindow->getSize().x),
+        static_cast<float>(this->IstateData->sWindow->getSize().y)));
 
     this->view.setCenter(sf::Vector2f(
-        this->IstateData->sWindow->getSize().x / 2,
-        this->IstateData->sWindow->getSize().y / 2));
+        static_cast<float>(this->IstateData->sWindow->getSize().x) / 2,
+        static_cast<float>(this->IstateData->sWindow->getSize().y) / 2));
 }
 
 void MainMenu::initKeybinds()
@@ -56,8 +56,8 @@ void MainMenu::initBackground()
             this->backgrond_shapes[i].getSize().y / 2));
 
         this->backgrond_shapes[i].setPosition(sf::Vector2f(
-            this->IstateData->sWindow->getSize().x / 2 - (this->backgrond_shapes[i].getSize().x / 2) + this->backgrond_shapes[i].getOrigin().x,
-            this->IstateData->sWindow->getSize().y / 2 - (this->backgrond_shapes[i].getSize().y / 2) + this->backgrond_shapes[i].getOrigin().y));
+            static_cast<float>(this->IstateData->sWindow->getSize().x) / 2 - (this->backgrond_shapes[i].getSize().x / 2) + this->backgrond_shapes[i].getOrigin().x,
+            static_cast<float>(this->IstateData->sWindow->getSize().y) / 2 - (this->backgrond_shapes[i].getSize().y / 2) + this->backgrond_shapes[i].getOrigin().y));
     }
     this->backgrond_shapes[0].scale(sf::Vector2f(2.f, 2.f));
 }
@@ -139,8 +139,8 @@ void MainMenu::resetView()
         static_cast<float>(this->IstateData->sWindow->getSize().y)));
 
     this->view.setCenter(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
+        static_cast<float>(this->IstateData->sWindow->getSize().x) / 2,
+        static_cast<float>(this->IstateData->sWindow->getSize().y) / 2));
 }
 
 MainMenu::MainMenu(StateData* statedata)
@@ -211,9 +211,6 @@ void MainMenu::updateButtons()
 
         if (this->buttons["NOICE_BNT"]->isPressed() && this->getKeytime())
             this->Istates->push(new EditorState(this->IstateData));
-
-        if (this->buttons["NODE_BTN"]->isPressed() && this->getKeytime())
-            this->Istates->push(new NodeViewer(this->IstateData));
     }
 }
 

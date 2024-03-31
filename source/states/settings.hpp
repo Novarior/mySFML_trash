@@ -1,6 +1,7 @@
 #ifndef CPP_SETTINGS_STATE_HPP
 #define CPP_SETTINGS_STATE_HPP
 
+#include "../locTexts/helperText.hpp"
 #include "State.hpp"
 
 /// @brief  Class for the settings state
@@ -50,6 +51,14 @@ private:
     void initGui(); // Initialize GUI
     void initPageLayout(); // Initialize page layout
     void resetGui(); // Reset GUI
+
+    // init categories settings
+    void initButtons();
+    void initGraphicsPage();
+    void initSounsPage();
+    void initGameplayPage();
+    void initKeyboardPage();
+    void initEctPage();
 
 public:
     /// @brief Constructor for SettingsState

@@ -24,6 +24,7 @@ private:
     void initStateData();
     void initState();
     void initWindow();
+    void initLocations();
 
 public:
     Core();

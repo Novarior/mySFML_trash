@@ -3,12 +3,10 @@
 #include "../header.h"
 
 enum class SoundCategory {
-    vol_VOID,
     vol_MASTER,
     vol_SFX, // Звуковые эффекты
     vol_MUSIC, // Музыка
     vol_AMBIENT, // Фоновые звуки
-    vol_PLAYER, // Звуки, связанные с действиями игрока
     vol_ENTITY, // Звуки, связанные с другими сущностями в игре
     vol_UI, // Звуки пользовательского интерфейса
     vol_DIALOGUE, // Диалоги или голосовые звуки
@@ -22,12 +20,10 @@ class VolumeManager {
 private:
     // Громкости
     std::map<SoundCategory, float> categoryVolumes = {
-        { SoundCategory::vol_VOID, 100.f },
         { SoundCategory::vol_MASTER, 100.f },
         { SoundCategory::vol_SFX, 100.f },
         { SoundCategory::vol_MUSIC, 100.f },
         { SoundCategory::vol_AMBIENT, 100.f },
-        { SoundCategory::vol_PLAYER, 100.f },
         { SoundCategory::vol_ENTITY, 100.f },
         { SoundCategory::vol_UI, 100.f },
         { SoundCategory::vol_DIALOGUE, 100.f },
@@ -35,6 +31,7 @@ private:
         { SoundCategory::vol_WEAPON, 100.f },
         { SoundCategory::vol_ENVIRONMENT, 100.f }
     };
+
 public:
     VolumeManager() { }
 

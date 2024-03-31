@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "locTexts/helperText.hpp"
 
 #if __APPLE__
 void Core::initDirectories()
@@ -65,6 +66,13 @@ void Core::initState()
     this->mState.push(new MainMenu(&this->mStatedata));
 }
 
+void Core::initLocations()
+{
+    helperText::Button::initializeLocalization(helperText::Language::ENG);
+    helperText::SettingsTexts::initializeLocalization(helperText::Language::ENG);
+    helperText::VolumeTexts::initializeLocalization(helperText::Language::ENG);
+}
+
 void Core::initWindow()
 {
     mWindow = new sf::RenderWindow(
@@ -93,6 +101,7 @@ Core::Core()
     this->initVar();
     this->initWindow();
     this->initStateData();
+    this->initLocations();
     this->initState();
 
     FPS::reset();

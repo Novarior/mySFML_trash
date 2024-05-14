@@ -11,7 +11,7 @@ public:
         this->m_name = "Poison of Regeneration";
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
 
-        if (this->m_texture.loadFromFile(std::string(sAppFunctions::get_resources_dir() + itemTextures::item_img_poison_small_regeneration)))
+        if (this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + itemTextures::item_img_poison_small_regeneration)))
             this->m_shape.setTexture(&this->m_texture);
         else
             Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::PoisonSmallRegeneration", logType::WARNING);

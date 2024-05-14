@@ -61,6 +61,7 @@ public:
     void updatePlayerInputs(const float& delta_time); // Update player inputs
     void updateGUI(const float& delta_time); // Update GUI
     void updateDebug(const float& delta_time); // Update debug
+    void updateSounds(const float& delta_time); // Update sounds
     void update(const float& delta_time); // Update state
 
     // Render functions

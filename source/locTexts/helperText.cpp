@@ -1,5 +1,6 @@
 #include "helperText.hpp"
 
+helperText::Language helperText::ApplicationLangue::currentLanguage = helperText::Language::ENG;
 // struct SettingsTexts
 std::string helperText::SettingsTexts::TEXT_RESOLUTION = "#RESOLUTION";
 std::string helperText::SettingsTexts::TEXT_FULLSCREEN = "#FULLSCREEN";

@@ -3,6 +3,7 @@
 
 #include "../locTexts/helperText.hpp"
 #include "State.hpp"
+#include "VolumeManager.hpp"
 
 /// @brief  Class for the settings state
 /// @note   Inherited from the State class
@@ -13,7 +14,7 @@ private:
         AUDIO,
         GRAPHICS,
         CONTROLS,
-        ECT,
+        GAMEPLAY,
         PAGE_COUNT
     };
     // Variables
@@ -60,6 +61,8 @@ private:
     void initKeyboardPage();
     void initEctPage();
 
+    void saveVolumeSettings(); // Save volume settings
+
 public:
     /// @brief Constructor for SettingsState
     /// @param state_data
@@ -67,6 +70,8 @@ public:
     virtual ~SettingsState();
 
     // Functions
+    void updateSounds(const float& delta_time); // Update sounds
+
     void updateAudioPage(const float& delta_time); // Update audio page
     void updateGraphicsPage(const float& delta_time); // Update graphics page
     void updateControlsPage(const float& delta_time); // Update controls page

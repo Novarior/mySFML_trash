@@ -15,6 +15,10 @@ enum class Language {
     ENG,
     RUS
 };
+
+// абстрактный класс которы хранит текущий выбраный язык
+// также есть переменная (строчкая и булиевая) которая хранит то что язык кастомный
+
 // стуктура со всякими кнопочками приложения
 struct Button {
     static std::string BUTTON_PLAY;
@@ -34,10 +38,10 @@ struct Button {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
             break;
         case Language::RUS:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
             break;
         }
 
@@ -45,6 +49,7 @@ struct Button {
         std::ifstream ifs(filename);
         if (!ifs.is_open()) {
             std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
+            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperButton::initializeLocalization()");
             return;
         }
 
@@ -61,6 +66,7 @@ struct Button {
         BUTTON_LOAD = json["BUTTONS"].value("LOCAL_LOAD", "@Load Text");
         BUTTON_NEW_GAME = json["BUTTONS"].value("LOCAL_NEW_GAME", "@New Game Text");
         BUTTON_CONTINUE = json["BUTTONS"].value("LOCAL_CONTINUE", "@Continue Text");
+        BUTTON_NOICE_EDITOR = json["BUTTONS"].value("LOCAL_NOICE_EDITOR", "@Noice Editor Text");
 
         // и так далее для остальных строк...
     }
@@ -83,16 +89,23 @@ struct VolumeTexts {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
             break;
         case Language::RUS:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
             break;
         }
 
-        std::ifstream file(filename);
         nlohmann::json json;
-        file >> json;
+        std::ifstream ifs(filename);
+        if (!ifs.is_open()) {
+            std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
+            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperVolumeTexts::initializeLocalization()");
+            return;
+        }
+
+        ifs >> json;
+        ifs.close();
 
         VOL_MASTER = json["AUDIO_OPTIONS"].value("LOCAL_MASTER", "@Master Volume");
         VOL_SFX = json["AUDIO_OPTIONS"].value("LOCAL_SFX", "@SFX Volume");
@@ -128,16 +141,23 @@ struct SettingsTexts {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
             break;
         case Language::RUS:
-            filename = sAppFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
             break;
         }
 
-        std::ifstream file(filename);
         nlohmann::json json;
-        file >> json;
+        std::ifstream ifs(filename);
+        if (!ifs.is_open()) {
+            std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
+            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperSettingsTexts::initializeLocalization()");
+            return;
+        }
+
+        ifs >> json;
+        ifs.close();
 
         TEXT_RESOLUTION = json["SETTING_OPTIONS"].value("LOCAL_RESOLUTION", "@Resolution Text");
         TEXT_FULLSCREEN = json["SETTING_OPTIONS"].value("LOCAL_FULLSCREEN", "@Fullscreen Text");
@@ -153,8 +173,21 @@ struct SettingsTexts {
         TEXT_SAVE = json["SETTING_OPTIONS"].value("LOCAL_SAVE", "@Save Text");
         TEXT_LOAD = json["SETTING_OPTIONS"].value("LOCAL_LOAD", "@Load Text");
         TEXT_EXIT = json["SETTING_OPTIONS"].value("LOCAL_EXIT", "@Exit Text");
+    }
+};
 
-        // и так далее для остальных строк...
+class ApplicationLangue {
+public:
+    static Language currentLanguage;
+
+    // метод для установки языка
+    static void setLanguage(Language language)
+    {
+        currentLanguage = language;
+
+        helperText::Button::initializeLocalization(language);
+        helperText::SettingsTexts::initializeLocalization(language);
+        helperText::VolumeTexts::initializeLocalization(language);
     }
 };
 }; // namespace helperText

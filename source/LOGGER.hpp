@@ -18,10 +18,10 @@ private:
 public:
     Logger()
     {
-        logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
+        logFile.open(ApplicationsFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {
             std::cerr << "Logger: Unable to open the log file. Creating a new one." << std::endl;
-            logFile.open(sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
+            logFile.open(ApplicationsFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
             if (!logFile) {
                 throw std::runtime_error("Logger: Unable to open the backup log file");
             }
@@ -33,7 +33,7 @@ public:
             logFile.close();
             // Создаем резервную копию лог-файла
 
-            std::filesystem::copy(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::filesystem::copy_options::overwrite_existing);
+            std::filesystem::copy(ApplicationsFunctions::getDocumentsAppFolder() + "/" + "log.log", ApplicationsFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::filesystem::copy_options::overwrite_existing);
         }
     }
 
@@ -46,12 +46,12 @@ public:
         };
         std::string typeString = logTypes[static_cast<int>(level)];
 
-        std::string logEntry = "[" + sAppFunctions::getCurrentTime() + "] _L: " + typeString + "\t_S: " + source + " -> " + message;
+        std::string logEntry = "[" + ApplicationsFunctions::getCurrentTime() + "] _L: " + typeString + "\t_S: " + source + " -> " + message;
         std::ofstream logFile;
-        logFile.open(sAppFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
+        logFile.open(ApplicationsFunctions::getDocumentsAppFolder() + "/" + "log.log", std::ios::app);
         if (!logFile) {
             std::cerr << "Logger: Unable to open the log file. Creating a new one." << std::endl;
-            logFile.open(sAppFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
+            logFile.open(ApplicationsFunctions::getDocumentsAppFolder() + "/backup_" + "log.log", std::ios::app);
             if (!logFile) {
                 throw std::runtime_error("Logger: Unable to open the backup log file");
             }

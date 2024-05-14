@@ -34,19 +34,20 @@ private:
 
 public:
     VolumeManager() { }
-
-    /// @brief set master volume
-    void setMasterVolume(float volume) { categoryVolumes[SoundCategory::vol_MASTER] = volume; }
-    /// @brief set volume using category
+    // set value Volume by category
     void setCategoryVolume(SoundCategory category, float volume) { categoryVolumes[category] = volume; }
-    /// @brief  get master volume
-    float getMasterVolume() const { return categoryVolumes.at(SoundCategory::vol_MASTER); }
-    /// @brief get volume using category
+
+    // get value Volume by category
     float getCategoryVolume(SoundCategory category) const
     {
         auto it = categoryVolumes.find(category);
         return it != categoryVolumes.end() ? it->second : 100.f;
     }
+
+    // get all categories for next save to file
+    const std::map<SoundCategory, float> getCategoryVolumes() const { return categoryVolumes; }
+    // get size of map categoryVolumes
+    const size_t getCategoryVolumesSize() const { return categoryVolumes.size() - 1; }
 };
 
 #endif // !AUDIO_MANAGER_HPP

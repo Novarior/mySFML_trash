@@ -27,6 +27,7 @@ PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font)
         this->container.getPosition().y + mmath::p2pY(4.f, vm));
 }
 
+
 PauseMenu::~PauseMenu()
 {
     // logger

@@ -22,6 +22,9 @@ private:
     std::vector<sf::Texture> background_textures;
     std::vector<sf::RectangleShape> backgrond_shapes;
 
+    sf::SoundBuffer testSoundBuffer;
+    sf::Sound testSound;
+
     // Initialization methods
     void initRenderDefines(); // Initialize render settings
     void initKeybinds(); // Initialize key bindings
@@ -29,6 +32,7 @@ private:
     void initBackground(); // Initialize background
     void initGUI(); // Initialize GUI
     void resetGUI(); // Reset GUI
+    void initSounds(); // Initialize sounds
 
     // Elements for start
     void resetView(); // Reset view
@@ -40,6 +44,7 @@ public:
     // Update methods
     void updateInput(const float& delta_time); // Update input
     void updateButtons(); // Update buttons
+    void updateSounds(const float& delta_time); // Update sounds
     void updateGUI(const float& delta_time); // Update GUI
     void update(const float& delta_time); // Update state
     void render(sf::RenderWindow& target); // Render

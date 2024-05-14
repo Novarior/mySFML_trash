@@ -1,4 +1,5 @@
 #include "MainMenu.hpp"
+#include "VolumeManager.hpp"
 
 void MainMenu::initRenderDefines()
 {
@@ -34,13 +35,13 @@ void MainMenu::initBackground()
     for (int i = 0; i < 3; i++) {
         this->background_textures.push_back(sf::Texture());
     }
-    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_3));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_3));
     tx.setSmooth(true);
     this->background_textures[0] = tx;
-    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_2));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_2));
     tx.setSmooth(true);
     this->background_textures[1] = tx;
-    tx.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_1));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::texture_background_mainmenu_lay_1));
     tx.setSmooth(true);
     this->background_textures[2] = tx;
 
@@ -136,6 +137,12 @@ void MainMenu::resetView()
         static_cast<float>(this->IstateData->sWindow->getSize().y) / 2));
 }
 
+void MainMenu::initSounds()
+{
+    this->testSoundBuffer.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sound_test));
+    this->testSound.setBuffer(this->testSoundBuffer);
+}
+
 MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
@@ -145,6 +152,7 @@ MainMenu::MainMenu(StateData* statedata)
     this->initRenderDefines();
     this->initKeybinds();
     this->initButtons();
+    this->initSounds();
 }
 
 MainMenu::~MainMenu()
@@ -158,6 +166,7 @@ MainMenu::~MainMenu()
     this->buttons.clear();
 
     this->backgrond_shapes.clear();
+    this->testSound.stop();
 }
 
 void MainMenu::update(const float& delta_time)
@@ -172,6 +181,7 @@ void MainMenu::update(const float& delta_time)
     this->updateMousePositions(&this->view);
     this->updateInput(delta_time);
     this->updateButtons();
+    this->updateSounds(delta_time);
 }
 
 void MainMenu::updateInput(const float& delta_time)
@@ -229,6 +239,19 @@ void MainMenu::updateGUI(const float& delta_time)
     this->backgrond_shapes[0].rotate(delta_time);
     this->backgrond_shapes[1].rotate(-delta_time);
 }
+
+void MainMenu::updateSounds(const float& delta_time)
+{
+    // get volume from VolumeManager
+    this->testSound.setVolume(this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MUSIC));
+    // play sound
+    this->testSound.setLoop(true);
+
+    if (this->testSound.getStatus() == sf::Sound::Status::Stopped || this->testSound.getStatus() == sf::Sound::Status::Paused) {
+        this->testSound.play();
+    }
+}
+
 void MainMenu::render(sf::RenderWindow& target)
 {
     this->renderTexture.clear();

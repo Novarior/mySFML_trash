@@ -13,9 +13,9 @@ const char config_entitydata[] = "/config/entitysdata.json";
 const char config_inventory[] = "/config/inventorydata.json";
 const char config_playerdata[] = "/config/playerdata.json";
 const char config_window[] = "/config/window.json";
+const char config_soundvolume[] = "/config/soundvolume.json";
 const char config_keybinds[] = "/config/keybinds.json";
 const char config_noicedata[] = "/config/noicedata.json";
-const char config_nodesdata[] = "/config/nodesdata.json";
 // localisation
 const char localisation_RU[] = "/localisation/RUS.json";
 const char localisation_EN[] = "/localisation/ENG.json";
@@ -24,6 +24,7 @@ const char localisation_EN[] = "/localisation/ENG.json";
 const char data_debugfont_path[] = "/fonts/Muli-Regular.ttf";
 const char data_gameproces_font_path[] = "/fonts/Blackwood Castle.ttf";
 const char data_gameproces_font_path_2[] = "/fonts/Alamak.ttf";
+const char data_gameproces_font_path_3[] = "/fonts/712_serif.ttf";
 
 // GUI textures
 const char texture_CellInventory_path[] = "/textures/textures/CellOutLine.png";
@@ -56,6 +57,10 @@ const char item_img_someore[] = "/textures/Images/some_ore.png";
 const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";
 const char texture_background_mainmenu_lay_2[] = "/textures/Images/Lay_2.png";
 const char texture_background_mainmenu_lay_3[] = "/textures/Images/Lay_3.png";
+
+// sounds
+
+const char sound_test[] = "/sounds/music/test_01.wav";
 };
 
 #endif // myConst_h

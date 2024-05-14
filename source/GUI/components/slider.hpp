@@ -44,11 +44,6 @@ public:
         _sliderCircle.setOutlineThickness(1.f);
         _sliderCircle.setOutlineColor(sf::Color::Black);
 
-        float new_x = _sliderCircle.getRadius();
-        new_x = std::max(new_x, _sliderBox.getPosition().x);
-        new_x = std::min(new_x, _sliderBox.getPosition().x + _sliderBox.getSize().x - 2 * _sliderCircle.getRadius());
-        _sliderCircle.setPosition(new_x, _sliderCircle.getPosition().y);
-
         // параметры для текста (значение слайдера)
         _textValue.setFont(_font);
         _textValue.setCharacterSize(character_size);

@@ -8,9 +8,10 @@
         "LOCAL_CANCEL" : "Отмена",
         "LOCAL_SAVE" : "Сохранить",
         "LOCAL_LOAD" : "Загрузить",
-        "LOCAL_NEW_GAME" : "Новая игра"
+        "LOCAL_NEW_GAME" : "Новая игра",
+        "LOCAL_CONTINUE" : "Продолжить",    
+        "LOCAL_NOICE_EDITOR": "Редактор "
     },
-
 
     "AUDIO_OPTIONS": {
         "LOCAL_MASTER": "Общая громкость",

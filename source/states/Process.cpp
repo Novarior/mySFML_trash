@@ -78,21 +78,14 @@ void Process::intGUI() // init GUI
 
 void Process::initView()
 {
-    this->view.setSize(sf::Vector2f(
+    sf::Vector2f halfSize = sf::Vector2f(
         static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
-
-    this->view.setCenter(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
-
-    this->playerView.setSize(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
-
-    this->playerView.setCenter(sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2)));
+        static_cast<float>(this->IstateData->sWindow->getSize().y / 2));
+        
+    this->view.setSize(halfSize);
+    this->view.setCenter(halfSize);
+    this->playerView.setSize(halfSize);
+    this->playerView.setCenter(halfSize);
 
     this->renderTexture.create(
         this->IstateData->sWindow->getSize().x,
@@ -360,6 +353,10 @@ void Process::updateDebug(const float& delta_time)
 
     this->dText.setString(this->dString_Stream.str());
     this->dString_Stream.str("");
+}
+
+void Process::updateSounds(const float& delta_time)
+{
 }
 
 ////////////////////////////////////////////////////////////////////////////////////

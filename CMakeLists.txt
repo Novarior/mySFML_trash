@@ -24,7 +24,7 @@ file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
 
 #include SFML library on project
-find_package(SFML 2.6.1 COMPONENTS graphics window system REQUIRED)
+find_package(SFML 2.6.1 COMPONENTS graphics window system audio REQUIRED)
 message("SFML_FOUND = ${SFML_FOUND}")
 
 #find nlohmann json library
@@ -78,7 +78,7 @@ configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Inf
         target_compile_options(Ekzeckt PUBLIC -O3)
     endif() 
 
-    target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system)
+    target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system sfml-audio)
     target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
     set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")

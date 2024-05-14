@@ -3,4 +3,5 @@ bin/.DS_Store
 bin/
 build/
 CMakeFiles/
+source/res/*
 .cache

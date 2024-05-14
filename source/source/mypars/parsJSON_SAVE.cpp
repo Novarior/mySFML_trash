@@ -1,134 +1,8 @@
 #include "parsJSON.hpp"
 
-// load playes
-const bool ParserJson::loadPlayer(Entity& player)
-{ // open json file
-    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
-        return false;
-    }
-    // load from json file
-
-    return true;
-}
-// load inventory
-const bool ParserJson::loadInventory(Inventory* inventory)
-{ // Check if inventory is null
-    if (!inventory) {
-        printf("ERROR::PARSER::LOAD::INVENTORY::INVENTORY_IS_NULL\n");
-        return false;
-    }
-
-    // Open the file
-    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_inventory);
-
-    // Check if the file is open
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
-        return false;
-    }
-
-    // Parse the JSON from the file
-    try {
-        json j;
-        ifs >> j;
-
-        // Load items
-        for (auto& item : j["inventory"]["items"]) {
-            if (item["slot"] != nullptr) {
-                // Create a new item
-                Item* newItem = static_cast<Item*>(ItemRegistry::getItem(item["unic ID"]));
-
-                // Add the item to the inventory
-                inventory->addItem(newItem);
-            }
-        }
-
-        // Load coins
-        inventory->getCoins().set_GoldCoinCouns(j["inventory"]["coins"]["gold"]);
-        inventory->getCoins().set_SilverCoinCouns(j["inventory"]["coins"]["silver"]);
-        inventory->getCoins().set_CopperCoinCouns(j["inventory"]["coins"]["copper"]);
-
-    } catch (const std::exception& e) {
-        Logger::log("Cant load inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n", e.what());
-        return false;
-    }
-
-    return true;
-}
-// load  entitys
-const bool ParserJson::loadEntitys(std::vector<Entity*>& entitys)
-{ // open json file
-
-    return false;
-}
-// load keybinds
-const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
-{ // load key binds from json file
-    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
-    if (!ifs.is_open()) {
-        printf("PARSER cant open file: %s\n", std::string(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds).c_str());
-        Logger::log("Parcer cant open file: " + sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds, "CORE->PARS", logType::ERROR);
-        return false;
-    }
-
-    try {
-        json j;
-        ifs >> j;
-
-        for (auto& element : j["key_binds"].items()) {
-            std::string name = element.key();
-            int value = element.value();
-            keyBinds[name] = value;
-        }
-    } catch (json::parse_error& e) {
-        printf("ERROR::PARSER::JSON::PARSE_ERROR\n   %s\n", e.what());
-        Logger::log("JSON parse error: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        return false;
-    }
-
-    ifs.close();
-    return true;
-}
-
-// load noice data
-const bool ParserJson::loadNoiceData(mmath::noiceData& data)
-{
-    // Open the file
-    std::ifstream ifs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
-
-    // Check if the file is open
-    if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
-        return false;
-    }
-
-    // Parse the JSON from the file
-    try {
-        json j;
-        ifs >> j;
-
-        // Read the noise data from the JSON
-        data.seed = j["noice"]["seed"];
-        data.octaves = j["noice"]["octaves"];
-        data.frequency = j["noice"]["frequency"];
-        data.amplifire = j["noice"]["amplifire"];
-        data.persistence = j["noice"]["persistence"];
-        data.smoothMode = j["noice"]["smooth"];
-    } catch (const std::exception& e) {
-        printf("ERROR::PARSER::LOAD::NOICEDATA::UNKNOWN_LINE\n   %s\n", e.what());
-        return false;
-    }
-
-    return true;
-}
-
 // SAVES
-// save player
 const bool ParserJson::savePlayer(Entity* player)
-{
+{ // save player
     // check if player is not null
     if (player == nullptr) {
         Logger::log("Cant save player: player is null", "CORE->PARS", logType::ERROR);
@@ -156,7 +30,7 @@ const bool ParserJson::savePlayer(Entity* player)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
@@ -166,10 +40,8 @@ const bool ParserJson::savePlayer(Entity* player)
 
     return true;
 }
-
-// save inventory
 const bool ParserJson::saveInventory(Inventory* inventory)
-{
+{ // save inventory
     // Check if inventory is null
     if (!inventory) {
         printf("ERROR::PARSER::SAVE::INVENTORY::INVENTORY_IS_NULL\n");
@@ -209,7 +81,7 @@ const bool ParserJson::saveInventory(Inventory* inventory)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_inventory);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_inventory);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
@@ -217,10 +89,8 @@ const bool ParserJson::saveInventory(Inventory* inventory)
     }
     return true;
 }
-
-// save entitys
 const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
-{
+{ // save entitys
     // Create a JSON object
     json j;
 
@@ -246,11 +116,11 @@ const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_entitydata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_entitydata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars can't save entities" << sAppFunctions::getDocumentsAppFolder() << myConst::config_entitydata;
+        ss << "Pars can't save entities" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config_entitydata;
         Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
         return false;
@@ -258,10 +128,8 @@ const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
 
     return true;
 }
-
-// save noicedata
 const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
-{
+{ // save noicedata
     // Create a JSON object
     json j;
     j["noice"] = {
@@ -278,7 +146,7 @@ const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
@@ -288,10 +156,8 @@ const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
 
     return true;
 }
-
-// save keybinds
 const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
-{
+{ // save keybinds
     // Create a JSON object
     json j;
     for (const auto& i : keyBinds) {
@@ -300,13 +166,35 @@ const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(sAppFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars can't save keybinds" << sAppFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
+        ss << "Pars can't save keybinds" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
         Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
+        return false;
+    }
+
+    return true;
+}
+
+const bool ParserJson::saveSoundVolumes(VolumeManager* data)
+{ // save sound volumes from VolumeManager class
+    // Write the JSON object to the file
+    try {
+        json j;
+        // Save the sound volumes to the JSON object
+        for (const auto& category : data->getCategoryVolumes()) {
+            j["sound_volumes"][static_cast<int>(category.first)] = category.second;
+        }
+        // Write the JSON object to the file
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_soundvolume);
+        ofs << std::setw(4) << j;
+    } catch (const std::exception& e) {
+        // catch exception
+        Logger::log("Cant save sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        printf("ERROR::PARSER::SAVE::SOUNDVOLUMES::FILE_NOT_OPEN\n   %s\n", myConst::config_soundvolume);
         return false;
     }
 

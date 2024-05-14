@@ -4,8 +4,10 @@
 // including stl lib
 #include <algorithm>
 #include <cmath>
+#include <execution>
 #include <filesystem>
 #include <fstream>
+#include <ios>
 #include <iostream>
 #include <map>
 #include <ostream>

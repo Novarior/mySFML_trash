@@ -9,6 +9,9 @@ using libs:
 - SFML
 - nlohmann/JSON
 
+Fonts was taken from:
+- https://www.1001fonts.com
+
 - tested on MacOS
 
 ```

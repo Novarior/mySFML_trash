@@ -349,6 +349,10 @@ void EditorState::updateButtons(const float& delta_time)
     this->m_noiceData.smoothMode = this->selector->getActiveElementID();
 }
 
+void EditorState::updateSounds(const float& delta_time)
+{
+}
+
 void EditorState::update(const float& delta_time)
 {
     // update keytime for next function used it for keypress delay

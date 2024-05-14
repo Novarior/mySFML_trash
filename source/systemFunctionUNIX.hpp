@@ -15,7 +15,7 @@
 // include consts
 #include "myConst.h"
 
-class sAppFunctions {
+class ApplicationsFunctions {
 private:
     /// @brief create app directory in documents folder
     static void createAppDirectories()
@@ -40,10 +40,10 @@ private:
     }
 
 public:
-    sAppFunctions() { }
-    ~sAppFunctions() { }
-    // get path to resources folder
+    ApplicationsFunctions() { }
+    ~ApplicationsFunctions() { }
 
+    // get path to resources folder from out application bundle
     static const std::string get_resources_dir()
     {
         CFURLRef resourceURL = CFBundleCopyResourcesDirectoryURL(CFBundleGetMainBundle());

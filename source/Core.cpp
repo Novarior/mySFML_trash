@@ -1,10 +1,13 @@
 #include "Core.h"
+#include "LOGGER.hpp"
 #include "locTexts/helperText.hpp"
+#include "myConst.h"
+#include <nl_types.h>
 
 #if __APPLE__
 void Core::initDirectories()
 { // check if app directory exists
-    if (sAppFunctions::checkAppDirectoryExists())
+    if (ApplicationsFunctions::checkAppDirectoryExists())
         Logger::log("App directory not exists, Create...", "Core::initDirectories()");
 }
 #endif
@@ -14,16 +17,20 @@ void Core::initVar()
 {
     this->mWindow = NULL;
 
-    if (!this->gfxSettings.loadFromFile(sAppFunctions::getDocumentsAppFolder()))
-        this->gfxSettings.saveToFile(sAppFunctions::getDocumentsAppFolder());
+    if (!this->gfxSettings.loadFromFile())
+        this->gfxSettings.saveToFile();
 }
 
 void Core::initStateData()
 {
     this->mStatedata.sWindow = this->mWindow;
     this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_gameproces_font_path))) { }
-    if (!this->mStatedata.debugFont.loadFromFile(std::string(sAppFunctions::get_resources_dir() + myConst::data_debugfont_path))) { }
+    if (!this->mStatedata.font.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_gameproces_font_path_3))) {
+        Logger::log("ERROR::GAMEPROCES::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_gameproces_font_path_3), "Core::initStateData()");
+    }
+    if (!this->mStatedata.debugFont.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_debugfont_path))) {
+        Logger::log("ERROR::DEBUG::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_debugfont_path), "Core::initStateData()");
+    }
     this->mStatedata.supportedKeys = &this->supportedKeys;
     this->mStatedata.gfxSettings = &this->gfxSettings;
     this->mStatedata.grid_size = this->gfxSettings._struct.gridSize;
@@ -68,9 +75,7 @@ void Core::initState()
 
 void Core::initLocations()
 {
-    helperText::Button::initializeLocalization(helperText::Language::ENG);
-    helperText::SettingsTexts::initializeLocalization(helperText::Language::ENG);
-    helperText::VolumeTexts::initializeLocalization(helperText::Language::ENG);
+    helperText::ApplicationLangue::setLanguage(helperText::Language::ENG);
 }
 
 void Core::initWindow()
@@ -110,7 +115,7 @@ Core::Core()
 
 Core::~Core()
 {
-    this->gfxSettings.saveToFile(sAppFunctions::getDocumentsAppFolder());
+    this->gfxSettings.saveToFile();
 
     while (!this->mState.empty()) {
         delete this->mState.top();

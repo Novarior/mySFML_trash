@@ -45,47 +45,55 @@ public:
     const myGFXStruct getgfxsettings() { return _struct; }
 
     // save to file
-    const bool
-    saveToFile(const std::string directoryPath)
+    const bool saveToFile()
     {
-        // Создаем объект JSON
         json j;
+        std::string path = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window;
 
-        // Заполняем объект данными
-        j["resolution"]["width"] = _struct.resolution.width;
-        j["resolution"]["height"] = _struct.resolution.height;
-        j["fullscreen"] = _struct.fullscreen;
-        j["frameRateLimit"] = _struct.frameRateLimit;
-        j["verticalSync"] = _struct.verticalSync;
-        j["antialiasingLevel"] = _struct.contextSettings.antialiasingLevel;
-        j["gridSize"] = _struct.gridSize;
+        // Read the existing JSON file
+        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window);
+        if (!ifs.is_open()) {
+            Logger::log("GFX::COULD NOT LOAD TO FILE: " + path, "GFX()", logType::ERROR);
+            return false;
+        }
+        // Fill the object with data
+        try {
+            ifs >> j;
+            j["window"]["resolution"]["width"] = _struct.resolution.width;
+            j["window"]["resolution"]["height"] = _struct.resolution.height;
+            j["window"]["fullscreen"] = _struct.fullscreen;
+            j["window"]["frameRateLimit"] = _struct.frameRateLimit;
+            j["window"]["verticalSync"] = _struct.verticalSync;
+            j["window"]["antialiasingLevel"] = _struct.contextSettings.antialiasingLevel;
+            j["window"]["gridSize"] = _struct.gridSize;
+        } catch (json::type_error& e) {
+            Logger::log("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            return false;
+        }
+        ifs.close();
+        // Open the file for writing
+        std::ofstream ofs(path, std::ios::ate);
 
-        // Создаем путь к файлу
-        std::string filePath = directoryPath + "/Config/config.json";
-
-        // Открываем файл для записи
-        std::ofstream ofs(filePath);
-
-        // Проверяем, открылся ли файл
+        // Check if the file opened
         if (!ofs.is_open()) {
-            Logger::log("GFX::COULD NOT SAVE TO FILE: " + filePath, "GFX()", logType::ERROR);
+            Logger::log("GFX::COULD NOT SAVE TO FILE: " + path, "GFX()", logType::ERROR);
             return false;
         }
 
-        // Записываем JSON в файл
+        // Write the JSON to the file
         ofs << j.dump(4) << std::endl;
 
-        // Закрываем файл
+        // Close the file
         ofs.close();
 
         return true;
     }
 
     // load from file
-    const bool loadFromFile(const std::string directoryPath)
+    const bool loadFromFile()
     {
         // Создаем путь к файлу
-        std::string filePath = directoryPath + "/Config/config.json";
+        std::string filePath = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window;
 
         // Открываем файл для чтения
         std::ifstream ifs(filePath);
@@ -96,26 +104,30 @@ public:
             return false;
         }
 
-        // Создаем объект JSON
-        nlohmann::json j;
-
-        // Читаем JSON из файла
-        ifs >> j;
-
-        // Закрываем файл
+        json j;
+        try {
+            ifs >> j;
+        } catch (json::exception& e) {
+            Logger::log("GFX::JSON::PARSE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            return false;
+        }
         ifs.close();
 
         // Заполняем данные из JSON
-        _struct.resolution.width = j["resolution"]["width"];
-        _struct.resolution.height = j["resolution"]["height"];
-        _struct.fullscreen = j["fullscreen"];
-        _struct.frameRateLimit = j["frameRateLimit"];
-        _struct.verticalSync = j["verticalSync"];
-        _struct.contextSettings.antialiasingLevel = j["antialiasingLevel"];
-        _struct.gridSize = j["gridSize"];
-
+        try {
+            _struct.resolution.width = j["window"]["resolution"]["width"];
+            _struct.resolution.height = j["window"]["resolution"]["height"];
+            _struct.fullscreen = j["window"]["fullscreen"];
+            _struct.frameRateLimit = j["window"]["frameRateLimit"];
+            _struct.verticalSync = j["window"]["verticalSync"];
+            _struct.contextSettings.antialiasingLevel = j["window"]["antialiasingLevel"];
+            _struct.gridSize = j["window"]["gridSize"];
+        } catch (json::type_error& e) {
+            Logger::log("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            return false;
+        }
         return true;
-    }
+    };
 };
 
 #endif

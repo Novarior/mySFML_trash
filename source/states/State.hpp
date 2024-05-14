@@ -39,7 +39,6 @@ public:
     unsigned int characterSize_game_small; // Character size for small game text
     bool reserGUI; // Flag to reset GUI
 
-    
     sf::Event* sEvent; // Pointer to the SFML event
 };
 
@@ -92,6 +91,8 @@ public:
     void pauseState() { this->Ipaused = true; } // Pause the state
     void unpauseState() { this->Ipaused = false; } // Unpause the state
 
+    // update sounds (virtual function)
+    virtual void updateSounds(const float& delta_time) = 0;
     // Update mouse positions (virtual function)
     virtual void updateMousePositions(sf::View* view = NULL);
     // Update key time (virtual function)

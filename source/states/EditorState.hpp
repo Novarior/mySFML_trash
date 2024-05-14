@@ -39,6 +39,7 @@ private:
     void updateInput(const float& delta_time); // Update input
     void updateButtons(const float& delta_time); // Update buttons
     void updateDebugText(const float& delta_time); // Update debug text
+    void updateSounds(const float& delta_time); // Update sounds
 
     // Render functions
     void renderTabMenu(sf::RenderTarget& target); // Render tab menu

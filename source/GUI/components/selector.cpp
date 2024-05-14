@@ -15,14 +15,14 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned
     // init buttons
     this->buttons["left"] = new gui::Button(
         sf::Vector2f(pos.x, pos.y),
-        sf::Vector2f(mmath::p2pX(10, size.x), size.y),
+        sf::Vector2f(mmath::p2pX(15, size.x), size.y),
         font, "-", 30,
         sf::Color::White, sf::Color(200, 200, 200, 200), sf::Color(150, 150, 150, 200),
         sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
 
     this->buttons["right"] = new gui::Button(
         sf::Vector2f(this->box.getPosition().x + this->box.getSize().x, pos.y),
-        sf::Vector2f(mmath::p2pX(10, size.x), size.y),
+        sf::Vector2f(mmath::p2pX(15, size.x), size.y),
         font, "+", 30,
         sf::Color::White, sf::Color(200, 200, 200, 200), sf::Color(150, 150, 150, 200),
         sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
@@ -32,8 +32,8 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned
     this->text.setString(list[0]);
     this->text.setCharacterSize(character_size);
     this->text.setPosition(
-        this->box.getPosition().x + (this->box.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->box.getPosition().y + (this->box.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);
+        this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f),
+        this->box.getPosition().y + this->text.getGlobalBounds().height / 2.f);
     this->text.setFillColor(sf::Color(255, 255, 255, 200));
 
     // init list
@@ -88,8 +88,8 @@ void Selector::update(const float& delta_time, const sf::Vector2i& mousePos)
         this->text.setString(this->list[this->activeElement]);
     }
     this->text.setPosition(
-        this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f,
-        this->box.getPosition().y + this->box.getSize().y / 2.f - this->text.getGlobalBounds().height / 2.f);
+        this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f),
+        this->box.getPosition().y + -this->text.getGlobalBounds().height / 2.f);
 }
 
 void Selector::updateKeyTime(const float& delta_time)

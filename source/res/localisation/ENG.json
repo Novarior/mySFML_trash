@@ -8,7 +8,9 @@
         "LOCAL_CANCEL" : "Cancel",
         "LOCAL_SAVE" : "Save",
         "LOCAL_LOAD" : "Load",
-        "LOCAL_NEW_GAME" : "New Game"
+        "LOCAL_NEW_GAME" : "New Game",
+        "LOCAL_CONTINUE" : "Continue",
+        "LOCAL_NOICE_EDITOR": "Noice Editor"
     },
 
     "AUDIO_OPTIONS": {

@@ -22,7 +22,7 @@ gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::st
     this->text.setCharacterSize(character_size);
     this->text.setPosition(
         this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);
+        this->shape.getPosition().y + this->text.getGlobalBounds().height / 2.f);
 
     this->textIdleColor = text_idle_color;
     this->textHoverColor = text_hover_color;

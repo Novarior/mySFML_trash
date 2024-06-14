@@ -13,13 +13,16 @@ class MovementComponent
     float deceleration;
     float maxVelocity;
     sf::Vector2f velocity;
-    public:
+    sf::Vector2f directons;
+
+public:
     MovementComponent(sf::Sprite& sprite, const float acceleration, const float deceleration, const float maxVelocity);
     ~MovementComponent();
 
     //Accessors
     const float& getMaxVelocity() const;
     const sf::Vector2f& getVelocity() const;
+    const sf::Vector2f& getDirectionVec() const;
 
     //Functions
     void stopVelocity();
@@ -27,6 +30,7 @@ class MovementComponent
     void stopVelocityY();
 
     void move(const float& dir_x, const float& dir_y, const float& delta_time);
+    float handleVelocity(float velocity, float deceleration, float maxVelocity, float delta_time);
     void update(const float& dt);
 };
 #endif

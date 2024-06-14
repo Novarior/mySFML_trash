@@ -144,13 +144,13 @@ void Process::initEntitys()
     // get random position from map array
     std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
 
-    // for (size_t i = 0; i < 32; i++) {
-    //     // call function to get random position
-    //     this->entitys.push_back(new Slime(
-    //         spawnPosArray[rand() % spawnPosArray.size()].x,
-    //         spawnPosArray[rand() % spawnPosArray.size()].y,
-    //         *this->player));
-    // }
+    for (size_t i = 0; i < 1; i++) {
+        // call function to get random position
+        this->entitys.push_back(new Slime(
+            spawnPosArray[rand() % spawnPosArray.size()].x,
+            spawnPosArray[rand() % spawnPosArray.size()].y,
+            *this->player));
+    }
 }
 
 void Process::registerItems()
@@ -265,7 +265,7 @@ void Process::updateGUI(const float& delta_time)
     if (this->t_inventory->getIsOpened()) // update inventory
         this->t_inventory->update(this->mousePosWindow);
     if (this->minimap != nullptr) // update minimap
-        this->minimap->update(this->player->e_getPosition());
+        this->minimap->update(this->player->e_getPosition(), this->entitys[0]->e_getPosition());
 
     this->playerBar["HP_BAR"]->update(this->player->getAttributes()->getAttributes().health, this->player->getAttributes()->getAttributes().max_health);
     this->playerBar["MP_BAR"]->update(this->player->getAttributes()->getAttributes().mana, this->player->getAttributes()->getAttributes().max_mana);
@@ -336,6 +336,9 @@ void Process::updateDebug(const float& delta_time)
         << "\n\tPlayer: " << sizeof(*this->player) << " = " << sizeof(Player) << " bytes"
         << "\n\tEntitys: " << this->entitys.size() << " x " << sizeof(Entity) << " = " << this->entitys.size() * sizeof(Entity) << " bytes"
         << "\n\tTotal Entitys: " << Entity::count_entitys
+        << "\n\tEntity[0] Data:"
+        << "\n\t\tmovDir: " << this->entitys[0]->getMovement()->getDirectionVec().x << ' ' << this->entitys[0]->getMovement()->getDirectionVec().y
+        << "\n\t\tmovVel: " << this->entitys[0]->getMovement()->getVelocity().x << ' ' << this->entitys[0]->getMovement()->getVelocity().y
         << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
         << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
         << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"

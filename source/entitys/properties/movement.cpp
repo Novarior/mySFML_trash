@@ -1,10 +1,13 @@
 #include "movement.hpp"
 
-MovementComponent::MovementComponent(sf::Sprite& sprite, const float acceleration, const float deceleration, const float maxVelocity) :
-	sprite(sprite) {
-	this->acceleration = acceleration;
-	this->deceleration = deceleration;
-	this->maxVelocity = maxVelocity;
+MovementComponent::MovementComponent(sf::Sprite& sprite, const float acceleration, const float deceleration, const float maxVelocity)
+    : sprite(sprite)
+    , acceleration(acceleration)
+    , deceleration(deceleration)
+    , maxVelocity(maxVelocity)
+    , directons(0.f, 0.f)
+    , velocity(0.f, 0.f)
+{
 }
 
 MovementComponent::~MovementComponent() {  }
@@ -36,48 +39,42 @@ void MovementComponent::move(const float& dir_x, const float& dir_y, const float
 	/* Accelerating a sprite until it reaches the max velocity. */
 	this->velocity.x += this->acceleration * delta_time * dir_x;
 	this->velocity.y += this->acceleration * delta_time * dir_y;
+
+        this->directons.x = dir_x;
+        this->directons.y = dir_y;
 }
 
 void MovementComponent::update(const float& delta_time) {
 	//Decelerates the sprite and controls the maximum velocity.
-	//Moves the sprite.
-	if (this->velocity.x > 0.f) {//Check for positive x
-		//Deceleration
-		this->velocity.x -= this->deceleration * delta_time;
-		if (this->velocity.x < 0.f)
-			this->velocity.x = 0.f;
-		//Max velocity check
-		if (this->velocity.x > this->maxVelocity)
-			this->velocity.x = this->maxVelocity;
+        this->velocity.x = this->handleVelocity(this->velocity.x, this->deceleration, this->maxVelocity, delta_time);
+        this->velocity.y = this->handleVelocity(this->velocity.y, this->deceleration, this->maxVelocity, delta_time);
+        // Final move
+        this->sprite.move(this->velocity.x, this->velocity.y); // Uses velocity
+}
 
-	}
-	else if (this->velocity.x < 0.f) {//Check for negative x
-		//Deceleration
-		this->velocity.x += deceleration * delta_time;
-		if (this->velocity.x > 0.f)
-			this->velocity.x = 0.f;
-		//Max velocity check
-		if (this->velocity.x < -this->maxVelocity)
-			this->velocity.x = -this->maxVelocity;
-	}
-	if (this->velocity.y > 0.f) {//Check for positive y
-		//Deceleration
-		this->velocity.y -= this->deceleration * delta_time;
-		if (this->velocity.y < 0.f)
-			this->velocity.y = 0.f;
-		//Max velocity check
-		if (this->velocity.y > this->maxVelocity)
-			this->velocity.y = this->maxVelocity;
-	}
-	else if (this->velocity.y < 0.f) {//Check for negative y
-		//Deceleration
-		this->velocity.y += deceleration * delta_time;
-		if (this->velocity.y > 0.f)
-			this->velocity.y = 0.f;
-		//Max velocity check
-		if (this->velocity.y < -this->maxVelocity)
-			this->velocity.y = -this->maxVelocity;
-	}
-	//Final move
-	this->sprite.move(this->velocity.x, this->velocity.y); //Uses velocity
+const sf::Vector2f& MovementComponent::getDirectionVec() const
+{
+    return this->directons;
+}
+
+float MovementComponent::handleVelocity(float velocity, float deceleration, float maxVelocity, float delta_time)
+{ // BUG FIX: velocity is stop if they are not in the range of maxVelocity (-1.f, 1.f)
+    // if velocity is less than 1.f, it will be set to 0.f
+    // if velocity is greater than -1.f, it will be set to 0.f
+    // fix, write logic for working with different ranges of velocity (0.231f & 0.521f)
+
+    if (velocity > 0.f) { // positive range velocity
+        velocity -= deceleration * delta_time;
+        if (velocity < 0.f)
+            velocity = 0.f;
+        if (velocity > maxVelocity)
+            velocity = maxVelocity;
+    } else if (velocity < 0.f) { // negative range velocity
+        velocity += deceleration * delta_time;
+        if (velocity > 0.f)
+            velocity = 0.f;
+        if (velocity < -maxVelocity)
+            velocity = -maxVelocity;
+    }
+    return velocity;
 }

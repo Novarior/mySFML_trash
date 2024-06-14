@@ -7,6 +7,8 @@
 #include "../staticFPSMetter.hpp"
 #include "VolumeManager.hpp"
 #include "gfx.hpp"
+#include <memory>
+#include <vector>
 
 // Forward declaration of State class
 class State;
@@ -23,6 +25,7 @@ public:
         this->sStates = nullptr;
         this->gfxSettings = nullptr;
         this->sEvent = nullptr;
+        this->reserGUI = false;
     }
 
     float grid_size; // Size of the grid
@@ -30,6 +33,7 @@ public:
     sf::Font font; // Font used in the game
     sf::Font debugFont; // Font used for debugging
     GraphicsSettings* gfxSettings; // Pointer to the graphics settings
+    std::vector<VolumeManager*> volumeManager; // Vector for link to volume manager
 
     std::stack<State*>* sStates; // Stack of states
     std::map<std::string, int>* supportedKeys; // Map of supported keys
@@ -53,7 +57,7 @@ protected:
     sf::Event* Ievent; // Pointer to the SFML event
     std::map<std::string, int>* IsupportedKeys; // Map of supported keys
     std::map<std::string, int> Ikeybinds; // Map of key bindings
-    std::unique_ptr<VolumeManager> IvolumeManager; // Volume manager
+    std::shared_ptr<VolumeManager> IvolumeManager; // Volume manager
 
     // Resources
     bool Iquit; // Flag to quit the state
@@ -71,6 +75,9 @@ protected:
     sf::Text dText; // Debug text
     bool debugMode; // Flag for debug mode
     std::map<std::string, sf::Texture> textures; // Map of textures
+
+    sf::SoundBuffer IsoundBuffer;
+    sf::Sound Isound;
 
     // Functions
     virtual void initKeybinds() = 0; // Initialize key bindings (pure virtual function)

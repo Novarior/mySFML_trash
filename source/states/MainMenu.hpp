@@ -22,8 +22,7 @@ private:
     std::vector<sf::Texture> background_textures;
     std::vector<sf::RectangleShape> backgrond_shapes;
 
-    sf::SoundBuffer testSoundBuffer;
-    sf::Sound testSound;
+
 
     // Initialization methods
     void initRenderDefines(); // Initialize render settings

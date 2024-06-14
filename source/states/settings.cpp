@@ -10,6 +10,11 @@ void SettingsState::initVariables()
     _gfxResource["GFX_ALL"] = std::vector<int> { 0, 2, 4, 8, 16 };
     _gfxResource["GFX_VSYNC"] = std::vector<int> { 0, 1 };
     _gfxResource["GFX_FULLSCREEN"] = std::vector<int> { 0, 1 };
+
+    // link to volume manager
+    for (size_t it = 0; it < this->IvolumeManager->getCategoryVolumesSize(); it++) {
+        this->IstateData->volumeManager.push_back(this->IvolumeManager.get());
+    }
 }
 
 void SettingsState::initFonts()
@@ -521,8 +526,11 @@ void SettingsState::updateInput(const float& delta_time)
 
 void SettingsState::updateAudioPage(const float& delta_time) // Update audio page
 {
-    for (auto& it : _sound_SliderMap)
+    for (auto& it : _sound_SliderMap) {
+
         it.second->update(this->mousePosView);
+        this->IvolumeManager->setCategoryVolume(it.first, it.second->getValue());
+    }
 }
 
 void SettingsState::updateSounds(const float& delta_time)

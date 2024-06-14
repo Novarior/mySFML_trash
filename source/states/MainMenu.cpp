@@ -139,8 +139,16 @@ void MainMenu::resetView()
 
 void MainMenu::initSounds()
 {
-    this->testSoundBuffer.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sound_test));
-    this->testSound.setBuffer(this->testSoundBuffer);
+    // link to volume manager
+    for (size_t it = 0; it < this->IvolumeManager->getCategoryVolumesSize(); it++) {
+        this->IstateData->volumeManager.push_back(this->IvolumeManager.get());
+    }
+
+    this->IsoundBuffer.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sound_test));
+    this->Isound.setBuffer(this->IsoundBuffer);
+    this->Isound.setLoop(true);
+    this->Isound.setVolume(this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER)
+        * this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MUSIC) / 100);
 }
 
 MainMenu::MainMenu(StateData* statedata)
@@ -166,7 +174,7 @@ MainMenu::~MainMenu()
     this->buttons.clear();
 
     this->backgrond_shapes.clear();
-    this->testSound.stop();
+    this->Isound.stop();
 }
 
 void MainMenu::update(const float& delta_time)
@@ -230,7 +238,18 @@ void MainMenu::updateGUI(const float& delta_time)
             << "\nResolution:\t" << this->IstateData->sWindow->getSize().x << " x " << this->IstateData->sWindow->getSize().y
             << "\nAntialiasing:\t" << this->IstateData->sWindow->getSettings().antialiasingLevel
             << "\nvSync:\t" << this->IstateData->gfxSettings->_struct.verticalSync
-            << "\nMouse Pos:\t" << this->mousePosWindow.x << " x " << this->mousePosWindow.y;
+            << "\nMouse Pos:\t" << this->mousePosWindow.x << " x " << this->mousePosWindow.y
+            << "\nVolume: "
+            << "\n\tMASTER: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_MASTER))
+            << "\n\tSFX: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_SFX))
+            << "\n\tMUSIC: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_MUSIC))
+            << "\n\tAMBIENT: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_AMBIENT))
+            << "\n\tENTITY: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_ENTITY))
+            << "\n\tUI: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_UI))
+            << "\n\tDIALOGUE: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_DIALOGUE))
+            << "\n\tFOLEY: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_FOLEY))
+            << "\n\tWEAPON: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_WEAPON))
+            << "\n\tENVIRONMENT: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_ENVIRONMENT));
         this->dText.setString(this->dString_Stream.str());
         this->dString_Stream.str("");
     }
@@ -242,14 +261,12 @@ void MainMenu::updateGUI(const float& delta_time)
 
 void MainMenu::updateSounds(const float& delta_time)
 {
-    // get volume from VolumeManager
-    this->testSound.setVolume(this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MUSIC));
-    // play sound
-    this->testSound.setLoop(true);
 
-    if (this->testSound.getStatus() == sf::Sound::Status::Stopped || this->testSound.getStatus() == sf::Sound::Status::Paused) {
-        this->testSound.play();
+    if (this->Isound.getStatus() == sf::Sound::Status::Stopped || this->Isound.getStatus() == sf::Sound::Status::Paused) {
+        this->Isound.play();
     }
+    this->Isound.setVolume(this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER)
+        * this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MUSIC) / 100);
 }
 
 void MainMenu::render(sf::RenderWindow& target)

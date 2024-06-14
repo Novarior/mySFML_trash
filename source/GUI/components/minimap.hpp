@@ -1,6 +1,6 @@
 #ifndef GUI_SIMPLE_COMPONENTS_MINIMAP_HPP
 #define GUI_SIMPLE_COMPONENTS_MINIMAP_HPP
-#include "../GUISYS.hpp"
+#include "../../header.h"
 
 namespace gui {
 class MiniMap {
@@ -10,6 +10,7 @@ private:
     sf::RectangleShape m_background;
     sf::RectangleShape m_view;
     sf::RectangleShape m_player;
+    sf::RectangleShape m_entity;
     sf::IntRect m_worldBounds;
 
 public:
@@ -26,7 +27,7 @@ public:
         this->m_background.setTexture(&this->m_texture);
     }
 
-    void update(sf::Vector2f playerPos);
+    void update(sf::Vector2f playerPos, sf::Vector2f entitys);
     void render(sf::RenderTarget& target);
 };
 }

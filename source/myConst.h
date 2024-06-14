@@ -1,6 +1,8 @@
 #ifndef myConst_h
 #define myConst_h
 
+#define __MDEBUG__ 1
+
 namespace myConst {
 // path constants
 

@@ -18,11 +18,14 @@ MiniMap::MiniMap(const sf::Vector2f m_position, const sf::Vector2f m_size, sf::I
 
     this->m_player.setSize(sf::Vector2f(5.f, 5.f));
     this->m_player.setFillColor(sf::Color::Red);
+
+    this->m_entity.setSize(sf::Vector2f(2.f, 2.f));
+    this->m_entity.setFillColor(sf::Color::Red);
 }
 
 MiniMap::~MiniMap() { }
 
-void MiniMap::update(sf::Vector2f playerPos)
+void MiniMap::update(sf::Vector2f playerPos, sf::Vector2f entitys)
 {
     // Получите размеры миникарты
     sf::Vector2f miniMapSize = this->m_background.getSize();
@@ -38,6 +41,15 @@ void MiniMap::update(sf::Vector2f playerPos)
 
     // Установите позицию игрока на миникарте
     this->m_player.setPosition(miniMapPos + this->m_background.getPosition());
+    // Выполните нормализацию координат точки в диапазоне [0, 1]
+    normalizedX = (entitys.x - this->m_worldBounds.left) / this->m_worldBounds.width;
+    normalizedY = (entitys.y - this->m_worldBounds.top) / this->m_worldBounds.height;
+
+    // Умножьте нормализованные координаты на размеры миникарты
+
+    miniMapPos.x = normalizedX * miniMapSize.x;
+    miniMapPos.y = normalizedY * miniMapSize.y;
+    this->m_entity.setPosition(miniMapPos + this->m_background.getPosition());
 }
 
 void MiniMap::render(sf::RenderTarget& target)
@@ -45,6 +57,7 @@ void MiniMap::render(sf::RenderTarget& target)
     target.draw(this->m_background);
     target.draw(this->m_view);
     target.draw(this->m_player);
+    target.draw(this->m_entity);
 }
 
 } // namespace gui

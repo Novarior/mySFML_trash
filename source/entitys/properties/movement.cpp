@@ -37,11 +37,29 @@ void MovementComponent::stopVelocityY() {/* Resets the velocity y to 0.*/
 
 void MovementComponent::move(const float& dir_x, const float& dir_y, const float& delta_time) {
 	/* Accelerating a sprite until it reaches the max velocity. */
-	this->velocity.x += this->acceleration * delta_time * dir_x;
-	this->velocity.y += this->acceleration * delta_time * dir_y;
+        /* Accelerating a sprite until it reaches the max velocity. */
+        float scaled_dir_x = dir_x;
+        float scaled_dir_y = dir_y;
 
-        this->directons.x = dir_x;
-        this->directons.y = dir_y;
+        if (dir_x != 0 && dir_y != 0) {
+            if (scaled_dir_x > 0.1f) {
+                scaled_dir_x = 1.f;
+            } else if (scaled_dir_x < -0.1f) {
+                scaled_dir_x = -1.f;
+            }
+
+            if (scaled_dir_y > 0.1f) {
+                scaled_dir_y = 1.f;
+            } else if (scaled_dir_y < -0.1f) {
+                scaled_dir_y = -1.f;
+            }
+        }
+
+        this->velocity.x += this->acceleration * delta_time * scaled_dir_x;
+        this->velocity.y += this->acceleration * delta_time * scaled_dir_y;
+
+        this->directons.x = scaled_dir_x;
+        this->directons.y = scaled_dir_y;
 }
 
 void MovementComponent::update(const float& delta_time) {

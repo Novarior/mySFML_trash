@@ -10,7 +10,7 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale(0.02f, 0.02f);
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 32.f, 32.f);
-    this->createMovementComponent(2.f, 1.4f, 2.1f);
+    this->createMovementComponent(2.f, 1.4f, 1.f);
     this->createAttributesComponent();
 
     this->e_setPosition(spawn_pos_x, spawn_pos_y);

@@ -293,75 +293,98 @@ void TileMap::updateWorldBoundsCollision(Entity* entity)
 }
 
 void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
-{ // TILES
-    this->m_colisionArea.fromX = entity->e_getGridPositionInt(_map_dataNoice.gridSize).x - 1;
-    if (this->m_colisionArea.fromX < 0)
-        this->m_colisionArea.fromX = 0;
-    else if (this->m_colisionArea.fromX > this->worldSizeGrid.x)
-        this->m_colisionArea.fromX = this->worldSizeGrid.x;
+{
+    auto entityGridPos = entity->e_getGridPositionInt(_map_dataNoice.gridSize);
 
-    this->m_colisionArea.toX = entity->e_getGridPositionInt(_map_dataNoice.gridSize).x + 3;
-    if (this->m_colisionArea.toX < 0)
-        this->m_colisionArea.toX = 0;
-    else if (this->m_colisionArea.toX > this->worldSizeGrid.x)
-        this->m_colisionArea.toX = this->worldSizeGrid.x;
-
-    this->m_colisionArea.fromY = entity->e_getGridPositionInt(_map_dataNoice.gridSize).y - 1;
-    if (this->m_colisionArea.fromY < 0)
-        this->m_colisionArea.fromY = 0;
-    else if (this->m_colisionArea.fromY > this->worldSizeGrid.y)
-        this->m_colisionArea.fromY = this->worldSizeGrid.y;
-
-    this->m_colisionArea.toY = entity->e_getGridPositionInt(_map_dataNoice.gridSize).y + 3;
-    if (this->m_colisionArea.toY < 0)
-        this->m_colisionArea.toY = 0;
-    else if (this->m_colisionArea.toY > this->worldSizeGrid.y)
-        this->m_colisionArea.toY = this->worldSizeGrid.y;
+    this->m_colisionArea.fromX = std::max(0, entityGridPos.x - 1);
+    this->m_colisionArea.toX = std::min(this->worldSizeGrid.x, entityGridPos.x + 3);
+    this->m_colisionArea.fromY = std::max(0, entityGridPos.y - 1);
+    this->m_colisionArea.toY = std::min(this->worldSizeGrid.y, entityGridPos.y + 3);
 
     for (int x = this->m_colisionArea.fromX; x < this->m_colisionArea.toX; x++) {
         for (int y = this->m_colisionArea.fromY; y < this->m_colisionArea.toY; y++) {
 
+            auto tile = this->tilemap[x][y][0];
+            if (!tile->getCollision())
+                continue;
+
             sf::IntRect playerBounds = sf::IntRect(entity->getGlobalBounds());
-            sf::IntRect wallBounds = sf::IntRect(this->tilemap[x][y][0]->getGlobalBounds());
+            sf::IntRect wallBounds = sf::IntRect(tile->getGlobalBounds());
             sf::IntRect nextPositionBounds = sf::IntRect(entity->getNextPositionBounds(delta_time));
 
-            if (this->tilemap[x][y][0]->getCollision() && this->tilemap[x][y][0]->intersects(nextPositionBounds)) {
+            if (tile->intersects(nextPositionBounds)) {
+                sf::Vector2f collisionDepth = getCollisionDepth(playerBounds, wallBounds);
 
-                // Bottom collision
-                if (playerBounds.top < wallBounds.top
-                    && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
-                    && playerBounds.left < wallBounds.left + wallBounds.width
-                    && playerBounds.left + playerBounds.width > wallBounds.left) {
-                    entity->getMovement()->stopVelocityY();
-                    entity->e_setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
-                }
-                // Top collision
-                else if (playerBounds.top > wallBounds.top
-                    && playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
-                    && playerBounds.left < wallBounds.left + wallBounds.width
-                    && playerBounds.left + playerBounds.width > wallBounds.left) {
-                    entity->getMovement()->stopVelocityY();
-                    entity->e_setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
-                }
-                // Right collision
-                if (playerBounds.left < wallBounds.left
-                    && playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
-                    && playerBounds.top < wallBounds.top + wallBounds.height
-                    && playerBounds.top + playerBounds.height > wallBounds.top) {
-                    entity->getMovement()->stopVelocityX();
-                    entity->e_setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
-                }
-                // Left collision
-                else if (playerBounds.left > wallBounds.left
-                    && playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
-                    && playerBounds.top < wallBounds.top + wallBounds.height
-                    && playerBounds.top + playerBounds.height > wallBounds.top) {
-                    entity->getMovement()->stopVelocityX();
-                    entity->e_setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                // Определение направления коллизии по глубине пересечения
+                if (collisionDepth.x > 0 && collisionDepth.y > 0) {
+                    if (collisionDepth.x < collisionDepth.y) {
+                        // Горизонтальная коллизия
+                        if (playerBounds.left < wallBounds.left) {
+                            entity->getMovement()->stopVelocityX();
+                            entity->e_setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
+                        } else {
+                            entity->getMovement()->stopVelocityX();
+                            entity->e_setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                        }
+                    } else {
+                        // Вертикальная коллизия
+                        if (playerBounds.top < wallBounds.top) {
+                            entity->getMovement()->stopVelocityY();
+                            entity->e_setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+                        } else {
+                            entity->getMovement()->stopVelocityY();
+                            entity->e_setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+sf::Vector2f TileMap::getCollisionDepth(const sf::IntRect& rectA, const sf::IntRect& rectB)
+{
+    float left = rectB.left - (rectA.left + rectA.width);
+    float right = (rectB.left + rectB.width) - rectA.left;
+    float top = rectB.top - (rectA.top + rectA.height);
+    float bottom = (rectB.top + rectB.height) - rectA.top;
+
+    float depthX = (std::abs(left) < right) ? left : right;
+    float depthY = (std::abs(top) < bottom) ? top : bottom;
+
+    return sf::Vector2f(depthX, depthY);
+}
+
+bool TileMap::checkBottomCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
+{
+    return playerBounds.top < wallBounds.top
+        && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+        && playerBounds.left < wallBounds.left + wallBounds.width
+        && playerBounds.left + playerBounds.width > wallBounds.left;
+}
+
+bool TileMap::checkTopCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
+{
+    return playerBounds.top > wallBounds.top
+        && playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
+        && playerBounds.left < wallBounds.left + wallBounds.width
+        && playerBounds.left + playerBounds.width > wallBounds.left;
+}
+
+bool TileMap::checkRightCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
+{
+    return playerBounds.left < wallBounds.left
+        && playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
+        && playerBounds.top < wallBounds.top + wallBounds.height
+        && playerBounds.top + playerBounds.height > wallBounds.top;
+}
+
+bool TileMap::checkLeftCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
+{
+    return playerBounds.left > wallBounds.left
+        && playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
+        && playerBounds.top < wallBounds.top + wallBounds.height
+        && playerBounds.top + playerBounds.height > wallBounds.top;
 }
 
 void TileMap::updateAnimationTiles(const float& delta_time)

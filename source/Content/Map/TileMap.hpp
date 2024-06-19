@@ -92,6 +92,13 @@ public:
     inline const sf::Vector2f& getMapSizeOnFloat() { return this->worldSizeFloat; }
     inline const rectangleWithOffset& getRenderArea() { return this->m_renderArea; }
 
+    sf::Vector2f getCollisionDepth(const sf::IntRect& rectA, const sf::IntRect& rectB);
+
+    bool checkBottomCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds);
+    bool checkTopCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds);
+    bool checkRightCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds);
+    bool checkLeftCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds);
+
     void updateWorldBoundsCollision(Entity* entity);
     void updateTileCollision(Entity* entity, const float& delta_time);
     void updateAnimationTiles(const float& delta_time);

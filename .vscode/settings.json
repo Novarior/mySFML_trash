@@ -102,7 +102,9 @@
         "condition_variable": "cpp",
         "numbers": "cpp",
         "semaphore": "cpp",
-        "*.in": "xml"
+        "*.in": "xml",
+        "execution": "cpp",
+        "print": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
@@ -132,5 +134,6 @@
     "todo-tree.tree.showBadges": true,
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showCountsInTree": false,
-    "todo-tree.tree.scanMode": "workspace only"
+    "todo-tree.tree.scanMode": "workspace only",
+    "C_Cpp.errorSquiggles": "disabled"
 }

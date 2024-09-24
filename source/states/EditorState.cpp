@@ -14,10 +14,10 @@ void EditorState::initKeybinds()
 void EditorState::initTabMenu()
 { // tab menu
     this->tabShape.setPosition(sf::Vector2f(
-        mmath::p2pX(70, this->IstateData->sWindow->getSize().x), 0));
+        mmath::p2pX(70, this->IstateData->sd_Window->getSize().x), 0));
     this->tabShape.setSize(sf::Vector2f(
-        mmath::p2pX(30, this->IstateData->sWindow->getSize().x),
-        this->IstateData->sWindow->getSize().y));
+        mmath::p2pX(30, this->IstateData->sd_Window->getSize().x),
+        this->IstateData->sd_Window->getSize().y));
     // half transparent gray
     this->tabShape.setFillColor(sf::Color(150, 150, 150, 200));
     this->tabShape.setOutlineThickness(5.f);
@@ -28,33 +28,33 @@ void EditorState::initTabMenu()
 void EditorState::initButtons()
 { // init buttons
     this->buttons["G_NOICE"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Gen Noice", this->IstateData->characterSize_game_big,
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Gen Noice", this->IstateData->sd_characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["G_TREE"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Gen Tree", this->IstateData->characterSize_game_big,
+        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Gen Tree", this->IstateData->sd_characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["SAVE_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Save", this->IstateData->characterSize_game_big,
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Save", this->IstateData->sd_characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["LOAD_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, "Load", this->IstateData->characterSize_game_big,
+        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Load", this->IstateData->sd_characterSize_game_big,
         sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
@@ -64,30 +64,30 @@ void EditorState::initSelectors()
 { // init static selector in tab menu
     this->staticSelector["OCTAVES"] = new gui::StaticSelector(
         sf::Vector2f(this->tabShape.getPosition()),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 1.f, true, "Octaves: ");
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 1.f, true, "Octaves: ");
 
     this->staticSelector["FREQUENCY"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 0.1f, true, "Frequency: ");
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 0.1f, true, "Frequency: ");
 
     this->staticSelector["PERSISTENCE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 5, 0.1f, true, "Persistence: ");
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 5, 0.1f, true, "Persistence: ");
 
     this->staticSelector["AMPLIFIRE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, 0, 10, 0.1f, true, "Amplifire: ");
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 0.1f, true, "Amplifire: ");
 
     std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
 
     this->selector = new gui::Selector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        this->IstateData->font, this->IstateData->characterSize_game_big, list.data(), list.size(), 0);
+        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, list.data(), list.size(), 0);
 
     // set default value for static selector
     this->staticSelector["OCTAVES"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().octaves);
@@ -107,11 +107,11 @@ void EditorState::initNoice()
         this->m_noiceData.amplifire = 1;
         this->m_noiceData.persistence = 0.6f;
     }
-    this->m_noiceData.gridSize = this->IstateData->grid_size;
-    this->m_noiceData.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
-    this->m_noiceData.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
-    this->m_noiceData.mapSizeX = this->IstateData->gfxSettings->_struct.resolution.width;
-    this->m_noiceData.mapSizeY = this->IstateData->gfxSettings->_struct.resolution.height;
+    this->m_noiceData.gridSize = this->IstateData->sd_gridSize;
+    this->m_noiceData.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
+    this->m_noiceData.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
+    this->m_noiceData.mapSizeX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
+    this->m_noiceData.mapSizeY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
     this->m_noiceData.smoothMode = 0;
 
     // init data for noice viewer
@@ -121,12 +121,12 @@ void EditorState::initNoice()
 
 void EditorState::initDebugText()
 { // init debug text
-    this->dText.setFont(this->IstateData->debugFont);
-    this->dText.setCharacterSize(this->IstateData->characterSize_debug);
-    this->dText.setPosition(sf::Vector2f(0, 0));
-    this->dText.setFillColor(sf::Color::White);
-    this->dText.setOutlineColor(sf::Color::Black);
-    this->dText.setOutlineThickness(2.f);
+    this->Itext.setFont(this->IstateData->sd_debugFont);
+    this->Itext.setCharacterSize(this->IstateData->sd_characterSize_debug);
+    this->Itext.setPosition(sf::Vector2f(0, 0));
+    this->Itext.setFillColor(sf::Color::White);
+    this->Itext.setOutlineColor(sf::Color::Black);
+    this->Itext.setOutlineThickness(2.f);
 }
 
 EditorState::EditorState(StateData* statedata)
@@ -146,7 +146,7 @@ EditorState::EditorState(StateData* statedata)
     this->myLS = new LSystem();
     this->myLS->setRule('d', "qd");
     this->myLS->setRule('s', "d[-qqs]+qqs");
-    this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sWindow->getSize().x / 2, this->IstateData->sWindow->getSize().y * 0.70));
+    this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2, this->IstateData->sd_Window->getSize().y * 0.70));
     this->myLS->generate();
 
     Logger::log("End initilization EditorState", "EditorState::EditorState()");
@@ -228,7 +228,7 @@ void EditorState::saveTreeAsImage(sf::RenderWindow& window)
     // create name for image file
     // add time to name for unique name
     std::stringstream ss;
-    ss << myConst::f_Trees << "tree" << std::to_string(std::time(nullptr)) << ".png";
+    ss << myConst::textures::f_Trees << "tree" << std::to_string(std::time(nullptr)) << ".png";
 
     // save image
     simg.saveToFile(ss.str());
@@ -241,7 +241,7 @@ void EditorState::updateInput(const float& delta_time)
         this->endState();
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
-        this->debugMode = !this->debugMode;
+        this->Idebud = !this->Idebud;
 
     // switch tab menu
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("TAB_MENU"))) && this->getKeytime())
@@ -270,36 +270,36 @@ void EditorState::updateDebugText(const float& delta_time)
 {
     // collect all data for debug text and update it
     double fps = 1.0f / delta_time;
-    this->dString_Stream
+    this->IstringStream
         << "FPS:\t" << fps
         << "\nCurent view generator:\t" << this->current_View_Generator
         << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
         << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode();
     if (this->m_NoiceViewer->getNoiceModel() == noiceType::PERLIN_NOICE_V2)
-        this->dString_Stream
+        this->IstringStream
             << "\nCurent noice smooth mode:\t" << this->m_NoiceViewer->getNoiceSmouthName() << ":\t" << this->m_NoiceViewer->getNoiceData().smoothMode
             << "\nSeed:\t" << this->m_NoiceViewer->getNoiceData().seed
             << "\nFastMode" << this->m_NoiceViewer->getNoiceData().fastMode;
-    this->dString_Stream
+    this->IstringStream
         << "\nTree Data:"
         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
         << "\nPause:\t" << this->Ipaused;
 
     // update debug text
-    this->dText.setString(this->dString_Stream.str());
+    this->Itext.setString(this->IstringStream.str());
     // clear string stream
-    this->dString_Stream.str("");
+    this->IstringStream.str("");
 }
 
 void EditorState::updateButtons(const float& delta_time)
 {
     for (auto& it : this->buttons)
-        it.second->update(this->mousePosWindow);
+        it.second->update(this->ImousePosWindow);
 
     for (auto& it : this->staticSelector)
-        it.second->update(delta_time, this->mousePosWindow);
+        it.second->update(delta_time, this->ImousePosWindow);
 
-    this->selector->update(delta_time, this->mousePosWindow);
+    this->selector->update(delta_time, this->ImousePosWindow);
 
     // update buttons using switch case for each button
     switch (this->current_View_Generator) {
@@ -339,13 +339,13 @@ void EditorState::updateButtons(const float& delta_time)
     case 1: // tree case
         if (this->buttons["G_TREE"]->isPressed()) {
             this->myLS->generate();
-            this->saveTreeAsImage(*this->IstateData->sWindow);
+            this->saveTreeAsImage(*this->IstateData->sd_Window);
         }
         break;
     default: // default case
         break;
     }
-    this->selector->update(delta_time, this->mousePosWindow);
+    this->selector->update(delta_time, this->ImousePosWindow);
     this->m_noiceData.smoothMode = this->selector->getActiveElementID();
 }
 
@@ -364,7 +364,7 @@ void EditorState::update(const float& delta_time)
         this->updateButtons(delta_time);
 
     // update debug text
-    if (this->debugMode)
+    if (this->Idebud)
         this->updateDebugText(delta_time);
 }
 
@@ -402,6 +402,6 @@ void EditorState::render(sf::RenderWindow& target)
 
     // layer 2 - debug text render
     // render debug text
-    if (this->debugMode)
-        target.draw(this->dText);
+    if (this->Idebud)
+        target.draw(this->Itext);
 }

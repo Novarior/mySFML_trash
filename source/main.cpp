@@ -1,4 +1,3 @@
-
 #define JSON_ImplicitConversions 0
 
 #include "Core.h"

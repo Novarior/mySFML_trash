@@ -7,8 +7,6 @@
 #include "../staticFPSMetter.hpp"
 #include "VolumeManager.hpp"
 #include "gfx.hpp"
-#include <memory>
-#include <vector>
 
 // Forward declaration of State class
 class State;
@@ -20,30 +18,31 @@ public:
     // Constructor initializes all pointers to nullptr
     StateData()
     {
-        this->sWindow = nullptr;
-        this->supportedKeys = nullptr;
-        this->sStates = nullptr;
-        this->gfxSettings = nullptr;
-        this->sEvent = nullptr;
+        this->sd_Window = nullptr;
+        this->sd_supportedKeys = nullptr;
+        this->sd_States = nullptr;
+        this->sd_gfxSettings = nullptr;
+        this->sd_Event = nullptr;
         this->reserGUI = false;
+        this->sd_volumeManager = nullptr;
     }
 
-    float grid_size; // Size of the grid
-    sf::RenderWindow* sWindow; // Pointer to the SFML window
-    sf::Font font; // Font used in the game
-    sf::Font debugFont; // Font used for debugging
-    GraphicsSettings* gfxSettings; // Pointer to the graphics settings
-    std::vector<VolumeManager*> volumeManager; // Vector for link to volume manager
+    float sd_gridSize; // Size of the grid
+    sf::RenderWindow* sd_Window; // Pointer to the SFML window
+    sf::Font sd_font; // Font used in the game
+    sf::Font sd_debugFont; // Font used for debugging
+    GraphicsSettings* sd_gfxSettings; // Pointer to the graphics settings
+    std::shared_ptr<VolumeManager> sd_volumeManager; // Vector for link to volume manager
 
-    std::stack<State*>* sStates; // Stack of states
-    std::map<std::string, int>* supportedKeys; // Map of supported keys
-    unsigned int characterSize_debug; // Character size for debug text
-    unsigned int characterSize_game_big; // Character size for big game text
-    unsigned int characterSize_game_medium; // Character size for medium game text
-    unsigned int characterSize_game_small; // Character size for small game text
+    std::stack<State*>* sd_States; // Stack of states
+    std::map<std::string, int>* sd_supportedKeys; // Map of supported keys
+    unsigned int sd_characterSize_debug; // Character size for debug text
+    unsigned int sd_characterSize_game_big; // Character size for big game text
+    unsigned int sd_characterSize_game_medium; // Character size for medium game text
+    unsigned int sd_characterSize_game_small; // Character size for small game text
     bool reserGUI; // Flag to reset GUI
 
-    sf::Event* sEvent; // Pointer to the SFML event
+    sf::Event* sd_Event; // Pointer to the SFML event
 };
 
 // Abstract class for game states
@@ -66,22 +65,35 @@ protected:
     float IkeytimeMax; // Maximum time between key presses
     float IgridSize; // Size of the grid
 
-    sf::Vector2i mousePosScreen; // Position of the mouse on the screen
-    sf::Vector2i mousePosWindow; // Position of the mouse in the window
-    sf::Vector2f mousePosView; // Position of the mouse in the view
-    sf::Vector2i mousePosGrid; // Position of the mouse on the grid
+    sf::Vector2i ImousePosScreen; // Position of the mouse on the screen
+    sf::Vector2i ImousePosWindow; // Position of the mouse in the window
+    sf::Vector2f ImousePosView; // Position of the mouse in the view
+    sf::Vector2i ImousePosGrid; // Position of the mouse on the grid
 
-    std::stringstream dString_Stream; // Stream for debug string
-    sf::Text dText; // Debug text
-    bool debugMode; // Flag for debug mode
-    std::map<std::string, sf::Texture> textures; // Map of textures
+    std::stringstream IstringStream; // Stream for debug string
+    sf::Text Itext; // Debug text
+    bool Idebud; // Flag for debug mode into game
+    std::map<std::string, sf::Texture> Itextures; // Map of textures
 
-    sf::SoundBuffer IsoundBuffer;
-    sf::Sound Isound;
+    // Sounds and him elements for game (volume, sound, buffer, ect )
+    std::shared_ptr<std::map<std::string, sf::Sound>> IsoundsMap; // shared map with sounds and name itself
+    std::shared_ptr<std::map<std::string, sf::SoundBuffer>> IsoundBufferMap; // Map of sound buffers, one buffer with one sound
 
-    // Functions
+    void initBuffer(); // Initialize buffer
+
+    // Functions for self state
     virtual void initKeybinds() = 0; // Initialize key bindings (pure virtual function)
     void reCaclulateCharacterSize(); // Recalculate character size
+
+    // Functions for sounds
+    virtual bool loadSoundtoBuffer(std::string _namepath, std::string _typename); // Load sound to buffer
+    void playSound(std::string _typename); // Play sound
+
+    // functions accses
+    inline void setVolume(SoundCategory _category, const float _newVal) // Set volume
+    {
+        this->IvolumeManager->setCategoryVolume(_category, _newVal);
+    }
 
 public:
     // Constructor

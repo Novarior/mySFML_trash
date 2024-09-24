@@ -60,6 +60,7 @@ public:
 
     // Accessors
     const bool isPressed() const;
+    const bool isHover() const;
     const std::string getText() const;
     const short unsigned& getId() const;
 

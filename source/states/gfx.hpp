@@ -48,10 +48,10 @@ public:
     const bool saveToFile()
     {
         json j;
-        std::string path = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window;
+        std::string path = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window;
 
         // Read the existing JSON file
-        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window);
+        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
         if (!ifs.is_open()) {
             Logger::log("GFX::COULD NOT LOAD TO FILE: " + path, "GFX()", logType::ERROR);
             return false;
@@ -93,7 +93,7 @@ public:
     const bool loadFromFile()
     {
         // Создаем путь к файлу
-        std::string filePath = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_window;
+        std::string filePath = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window;
 
         // Открываем файл для чтения
         std::ifstream ifs(filePath);

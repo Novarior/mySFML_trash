@@ -4,9 +4,9 @@
 // load playes
 const bool ParserJson::loadPlayer(Entity& player)
 { // open json file
-    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
+    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_playerdata);
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
+        printf("ERROR::PARSER::OPEN::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config::config_playerdata);
         return false;
     }
     // load from json file
@@ -22,11 +22,11 @@ const bool ParserJson::loadInventory(Inventory* inventory)
     }
 
     // Open the file
-    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_inventory);
+    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_inventory);
 
     // Check if the file is open
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
+        printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config::config_inventory);
         return false;
     }
 
@@ -68,10 +68,10 @@ const bool ParserJson::loadEntitys(std::vector<Entity*>& entitys)
 const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
 { // load key binds from json file
 
-    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
+    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds);
     if (!ifs.is_open()) {
-        printf("PARSER cant open file: %s\n", std::string(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_keybinds).c_str());
-        Logger::log("Parcer cant open file: " + ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_keybinds, "CORE->PARS", logType::ERROR);
+        printf("PARSER cant open file: %s\n", std::string(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds).c_str());
+        Logger::log("Parcer cant open file: " + ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds, "CORE->PARS", logType::ERROR);
         return false;
     }
 
@@ -96,11 +96,11 @@ const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
 const bool ParserJson::loadNoiceData(mmath::noiceData& data)
 { // load noice data
     // Open the file
-    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
+    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_noicedata);
 
     // Check if the file is open
     if (!ifs.is_open()) {
-        printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
+        printf("ERROR::PARSER::OPEN::NOICEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config::config_playerdata);
         return false;
     }
 
@@ -129,7 +129,7 @@ const bool ParserJson::loadSoundVolumes(VolumeManager* data)
     try {
         json j;
         // Open the file and load the JSON object from it
-        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_soundvolume);
+        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_soundvolume);
         ifs >> j;
 
         // Create a temporary VolumeManager object

@@ -4,13 +4,13 @@ const bool Process::loadGameData()
 {
     // load noice config
     if (ParserJson::loadNoiceData(this->noicedata))
-        printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config_noicedata);
+        printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n", myConst::config::config_noicedata);
     else {
         this->noicedata.mapSizeX = 1000;
         this->noicedata.mapSizeY = 1000;
-        this->noicedata.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
-        this->noicedata.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
-        this->noicedata.gridSize = this->IstateData->grid_size;
+        this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
+        this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
+        this->noicedata.gridSize = this->IstateData->sd_gridSize;
     }
     return true;
 }
@@ -49,8 +49,8 @@ void Process::initKeybinds()
 
 void Process::initPauseMenu()
 {
-    const sf::VideoMode& vm = this->IstateData->gfxSettings->_struct.resolution;
-    this->pausemenu = new PauseMenu(this->IstateData->gfxSettings->_struct.resolution, this->IstateData->font);
+    const sf::VideoMode& vm = this->IstateData->sd_gfxSettings->_struct.resolution;
+    this->pausemenu = new PauseMenu(this->IstateData->sd_gfxSettings->_struct.resolution, this->IstateData->sd_font);
     this->pausemenu->addButton("EXIT_BUTTON", mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::p2pY(6.f, vm), mmath::calcCharSize(vm), "Quit");
     this->pausemenu->addButton("GEN", mmath::p2pX(20, vm), mmath::p2pY(74.f, vm), mmath::p2pX(13.f, vm), mmath::calcCharSize(vm), "Generate");
 }
@@ -65,13 +65,13 @@ void Process::intGUI() // init GUI
 {
     // init player HP bar on top right on screen math position using mmath::p2pX/X
     this->playerBar["HP_BAR"] = new gui::ProgressBar(
-        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Color::Red, this->IstateData->characterSize_game_small, this->IstateData->font);
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x), mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x), mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
+        sf::Color::Red, this->IstateData->sd_characterSize_game_small, this->IstateData->sd_font);
     this->playerBar["MP_BAR"] = new gui::ProgressBar(
-        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(7, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(3, this->IstateData->sWindow->getSize().y)),
-        sf::Color::Blue, this->IstateData->characterSize_game_small, this->IstateData->font);
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x), mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x), mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
+        sf::Color::Blue, this->IstateData->sd_characterSize_game_small, this->IstateData->sd_font);
 
     this->initMiniMap();
 }
@@ -79,8 +79,8 @@ void Process::intGUI() // init GUI
 void Process::initView()
 {
     sf::Vector2f halfSize = sf::Vector2f(
-        static_cast<float>(this->IstateData->sWindow->getSize().x / 2),
-        static_cast<float>(this->IstateData->sWindow->getSize().y / 2));
+        static_cast<float>(this->IstateData->sd_Window->getSize().x / 2),
+        static_cast<float>(this->IstateData->sd_Window->getSize().y / 2));
         
     this->view.setSize(halfSize);
     this->view.setCenter(halfSize);
@@ -88,14 +88,14 @@ void Process::initView()
     this->playerView.setCenter(halfSize);
 
     this->renderTexture.create(
-        this->IstateData->sWindow->getSize().x,
-        this->IstateData->sWindow->getSize().y);
+        this->IstateData->sd_Window->getSize().x,
+        this->IstateData->sd_Window->getSize().y);
 
     this->renderSprite.setTexture(this->renderTexture.getTexture());
 
     this->renderSprite.setTextureRect(sf::IntRect(0, 0,
-        this->IstateData->sWindow->getSize().x,
-        this->IstateData->sWindow->getSize().y));
+        this->IstateData->sd_Window->getSize().x,
+        this->IstateData->sd_Window->getSize().y));
 }
 
 void Process::initPlayer()
@@ -104,9 +104,9 @@ void Process::initPlayer()
     std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
     // set player position to random position getting from spawnPosArray
     this->player = new Player(spawnPosArray[rand() % spawnPosArray.size()]);
-    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sWindow->getSize()), 32.0f, this->IstateData->font, this->IstateData->characterSize_game_big);
+    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sd_Window->getSize()), 32.0f, this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
 
-    this->t_inventory->addItem(new Items::Stone(this->IstateData->grid_size));
+    this->t_inventory->addItem(new Items::Stone(this->IstateData->sd_gridSize));
 }
 
 void Process::initMiniMap() // init minimap
@@ -117,8 +117,8 @@ void Process::initMiniMap() // init minimap
         this->mapTiles->getMapSizeOnFloat().y);
 
     this->minimap = new gui::MiniMap(
-        sf::Vector2f(mmath::p2pX(75, this->IstateData->sWindow->getSize().x), mmath::p2pX(10, this->IstateData->sWindow->getSize().y)),
-        sf::Vector2f(mmath::p2pX(20, this->IstateData->sWindow->getSize().x), mmath::p2pX(20, this->IstateData->sWindow->getSize().y)),
+        sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x), mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x), mmath::p2pX(20, this->IstateData->sd_Window->getSize().y)),
         worldBounds);
 
     this->minimap->setImage(this->mapTiles->getMinimapImage());
@@ -128,12 +128,12 @@ void Process::initMiniMap() // init minimap
 void Process::initTileMapData()
 {
     this->noicedata.seed = std::time(0);
-    this->noicedata.gridSize = this->IstateData->grid_size;
+    this->noicedata.gridSize = this->IstateData->sd_gridSize;
     this->noicedata.octaves = 8;
     this->noicedata.frequency = 8;
     this->noicedata.amplifire = 0.5f;
-    this->noicedata.RenderWindowX = this->IstateData->gfxSettings->_struct.resolution.width;
-    this->noicedata.RenderWindowY = this->IstateData->gfxSettings->_struct.resolution.height;
+    this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
+    this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
     this->noicedata.mapSizeX = 620;
     this->noicedata.mapSizeY = 430;
     this->noicedata.persistence = 0.6f;
@@ -155,7 +155,7 @@ void Process::initEntitys()
 
 void Process::registerItems()
 {
-    int size = this->IstateData->grid_size;
+    int size = this->IstateData->sd_gridSize;
 
     // register items to registry
     ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
@@ -220,7 +220,7 @@ void Process::updateInput(const float& delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
-        this->debugMode = !this->debugMode;
+        this->Idebud = !this->Idebud;
 }
 
 void Process::updatePlayerInputs(const float& delta_time)
@@ -263,7 +263,7 @@ void Process::updateEntitys(const float& delta_time)
 void Process::updateGUI(const float& delta_time)
 {
     if (this->t_inventory->getIsOpened()) // update inventory
-        this->t_inventory->update(this->mousePosWindow);
+        this->t_inventory->update(this->ImousePosWindow);
     if (this->minimap != nullptr) // update minimap
         this->minimap->update(this->player->e_getPosition(), this->entitys[0]->e_getPosition());
 
@@ -280,11 +280,11 @@ void Process::update(const float& delta_time)
     this->updateInput(delta_time);
 
     // one more update
-    if (this->debugMode)
+    if (this->Idebud)
         this->updateDebug(delta_time);
 
     if (this->Ipaused) { // update pause
-        this->pausemenu->update(this->mousePosWindow);
+        this->pausemenu->update(this->ImousePosWindow);
 
         if (this->pausemenu->isButtonPressed("EXIT_BUTTON") && this->getKeytime())
             this->endState();
@@ -311,7 +311,7 @@ void Process::update(const float& delta_time)
 void Process::updateDebug(const float& delta_time)
 {
     double fps = 1.0f / delta_time;
-    this->dString_Stream
+    this->IstringStream
         << "FPS:\t" << fps
         << "\nResolution: " << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
         << "\nPlayer:"
@@ -321,7 +321,7 @@ void Process::updateDebug(const float& delta_time)
         << "\nPosition:"
         << "\n\tx: " << this->player->e_getPosition().x
         << "\n\ty: " << this->player->e_getPosition().y
-        << "\n\tSecected Cell ID: " << this->t_inventory->getCurrentCellID(this->mousePosWindow)
+        << "\n\tSecected Cell ID: " << this->t_inventory->getCurrentCellID(this->ImousePosWindow)
         << "\n\tgrid x: " << this->player->e_getGridPositionFloat(this->IgridSize).x
         << "\n\tgrid y: " << this->player->e_getGridPositionFloat(this->IgridSize).y
         << "\nMap Size: " << this->mapTiles->getMapSizeOnTiles().x << 'x' << this->mapTiles->getMapSizeOnTiles().y
@@ -354,8 +354,8 @@ void Process::updateDebug(const float& delta_time)
         << "\n\tNoiceSizeMapX:\t" << this->noicedata.mapSizeX
         << "\n\tNoiceSizeMapY:\t" << this->noicedata.mapSizeY;
 
-    this->dText.setString(this->dString_Stream.str());
-    this->dString_Stream.str("");
+    this->Itext.setString(this->IstringStream.str());
+    this->IstringStream.str("");
 }
 
 void Process::updateSounds(const float& delta_time)
@@ -368,8 +368,8 @@ void Process::updateSounds(const float& delta_time)
 // sub render functions
 void Process::renderGUI(sf::RenderTarget& target)
 {
-    if (this->debugMode) // debuging text render
-        target.draw(this->dText);
+    if (this->Idebud) // debuging text render
+        target.draw(this->Itext);
 
     if (this->Ipaused) // Pause menu render
     {
@@ -394,12 +394,12 @@ void Process::renderTileMap(sf::RenderTarget& target)
 void Process::renderEntities(sf::RenderTarget& target)
 {
     for (auto* enemy : this->entitys)
-        enemy->e_render(target, this->debugMode);
+        enemy->e_render(target, this->Idebud);
 }
 
 void Process::renderPlayer(sf::RenderTarget& target)
 {
-    this->player->e_render(target, this->debugMode);
+    this->player->e_render(target, this->Idebud);
     this->playerView.setCenter(this->player->e_getPosition());
 }
 

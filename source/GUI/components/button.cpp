@@ -47,6 +47,13 @@ const bool gui::Button::isPressed() const
     return false;
 }
 
+const bool gui::Button::isHover() const
+{
+    if (this->buttonState == BTN_HOVER)
+        return true;
+    return false;
+}
+
 const std::string gui::Button::getText() const
 {
     return this->text.getString();

@@ -30,11 +30,11 @@ const bool ParserJson::savePlayer(Entity* player)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_playerdata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_playerdata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config_playerdata);
+        printf("ERROR::PARSER::SAVE::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config::config_playerdata);
         return false;
     }
 
@@ -81,11 +81,11 @@ const bool ParserJson::saveInventory(Inventory* inventory)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_inventory);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_inventory);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config_inventory);
+        printf("ERROR::PARSER::SAVE::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config::config_inventory);
     }
     return true;
 }
@@ -116,13 +116,13 @@ const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_entitydata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_entitydata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars can't save entities" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config_entitydata;
+        ss << "Pars can't save entities" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config::config_entitydata;
         Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config_entitydata);
+        printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config::config_entitydata);
         return false;
     }
 
@@ -146,11 +146,11 @@ const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_noicedata);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_noicedata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config_noicedata);
+        printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config::config_noicedata);
         return false;
     }
 
@@ -166,13 +166,13 @@ const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_keybinds);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars can't save keybinds" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config_keybinds;
+        ss << "Pars can't save keybinds" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config::config_keybinds;
         Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config_keybinds);
+        printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config::config_keybinds);
         return false;
     }
 
@@ -189,12 +189,12 @@ const bool ParserJson::saveSoundVolumes(VolumeManager* data)
             j["sound_volumes"][static_cast<int>(category.first)] = category.second;
         }
         // Write the JSON object to the file
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config_soundvolume);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_soundvolume);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         // catch exception
         Logger::log("Cant save sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::SOUNDVOLUMES::FILE_NOT_OPEN\n   %s\n", myConst::config_soundvolume);
+        printf("ERROR::PARSER::SAVE::SOUNDVOLUMES::FILE_NOT_OPEN\n   %s\n", myConst::config::config_soundvolume);
         return false;
     }
 

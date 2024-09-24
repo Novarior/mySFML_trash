@@ -7,6 +7,8 @@ MovementComponent::MovementComponent(sf::Sprite& sprite, const float acceleratio
     , maxVelocity(maxVelocity)
     , directons(0.f, 0.f)
     , velocity(0.f, 0.f)
+    , onGround(false)
+    , mov_state(MovamentState::Idle)
 {
 }
 

@@ -2,7 +2,6 @@
 #include "LOGGER.hpp"
 #include "locTexts/helperText.hpp"
 #include "myConst.h"
-#include <nl_types.h>
 
 #if __APPLE__
 void Core::initDirectories()
@@ -23,23 +22,38 @@ void Core::initVar()
 
 void Core::initStateData()
 {
-    this->mStatedata.sWindow = this->mWindow;
-    this->mStatedata.sStates = &this->mState;
-    if (!this->mStatedata.font.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_gameproces_font_path_3))) {
-        Logger::log("ERROR::GAMEPROCES::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_gameproces_font_path_3), "Core::initStateData()");
+    this->mStatedata.sd_Window = this->mWindow;
+    this->mStatedata.sd_States = &this->mState;
+    if (!this->mStatedata.sd_font.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::fonts::data_gameproces_font_path_3))) {
+        Logger::log("ERROR::GAMEPROCES::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::fonts::data_gameproces_font_path_3), "Core::initStateData()");
     }
-    if (!this->mStatedata.debugFont.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_debugfont_path))) {
-        Logger::log("ERROR::DEBUG::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::data_debugfont_path), "Core::initStateData()");
+    if (!this->mStatedata.sd_debugFont.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::fonts::data_debugfont_path))) {
+        Logger::log("ERROR::DEBUG::COULD NOT LOAD TO FILE: " + std::string(ApplicationsFunctions::get_resources_dir() + myConst::fonts::data_debugfont_path), "Core::initStateData()");
     }
-    this->mStatedata.supportedKeys = &this->supportedKeys;
-    this->mStatedata.gfxSettings = &this->gfxSettings;
-    this->mStatedata.grid_size = this->gfxSettings._struct.gridSize;
-    this->mStatedata.characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
-    this->mStatedata.characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
-    this->mStatedata.characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
-    this->mStatedata.characterSize_game_small = mmath::calcCharSize(this->mWindow->getSize(), 100);
+    this->mStatedata.sd_supportedKeys = &this->supportedKeys;
+    this->mStatedata.sd_gfxSettings = &this->gfxSettings;
+    this->mStatedata.sd_gridSize = this->gfxSettings._struct.gridSize;
+    this->mStatedata.sd_characterSize_debug = mmath::calcCharSize(this->mWindow->getSize(), 150);
+    this->mStatedata.sd_characterSize_game_big = mmath::calcCharSize(this->mWindow->getSize(), 60);
+    this->mStatedata.sd_characterSize_game_medium = mmath::calcCharSize(this->mWindow->getSize(), 85);
+    this->mStatedata.sd_characterSize_game_small = mmath::calcCharSize(this->mWindow->getSize(), 100);
     this->mStatedata.reserGUI = false;
-    this->mStatedata.sEvent = &this->mEvents;
+    this->mStatedata.sd_Event = &this->mEvents;
+
+    this->mStatedata.sd_volumeManager = std::shared_ptr<VolumeManager>(new VolumeManager());
+
+#if __MDEBUG__ == 1
+    // logger moment
+
+    // check if window is not null
+    if (!this->mStatedata.sd_Window)
+        Logger::log("ERROR::WINDOW::NOT INITED", "Core::initStateData()", logType::ERROR);
+
+    // check if states is not empty or null idk
+    if (!this->mStatedata.sd_States->empty())
+        Logger::log("ERROR::STATES::NOT INITED", "Core::initStateData()", logType::ERROR);
+
+#endif
 }
 
 void Core::initKeyBinds()
@@ -66,16 +80,34 @@ void Core::initKeyBinds()
     supportedKeys["F3"] = sf::Keyboard::Scancode::F3;
     // save default keys to file
     ParserJson::saveKeyBinds(this->supportedKeys);
+
+#if __MDEBUG__ == 1
+    // logger moment with key binds
+    Logger::log("Key binds inited", "Core::initKeyBinds()");
+
+    // log all keys
+    for (auto& i : supportedKeys)
+        Logger::log("Key: " + i.first + " Value: " + std::to_string(i.second), "Core::initKeyBinds()");
+
+#endif
 }
 
 void Core::initState()
 {
     this->mState.push(new MainMenu(&this->mStatedata));
+
+#if __MDEBUG__ == 1
+    // logger moment with states
+    Logger::log("State inited", "Core::initState()");
+    Logger::log("State size: " + std::to_string(this->mState.size()), "Core::initState()");
+#endif
 }
 
 void Core::initLocations()
 {
     helperText::ApplicationLangue::setLanguage(helperText::Language::ENG);
+
+    // debuggg
 }
 
 void Core::initWindow()
@@ -110,7 +142,10 @@ Core::Core()
     this->initState();
 
     FPS::reset();
+
+#if __MDEBUG__ == 1
     Logger::log("Core Inited", "Core::Core()");
+#endif
 }
 
 Core::~Core()
@@ -122,6 +157,23 @@ Core::~Core()
         this->mState.pop();
     }
     delete this->mWindow;
+
+#if __MDEBUG__ == 1
+    // logger moment
+    Logger::log("Core Delete...", "Core::~Core()");
+
+    if (this->mState.empty())
+        Logger::log("State is empty", "Core::~Core()");
+    else
+        Logger::log("State is not empty... mem leaked", "Core::~Core()");
+
+    if (this->mWindow == NULL)
+        Logger::log("Window is not null", "Core::~Core()");
+    else
+        Logger::log("Window is null... mem leaked", "Core::~Core()");
+
+    Logger::log("Core Deleted", "Core::~Core()");
+#endif
 }
 
 void Core::run()

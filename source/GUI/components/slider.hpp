@@ -15,14 +15,17 @@ private:
     sf::Text _textValue; // текстовое значение слайдера
     sf::Font& _font; // шрифт
     T _value;
+    T _newValue;
     T _min;
     T _max;
     T _step;
+    bool isChanged = false;
 
 public:
     Slider(sf::Vector2f position, sf::Vector2f size, sf::Font& font, T base_value, T min_val, T max_val, T step, const unsigned character_size = 20, const std::string& name = "FIX ME")
         : _font(font)
         , _value(base_value)
+        , _newValue(base_value)
         , _min(min_val)
         , _max(max_val)
         , _step(step)
@@ -81,6 +84,13 @@ public:
             float ratio = (new_x - _sliderBox.getPosition().x) / (_sliderBox.getSize().x - 2 * _sliderCircle.getRadius());
             _value = _min + ratio * (_max - _min);
 
+            if (_value != _newValue) {
+                isChanged = true;
+                _newValue = _value;
+            } else {
+                isChanged = false;
+            }
+
             // Обновляем заполненность слайдера
             _sliderFillBox.setSize({ ratio * _sliderBox.getSize().x, _sliderFillBox.getSize().y });
 
@@ -90,6 +100,9 @@ public:
             _sliderCircle.setFillColor(sf::Color::White);
         }
     }
+
+    bool isChangedValue() const { return isChanged; }
+
     // render slider
     void render(sf::RenderTarget& target)
     {

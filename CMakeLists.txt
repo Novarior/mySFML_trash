@@ -1,12 +1,12 @@
 #set minimun cmake version for build 
 cmake_minimum_required(VERSION 3.5.0)
-project(Ekzeckt VERSION 0.0.6)
+project(Ekzeckt VERSION 0.0.7)
 
 #set miniimum c++ standart 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(CMAKE_OSX_SYSROOT /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk)
+set(CMAKE_OSX_SYSROOT /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk)
 
 #set build type
 
@@ -15,6 +15,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Debug)
 else()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin/Bundle)
 endif()
+
 message("CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}")
 message("CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
 message("Debug build = ${CMAKE_BUILD_TYPE}")
@@ -24,16 +25,25 @@ file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
 
 #include SFML library on project
+message("")
 find_package(SFML 2.6.1 COMPONENTS graphics window system audio REQUIRED)
-message("SFML_FOUND = ${SFML_FOUND}")
+message("SFML was found = ${SFML_FOUND}")
 
 #find nlohmann json library
 find_package(nlohmann_json 3.11.2 REQUIRED)
-message("nlohmann_json_FOUND = ${nlohmann_json_FOUND}")
+if(NOT nlohmann_json_FOUND)
+    message("nlohmann_json was not found = ${nlohmann_json_FOUND}")
+else()
+    message("nlohmann_json was not found = ${nlohmann_json_FOUND}")
+endif()
 
 #for bundle
-find_library(COREFOUNDATION_LIBRARY CoreFoundation)
-message("COREFOUNDATION_LIBRARY = ${COREFOUNDATION_LIBRARY}")
+find_library(COREFOUNDATION_LIBRARY CoreFoundation "${CMAKE_OSX_SYSROOT}/System/Library/Frameworks")
+if (NOT COREFOUNDATION_LIBRARY)
+    message(FATAL_ERROR "CoreFoundation not found")
+endif()
+message("CoreFoundation = ${COREFOUNDATION_LIBRARY}" )
+message("")
 
 #search for all files in resources folder
 file(GLOB_RECURSE MY_APP_RESOURCES source/res/*)
@@ -83,6 +93,12 @@ configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Inf
     target_link_libraries(Ekzeckt "-framework CoreFoundation")
     set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)
-endif()
+    endif()
+    
+    set(CPACK_SOURCE_GENERATOR "DragNDrop")
+    set(CPACK_GENERATOR "DragNDrop")
+
+
+    include(InstallRequiredSystemLibraries)
+    include(CPack)

@@ -38,10 +38,10 @@ struct Button {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
             break;
         case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
             break;
         }
 
@@ -89,10 +89,10 @@ struct VolumeTexts {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
             break;
         case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
             break;
         }
 
@@ -141,10 +141,10 @@ struct SettingsTexts {
         std::string filename;
         switch (language) {
         case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_EN;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
             break;
         case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation_RU;
+            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
             break;
         }
 

@@ -1,7 +1,11 @@
 #ifndef CPP_MovementComponent_HPP
 #define CPP_MovementComponent_HPP
 #include "../../header.h"
-enum movestate { NONe = -1, Idle, Jump, Fall, Shift };
+enum MovamentState { NONe = -1,
+    Idle,
+    Walk,
+    Fall,
+    Shift };
 
 #define MAXSPEEDENTITY = 0x3ff;
 class MovementComponent
@@ -14,6 +18,11 @@ class MovementComponent
     float maxVelocity;
     sf::Vector2f velocity;
     sf::Vector2f directons;
+    bool onGround;
+    MovamentState mov_state;
+
+    const float gravity = 9.2f; // m/s^2 like in real life
+    const float maxFallSpeed = 9.2f;
 
 public:
     MovementComponent(sf::Sprite& sprite, const float acceleration, const float deceleration, const float maxVelocity);

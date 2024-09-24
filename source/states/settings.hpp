@@ -15,6 +15,7 @@ private:
         GRAPHICS,
         CONTROLS,
         GAMEPLAY,
+        ECTPAGE,
         PAGE_COUNT
     };
     // Variables

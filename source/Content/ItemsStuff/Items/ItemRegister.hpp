@@ -14,10 +14,10 @@ public:
     {
         if (items.find(id) == items.end()) {
             items[id] = item;
-            Logger::log("Item with id: " + std::to_string(id) + " has been registered", "ItemRegistry", logType::INFO);
+            Logger::logStatic("Item with id: " + std::to_string(id) + " has been registered", "ItemRegistry", logType::INFO);
             return true;
         } else {
-            Logger::log("Item with id: " + std::to_string(id) + " alredy was bew registered", "ItemRegistry", logType::WARNING);
+            Logger::logStatic("Item with id: " + std::to_string(id) + " alredy was bew registered", "ItemRegistry", logType::WARNING);
             return false; // Item with this ID already exists
         }
     }

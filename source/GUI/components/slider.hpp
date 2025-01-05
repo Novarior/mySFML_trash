@@ -1,7 +1,7 @@
 #ifndef GUI_SIMPLE_SLIDER_HPP
 #define GUI_SIMPLE_SLIDER_HPP
 
-#include "../../header.h"
+#include "../../core/header.h"
 
 namespace gui {
 template <typename T>

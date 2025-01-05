@@ -1,7 +1,7 @@
 #ifndef CPP_ENTITYCLASS_HPP
 #define CPP_ENTITYCLASS_HPP
 
-#include "../header.h"
+#include "../core/header.h"
 #include "entityEnum.hpp"
 #include "properties/attributes.hpp"
 #include "properties/hitbox.hpp"

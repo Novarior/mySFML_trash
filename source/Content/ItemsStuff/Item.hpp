@@ -1,71 +1,65 @@
 #ifndef ITEMSTUFF_ITEM_H
 #define ITEMSTUFF_ITEM_H
-#include "../../header.h"
+#include "../../core/header.h"
 #include "Coins.hpp"
 #include "itemtextures.hpp"
 
 class Item {
-private:
 public:
-    Item()
-        : m_Usable(false)
-        , m_stacable(false)
-        , m_pickable(false)
-        , m_amount(0)
-        , m_maxAmount(0)
-        , m_price({ 0, 0, 1 })
-        , m_name("Default")
+    Item(unsigned int id = 0, const std::string& name = "Default", bool pickable = false, bool stackable = false,
+        bool usable = false, int amount = 0, unsigned maxAmount = 0, const Coins& price = { 0, 0, 1 })
+        : item_ID(id)
+        , m_name(name)
+        , m_pickable(pickable)
+        , m_stackable(stackable)
+        , m_usable(usable)
+        , m_amount(amount)
+        , m_maxAmount(maxAmount)
+        , m_price(price)
     {
     }
-    inline virtual ~Item() noexcept { }
 
-    inline void dropItem() noexcept { this->~Item(); }
+    virtual ~Item() noexcept = default;
 
-    // modificators
-    const bool pickedUp() const noexcept { return this->m_pickable; }
+    // Modifiers
+    void addAmount(int _amount) noexcept { m_amount += _amount; }
+    void removeAmount(int _amount) noexcept { m_amount -= _amount; }
 
-    // set from
-    inline void setItemPositionOnInventory(sf::Vector2f position) noexcept { this->m_shape.setPosition(position); }
+    // Getters
+    unsigned int getID() const noexcept { return item_ID; }
+    const std::string& getName() const noexcept { return m_name; }
+    int getAmount() const noexcept { return m_amount; }
+    unsigned getMaxAmount() const noexcept { return m_maxAmount; }
+    bool isPickable() const noexcept { return m_pickable; }
+    bool isStackable() const noexcept { return m_stackable; }
+    bool isUsable() const noexcept { return m_usable; }
+    Coins& getPrice() noexcept { return m_price; }
 
-    // modifiers functions
-    inline void addAmount(int _amount) noexcept { this->m_amount += _amount; }
-    inline void removeAmount(int _amount) noexcept { this->m_amount -= _amount; }
-
-    // inline functions get
-    inline const unsigned int getID() const noexcept { return this->item_ID; }
-    inline const std::string getName() const noexcept { return this->m_name; }
-    inline const int getAmount() const noexcept { return this->m_amount; }
-    inline const int getMaxAmount() const noexcept { return this->m_maxAmount; }
-    inline const bool isPickable() const noexcept { return this->m_pickable; }
-    inline const bool isStackable() const noexcept { return this->m_stacable; }
-    inline const bool isUsable() const noexcept { return this->m_Usable; }
-    inline Coins& getPrice() noexcept { return this->m_price; }
-
-    // inline functions set
-    inline void setID(const unsigned int ID) noexcept { this->item_ID = ID; }
-    inline void setName(const std::string name) noexcept { this->m_name = name; }
-    inline void setAmount(const int _amount) noexcept { this->m_amount = _amount; }
-    inline void setPickable(const bool pickable) noexcept { this->m_pickable = pickable; }
-    inline void setStackable(const bool stacable) noexcept { this->m_stacable = stacable; }
+    // Setters
+    void setID(unsigned int ID) noexcept { item_ID = ID; }
+    void setName(const std::string& name) noexcept { m_name = name; }
+    void setAmount(int amount) noexcept { m_amount = amount; }
+    void setPickable(bool pickable) noexcept { m_pickable = pickable; }
+    void setStackable(bool stackable) noexcept { m_stackable = stackable; }
 
     virtual void useItem() = 0;
-    virtual void update(const float& delta_time, sf::Vector2i mouse_pos) = 0;
-    virtual void render(sf::RenderTarget& target) noexcept { target.draw(this->m_shape); }
+    virtual void update(float delta_time, sf::Vector2i mouse_pos) { }
+    virtual void render(sf::RenderTarget& target) noexcept { target.draw(m_shape); }
 
-    inline void setPosistion(sf::Vector2f position) noexcept { this->m_shape.setPosition(position); }
-    inline void setSize(sf::Vector2f size) noexcept { this->m_shape.setSize(size); }
+    void setPosition(sf::Vector2f position) noexcept { m_shape.setPosition(position); }
+    void setSize(sf::Vector2f size) noexcept { m_shape.setSize(size); }
 
 protected:
-    bool m_Usable;
     unsigned int item_ID;
-    bool m_stacable;
-    unsigned m_maxAmount;
-    bool m_pickable;
-    int m_amount;
     std::string m_name;
+    bool m_pickable;
+    bool m_stackable;
+    bool m_usable;
+    int m_amount;
+    unsigned m_maxAmount;
+    Coins m_price;
     sf::Texture m_texture;
     sf::RectangleShape m_shape;
-    Coins m_price;
 };
 
 #endif

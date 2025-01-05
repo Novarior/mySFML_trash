@@ -18,14 +18,14 @@ const bool Process::loadGameData()
 const bool Process::saveGameData()
 {
     // save player to JSON file
-    if (ParserJson::savePlayer(this->player))
-        Logger::log("Parser::savePlayer()::ERROR::", "Process::saveGameData()", logType::ERROR);
+    if (ParserJson::savePlayer(this->player.get()))
+        Logger::logStatic("Parser::savePlayer()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save inventory to JSON file
-    if (ParserJson::saveInventory(this->t_inventory))
-        Logger::log("Parser::saveInventory()::ERROR::", "Process::saveGameData()", logType::ERROR);
+    if (ParserJson::saveInventory(t_inventory))
+        Logger::logStatic("Parser::saveInventory()::ERROR::", "Process::saveGameData()", logType::ERROR);
     // save entitys pos and other data
     if (ParserJson::saveEntitys(this->entitys))
-        Logger::log("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", logType::ERROR);
+        Logger::logStatic("Parser::saveEntitys()::ERROR::", "Process::saveGameData()", logType::ERROR);
 
     return true;
 }
@@ -58,7 +58,7 @@ void Process::initPauseMenu()
 void Process::initTileMap()
 {
     this->myGN = new ProcessGenerationNoice(this->noicedata);
-    this->mapTiles = new TileMap(this->noicedata, myGN);
+    this->mapTiles = std::make_shared<TileMap>(this->noicedata, myGN);
 }
 
 void Process::intGUI() // init GUI
@@ -103,10 +103,17 @@ void Process::initPlayer()
     // get array with posible spawn positions
     std::vector<sf::Vector2f> spawnPosArray = this->mapTiles->getSpawnPosArray();
     // set player position to random position getting from spawnPosArray
-    this->player = new Player(spawnPosArray[rand() % spawnPosArray.size()]);
-    this->t_inventory = new Inventory(sf::Vector2f(this->IstateData->sd_Window->getSize()), 32.0f, this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
+    this->player = std::make_shared<Player>(spawnPosArray[rand() % spawnPosArray.size()]);
+    this->t_inventory = std::make_shared<Inventory>(
+        sf::Vector2f(this->IstateData->sd_Window->getSize()), 10, 4,
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
 
-    this->t_inventory->addItem(new Items::Stone(this->IstateData->sd_gridSize));
+    std::shared_ptr<Item> stoneItem = std::make_shared<Items::Stone>(64); // 64 - это gridSizeI
+
+    t_inventory->addItem(stoneItem);
+    //  this->t_inventoryHUD = std::make_unique<InventoryHUD>(
+    //     sf::Vector2f(this->IstateData->sd_Window->getSize()), 32.0f,
+    //     this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
 }
 
 void Process::initMiniMap() // init minimap
@@ -161,8 +168,8 @@ void Process::registerItems()
     ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
     ItemRegistry::registerItem(1, std::make_unique<Items::PoisonSmallRegeneration>(size));
 
-    Logger::log("Items has been registered", "Process::registerItems()");
-    Logger::log("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
+    Logger::logStatic("Items has been registered", "Process::registerItems()");
+    Logger::logStatic("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
 }
 
 Process::Process(StateData* state_data, const bool defaultLoad)
@@ -182,21 +189,21 @@ Process::Process(StateData* state_data, const bool defaultLoad)
     this->initEntitys();
     this->intGUI();
 
-    Logger::log("End initilization process", "Process::Process()");
+    Logger::logStatic("End initilization process", "Process::Process()");
 }
 
 Process::~Process()
 {
     if (this->saveGameData())
-        Logger::log("Game Data has be saved", "Process::~Process()::saveGameData()");
+        Logger::logStatic("Game Data has be saved", "Process::~Process()::saveGameData()");
     else
-        Logger::log("Game Data has not be saved", "Process::~Process()::saveGameData()", logType::ERROR);
+        Logger::logStatic("Game Data has not be saved", "Process::~Process()::saveGameData()", logType::ERROR);
 
     delete this->myGN;
-    delete this->mapTiles;
+    this->mapTiles.reset();
     delete this->pausemenu;
-    delete this->player;
-    delete this->t_inventory;
+    this->player.reset();
+    this->t_inventory.reset();
     delete this->minimap;
 
     // clear bar
@@ -216,7 +223,7 @@ Process::~Process()
 void Process::updateInput(const float& delta_time)
 {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) && this->getKeytime())
-        this->t_inventory->toggleSwitch();
+        this->t_inventory.get()->toggleInventory();
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) && this->getKeytime())
         this->Ipaused = !this->Ipaused;
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) && this->getKeytime())
@@ -243,7 +250,7 @@ void Process::updatePlayerInputs(const float& delta_time)
 void Process::updateTileMap(const float& delta_time)
 { // update tilemap
     this->mapTiles->updateRenderArea(this->player->e_getGridPositionInt(this->IgridSize));
-    this->mapTiles->update(this->player, delta_time);
+    this->mapTiles->update(this->player.get(), delta_time);
 
     // update entitys collision
     for (size_t i = 0; i < this->entitys.size(); i++)
@@ -262,7 +269,7 @@ void Process::updateEntitys(const float& delta_time)
 
 void Process::updateGUI(const float& delta_time)
 {
-    if (this->t_inventory->getIsOpened()) // update inventory
+    if (this->t_inventory->isInventoryOpened()) // update inventory
         this->t_inventory->update(this->ImousePosWindow);
     if (this->minimap != nullptr) // update minimap
         this->minimap->update(this->player->e_getPosition(), this->entitys[0]->e_getPosition());
@@ -290,7 +297,7 @@ void Process::update(const float& delta_time)
             this->endState();
         if (this->pausemenu->isButtonPressed("GEN") && this->getKeytime()) {
             delete this->myGN;
-            delete this->mapTiles;
+            this->mapTiles.reset();
             delete this->minimap;
             this->initTileMapData();
             this->initTileMap();
@@ -313,6 +320,8 @@ void Process::updateDebug(const float& delta_time)
     double fps = 1.0f / delta_time;
     this->IstringStream
         << "FPS:\t" << fps
+        << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+
         << "\nResolution: " << this->Iwindow->getSize().x << " x " << this->Iwindow->getSize().y
         << "\nPlayer:"
         << "\nComponents: "
@@ -376,10 +385,12 @@ void Process::renderGUI(sf::RenderTarget& target)
         if (this->pausemenu != nullptr)
             this->pausemenu->render(target);
     } else {
-        if (this->t_inventory->getIsOpened()) // inventory  menu render
+        if (this->t_inventory->isInventoryOpened()) // inventory  menu render
             this->t_inventory->render(target);
-        for (auto& it : this->playerBar) // render player bars
-            it.second->render(target);
+        else
+            // this->t_inventoryHUD.get()->render(target);
+            for (auto& it : this->playerBar) // render player bars
+                it.second->render(target);
 
         if (this->minimap != nullptr)
             this->minimap->render(target);

@@ -1,6 +1,6 @@
 #ifndef CPP_MovementComponent_HPP
 #define CPP_MovementComponent_HPP
-#include "../../header.h"
+#include "../../core/header.h"
 enum MovamentState { NONe = -1,
     Idle,
     Walk,

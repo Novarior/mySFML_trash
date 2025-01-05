@@ -2,7 +2,7 @@
 #define CPP_STATE_PAUSE_HPP
 
 #include "../GUI/GUISYS.hpp"
-#include "../header.h"
+#include "../core/header.h"
 
 class PauseMenu {
 private:

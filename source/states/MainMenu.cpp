@@ -1,6 +1,4 @@
 #include "MainMenu.hpp"
-#include "VolumeManager.hpp"
-#include <memory>
 
 void MainMenu::initRenderDefines()
 {
@@ -36,13 +34,13 @@ void MainMenu::initBackground()
     for (int i = 0; i < 3; i++) {
         this->background_textures.push_back(sf::Texture());
     }
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_background_mainmenu_lay_3));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_3));
     tx.setSmooth(true);
     this->background_textures[0] = tx;
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_background_mainmenu_lay_2));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_2));
     tx.setSmooth(true);
     this->background_textures[1] = tx;
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_background_mainmenu_lay_1));
+    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_1));
     tx.setSmooth(true);
     this->background_textures[2] = tx;
 
@@ -144,16 +142,18 @@ void MainMenu::initSounds()
     this->IvolumeManager = this->IstateData->sd_volumeManager;
 #if __MDEBUG__ == 1
     if (!this->loadSoundtoBuffer(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::music_menu), "MAIN_MENU"))
-        Logger::log("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::music_menu), "MainMenu::initSounds()", logType::ERROR);
+        Logger::logStatic("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::music_menu), "MainMenu::initSounds()", logType::ERROR);
     if (!this->loadSoundtoBuffer(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::selbtn_menu), "SELECT_MENU"))
-        Logger::log("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::selbtn_menu), "MainMenu::initSounds()", logType::ERROR);
+        Logger::logStatic("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::selbtn_menu), "MainMenu::initSounds()", logType::ERROR);
     if (!this->loadSoundtoBuffer(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_newg), "PRESS_NEW_GAME"))
-        Logger::log("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_newg), "MainMenu::initSounds()", logType::ERROR);
+        Logger::logStatic("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_newg), "MainMenu::initSounds()", logType::ERROR);
     if (!this->loadSoundtoBuffer(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_btn), "PRESS_BUTTON"))
-        Logger::log("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_btn), "MainMenu::initSounds()", logType::ERROR);
+        Logger::logStatic("Cannot load to buffer" + std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::press_btn), "MainMenu::initSounds()", logType::ERROR);
 
     // upload sounds from buffer
+
     this->IsoundsMap.get()->at("MAIN_MENU") = sf::Sound(this->IsoundBufferMap.get()->at("MAIN_MENU"));
+
 #else
     // load sounds
     this->loadSoundtoBuffer(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sounds::music_menu), "MAIN_MENU");
@@ -177,7 +177,7 @@ MainMenu::MainMenu(StateData* statedata)
     : State(statedata)
 {
     // logger
-    Logger::log("MainMenu constructor", "MainMenu");
+    Logger::logStatic("MainMenu constructor", "MainMenu");
     this->initGUI();
     this->initRenderDefines();
     this->initKeybinds();
@@ -187,7 +187,7 @@ MainMenu::MainMenu(StateData* statedata)
 
 MainMenu::~MainMenu()
 {
-    Logger::log("MainMenu destructor", "MainMenu");
+    Logger::logStatic("MainMenu destructor", "MainMenu");
 
     // delete buttons
     if (!this->buttons.empty())
@@ -259,6 +259,8 @@ void MainMenu::updateGUI(const float& delta_time)
     if (this->Idebud) {
         this->IstringStream
             << "\nver:\t" << CMAKE_PROJECT_VERSION
+            << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+            << "\nCurrent state memory usage:\t" << getMemoryUsage()<< " bytes"
             << "\nFPS delta:\t" << 1 / delta_time
             << "\nFPS Clock:\t" << FPS::getFPS()
             << "\nFPS limit:\t" << this->IstateData->sd_gfxSettings->_struct.frameRateLimit

@@ -8,7 +8,7 @@
 // поэтому важно чтобы они были в отдельном файле
 // и было легко их заменить на другой язык
 
-#include "../header.h"
+#include "../core/header.h"
 
 namespace helperText {
 enum class Language {
@@ -18,8 +18,21 @@ enum class Language {
 
 // абстрактный класс которы хранит текущий выбраный язык
 // также есть переменная (строчкая и булиевая) которая хранит то что язык кастомный
+class Localization {
+private:
+    static nlohmann::json loadedJson;
+    static std::string currentFilePath;
 
-// стуктура со всякими кнопочками приложения
+    // Метод для загрузки JSON-файла, если он не был загружен ранее
+    static bool loadLocalizationFile(const std::string& filename);
+
+public:
+    // Загружает локализацию в зависимости от языка
+    static bool initializeLocalization(Language language);
+    static std::string getLocalizedString(const std::string& category, const std::string& key, const std::string& defaultValue);
+};
+
+// Структура с текстами для кнопок
 struct Button {
     static std::string BUTTON_PLAY;
     static std::string BUTTON_OPTIONS;
@@ -35,43 +48,24 @@ struct Button {
 
     static void initializeLocalization(Language language)
     {
-        std::string filename;
-        switch (language) {
-        case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
-            break;
-        case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
-            break;
+        Localization localization;
+        if (localization.initializeLocalization(language)) {
+            BUTTON_PLAY = localization.getLocalizedString("BUTTONS", "LOCAL_PLAY", "@Play Text");
+            BUTTON_OPTIONS = localization.getLocalizedString("BUTTONS", "LOCAL_OPTIONS", "@Options Text");
+            BUTTON_EXIT = localization.getLocalizedString("BUTTONS", "LOCAL_EXIT", "@Exit Text");
+            BUTTON_BACK = localization.getLocalizedString("BUTTONS", "LOCAL_BACK", "@Back Text");
+            BUTTON_APPLY = localization.getLocalizedString("BUTTONS", "LOCAL_APPLY", "@Apply Text");
+            BUTTON_CANCEL = localization.getLocalizedString("BUTTONS", "LOCAL_CANCEL", "@Cancel Text");
+            BUTTON_SAVE = localization.getLocalizedString("BUTTONS", "LOCAL_SAVE", "@Save Text");
+            BUTTON_LOAD = localization.getLocalizedString("BUTTONS", "LOCAL_LOAD", "@Load Text");
+            BUTTON_NEW_GAME = localization.getLocalizedString("BUTTONS", "LOCAL_NEW_GAME", "@New Game Text");
+            BUTTON_CONTINUE = localization.getLocalizedString("BUTTONS", "LOCAL_CONTINUE", "@Continue Text");
+            BUTTON_NOICE_EDITOR = localization.getLocalizedString("BUTTONS", "LOCAL_NOICE_EDITOR", "@Noice Editor Text");
         }
-
-        nlohmann::json json;
-        std::ifstream ifs(filename);
-        if (!ifs.is_open()) {
-            std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
-            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperButton::initializeLocalization()");
-            return;
-        }
-
-        ifs >> json;
-        ifs.close();
-
-        BUTTON_PLAY = json["BUTTONS"].value("LOCAL_PLAY", "@Play Text");
-        BUTTON_OPTIONS = json["BUTTONS"].value("LOCAL_OPTIONS", "@Options Text");
-        BUTTON_EXIT = json["BUTTONS"].value("LOCAL_EXIT", "@Exit Text");
-        BUTTON_BACK = json["BUTTONS"].value("LOCAL_BACK", "@Back Text");
-        BUTTON_APPLY = json["BUTTONS"].value("LOCAL_APPLY", "@Apply Text");
-        BUTTON_CANCEL = json["BUTTONS"].value("LOCAL_CANCEL", "@Cancel Text");
-        BUTTON_SAVE = json["BUTTONS"].value("LOCAL_SAVE", "@Save Text");
-        BUTTON_LOAD = json["BUTTONS"].value("LOCAL_LOAD", "@Load Text");
-        BUTTON_NEW_GAME = json["BUTTONS"].value("LOCAL_NEW_GAME", "@New Game Text");
-        BUTTON_CONTINUE = json["BUTTONS"].value("LOCAL_CONTINUE", "@Continue Text");
-        BUTTON_NOICE_EDITOR = json["BUTTONS"].value("LOCAL_NOICE_EDITOR", "@Noice Editor Text");
-
-        // и так далее для остальных строк...
     }
 };
 
+// Структура с текстами для громкости
 struct VolumeTexts {
     static std::string VOL_MASTER;
     static std::string VOL_SFX;
@@ -86,40 +80,24 @@ struct VolumeTexts {
 
     static void initializeLocalization(Language language)
     {
-        std::string filename;
-        switch (language) {
-        case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
-            break;
-        case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
-            break;
+        Localization localization;
+
+        if (localization.initializeLocalization(language)) {
+            VOL_MASTER = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_MASTER", "@Master Volume");
+            VOL_SFX = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_SFX", "@SFX Volume");
+            VOL_MUSIC = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_MUSIC", "@Music Volume");
+            VOL_AMBIENT = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_AMBIENT", "@Ambient Volume");
+            VOL_ENTITYSFX = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_ENTITYSFX", "@Entity SFX Volume");
+            VOL_UI_VOL = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_UI_VOL", "@UI Volume");
+            VOL_DIALOGUE_VOL = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_DIALOGUE_VOL", "@Dialogue Volume");
+            VOL_FOLEYVOL = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_FOLEYVOL", "@Foley Volume");
+            VOL_WEAPONVOL = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_WEAPONVOL", "@Weapon Volume");
+            VOL_ENVIRONMENTVOL = localization.getLocalizedString("AUDIO_OPTIONS", "LOCAL_ENVIRONMENTVOL", "@Environment Volume");
         }
-
-        nlohmann::json json;
-        std::ifstream ifs(filename);
-        if (!ifs.is_open()) {
-            std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
-            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperVolumeTexts::initializeLocalization()");
-            return;
-        }
-
-        ifs >> json;
-        ifs.close();
-
-        VOL_MASTER = json["AUDIO_OPTIONS"].value("LOCAL_MASTER", "@Master Volume");
-        VOL_SFX = json["AUDIO_OPTIONS"].value("LOCAL_SFX", "@SFX Volume");
-        VOL_MUSIC = json["AUDIO_OPTIONS"].value("LOCAL_MUSIC", "@Music Volume");
-        VOL_AMBIENT = json["AUDIO_OPTIONS"].value("LOCAL_AMBIENT", "@Ambient Volume");
-        VOL_ENTITYSFX = json["AUDIO_OPTIONS"].value("LOCAL_ENTITYSFX", "@Entity SFX Volume");
-        VOL_UI_VOL = json["AUDIO_OPTIONS"].value("LOCAL_UI_VOL", "@UI Volume");
-        VOL_DIALOGUE_VOL = json["AUDIO_OPTIONS"].value("LOCAL_DIALOGUE_VOL", "@Dialogue Volume");
-        VOL_FOLEYVOL = json["AUDIO_OPTIONS"].value("LOCAL_FOLEYVOL", "@Foley Volume");
-        VOL_WEAPONVOL = json["AUDIO_OPTIONS"].value("LOCAL_WEAPONVOL", "@Weapon Volume");
-        VOL_ENVIRONMENTVOL = json["AUDIO_OPTIONS"].value("LOCAL_ENVIRONMENTVOL", "@Environment Volume");
     }
 };
 
+// Структура с текстами для настроек
 struct SettingsTexts {
     static std::string TEXT_RESOLUTION;
     static std::string TEXT_FULLSCREEN;
@@ -138,41 +116,24 @@ struct SettingsTexts {
 
     static void initializeLocalization(Language language)
     {
-        std::string filename;
-        switch (language) {
-        case Language::ENG:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_EN;
-            break;
-        case Language::RUS:
-            filename = ApplicationsFunctions::get_resources_dir() + myConst::localisation::localisation_RU;
-            break;
+        Localization localization;
+
+        if (localization.initializeLocalization(language)) {
+            TEXT_RESOLUTION = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_RESOLUTION", "@Resolution Text");
+            TEXT_FULLSCREEN = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_FULLSCREEN", "@Fullscreen Text");
+            TEXT_VSYNC = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_VSYNC", "@VSync Text");
+            TEXT_CONTROLS = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_CONTROLS", "@Controls Text");
+            TEXT_AUDIO = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_AUDIO", "@Audio Text");
+            TEXT_ANTIALIASING = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_ANTIALIASING", "@Antialiasing Text");
+            TEXT_FRAMERATE_LIMIT = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_FRAMERATE_LIMIT", "@Framerate Limit Text");
+            TEXT_GRAPHICS = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_GRAPHICS", "@Graphics Text");
+            TEXT_GAMEPLAY = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_GAMEPLAY", "@Gameplay Text");
+            TEXT_LANGUAGE = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_LANGUAGE", "@Language Text");
+            TEXT_CREDITS = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_CREDITS", "@Credits Text");
+            TEXT_SAVE = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_SAVE", "@Save Text");
+            TEXT_LOAD = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_LOAD", "@Load Text");
+            TEXT_EXIT = localization.getLocalizedString("SETTING_OPTIONS", "LOCAL_EXIT", "@Exit Text");
         }
-
-        nlohmann::json json;
-        std::ifstream ifs(filename);
-        if (!ifs.is_open()) {
-            std::cerr << "ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " << filename << std::endl;
-            Logger::log("ERROR::GRAPHICSSETTINGS::COULD NOT LOAD TO FILE: " + filename, "HelperSettingsTexts::initializeLocalization()");
-            return;
-        }
-
-        ifs >> json;
-        ifs.close();
-
-        TEXT_RESOLUTION = json["SETTING_OPTIONS"].value("LOCAL_RESOLUTION", "@Resolution Text");
-        TEXT_FULLSCREEN = json["SETTING_OPTIONS"].value("LOCAL_FULLSCREEN", "@Fullscreen Text");
-        TEXT_VSYNC = json["SETTING_OPTIONS"].value("LOCAL_VSYNC", "@VSync Text");
-        TEXT_CONTROLS = json["SETTING_OPTIONS"].value("LOCAL_CONTROLS", "@Controls Text");
-        TEXT_AUDIO = json["SETTING_OPTIONS"].value("LOCAL_AUDIO", "@Audio Text");
-        TEXT_ANTIALIASING = json["SETTING_OPTIONS"].value("LOCAL_ANTIALIASING", "@Antialiasing Text");
-        TEXT_FRAMERATE_LIMIT = json["SETTING_OPTIONS"].value("LOCAL_FRAMERATE_LIMIT", "@Framerate Limit Text");
-        TEXT_GRAPHICS = json["SETTING_OPTIONS"].value("LOCAL_GRAPHICS", "@Graphics Text");
-        TEXT_GAMEPLAY = json["SETTING_OPTIONS"].value("LOCAL_GAMEPLAY", "@Gameplay Text");
-        TEXT_LANGUAGE = json["SETTING_OPTIONS"].value("LOCAL_LANGUAGE", "@Language Text");
-        TEXT_CREDITS = json["SETTING_OPTIONS"].value("LOCAL_CREDITS", "@Credits Text");
-        TEXT_SAVE = json["SETTING_OPTIONS"].value("LOCAL_SAVE", "@Save Text");
-        TEXT_LOAD = json["SETTING_OPTIONS"].value("LOCAL_LOAD", "@Load Text");
-        TEXT_EXIT = json["SETTING_OPTIONS"].value("LOCAL_EXIT", "@Exit Text");
     }
 };
 
@@ -180,7 +141,6 @@ class ApplicationLangue {
 public:
     static Language currentLanguage;
 
-    // метод для установки языка
     static void setLanguage(Language language)
     {
         currentLanguage = language;
@@ -190,5 +150,7 @@ public:
         helperText::VolumeTexts::initializeLocalization(language);
     }
 };
+
 }; // namespace helperText
+
 #endif /* F01D25E1_1913_4228_8335_54CCC0564D08 */

@@ -1,7 +1,7 @@
 #ifndef CPP_CONTENT_ROTATIONCIRCLE_HPP
 #define CPP_CONTENT_ROTATIONCIRCLE_HPP
 
-#include "../header.h"
+#include "../core/header.h"
 
 struct BlocksGenData {
     sf::Vector2u windowSize;

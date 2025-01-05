@@ -12,7 +12,7 @@ void AIAttack::update(const float& delta_time)
     updateCooldown(delta_time);
 
     _ai_rad.setPosition(_ai_self.e_getPosition());
-    if (getCooldown())
+    if (isCooldownOver())
         if (_ai_rad.getGlobalBounds().intersects(_ai_target.getGlobalBounds()))
             _ai_target.e_takeDamage(_ai_self.getAttributes()->getAttributes().damage);
 }

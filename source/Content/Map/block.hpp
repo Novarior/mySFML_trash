@@ -1,6 +1,6 @@
 #ifndef CPP_CONTENT_BLOCKS_HPP
 #define CPP_CONTENT_BLOCKS_HPP
-#include "../../header.h"
+#include "../../core/header.h"
 
 enum BLOCKTYPE { NAN_DEF = 0,
     BLOCK_GRASS,

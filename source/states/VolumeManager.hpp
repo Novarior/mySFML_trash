@@ -1,6 +1,6 @@
 #ifndef AUDIO_MANAGER_HPP
 #define AUDIO_MANAGER_HPP
-#include "../header.h"
+#include "../core/header.h"
 #include <string>
 
 enum class SoundCategory {
@@ -37,7 +37,7 @@ public:
     VolumeManager()
     {
         // write log message what im here doing something
-        Logger::log("Start initilization VolumeManager", "VolumeManager::VolumeManager()");
+        Logger::logStatic("Start initilization VolumeManager", "VolumeManager::VolumeManager()");
     }
     // set value Volume by category
     void setCategoryVolume(SoundCategory category, float volume, void* data = nullptr)
@@ -45,8 +45,8 @@ public:
         // write idk what need
         // wath for categoryes
 
-        Logger::log("Set volume SoundCategory to category", "VolumeManager::setCategoryVolume()");
-        Logger::log("Category: " + std::to_string(static_cast<int>(category)) + " Volume: " + std::to_string(volume), "VolumeManager::setCategoryVolume()");
+        Logger::logStatic("Set volume SoundCategory to category", "VolumeManager::setCategoryVolume()");
+        Logger::logStatic("Category: " + std::to_string(static_cast<int>(category)) + " Volume: " + std::to_string(volume), "VolumeManager::setCategoryVolume()");
         categoryVolumes[category] = volume;
     }
 

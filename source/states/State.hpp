@@ -2,9 +2,10 @@
 #define CPP_STATE_CORESTATE_HPP
 
 #include "../GUI/GUISYS.hpp"
+#include "../core/MemoryUsageMonitor.hpp"
+#include "../core/staticFPSMetter.hpp"
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
-#include "../staticFPSMetter.hpp"
 #include "VolumeManager.hpp"
 #include "gfx.hpp"
 
@@ -122,5 +123,7 @@ public:
     virtual void update(const float& delta_time) = 0;
     // Render the state (pure virtual function)
     virtual void render(sf::RenderWindow& target) = 0;
+
+    
 };
 #endif

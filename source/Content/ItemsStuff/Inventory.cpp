@@ -1,258 +1,228 @@
 #include "Inventory.hpp"
 
+// Очистка инвентаря
 void Inventory::clearInventory()
 {
-    // Clearing the inventory
-    for (std::vector<Item*>& row : InventoryArray) {
-        for (Item* slotMap : row) {
-            delete slotMap;
-            slotMap = nullptr;
+    for (auto& row : InventoryArray)
+        for (auto& item : row) {
+            item.reset(); // Умное указание освободит память
         }
-    }
 }
 
-Inventory::Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& font, unsigned int character_size)
-    : m_font(font)
+void Inventory::initializeCells(unsigned int rows, unsigned int cols, float cell_size)
 {
-    // init flag for inventory
-    this->isOpened = false;
+    // Резервируем память для двух векторов: ячеек и инвентаря
+    CellsInventory.resize(rows, std::vector<Cell>(cols, Cell(sf::Vector2f(0, 0), cell_size, m_CellInvTex)));
+    InventoryArray.resize(rows, std::vector<std::shared_ptr<Item>>(cols, nullptr));
 
-    // init background layout
-    sf::Vector2f screen_2to3(mmath::p2pX(66, screen_size.x), mmath::p2pX(66, screen_size.y));
-    sf::Vector2f screen_1to6(mmath::p2pX(16, screen_size.x), mmath::p2pX(16, screen_size.y));
-    sf::Vector2f screen_1t10(mmath::p2pX(10, screen_size.x), mmath::p2pX(10, screen_size.y));
-
-    this->m_background_inventory.setSize(screen_2to3);
-    this->m_background_inventory.setPosition(screen_1to6);
-    this->m_background_inventory.setFillColor(sf::Color(40, 40, 40, 225));
-
-    // // init text layout
-    // this->m_Text.setCharacterSize(character_size);
-    // this->m_Text.setFont(font);
-    // this->m_Text.setFillColor(sf::Color::White);
-    // this->m_Text.setOutlineColor(sf::Color::Black);
-    // this->m_Text.setOutlineThickness(2.0f);
-    // this->m_CellInvTex.loadFromFile(myConst::texture_CellInventory_path);
-    // this->m_StringStream.str("");
-    // this->m_Text.setPosition(m_BackShape.getPosition().x + character_size,
-    //     m_BackShape.getPosition().y + m_BackShape.getSize().y - mmath::p2pX(5, this->m_BackShape.getSize().y) - character_size);
-
-    // init cells inventory layout
-    // Initialize the CellsInventory with rows and columns
-    unsigned int rows = 20; // for example
-    unsigned int cols = 10; // for example
-    float cell_size = gridSize_cell;
-    for (unsigned int row = 0; row < rows; ++row) {
-        std::vector<Cell> rowCells;
-        for (unsigned int col = 0; col < cols; ++col) {
-            sf::Vector2f cellPos(
-                this->m_background_inventory.getPosition().x + (screen_2to3.x / 20) * row,
-                this->m_background_inventory.getPosition().y + (screen_2to3.x / 20) * col);
-
-            rowCells.emplace_back(cellPos, screen_2to3.x / rows, this->m_CellInvTex, row * cols + col);
-        }
-        CellsInventory.push_back(rowCells);
+    // Загружаем текстуру для ячеек
+    if (!m_CellInvTex.loadFromFile("path_to_texture.png")) {
+        // Обработка ошибки загрузки текстуры
+        std::cerr << "Ошибка загрузки текстуры для ячеек инвентаря!" << std::endl;
+        return;
     }
 
-    // init Coins GUI
-    this->m_Coins = { 0, 0, 0 };
+    // Инициализация каждой ячейки
+    for (unsigned int row = 0; row < rows; ++row) {
+        for (unsigned int col = 0; col < cols; ++col) {
+            // Позиция ячейки на экране
+            sf::Vector2f cellPosition(
+                m_background_inventory.getPosition().x + col * cell_size,
+                m_background_inventory.getPosition().y + row * cell_size);
 
-    // initializing the inventory map with nullptr 30 rows and 4 columns
-    // array std::vector<std::vector<Item*>> InventoryArray;
-    this->clearInventory();
-    // resize 30x4
-    this->InventoryArray.resize(rows, std::vector<Item*>());
-    for (int i = 0; i < rows; i++)
-        this->InventoryArray[i].resize(cols, nullptr);
+            // Создание ячейки
+            CellsInventory[row][col] = Cell(cellPosition, cell_size, this->m_CellInvTex);
+        }
+    }
 }
 
+// Конструктор инвентаря
+Inventory::Inventory(sf::Vector2f screen_size, unsigned int rows, unsigned int cols, sf::Font& font, float cell_size)
+    : m_font(font)
+    , isOpened(false)
+    , m_Coins(0, 0, 0)
+{
+    // Фон инвентаря
+    sf::Vector2f inventorySize(screen_size.x * 0.5f, screen_size.y * 0.5f);
+    sf::Vector2f inventoryPosition(screen_size.x * 0.25f, screen_size.y * 0.25f);
+
+    m_background_inventory.setSize(inventorySize);
+    m_background_inventory.setPosition(inventoryPosition);
+    m_background_inventory.setFillColor(sf::Color(40, 40, 40, 225));
+
+    // Инициализация ячеек
+    initializeCells(rows, cols, cell_size);
+
+    // Инициализация текста
+    m_Text.setFont(m_font);
+    m_Text.setCharacterSize(24);
+    m_Text.setFillColor(sf::Color::White);
+    m_Text.setString("Inventory");
+    updateTextPosition();
+}
+
+void Inventory::updateTextPosition()
+{
+    // Позиционируем текст в верхней части инвентаря (например, чуть выше фона)
+    sf::Vector2f textPosition(
+        m_background_inventory.getPosition().x + 10.f, // сдвиг от левого края фона
+        m_background_inventory.getPosition().y - 30.f // сдвиг от верхнего края фона
+    );
+
+    m_Text.setPosition(textPosition);
+}
+
+unsigned int Inventory::getCurrentCellID(sf::Vector2i mouse_pos) const
+{
+    // Получаем размеры ячеек
+    float cell_size = CellsInventory[0][0].getSize().x; // Предполагаем, что все ячейки одного размера
+
+    // Проверяем, что позиция мыши находится в пределах инвентаря
+    if (mouse_pos.x < m_background_inventory.getPosition().x || mouse_pos.y < m_background_inventory.getPosition().y || mouse_pos.x > m_background_inventory.getPosition().x + m_background_inventory.getSize().x || mouse_pos.y > m_background_inventory.getPosition().y + m_background_inventory.getSize().y) {
+        return -1; // Если мышь не внутри инвентаря
+    }
+
+    // Рассчитываем индексы строки и столбца в сетке инвентаря
+    unsigned int row = (mouse_pos.y - m_background_inventory.getPosition().y) / cell_size;
+    unsigned int col = (mouse_pos.x - m_background_inventory.getPosition().x) / cell_size;
+
+    // Проверяем, что индексы находятся в пределах размеров инвентаря
+    if (row >= CellsInventory.size() || col >= CellsInventory[0].size()) {
+        return -1; // Если координаты вне допустимого диапазона
+    }
+
+    // Возвращаем идентификатор ячейки
+    return CellsInventory[row][col].getID();
+}
+
+// Деструктор инвентаря
 Inventory::~Inventory()
 {
-    // clearing the inventory
-    for (std::vector<Item*>& row : this->InventoryArray) {
-        for (Item* it : row) {
-            delete it;
-            it = nullptr;
-        }
-        row.clear();
-    }
-    this->InventoryArray.clear();
-
-    // Очистка вектора CellsInventory
-    for (auto& rowCells : this->CellsInventory)
-        rowCells.clear();
-
-    this->CellsInventory.clear();
+    clearInventory();
 }
 
-bool Inventory::addItem(Item* item)
-{ // check if item is not null
-    if (item != nullptr) { // check if item is not nullptr
-        //  check if the item is stackable
-        if (item->isStackable()) { // if stackable
-            // find empty slot and add item to it
-            for (size_t row = 0; row < this->InventoryArray.size(); row++)
-                for (size_t col = 0; col < this->InventoryArray[row].size(); col++)
-                    // if slot is not empty
-                    if (this->InventoryArray[row][col] != nullptr) {
-
-                        // check if the amount of item is less than max amount
-                        if (this->InventoryArray[row][col]->getAmount() < this->InventoryArray[row][col]->getMaxAmount()) {
-                            this->InventoryArray[row][col]->addAmount(item->getAmount());
-                            return true;
-                        }
-                    } else if (this->InventoryArray[row][col] == nullptr) {
-                        // if slot is empty
-
-                        this->InventoryArray[row][col] = item;
-                        this->InventoryArray[row][col]->setPosistion(this->CellsInventory[row][col].getPosition());
-                        this->InventoryArray[row][col]->setSize(this->CellsInventory[row][col].getSize());
-                        return true;
-                    }
-
-        } else { // if not stackable
-            // find empty slot and add item to it
-            for (auto& row : this->InventoryArray)
-                for (auto& it : row)
-                    if (it == nullptr) {
-                        it = item;
-                        return true;
-                    }
-        }
-    }
-    return false;
-}
-
-bool Inventory::removeItem(Item* item)
+bool Inventory::addItem(std::shared_ptr<Item> item)
 {
-    if (item != nullptr) {
-        for (std::vector<Item*>& row : InventoryArray) {
-            for (Item* slotMap : row) {
-                if (slotMap != nullptr && slotMap->getID() == item->getID()) {
-                    delete slotMap;
-                    slotMap = nullptr;
+    if (!item)
+        return false;
+
+    // Если предмет можно складывать
+    if (item->isStackable()) {
+        for (auto& row : InventoryArray) {
+            for (auto& slot : row) {
+                if (slot && slot->getID() == item->getID() && slot->getAmount() < slot->getMaxAmount()) {
+                    slot->addAmount(item->getAmount());
                     return true;
                 }
             }
         }
     }
-    return false;
-}
-bool Inventory::removeItem(unsigned int ID)
-{
-    // find item by using ID, if found delete it and set it to nullptr
-    for (std::vector<Item*>& row : InventoryArray) {
-        for (Item* slotMap : row) {
-            if (slotMap != nullptr && slotMap->getID() == ID) {
-                delete slotMap;
-                slotMap = nullptr;
+
+    // Если предмет не складывается, ищем пустой слот
+    for (size_t row = 0; row < InventoryArray.size(); ++row) {
+        for (size_t col = 0; col < InventoryArray[row].size(); ++col) {
+            if (!InventoryArray[row][col]) {
+                InventoryArray[row][col] = item;
+
+                // Привязка позиции и размера предмета к ячейке
+                item->setPosition(CellsInventory[row][col].getPosition());
+                item->setSize(CellsInventory[row][col].getSize());
                 return true;
             }
         }
     }
-    return false;
+
+    return false; // Инвентарь заполнен
 }
 
-void Inventory::clear()
+bool Inventory::removeItemByID(unsigned int ID)
 {
-    // Clearing the inventory
-    for (std::vector<Item*>& row : InventoryArray) {
-        for (Item* slotMap : row) {
-            delete slotMap;
-            slotMap = nullptr;
+    for (auto& row : InventoryArray) {
+        auto it = std::find_if(row.begin(), row.end(), [ID](std::shared_ptr<Item> slot) {
+            return slot && slot->getID() == ID;
+        });
+
+        if (it != row.end()) {
+            *it = nullptr; // Освобождение слота
+            return true;
         }
     }
+    return false; // Предмет с таким ID не найден
 }
 
-void Inventory::openInventory()
+std::shared_ptr<Item> Inventory::getItem(unsigned int ID) const
 {
-    this->isOpened = true;
-}
-void Inventory::closeInventory()
-{
-    this->isOpened = false;
-}
-
-const unsigned int Inventory::getCurrentCellID(sf::Vector2i mousePos)
-{
-    if (!this->CellsInventory.empty())
-        for (auto& rowCells : CellsInventory)
-            for (auto& cell : rowCells) {
-                if (cell.getGlobalBounds(mousePos))
-                    return cell.getID(mousePos);
+    for (const auto& row : InventoryArray) {
+        for (const auto& item : row) {
+            if (item && item->getID() == ID) {
+                return item;
             }
-    return 0;
+        }
+    }
+    return nullptr; // Предмет не найден
 }
 
-const int Inventory::getNumSlot(Item* item)
+std::shared_ptr<Item> Inventory::getItemFromSlot(unsigned int slot) const
 {
-    if (item != nullptr)
-        for (int x = 0; x < this->InventoryArray.size(); x++)
-            for (int y = 0; y < this->InventoryArray[x].size(); y++)
-                if (this->InventoryArray[x][y] != nullptr && this->InventoryArray[x][y]->getID() == item->getID())
-                    return x * this->InventoryArray.size() + y;
+    unsigned int rows = InventoryArray.size();
+    unsigned int cols = InventoryArray[0].size();
 
-    return -1;
+    if (slot >= rows * cols)
+        return nullptr;
+
+    return InventoryArray[slot / cols][slot % cols];
+}
+
+int Inventory::getTotalSlots() const
+{
+    return static_cast<int>(InventoryArray.size() * InventoryArray[0].size());
 }
 
 Coins& Inventory::getCoins()
 {
-    return this->m_Coins;
-}
-// get item from the inventory by using ID item
-Item* Inventory::getItem(unsigned int ID)
-{
-    Item* foundItem = nullptr;
-
-    for (std::vector<Item*>& row : this->InventoryArray)
-        for (Item* item : row)
-            if (item != nullptr && item->getID() == ID)
-                return item;
-
-    return foundItem;
+    return m_Coins;
 }
 
-Item* Inventory::getItemFromNumSlot(unsigned int num_slot)
-{ // Check if the slot is within the valid range
-    if (0 <= num_slot < this->InventoryArray.size()) {
-        // Get the row of the slot
-        // Loop through each column in the row
-        for (int i = 0; i < this->InventoryArray.size(); ++i)
-            if (this->InventoryArray[i][i % 4] != nullptr)
-                return this->InventoryArray[num_slot][i];
-    }
-    return nullptr; // Item not found
-}
-
+// Обновление инвентаря
 void Inventory::update(sf::Vector2i mouse_pos)
 {
-    if (!this->CellsInventory.empty())
-        for (auto& rowCells : CellsInventory)
-            for (auto& cell : rowCells)
-                cell.update(mouse_pos);
+    for (auto& row : CellsInventory) {
+        for (auto& cell : row) {
+            cell.update(mouse_pos);
+        }
+    }
 
-    this->m_StringStream << this->m_Coins.get_GoldCointCount() << "\t\t" << this->m_Coins.get_SilverCointCount() << "\t\t" << this->m_Coins.get_CopperCointCount();
-    this->m_Text.setString(this->m_StringStream.str());
-    this->m_StringStream.str("");
+    // Обновление текста с монетами
+    m_StringStream.str("");
+    m_StringStream.clear();
+    m_StringStream << "Gold: " << m_Coins.get_GoldCointCount() << " | "
+                   << "Silver: " << m_Coins.get_SilverCointCount() << " | "
+                   << "Copper: " << m_Coins.get_CopperCointCount();
+    m_Text.setString(m_StringStream.str());
 }
 
 void Inventory::render(sf::RenderTarget& target)
 {
-    // rendering the inventory
-    // draw background layout
-    target.draw(this->m_background_inventory);
+    if (!isOpened)
+        return;
 
-    // draw cells inventory
-    if (!this->CellsInventory.empty())
-        for (auto& rowCells : CellsInventory)
-            for (auto& cell : rowCells)
-                target.draw(cell);
+    // Отображение фона и ячеек
+    target.draw(m_background_inventory);
+    for (const auto& row : CellsInventory) {
+        for (const auto& cell : row) {
+            target.draw(cell);
+        }
+    }
 
-    // // draw items in inventory, if not empty and not null draw it, else continue
-    for (std::vector<Item*>& row : this->InventoryArray)
-        for (Item* item : row)
-            if (item != nullptr)
+    // Отображение текста
+    target.draw(m_Text);
+
+    // Отображение предметов
+    for (const auto& row : InventoryArray) {
+        for (const auto& item : row) {
+            if (item) {
                 item->render(target);
-            else
-                continue;
+            }
+        }
+    }
 }

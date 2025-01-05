@@ -50,5 +50,7 @@ public:
 
     void update(const float& delta_time); // Update state
     void render(sf::RenderWindow& target); // Render state
+
+    virtual size_t getMemoryUsage() const { return sizeof(*this); }
 };
 #endif

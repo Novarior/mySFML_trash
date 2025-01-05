@@ -1,7 +1,7 @@
 #ifndef CPP_MATH_CORE_HPP
 #define CPP_MATH_CORE_HPP
 
-#include "../header.h"
+#include "../core/header.h"
 namespace mmath {
 
 enum eSmoothMode {

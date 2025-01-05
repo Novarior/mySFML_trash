@@ -41,6 +41,25 @@ float SimplexNoise::computeNoise(float x, float y, int gi, int grad3[][3])
     return t * t * dot(grad3[gi], x, y);
 }
 
+/**
+ * @brief Generates 2D Simplex noise for the given coordinates.
+ *
+ * This function computes the 2D Simplex noise value for the input coordinates (xin, yin).
+ * Simplex noise is a method for constructing an n-dimensional noise function comparable to Perlin noise ("classic" noise) but with fewer artifacts and a lower computational overhead.
+ *
+ * @param xin The x-coordinate for which to generate noise.
+ * @param yin The y-coordinate for which to generate noise.
+ * @return A float value representing the noise at the given coordinates, normalized between -1 and 1.
+ *
+ * @param xin Координата X.
+ * @param yin Координата Y.
+ * @return Значение шума в диапазоне от -1 до 1.
+ *
+ * Функция использует алгоритм Simplex Noise для генерации шума на основе
+ * входных координат. Она включает в себя вычисление смещений в сетке Simplex,
+ * определение точек сетки и вычисление вклада каждой вершины сетки в итоговое
+ * значение шума. Результат нормализуется в диапазоне от -1 до 1.
+ */
 float SimplexNoise::noise(float xin, float yin)
 {
     // Константы для настройки Simplex шума

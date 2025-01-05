@@ -11,7 +11,7 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
     : m_noice_data(m_data)
 {
     // logger
-    Logger::log("NoiceViewer constructor", "NoiceViewer");
+    Logger::logStatic("NoiceViewer constructor", "NoiceViewer");
 
     this->m_prn_noice = new ProcessGenerationNoice(this->m_noice_data);
     this->m_perlin_noice = new PerlinNoise();
@@ -29,7 +29,7 @@ NoiceViewer::NoiceViewer(mmath::noiceData& m_data)
 
 NoiceViewer::~NoiceViewer()
 {
-    Logger::log("NoiceViewer destructor", "NoiceViewer");
+    Logger::logStatic("NoiceViewer destructor", "NoiceViewer");
 
     delete this->m_prn_noice;
     delete this->m_perlin_noice;

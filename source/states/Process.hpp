@@ -4,9 +4,9 @@
 #include "../Content/ItemsStuff/Inventory.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
+#include "../core/header.h"
 #include "../entitys/Enemys/slime.hpp"
 #include "../entitys/player.hpp"
-#include "../header.h"
 #include "../math/ProcessGenerationNoice.hpp"
 #include "PauseMenu.hpp"
 #include "State.hpp"
@@ -22,9 +22,10 @@ private:
     sf::RenderTexture renderTexture;
 
     // Game elements
-    Inventory* t_inventory; // Inventory
-    Player* player; // Player
-    TileMap* mapTiles; // Tile map
+    std::shared_ptr<Inventory> t_inventory; // Inventory
+    // std::unique_ptr<InventoryHUD> t_inventoryHUD; // Inventory HUD
+    std::shared_ptr<Player> player; // Player
+    std::shared_ptr<TileMap> mapTiles; // Tile map
     mmath::noiceData noicedata; // Noise data
     std::vector<Entity*> entitys; // Entities
     ProcessGenerationNoice* myGN; // Noise generation

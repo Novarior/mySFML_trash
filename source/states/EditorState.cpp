@@ -133,7 +133,7 @@ EditorState::EditorState(StateData* statedata)
     : State(statedata)
 {
     // init logger
-    Logger::log("Start initilization EditorState", "EditorState::EditorState()");
+    Logger::logStatic("Start initilization EditorState", "EditorState::EditorState()");
     // init keybinds
     this->initKeybinds();
     this->initTabMenu();
@@ -149,12 +149,12 @@ EditorState::EditorState(StateData* statedata)
     this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2, this->IstateData->sd_Window->getSize().y * 0.70));
     this->myLS->generate();
 
-    Logger::log("End initilization EditorState", "EditorState::EditorState()");
+    Logger::logStatic("End initilization EditorState", "EditorState::EditorState()");
 }
 
 EditorState::~EditorState()
 {
-    Logger::log("Start destruction EditorState", "EditorState::~EditorState()");
+    Logger::logStatic("Start destruction EditorState", "EditorState::~EditorState()");
 
     ParserJson::saveNoiceData(this->m_NoiceViewer->getNoiceData());
 
@@ -163,6 +163,8 @@ EditorState::~EditorState()
 
     for (auto& it : this->staticSelector)
         delete it.second;
+
+    delete this->m_NoiceViewer;
 
     delete this->selector;
 
@@ -272,6 +274,8 @@ void EditorState::updateDebugText(const float& delta_time)
     double fps = 1.0f / delta_time;
     this->IstringStream
         << "FPS:\t" << fps
+        << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+
         << "\nCurent view generator:\t" << this->current_View_Generator
         << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
         << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode();

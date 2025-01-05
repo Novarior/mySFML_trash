@@ -1,6 +1,6 @@
 #ifndef GUI_SIMPLE_PROGRESSBAR_HPP
 #define GUI_SIMPLE_PROGRESSBAR_HPP
-#include "../../header.h"
+#include "../../core/header.h"
 
 namespace gui {
 class ProgressBar {

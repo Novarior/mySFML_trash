@@ -1,6 +1,6 @@
 #ifndef CPP_HITBOX_HPP
 #define CPP_HITBOX_HPP
-#include "../../header.h"
+#include "../../core/header.h"
 
 class HitboxComponent
 {

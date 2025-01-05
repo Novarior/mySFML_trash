@@ -1,6 +1,6 @@
 #ifndef GRAPHICSSETTINGS_H
 #define GRAPHICSSETTINGS_H
-#include "../header.h"
+#include "../core/header.h"
 
 struct myGFXStruct {
     // Variables
@@ -53,7 +53,7 @@ public:
         // Read the existing JSON file
         std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
         if (!ifs.is_open()) {
-            Logger::log("GFX::COULD NOT LOAD TO FILE: " + path, "GFX()", logType::ERROR);
+            Logger::logStatic("GFX::COULD NOT LOAD TO FILE: " + path, "GFX()", logType::ERROR);
             return false;
         }
         // Fill the object with data
@@ -67,7 +67,7 @@ public:
             j["window"]["antialiasingLevel"] = _struct.contextSettings.antialiasingLevel;
             j["window"]["gridSize"] = _struct.gridSize;
         } catch (json::type_error& e) {
-            Logger::log("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            Logger::logStatic("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
             return false;
         }
         ifs.close();
@@ -76,7 +76,7 @@ public:
 
         // Check if the file opened
         if (!ofs.is_open()) {
-            Logger::log("GFX::COULD NOT SAVE TO FILE: " + path, "GFX()", logType::ERROR);
+            Logger::logStatic("GFX::COULD NOT SAVE TO FILE: " + path, "GFX()", logType::ERROR);
             return false;
         }
 
@@ -108,7 +108,7 @@ public:
         try {
             ifs >> j;
         } catch (json::exception& e) {
-            Logger::log("GFX::JSON::PARSE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            Logger::logStatic("GFX::JSON::PARSE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
             return false;
         }
         ifs.close();
@@ -123,7 +123,7 @@ public:
             _struct.contextSettings.antialiasingLevel = j["window"]["antialiasingLevel"];
             _struct.gridSize = j["window"]["gridSize"];
         } catch (json::type_error& e) {
-            Logger::log("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
+            Logger::logStatic("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
             return false;
         }
         return true;

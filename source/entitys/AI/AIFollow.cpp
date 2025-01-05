@@ -17,14 +17,16 @@ void AIFollow::update(const float& delta_time)
 
     float vecLength = sqrt(pow(moveVec.x, 2) + pow(moveVec.y, 2));
 
-    moveVec /= vecLength;
+    if (moveVec.x != 0 && moveVec.y != 0)
+        moveVec /= vecLength;
 
-    if ((_ai_self.e_getPosition().x != _ai_target.e_getPosition().x) && std::abs(vecLength) < 500.f)
+    if (vecLength > 0 && vecLength < 500.f)
         _ai_self.e_move(moveVec.x, moveVec.y, delta_time);
 }
 
 bool AIFollow::isCloseEnough()
 {
-    float distance = sqrt(pow(_ai_target.e_getPosition().x - _ai_self.e_getPosition().x, 2) + pow(_ai_target.e_getPosition().y - _ai_self.e_getPosition().y, 2));
-    return distance <= _ai_stopDistance;
+    float distanceSquared = pow(_ai_target.e_getPosition().x - _ai_self.e_getPosition().x, 2)
+        + pow(_ai_target.e_getPosition().y - _ai_self.e_getPosition().y, 2);
+    return distanceSquared <= pow(_ai_stopDistance, 2);
 }

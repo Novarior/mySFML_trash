@@ -1,5 +1,4 @@
 #include "parsJSON.hpp"
-#include <stdexcept>
 
 // load playes
 const bool ParserJson::loadPlayer(Entity& player)
@@ -13,52 +12,83 @@ const bool ParserJson::loadPlayer(Entity& player)
 
     return true;
 }
+
 // load inventory
-const bool ParserJson::loadInventory(Inventory* inventory)
-{ // Check if inventory is null
+const bool ParserJson::loadInventory(const std::shared_ptr<Inventory>& inventory)
+{
+    // Проверка, что указатель на инвентарь не пустой
     if (!inventory) {
         printf("ERROR::PARSER::LOAD::INVENTORY::INVENTORY_IS_NULL\n");
         return false;
     }
 
-    // Open the file
+    // Открытие файла
     std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_inventory);
 
-    // Check if the file is open
+    // Проверка, что файл открылся
     if (!ifs.is_open()) {
         printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config::config_inventory);
         return false;
     }
 
-    // Parse the JSON from the file
+    // Парсим JSON из файла
     try {
         json j;
-        ifs >> j;
+        if (!(ifs >> j)) {
+            throw std::runtime_error("Failed to parse JSON from file.");
+        }
 
-        // Load items
+        // Проверка наличия ключа "inventory" и "items"
+        if (!j.contains("inventory") || !j["inventory"].contains("items")) {
+            throw std::runtime_error("Missing 'inventory' or 'items' in JSON.");
+        }
+
+        // Загружаем предметы
         for (auto& item : j["inventory"]["items"]) {
-            if (item["slot"] != nullptr) {
-                // Create a new item
+            if (!item["slot"].is_null()) { // Проверяем на null
+                // Получаем предмет по ID
                 Item* newItem = static_cast<Item*>(ItemRegistry::getItem(item["unic ID"]));
 
-                // Add the item to the inventory
-                inventory->addItem(newItem);
+                // Проверка, что предмет найден
+                if (!newItem) {
+                    printf("ERROR::PARSER::LOAD::ITEM_NOT_FOUND::ID=%d\n", item["unic ID"].get<int>());
+                    continue; // Пропускаем этот предмет
+                }
+
+                // Добавляем предмет в инвентарь
+                if (!inventory->addItem(std::shared_ptr<Item>(newItem))) {
+                    printf("ERROR::PARSER::LOAD::ITEM_ADD_FAILED::ID=%d\n", item["unic ID"].get<int>());
+                }
             }
         }
 
-        // Load coins
-        inventory->getCoins().set_GoldCoinCouns(j["inventory"]["coins"]["gold"]);
-        inventory->getCoins().set_SilverCoinCouns(j["inventory"]["coins"]["silver"]);
-        inventory->getCoins().set_CopperCoinCouns(j["inventory"]["coins"]["copper"]);
+        // Проверка наличия ключа "coins"
+        if (!j["inventory"].contains("coins")) {
+            throw std::runtime_error("Missing 'coins' in JSON.");
+        }
+
+        // Загружаем монеты
+        if (j["inventory"]["coins"].contains("gold")) {
+            inventory->getCoins().set_GoldCoinCouns(j["inventory"]["coins"]["gold"].get<int>());
+        }
+
+        if (j["inventory"]["coins"].contains("silver")) {
+            inventory->getCoins().set_SilverCoinCouns(j["inventory"]["coins"]["silver"].get<int>());
+        }
+
+        if (j["inventory"]["coins"].contains("copper")) {
+            inventory->getCoins().set_CopperCoinCouns(j["inventory"]["coins"]["copper"].get<int>());
+        }
 
     } catch (const std::exception& e) {
-        Logger::log("Cant load inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        Logger::logStatic("Cant load inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n", e.what());
         return false;
     }
 
     return true;
 }
+
 // load  entitys
 const bool ParserJson::loadEntitys(std::vector<Entity*>& entitys)
 { // open json file
@@ -68,10 +98,10 @@ const bool ParserJson::loadEntitys(std::vector<Entity*>& entitys)
 const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
 { // load key binds from json file
 
-    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds);
+    std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
     if (!ifs.is_open()) {
-        printf("PARSER cant open file: %s\n", std::string(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds).c_str());
-        Logger::log("Parcer cant open file: " + ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds, "CORE->PARS", logType::ERROR);
+        printf("PARSER cant open file: %s\n", std::string(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window).c_str());
+        Logger::logStatic("Parcer cant open file: " + ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window, "CORE->PARS", logType::ERROR);
         return false;
     }
 
@@ -86,7 +116,7 @@ const bool ParserJson::loadKeyBinds(std::map<std::string, int>& keyBinds)
         }
     } catch (json::parse_error& e) {
         printf("ERROR::PARSER::JSON::PARSE_ERROR\n   %s\n", e.what());
-        Logger::log("JSON parse error: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        Logger::logStatic("JSON parse error: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         return false;
     }
 
@@ -129,7 +159,7 @@ const bool ParserJson::loadSoundVolumes(VolumeManager* data)
     try {
         json j;
         // Open the file and load the JSON object from it
-        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_soundvolume);
+        std::ifstream ifs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
         ifs >> j;
 
         // Create a temporary VolumeManager object
@@ -146,7 +176,7 @@ const bool ParserJson::loadSoundVolumes(VolumeManager* data)
         *data = tempData;
     } catch (const std::exception& e) {
         // catch exception
-        Logger::log("Cant load sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        Logger::logStatic("Cant load sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         return false;
     }
     return true;

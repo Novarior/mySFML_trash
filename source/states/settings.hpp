@@ -85,6 +85,8 @@ public:
     void renderPageLayout(sf::RenderTarget& target); // Render page layout
     void renderGui(sf::RenderTarget& target); // Render the GUI
     void render(sf::RenderWindow& target); // Render the state
+    
+    virtual size_t getMemoryUsage() const { return sizeof(*this); }
 };
 
 #endif // CPP_SETTINGS_STATE_HPP

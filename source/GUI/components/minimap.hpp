@@ -1,6 +1,6 @@
 #ifndef GUI_SIMPLE_COMPONENTS_MINIMAP_HPP
 #define GUI_SIMPLE_COMPONENTS_MINIMAP_HPP
-#include "../../header.h"
+#include "../../core/header.h"
 
 namespace gui {
 class MiniMap {
@@ -23,7 +23,7 @@ public:
         this->m_image = image;
 
         if (!this->m_texture.loadFromImage(this->m_image))
-            Logger::log("Failed to load texture from image", "MiniMap::setImage()");
+            Logger::logStatic("Failed to load texture from image", "MiniMap::setImage()");
         this->m_background.setTexture(&this->m_texture);
     }
 

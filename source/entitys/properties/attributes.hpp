@@ -1,7 +1,7 @@
 #ifndef ATTRIBUTES_HPP
 #define ATTRIBUTES_HPP
 
-#include "../../header.h"
+#include "../../core/header.h"
 
 struct Atri {
     float health = 10;

@@ -1,12 +1,10 @@
 #set minimun cmake version for build 
-cmake_minimum_required(VERSION 3.5.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(Ekzeckt VERSION 0.0.7)
 
 #set miniimum c++ standart 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_OSX_SYSROOT /Library/Developer/CommandLineTools/SDKs/MacOSX15.0.sdk)
 
 #set build type
 
@@ -26,11 +24,11 @@ file(GLOB_RECURSE SOURCE_PROJECT_FILES source/*.cpp)
 
 #include SFML library on project
 message("")
-find_package(SFML 2.6.1 COMPONENTS graphics window system audio REQUIRED)
+find_package(SFML 3.0.0 REQUIRED COMPONENTS Graphics Audio Network)
 message("SFML was found = ${SFML_FOUND}")
 
 #find nlohmann json library
-find_package(nlohmann_json 3.11.2 REQUIRED)
+find_package(nlohmann_json 3.11.3 REQUIRED)
 if(NOT nlohmann_json_FOUND)
     message("nlohmann_json was not found = ${nlohmann_json_FOUND}")
 else()
@@ -88,9 +86,9 @@ configure_file(${METADATA_DIR}/Info.plist.in ${CMAKE_CURRENT_SOURCE_DIR}/bin/Inf
         target_compile_options(Ekzeckt PUBLIC -O3)
     endif() 
 
-    target_link_libraries(Ekzeckt sfml-graphics sfml-window sfml-system sfml-audio)
+    target_link_libraries(Ekzeckt SFML::Graphics SFML::Audio SFML::Network)
     target_link_libraries(Ekzeckt nlohmann_json::nlohmann_json)
-    target_link_libraries(Ekzeckt "-framework CoreFoundation")
+    target_link_libraries(Ekzeckt "-framework CoreFoundation" "-framework CoreServices")
     set_source_files_properties(${DATA_BUNDLE_ICON_FILE} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     set_target_properties(Ekzeckt PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/bin/Info.plist)

@@ -453,12 +453,12 @@ SettingsState::SettingsState(StateData* state_data)
     this->initFonts();
     this->initGui();
     this->initKeybinds();
-    Logger::log("End initilization settings state", "SettingsState::SettingsState()", logType::INFO);
+    Logger::logStatic("End initilization settings state", "SettingsState::SettingsState()", logType::INFO);
 }
 
 SettingsState::~SettingsState()
 {
-    Logger::log("SettingsState destructor", "SettingsState::~SettingsState()", logType::INFO);
+    Logger::logStatic("SettingsState destructor", "SettingsState::~SettingsState()", logType::INFO);
 
     // delete selector
     _selectors.clear();
@@ -590,6 +590,8 @@ void SettingsState::updateGui(const float& delta_time)
     if (this->Idebud) {
         this->IstringStream
             << "Ver: " << CMAKE_PROJECT_VERSION << "\nFPS:\t" << 1 / delta_time
+            << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+
             << "\nPage: " << pageName << " " << static_cast<int>(this->page)
             << "\nSliders: "
             << "\n\tMASTER: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_MASTER))

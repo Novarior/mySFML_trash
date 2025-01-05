@@ -5,7 +5,7 @@ const bool ParserJson::savePlayer(Entity* player)
 { // save player
     // check if player is not null
     if (player == nullptr) {
-        Logger::log("Cant save player: player is null", "CORE->PARS", logType::ERROR);
+        Logger::logStatic("Cant save player: player is null", "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::PLAYER::PLAYER_IS_NULL\n");
         return false;
     }
@@ -33,62 +33,85 @@ const bool ParserJson::savePlayer(Entity* player)
         std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_playerdata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
-        Logger::log("Cant save player: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        Logger::logStatic("Cant save player: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::PLAYER::FILE_NOT_OPEN\n   %s\n", myConst::config::config_playerdata);
         return false;
     }
 
     return true;
 }
-const bool ParserJson::saveInventory(Inventory* inventory)
-{ // save inventory
-    // Check if inventory is null
+
+const bool ParserJson::saveInventory(const std::shared_ptr<Inventory>& inventory)
+{
+    // Проверка, что указатель на инвентарь не пустой
     if (!inventory) {
-        printf("ERROR::PARSER::SAVE::INVENTORY::INVENTORY_IS_NULL\n");
+        std::cerr << "ERROR::PARSER::SAVE::INVENTORY::INVENTORY_IS_NULL" << std::endl;
         return false;
     }
 
-    // Create a JSON object
+    // Создаем JSON-объект
     json j;
-    j["inventory"]["size"] = inventory->getSizeInventory();
-    const std::vector<std::vector<Item*>>& iArr = inventory->getInventoryArray();
-    int slot = 0;
 
-    // Save items
-    for (const auto& row : iArr) {
-        for (const auto& item : row) {
-            // Check item if null
-            if (item != nullptr) {
-                j["inventory"]["items"][slot]["slot"] = inventory->getNumSlot(item);
-                j["inventory"]["items"][slot]["name"] = item->getName();
-                j["inventory"]["items"][slot]["amount"] = item->getAmount();
-                j["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
-                j["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
-                j["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
-                j["inventory"]["items"][slot]["stackable"] = item->isStackable();
-                j["inventory"]["items"][slot]["usable"] = item->isUsable();
-                j["inventory"]["items"][slot]["unic ID"] = item->getID();
-            } else {
-                j["inventory"]["items"][slot]["slot"] = NULL;
-            }
-            slot++;
-        }
-    }
-
-    j["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
-    j["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
-    j["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
-
-    // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_inventory);
-        ofs << std::setw(4) << j;
+        // Сохраняем информацию об инвентаре
+        j["inventory"]["size"] = inventory->getTotalSlots();
+
+        // Ссылаемся на инвентарь для удобства
+        const auto& invArray = inventory->getInventoryArray(); // Получаем доступ к инвентарю
+        int slot = 0;
+
+        // Сохраняем предметы
+        for (const auto& row : invArray) {
+            for (const auto& item : row) {
+                if (item) {
+                    // Сохраняем информацию о предмете
+                    j["inventory"]["items"][slot]["slot"] = slot;
+                    j["inventory"]["items"][slot]["name"] = item->getName();
+                    j["inventory"]["items"][slot]["amount"] = item->getAmount();
+                    j["inventory"]["items"][slot]["price"]["Gold"] = item->getPrice().get_GoldCointCount();
+                    j["inventory"]["items"][slot]["price"]["Silver"] = item->getPrice().get_SilverCointCount();
+                    j["inventory"]["items"][slot]["price"]["Copper"] = item->getPrice().get_CopperCointCount();
+                    j["inventory"]["items"][slot]["stackable"] = item->isStackable();
+                    j["inventory"]["items"][slot]["usable"] = item->isUsable();
+                    j["inventory"]["items"][slot]["unic ID"] = item->getID();
+                }
+                // Пропускаем пустые ячейки
+                else {
+                    j["inventory"]["items"][slot]["slot"] = nullptr;
+                }
+                slot++;
+            }
+        }
+
+        // Сохраняем монеты
+        j["inventory"]["coins"]["gold"] = inventory->getCoins().get_GoldCointCount();
+        j["inventory"]["coins"]["silver"] = inventory->getCoins().get_SilverCointCount();
+        j["inventory"]["coins"]["copper"] = inventory->getCoins().get_CopperCointCount();
     } catch (const std::exception& e) {
-        Logger::log("Cant save inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::INVENTORY::FILE_NOT_OPEN\n   %s\n", myConst::config::config_inventory);
+        std::cerr << "ERROR::PARSER::SAVE::INVENTORY::JSON_CREATION_FAILED: " << e.what() << std::endl;
+        return false;
     }
+
+    // Сохраняем JSON в файл
+    try {
+        std::string filePath = ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_inventory;
+        std::ofstream ofs(filePath, std::ios::out | std::ios::trunc);
+        if (!ofs.is_open()) {
+            throw std::ios_base::failure("Failed to open file: " + filePath);
+        }
+
+        // Записываем JSON в файл с отступами
+        ofs << std::setw(4) << j;
+        ofs.close();
+    } catch (const std::exception& e) {
+        Logger::logStatic("Cant save inventory: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        std::cerr << "ERROR::PARSER::SAVE::INVENTORY::FILE_WRITE_FAILED: " << e.what() << std::endl;
+        return false;
+    }
+
     return true;
 }
+
 const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
 { // save entitys
     // Create a JSON object
@@ -121,7 +144,7 @@ const bool ParserJson::saveEntitys(std::vector<Entity*> entitys)
     } catch (const std::exception& e) {
         std::stringstream ss;
         ss << "Pars can't save entities" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config::config_entitydata;
-        Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
+        Logger::logStatic(ss.str(), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::SAVE::ENTITYS::FILE_NOT_OPEN\n   %s\n", myConst::config::config_entitydata);
         return false;
     }
@@ -149,7 +172,7 @@ const bool ParserJson::saveNoiceData(mmath::noiceData _dataNoice)
         std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_noicedata);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
-        Logger::log("Cant save noice data: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        Logger::logStatic("Cant save noice data: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
         printf("ERROR::PARSER::OPEN::GAMEDATA::FILE_NOT_OPEN\n   %s\n", myConst::config::config_noicedata);
         return false;
     }
@@ -166,13 +189,13 @@ const bool ParserJson::saveKeyBinds(std::map<std::string, int>& keyBinds)
 
     // Write the JSON object to the file
     try {
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_keybinds);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         std::stringstream ss;
-        ss << "Pars can't save keybinds" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config::config_keybinds;
-        Logger::log(ss.str(), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config::config_keybinds);
+        ss << "Pars can't save keybinds" << ApplicationsFunctions::getDocumentsAppFolder() << myConst::config::config_window;
+        Logger::logStatic(ss.str(), "CORE->PARS", logType::ERROR);
+        printf("ERROR::PARSER::SAVE::KEYBINDS::FILE_NOT_OPEN\n   %s\n", myConst::config::config_window);
         return false;
     }
 
@@ -189,12 +212,12 @@ const bool ParserJson::saveSoundVolumes(VolumeManager* data)
             j["sound_volumes"][static_cast<int>(category.first)] = category.second;
         }
         // Write the JSON object to the file
-        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_soundvolume);
+        std::ofstream ofs(ApplicationsFunctions::getDocumentsAppFolder() + myConst::config::config_window);
         ofs << std::setw(4) << j;
     } catch (const std::exception& e) {
         // catch exception
-        Logger::log("Cant save sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
-        printf("ERROR::PARSER::SAVE::SOUNDVOLUMES::FILE_NOT_OPEN\n   %s\n", myConst::config::config_soundvolume);
+        Logger::logStatic("Cant save sound volumes: " + std::string(e.what()), "CORE->PARS", logType::ERROR);
+        printf("ERROR::PARSER::SAVE::SOUNDVOLUMES::FILE_NOT_OPEN\n   %s\n", myConst::config::config_window);
         return false;
     }
 

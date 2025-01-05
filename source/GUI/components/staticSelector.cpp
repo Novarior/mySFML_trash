@@ -16,6 +16,25 @@ const bool StaticSelector::getKeytime()
     return false;
 }
 
+/**
+ * @brief Constructs a new StaticSelector object.
+ * 
+ * @param pos The position of the selector.
+ * @param size The size of the selector.
+ * @param font The font used for the text in the selector.
+ * @param character_size The size of the characters in the text.
+ * @param current_value The initial value of the selector.
+ * @param max_value The maximum value the selector can have.
+ * @param change_step The step size for changing the value.
+ * @param addritional_text Flag indicating whether additional text should be displayed.
+ * @param add_text The additional text to be displayed if addritional_text is true.
+ * 
+ * @details Initializes the selector's box, text, and buttons. The box is positioned and sized
+ * according to the given parameters. The text is set with the given font and character size,
+ * and positioned in the center of the box. Two buttons are created for incrementing and 
+ * decrementing the value, positioned on the left and right of the box respectively. If 
+ * additional text is to be displayed, it is set according to the add_text parameter.
+ */
 StaticSelector::StaticSelector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font,
     unsigned int character_size, float current_value, float max_value, float change_step,
     bool addritional_text, std::string add_text)

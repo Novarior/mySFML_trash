@@ -6,21 +6,16 @@ namespace Items {
 class Stone : public Item {
 public:
     Stone(unsigned int gridSizeI)
+        : Item(1, "Stone", true, true, false, 1, 8, { 0, 0, 1 })
     {
-        this->m_name = "Stone";
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
-        this->m_Usable = false;
 
         if (this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + itemTextures::item_img_stone2)))
             this->m_shape.setTexture(&this->m_texture);
         else
-            Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::Stone", logType::WARNING);
-        this->m_stacable = true;
-        this->item_ID = 0;
-        this->m_amount = 1;
-        this->m_price = { 0, 0, 1 };
-        this->m_pickable = true;
-        this->m_maxAmount = 8;
+            Logger::logStatic("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::Stone", logType::WARNING);
+
+        // Остальная инициализация конкретных свойств для Stone
     }
     virtual ~Stone() { }
 
@@ -31,7 +26,9 @@ public:
         std::cout << this->m_name << " is not usable" << std::endl;
     }
 
-    void update(const float& delta_time, sf::Vector2i mouse_pos) override { }
+    void update(const float& delta_time, sf::Vector2i mouse_pos)
+    {
+    }
 };
 };
 #endif /* item_stone_hpp */

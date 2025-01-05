@@ -7,22 +7,16 @@ class PoisonSmallRegeneration : public Item {
 private:
 public:
     PoisonSmallRegeneration(unsigned int gridSizeI)
+
+        : Item(2, "Poison of Regeneration", true, true, false, 1, 2, { 0, 1, 25 })
     {
-        this->m_name = "Poison of Regeneration";
+
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
 
         if (this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + itemTextures::item_img_poison_small_regeneration)))
             this->m_shape.setTexture(&this->m_texture);
         else
-            Logger::log("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::PoisonSmallRegeneration", logType::WARNING);
-
-        this->m_Usable = true;
-        this->m_stacable = true;
-        this->m_price = { 0, 1, 25 };
-        this->m_pickable = true;
-        this->m_amount = 1;
-        this->m_maxAmount = 2;
-        this->item_ID = 1;
+            Logger::logStatic("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::PoisonSmallRegeneration", logType::WARNING);
     }
     virtual ~PoisonSmallRegeneration() { }
 
@@ -42,7 +36,9 @@ public:
             std::cout << "Error: Quantity of item is less than 0" << std::endl;
     }
 
-    void update(const float& delta_time, sf::Vector2i mouse_pos) override { }
+    void update(const float& delta_time, sf::Vector2i mouse_pos)
+    {
+    }
 };
 }
 #endif /* item_poison_small_regeneration_hpp */

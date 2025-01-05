@@ -1,5 +1,6 @@
 #include "selector.hpp"
 namespace gui {
+
 Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned int character_size,
     std::string list[], unsigned nrOfElements, unsigned default_active_element)
     : keytime(0.f)

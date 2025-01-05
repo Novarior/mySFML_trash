@@ -1,6 +1,6 @@
 #ifndef GUI_SIMPLE_TEXTBOX_H
 #define GUI_SIMPLE_TEXTBOX_H
-#include "../../header.h"
+#include "../../core/header.h"
 
 namespace gui {
 class Textbox {

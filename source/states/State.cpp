@@ -9,7 +9,7 @@
 State::State(StateData* state_data)
 {
     // write log message what im here doing something
-    Logger::log("Start initilization state", "State::State()");
+    Logger::logStatic("Start initilization state", "State::State()");
 
     // init variabless from state_data to curent state
     IstateData = state_data;
@@ -35,12 +35,13 @@ State::State(StateData* state_data)
     Itext.setOutlineColor(sf::Color::Black);
     Itext.setFont(IstateData->sd_debugFont);
 
-    Logger::log("End initilization state", "State::State()");
+    Logger::logStatic("End initilization state", "State::State()");
+    this->initBuffer();
 }
 
 State::~State()
 {
-    Logger::log("destroy state", "State::~State()");
+    Logger::logStatic("destroy state", "State::~State()");
 }
 
 // Accessors
@@ -65,11 +66,13 @@ bool State::loadSoundtoBuffer(std::string _namepath, std::string _typename)
 {
     sf::SoundBuffer buffer;
     if (!buffer.loadFromFile(_namepath)) {
-        Logger::log("Failed to load sound buffer", "State::loadSoundtoBuffer()");
+        Logger::logStatic("Failed to load sound buffer", "State::loadSoundtoBuffer()");
         return false;
     }
 
     this->IsoundBufferMap->insert(std::make_pair(_typename, buffer));
+    this->IsoundsMap->insert(std::make_pair(_typename, sf::Sound(this->IsoundBufferMap->at(_typename))));
+
     return true;
 }
 

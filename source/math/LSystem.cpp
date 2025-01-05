@@ -6,6 +6,18 @@ LSystem::LSystem()
 
 LSystem::~LSystem()
 {
+    // очистка стека
+    while (!this->stack.empty())
+        this->stack.pop();
+
+    // очистка вектора
+    this->line.clear();
+
+    // очистка правил
+    this->rules.clear();
+
+    // очистка строки
+    this->sentence.clear();
 }
 
 void LSystem::generate()

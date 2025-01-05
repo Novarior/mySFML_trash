@@ -1,5 +1,6 @@
 #ifndef ITEMSTUFF_INVENTORY_H
 #define ITEMSTUFF_INVENTORY_H
+
 #include "Coins.hpp"
 #include "Items/ItemRegister.hpp"
 
@@ -16,28 +17,32 @@ public:
         m_shape.setOutlineThickness(-1.f);
         m_shape.setOutlineColor(sf::Color::Green);
     }
-    virtual ~Cell() { }
 
-    const unsigned int getID(sf::Vector2i mouse_pos) { return this->m_ID; }
+    virtual ~Cell()
+    {
+    }
+
+    const unsigned int getID() const { return this->m_ID; }
+    void setID(unsigned int newID) { m_ID = newID; }
 
     const sf::Vector2f getPosition() const { return m_shape.getPosition(); }
     const sf::Vector2f getSize() const { return m_shape.getSize(); }
 
     inline const bool getGlobalBounds(sf::Vector2i mouse_pos) { return m_shape.getGlobalBounds().contains(sf::Vector2f(mouse_pos)); }
 
-    inline void update(sf::Vector2i mouse_pos)
+    void update(sf::Vector2i mouse_pos)
     {
-        m_shape.setOutlineColor(sf::Color(80, 70, 40, 127));
         if (m_shape.getGlobalBounds().contains(sf::Vector2f(mouse_pos))) {
             m_shape.setOutlineColor(sf::Color::Green);
+        } else {
+            m_shape.setOutlineColor(sf::Color(80, 70, 40, 127));
         }
     }
 
 private:
     unsigned int m_ID;
-    sf::Texture& m_texture;
+    sf::Texture m_texture;
     sf::RectangleShape m_shape;
-    const unsigned int getCountID() { return this->m_ID; }
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
@@ -47,50 +52,59 @@ private:
 
 class Inventory {
 public:
-    Inventory(sf::Vector2f screen_size, float gridSize_cell, sf::Font& font, unsigned int character_size);
+    Inventory(sf::Vector2f screen_size, unsigned int rows, unsigned int cols, sf::Font& font, float cell_size);
     virtual ~Inventory();
 
-    const unsigned int getCurrentCellID(sf::Vector2i mousePos);
+    // Основные функции
+    unsigned int getCurrentCellID(sf::Vector2i mouse_pos) const;
     void update(sf::Vector2i mouse_pos);
     void render(sf::RenderTarget& target);
 
-    // funcrions for manipulating with items
-    bool addItem(Item* item);
-    bool removeItem(Item* item);
-    bool removeItem(unsigned int ID);
-    void clear();
+    // Функции для работы с предметами
+    bool addItem(std::shared_ptr<Item> _item);
+    //  bool removeItem(std::shared_ptr<Item> _item);
+    bool removeItemByID(unsigned int _id);
+    void clearInventory();
 
-    Item* getItem(unsigned int ID);
-    Item* getItemFromNumSlot(unsigned int num_slot);
-    const int getNumSlot(Item* item);
-    std::vector<std::vector<Item*>>& getInventoryArray() { return this->InventoryArray; }
+    std::shared_ptr<Item> getItem(unsigned int _id) const;
+    std::shared_ptr<Item> getItemFromSlot(unsigned int slot) const;
 
-    // functions for manipulating with inventory
-    void openInventory();
-    void closeInventory();
-    void toggleSwitch() { this->isOpened = !this->isOpened; }
-    const bool getIsOpened() const { return this->isOpened; }
-    const int getSizeInventory() { return this->CellsInventory.size() * this->CellsInventory[0].size(); }
+    std::vector<std::vector<std::shared_ptr<Item>>> getInventoryArray() const
+    {
+        return InventoryArray;
+    }
 
-    // functions for manipulating with coins
+    // Управление открытием/закрытием инвентаря
+    void openInventory() { isOpened = true; }
+    void closeInventory() { isOpened = false; }
+    void toggleInventory() { isOpened = !isOpened; }
+    const bool isInventoryOpened() const { return isOpened; }
+
+    // Получение состояния
+    int getTotalSlots() const;
     Coins& getCoins();
 
+    void initializeCells(unsigned int rows, unsigned int cols, float cell_size);
+    void updateTextPosition();
+
 private:
-    bool isOpened;
+    bool isOpened; // Открыт ли инвентарь
 
-    // containers for items and ect.
-    Coins m_Coins;
-    std::vector<std::vector<Item*>> InventoryArray;
+    // Слоты для предметов
     std::vector<std::vector<Cell>> CellsInventory;
+    std::vector<std::vector<std::shared_ptr<Item>>> InventoryArray;
 
-    // variables
+    // Монеты
+    Coins m_Coins;
+
+    // Для отображения
     sf::Font& m_font;
     sf::Text m_Text;
-    std::stringstream m_StringStream;
-    sf::RectangleShape m_CellInvenrotyShape;
     sf::Texture m_CellInvTex;
     sf::RectangleShape m_background_inventory;
+    std::stringstream m_StringStream;
 
-    void clearInventory();
+    // Вспомогательные функции
 };
+
 #endif

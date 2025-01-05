@@ -1,6 +1,6 @@
 #ifndef ITEMSTUFF_COINS_H
 #define ITEMSTUFF_COINS_H
-#include "../../header.h"
+#include "../../core/header.h"
 
 class Coins {
 private:

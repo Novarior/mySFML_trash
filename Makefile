@@ -245,30 +245,6 @@ source/Content/rotationCircle.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/Content/rotationCircle.cpp.s
 .PHONY : source/Content/rotationCircle.cpp.s
 
-source/Core.o: source/Core.cpp.o
-.PHONY : source/Core.o
-
-# target to build an object file
-source/Core.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/Core.cpp.o
-.PHONY : source/Core.cpp.o
-
-source/Core.i: source/Core.cpp.i
-.PHONY : source/Core.i
-
-# target to preprocess a source file
-source/Core.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/Core.cpp.i
-.PHONY : source/Core.cpp.i
-
-source/Core.s: source/Core.cpp.s
-.PHONY : source/Core.s
-
-# target to generate assembly for a file
-source/Core.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/Core.cpp.s
-.PHONY : source/Core.cpp.s
-
 source/GUI/components/button.o: source/GUI/components/button.cpp.o
 .PHONY : source/GUI/components/button.o
 
@@ -460,6 +436,54 @@ source/GUI/components/textureSelector.s: source/GUI/components/textureSelector.c
 source/GUI/components/textureSelector.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/GUI/components/textureSelector.cpp.s
 .PHONY : source/GUI/components/textureSelector.cpp.s
+
+source/core/Core.o: source/core/Core.cpp.o
+.PHONY : source/core/Core.o
+
+# target to build an object file
+source/core/Core.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/Core.cpp.o
+.PHONY : source/core/Core.cpp.o
+
+source/core/Core.i: source/core/Core.cpp.i
+.PHONY : source/core/Core.i
+
+# target to preprocess a source file
+source/core/Core.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/Core.cpp.i
+.PHONY : source/core/Core.cpp.i
+
+source/core/Core.s: source/core/Core.cpp.s
+.PHONY : source/core/Core.s
+
+# target to generate assembly for a file
+source/core/Core.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/Core.cpp.s
+.PHONY : source/core/Core.cpp.s
+
+source/core/main.o: source/core/main.cpp.o
+.PHONY : source/core/main.o
+
+# target to build an object file
+source/core/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/main.cpp.o
+.PHONY : source/core/main.cpp.o
+
+source/core/main.i: source/core/main.cpp.i
+.PHONY : source/core/main.i
+
+# target to preprocess a source file
+source/core/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/main.cpp.i
+.PHONY : source/core/main.cpp.i
+
+source/core/main.s: source/core/main.cpp.s
+.PHONY : source/core/main.s
+
+# target to generate assembly for a file
+source/core/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/core/main.cpp.s
+.PHONY : source/core/main.cpp.s
 
 source/entitys/AI/AIAttack.o: source/entitys/AI/AIAttack.cpp.o
 .PHONY : source/entitys/AI/AIAttack.o
@@ -748,30 +772,6 @@ source/locTexts/helperText.s: source/locTexts/helperText.cpp.s
 source/locTexts/helperText.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/locTexts/helperText.cpp.s
 .PHONY : source/locTexts/helperText.cpp.s
-
-source/main.o: source/main.cpp.o
-.PHONY : source/main.o
-
-# target to build an object file
-source/main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/main.cpp.o
-.PHONY : source/main.cpp.o
-
-source/main.i: source/main.cpp.i
-.PHONY : source/main.i
-
-# target to preprocess a source file
-source/main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/main.cpp.i
-.PHONY : source/main.cpp.i
-
-source/main.s: source/main.cpp.s
-.PHONY : source/main.s
-
-# target to generate assembly for a file
-source/main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Ekzeckt.dir/build.make CMakeFiles/Ekzeckt.dir/source/main.cpp.s
-.PHONY : source/main.cpp.s
 
 source/math/LSystem.o: source/math/LSystem.cpp.o
 .PHONY : source/math/LSystem.o
@@ -1108,9 +1108,6 @@ help:
 	@echo "... source/Content/rotationCircle.o"
 	@echo "... source/Content/rotationCircle.i"
 	@echo "... source/Content/rotationCircle.s"
-	@echo "... source/Core.o"
-	@echo "... source/Core.i"
-	@echo "... source/Core.s"
 	@echo "... source/GUI/components/button.o"
 	@echo "... source/GUI/components/button.i"
 	@echo "... source/GUI/components/button.s"
@@ -1135,6 +1132,12 @@ help:
 	@echo "... source/GUI/components/textureSelector.o"
 	@echo "... source/GUI/components/textureSelector.i"
 	@echo "... source/GUI/components/textureSelector.s"
+	@echo "... source/core/Core.o"
+	@echo "... source/core/Core.i"
+	@echo "... source/core/Core.s"
+	@echo "... source/core/main.o"
+	@echo "... source/core/main.i"
+	@echo "... source/core/main.s"
 	@echo "... source/entitys/AI/AIAttack.o"
 	@echo "... source/entitys/AI/AIAttack.i"
 	@echo "... source/entitys/AI/AIAttack.s"
@@ -1171,9 +1174,6 @@ help:
 	@echo "... source/locTexts/helperText.o"
 	@echo "... source/locTexts/helperText.i"
 	@echo "... source/locTexts/helperText.s"
-	@echo "... source/main.o"
-	@echo "... source/main.i"
-	@echo "... source/main.s"
 	@echo "... source/math/LSystem.o"
 	@echo "... source/math/LSystem.i"
 	@echo "... source/math/LSystem.s"

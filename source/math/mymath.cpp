@@ -14,12 +14,12 @@ const double mmath::randZeroToOne()
     return rand() / (RAND_MAX + 1.);
 }
 // precent to X
-const float mmath::p2pX(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.width) * (perc / 100.f)); }
+const float mmath::p2pX(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.size.x) * (perc / 100.f)); }
 const float mmath::p2pX(const float perc, const unsigned int& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
 const float mmath::p2pX(const float perc, const float& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
 
 // precent to Y
-const float mmath::p2pY(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.height) * (perc / 100.f)); }
+const float mmath::p2pY(const float perc, const sf::VideoMode& vm) { return floor(static_cast<float>(vm.size.y) * (perc / 100.f)); }
 const float mmath::p2pY(const float perc, const unsigned int& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
 const float mmath::p2pY(const float perc, const float& i) { return floor(static_cast<float>(i) * (perc / 100.f)); }
 
@@ -56,7 +56,7 @@ const double mmath::Rescale(double r_value, double minInput, double maxInput, do
 //  @return		unsigned int			The calculated character size value.
 const unsigned int mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
 {
-    return static_cast<unsigned int>((vm.width + vm.height) / modifier);
+    return static_cast<unsigned int>((vm.size.x + vm.size.y) / modifier);
 }
 //  Calculates the character size for text using the current resolution and a constant.
 //  @param		sf::VideoMode& vm		The current videomode of the window (resolution).

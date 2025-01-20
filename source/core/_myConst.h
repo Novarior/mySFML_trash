@@ -31,6 +31,10 @@ namespace fonts { // fonts
 
 namespace gui { // GUI textures
     const char texture_CellInventory_path[] = "/textures/textures/CellOutLine.png";
+
+    const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";
+    const char texture_background_mainmenu_lay_2[] = "/textures/Images/Lay_2.png";
+    const char texture_background_mainmenu_lay_3[] = "/textures/Images/Lay_3.png";
 };
 
 namespace textures { // textures
@@ -41,8 +45,9 @@ namespace textures { // textures
     const char texture_SAND[] = "/textures/Tiles/sand.png";
     const char texture_DIRT[] = "/textures/Tiles/coarse_dirt.png";
 
-    const char f_Trees[] = "/textures/Trees/";
+    const char texture_NULL[] = "/textures/gui/nulltexture.png";
 
+    const char folder_Trees[] = "/textures/Trees/";
 };
 
 namespace shders { // shaders
@@ -51,7 +56,8 @@ namespace shders { // shaders
 };
 
 namespace sprites { // sprites
-    const char slime_texture[] = "/textures/Entitys/slime_terratia.png";
+    const char texture_SLIME[] = "/textures/Entitys/slime_terratia.png";
+    const char texture_PLAYER[] = "/textures/Entitys/slime_terratia.png";
 };
 
 namespace items { // items
@@ -62,9 +68,7 @@ namespace items { // items
 };
 
 namespace backgrounds { // backgrounds
-    const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";
-    const char texture_background_mainmenu_lay_2[] = "/textures/Images/Lay_2.png";
-    const char texture_background_mainmenu_lay_3[] = "/textures/Images/Lay_3.png";
+   
 };
 
 namespace sounds { // sounds

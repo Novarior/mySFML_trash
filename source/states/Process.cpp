@@ -88,10 +88,9 @@ void Process::initView()
     this->playerView.setCenter(halfSize);
 
     if (!this->renderTexture.resize({ this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y }))
-        sf::RenderTexture _buffRenderTexture({ this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y },)
+        sf::RenderTexture _buffRenderTexture({this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y});
 
-            this->renderSprite.setTexture(this->renderTexture.getTexture());
-
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
     this->renderSprite.setTextureRect(sf::IntRect({ 0, 0 },
         sf::Vector2i(this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y)));
 }
@@ -167,8 +166,9 @@ void Process::registerItems()
     Logger::logStatic("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
 }
 
-Process::Process(StateData* state_data, const bool defaultLoad)
-    : State(state_data)
+Process::Process(StateData *state_data, const bool defaultLoad)
+    : State(state_data), renderSprite(TextureManager::getTexture("texture_null"))
+
 { // init Parser
     if (defaultLoad)
         this->loadGameData();

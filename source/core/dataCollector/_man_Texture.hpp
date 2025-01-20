@@ -1,70 +1,66 @@
 #ifndef FB27D2D7_15D5_4021_90D0_83477726D619
 #define FB27D2D7_15D5_4021_90D0_83477726D619
-#include <SFML/Graphics.hpp>
-#include <iostream>
-#include <string>
-#include <unordered_map>
 
-class TextureManager {
+#include "../header.h"
+
+class TextureManager
+{
 public:
     // Метод для загрузки текстуры
-    bool loadTexture(const std::string& textureName, const std::string& filePath)
+    static bool loadTexture(const std::string &textureName, const std::string &filePath)
     {
-        if (textures.find(textureName) != textures.end()) {
+        if (m_textures.find(textureName) != m_textures.end())
+        {
             // Если текстура уже загружена, возвращаем true
-            logger.logTextureLoad(textureName, true);
+            Logger::logStatic(textureName + " texture alrady loaded", "TextureManager::loadTexture()", logType::INFO);
             return true;
         }
 
         sf::Texture texture;
-        if (texture.loadFromFile(filePath)) {
-            //сохраняем текстуру в контейнер
-            textures[textureName] = texture;
-            logger.logTextureLoad(textureName, true); // Логируем успешную загрузку
+        if (texture.loadFromFile(ApplicationsFunctions::get_resources_dir() + filePath))
+        {
+            // сохраняем текстуру в контейнер
+            m_textures.emplace(textureName, std::move(texture));
+            Logger::logStatic(textureName + " success load", "TextureManager::loadTexture()", logType::INFO); // Логируем успешную загрузку
             return true;
-        } else {
-            logger.logTextureLoad(textureName, false); // Логируем ошибку
+        }
+        else
+        {
+            Logger::logStatic(textureName + " failed to load", "TextureManager::loadTexture()", logType::ERROR); // Логируем ошибку
             return false;
         }
     }
 
     // Метод для получения текстуры по имени
-    sf::Texture& getTexture(const std::string& textureName)
+    static sf::Texture &getTexture(const std::string &textureName)
     {
-        if (textures.find(textureName) != textures.end()) {
-            return textures[textureName];
-        } else {
+        if (m_textures.find(textureName) != m_textures.end())
+        {
+            return m_textures[textureName];
+        }
+        else
+        {
             // В случае отсутствия текстуры, логируем ошибку
-            logger.logError("Texture not found: " + textureName);
+            Logger::logStatic("Texture not found: " + textureName, "TextureManager::getTexture()", logType::ERROR);
             throw std::runtime_error("Texture not found: " + textureName);
         }
     }
 
     // Метод для проверки, существует ли текстура
-    bool hasTexture(const std::string& textureName)
+    static bool hasTexture(const std::string &textureName)
     {
         return m_textures.find(textureName) != m_textures.end();
     }
 
-private:
-    // Контейнер для хранения текстур
-    std::unordered_map<std::string, sf::Texture> m_textures;
-};
-#include "Logger.hpp"
-#include <SFML/Graphics.hpp>
-#include <string>
-#include <unordered_map>
+    ~TextureManager()
+    {
+        m_textures.clear();
+    }
 
-class TextureManager {
-private:
-    std::unordered_map<std::string, sf::Texture> textures;
-    Logger logger; // Экземпляр логгера для записи событий
-
-public:
-    // Загрузка текстуры по имени
-  
- 
+    // Контейнер для хранения текстур (теперь это статический контейнер)
+    static std::unordered_map<std::string, sf::Texture> m_textures;
 };
+
 // int main()
 // {
 //     TextureManager textureManager;

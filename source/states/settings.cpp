@@ -1,5 +1,4 @@
 #include "settings.hpp"
-#include "VolumeManager.hpp"
 
 void SettingsState::initVariables()
 { // init variables
@@ -151,14 +150,11 @@ void SettingsState::initGraphicsPage()
             background_layer_pos.x + mmath::p2pX(5, background_layer_size.x),
             background_layer_pos.y + mmath::p2pX(5, background_layer_size.y) + i * mmath::p2pX(10, background_layer_size.y)));
         shape.setSize(sf::Vector2f(mmath::p2pX(20, background_layer_size.x), mmath::p2pX(5, background_layer_size.y)));
-        sf::Text text;
-        text.setString(settingsNames[i]);
-        text.setFillColor(sf::Color::White);
-        text.setFont(this->font);
-        text.setCharacterSize(this->IstateData->sd_characterSize_game_medium);
+        sf::Text text(this->font, settingsNames[i], this->IstateData->sd_characterSize_game_medium);
+
         text.setPosition(sf::Vector2f(
             shape.getPosition().x,
-            shape.getPosition().y + (shape.getGlobalBounds().height / 2) - (text.getGlobalBounds().height / 2)));
+            shape.getPosition().y + (shape.getGlobalBounds().position.y / 2) - (text.getGlobalBounds().position.y / 2)));
 
         _graphic_list.push_back(std::make_pair(text, shape));
     }
@@ -167,10 +163,10 @@ void SettingsState::initGraphicsPage()
     // init dropdown list with video modes
     std::vector<std::string> modes_str;
     int index = 0;
-    for (auto& i : _video_modes) {
-        modes_str.push_back(std::to_string(i.width) + " x " + std::to_string(i.height));
-        if (i.width == this->IstateData->sd_gfxSettings->_struct.resolution.width
-            && i.height == this->IstateData->sd_gfxSettings->_struct.resolution.height)
+    for (auto &i : _video_modes)
+    {
+        modes_str.push_back(std::to_string(i.size.x) + " x " + std::to_string(i.size.y));
+        if (i.size.x == this->IstateData->sd_gfxSettings->_struct.resolution.size.x && i.size.y == this->IstateData->sd_gfxSettings->_struct.resolution.size.y)
             index = modes_str.size() - 1;
     }
 
@@ -226,7 +222,7 @@ void SettingsState::initGraphicsPage()
     // init antialiasing list
     std::vector<std::string> antialiasing_list = { "OFF", "x2", "x4", "x8", "x16" };
 
-    std::string currentAA = "x" + std::to_string(this->IstateData->sd_gfxSettings->_struct.contextSettings.antialiasingLevel);
+    std::string currentAA = "x" + std::to_string(this->IstateData->sd_gfxSettings->_struct.contextSettings.antiAliasingLevel);
     auto aalit = std::find(antialiasing_list.begin(), antialiasing_list.end(), currentAA);
     unsigned AAS = (aalit != antialiasing_list.end()) ? std::distance(antialiasing_list.begin(), aalit) : 0;
 
@@ -355,9 +351,7 @@ void SettingsState::initKeyboardPage()
     sf::Vector2u window_size = this->Iwindow->getSize();
     sf::Vector2f button_size = sf::Vector2f(mmath::p2pX(16, window_size.x), mmath::p2pY(5, window_size.y));
 
-    sf::Text text;
-    text.setFont(this->IstateData->sd_font);
-    text.setCharacterSize(24);
+    sf::Text text(this->IstateData->sd_font, "", 24);
 
     sf::RectangleShape rectangle;
     rectangle.setFillColor(sf::Color(200, 200, 200, 150));
@@ -369,9 +363,9 @@ void SettingsState::initKeyboardPage()
 
         float posX = mmath::p2pX(12.f * (i % 3), window_size.x);
         float posY = mmath::p2pY(40.f, window_size.y) + mmath::p2pY(3.f * (i2 / 3), window_size.y);
-        text.setPosition(posX, posY);
+        text.setPosition({posX, posY});
 
-        rectangle.setSize(sf::Vector2f(text.getGlobalBounds().width, text.getGlobalBounds().height));
+        rectangle.setSize(sf::Vector2f(text.getGlobalBounds().size.x, text.getGlobalBounds().size.y));
         rectangle.setPosition(text.getPosition());
 
         _keybindText.push_back(text);
@@ -394,7 +388,7 @@ void SettingsState::resetGui()
 
     gfx.resolution = _video_modes[_selectors["SELEC_VMODE"]->getActiveElementID()];
     gfx.frameRateLimit = _gfxResource["GFX_FPS"][_selectors["SELEC_FPS"].get()->getActiveElementID()];
-    gfx.contextSettings.antialiasingLevel = _gfxResource["GFX_ALL"][_selectors["SELEC_AAL"].get()->getActiveElementID()];
+    gfx.contextSettings.antiAliasingLevel = _gfxResource["GFX_ALL"][_selectors["SELEC_AAL"].get()->getActiveElementID()];
     gfx.fullscreen = _gfxResource["GFX_FULLSCREEN"][_selectors["SELEC_FULLSCREEN"]->getActiveElementID()];
     gfx.verticalSync = _gfxResource["GFX_VSYNC"][_selectors["SELEC_VSYNC"].get()->getActiveElementID()];
 
@@ -402,12 +396,14 @@ void SettingsState::resetGui()
 
     // reset window
     if (gfx.fullscreen)
-        this->Iwindow->create(gfx.resolution, gfx.title, sf::Style::Fullscreen, gfx.contextSettings);
+        this->Iwindow->create(gfx.resolution, gfx.title, sf::State::Fullscreen, gfx.contextSettings);
     else
-        this->Iwindow->create(gfx.resolution, gfx.title, sf::Style::Titlebar | sf::Style::Close, gfx.contextSettings);
+        this->Iwindow->create(gfx.resolution, gfx.title, sf::State::Windowed, gfx.contextSettings);
     this->Iwindow->setFramerateLimit(gfx.frameRateLimit);
 
     this->IstateData->reserGUI = true;
+    this->saveVolumeSettings();
+    this->IstateData->sd_gfxSettings->saveToFile();
 
     _keybindBackground.clear();
     _keybindBackground.clear();
@@ -425,12 +421,7 @@ void SettingsState::resetGui()
     this->initVariables();
 
     // init fonts
-    this->IstateData->sd_gfxSettings->saveToFile();
-
-    this->saveVolumeSettings();
-
     this->reCaclulateCharacterSize();
-
     this->initGui();
 }
 
@@ -606,11 +597,11 @@ void SettingsState::updateGui(const float& delta_time)
             << "\n\tENVIRONMENT: " + std::to_string(this->IvolumeManager.get()->getCategoryVolume(SoundCategory::vol_ENVIRONMENT))
             << "\nVideo modes: " << _video_modes.size()
             << "\nVideo mode: "
-            << std::to_string(this->IstateData->sd_gfxSettings->_struct.resolution.width)
-            << std::to_string(this->IstateData->sd_gfxSettings->_struct.resolution.height)
+            << std::to_string(this->IstateData->sd_gfxSettings->_struct.resolution.size.x)
+            << std::to_string(this->IstateData->sd_gfxSettings->_struct.resolution.size.y)
             << "\nFramerate limit: " + std::to_string(this->IstateData->sd_gfxSettings->_struct.frameRateLimit)
             << "\nResolution: " << this->IstateData->sd_Window->getSize().x << "x" << this->IstateData->sd_Window->getSize().y
-            << "\nAntialiasing: " << this->IstateData->sd_gfxSettings->_struct.contextSettings.antialiasingLevel
+            << "\nAntialiasing: " << this->IstateData->sd_gfxSettings->_struct.contextSettings.antiAliasingLevel
             << "\nvSync: " << this->IstateData->sd_gfxSettings->_struct.verticalSync
             << "\nFullscreen: " << this->IstateData->sd_gfxSettings->_struct.fullscreen
             << "\nSize of state: " << sizeof(*this) << " bytes"

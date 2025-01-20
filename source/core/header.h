@@ -42,5 +42,8 @@ using namespace nlohmann;
 
 #include "_cmakever.h"
 #include "_myConst.h"
+#include "dataCollector/_man_Texture.hpp"
+#include "MemoryUsageMonitor.hpp"
+#include "staticFPSMetter.hpp"
 
 #endif

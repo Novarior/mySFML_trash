@@ -243,13 +243,11 @@ sf::IntRect EditorState::findNonTransparentRect(const sf::Image &image)
 void EditorState::saveTreeAsImage(sf::RenderWindow &window)
 {
     // create texture with window size
-    sf::Texture texture;
-    texture.create(window.getSize().x, window.getSize().y);
+    sf::Texture texture(sf::Vector2u(window.getSize().x, window.getSize().y));
 
     // get array shape
     std::vector<sf::RectangleShape> shapes;
-    shapes.insert(shapes.end(), this->myLS->internalArray(),
-                  this->myLS->internalArray() + this->myLS->getSizeArray());
+    shapes.insert(shapes.end(), this->myLS->internalArray(), this->myLS->internalArray() + this->myLS->getSizeArray());
 
     // Очищаем окно и рисуем все фигуры на текстуре
     window.clear(sf::Color::Transparent);
@@ -266,22 +264,22 @@ void EditorState::saveTreeAsImage(sf::RenderWindow &window)
     sf::IntRect mrect = findNonTransparentRect(image);
 
     // create newe image on mrect base
-    sf::Image simg;
-    simg.create(mrect.width - mrect.left, mrect.height - mrect.top);
+    sf::Image simg(sf::Vector2u(mrect.size.x - mrect.position.x, mrect.size.y - mrect.position.y), sf::Color::Black);
 
     // copy pixels from original image
-    for (int x = mrect.left; x < mrect.width; x++)
-        for (int y = mrect.top; y < mrect.height; y++)
-            simg.setPixel(x - mrect.left, y - mrect.top, image.getPixel(x, y));
+    for (unsigned int x = mrect.position.x; x < mrect.size.x; x++)
+        for (unsigned int y = mrect.position.y; y < mrect.size.x; y++)
+            simg.setPixel(sf::Vector2u(x - mrect.position.x, y - mrect.position.y), image.getPixel({x, y}));
 
     // create name for image file
     // add time to name for unique name
     std::stringstream ss;
-    ss << myConst::textures::f_Trees << "tree"
+    ss << myConst::textures::folder_Trees << "tree"
        << std::to_string(std::time(nullptr)) << ".png";
 
     // save image
-    simg.saveToFile(ss.str());
+    if (!simg.saveToFile(ss.str()))
+        Logger::logStatic("Image" + ss.str() + " has be corrupt and dosent saved!", "EditorState::saveTreeAsImage()", logType::ERROR);
 }
 
 void EditorState::updateInput(const float &delta_time)

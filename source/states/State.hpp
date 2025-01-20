@@ -2,9 +2,7 @@
 #define CPP_STATE_CORESTATE_HPP
 
 #include "../GUI/GUISYS.hpp"
-#include "../core/MemoryUsageMonitor.hpp"
-#include "../core/staticFPSMetter.hpp"
-#include "../core/dataCollector/_man_Volume.hpp"
+
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
 #include "gfx.hpp"

@@ -8,6 +8,7 @@
 #include "dataCollector/_man_Texture.hpp"
 #include "dataCollector/_man_Volume.hpp"
 #include "systemFunctionUNIX.hpp"
+#include "../locTexts/helperText.hpp"
 
 class Core {
 private:
@@ -28,6 +29,7 @@ private:
     void initState();
     void initWindow();
     void initLocations();
+    void initTextures();
 
 public:
     Core();

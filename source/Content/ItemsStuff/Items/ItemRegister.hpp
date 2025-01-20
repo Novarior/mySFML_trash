@@ -40,4 +40,5 @@ public:
 
     static bool containsItem(int id) { return items.find(id) != items.end(); }
 };
+
 #endif /* itemlist_hpp */

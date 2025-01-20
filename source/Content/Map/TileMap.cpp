@@ -55,7 +55,8 @@ void TileMap::initTrees()
   // load all images from floder
   // push to array
     sf::Texture texture;
-    for (const auto& it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::f_Trees))) {
+    for (const auto &it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::folder_Trees)))
+    {
         if (it.path().extension() != ".png")
             continue;
         if (texture.loadFromFile(it.path().c_str())) {

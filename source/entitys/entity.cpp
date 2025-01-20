@@ -19,17 +19,10 @@ void Entity::createAttributesComponent(Atri* attributes)
 }
 
 Entity::Entity(entityEnum::entityBehaviorClass enumBehavior,
-    entityEnum::entityMovementState enumMovementState,
-    entityEnum::entityState enumState,
-    entityEnum::entityDirection enumDirection)
-    : e_movement(nullptr)
-    , e_hitbox(nullptr)
-    , e_attributes(nullptr)
-    , e_enumBehavior(enumBehavior)
-    , e_enumMovementState(enumMovementState)
-    , e_enumState(enumState)
-    , e_enumDirection(enumDirection)
-    , m_sprite()
+               entityEnum::entityMovementState enumMovementState,
+               entityEnum::entityState enumState,
+               entityEnum::entityDirection enumDirection)
+    : e_movement(nullptr), e_hitbox(nullptr), e_attributes(nullptr), e_enumBehavior(enumBehavior), e_enumMovementState(enumMovementState), e_enumState(enumState), e_enumDirection(enumDirection), m_sprite(TextureManager::getTexture("texture_null"))
 {
     this->ID_entity = this->count_entitys;
     this->count_entitys++;
@@ -75,9 +68,7 @@ const sf::Vector2i Entity::e_getGridPositionInt(const unsigned int& grisSize)
 
 const sf::Vector2f Entity::e_getCenterPosition()
 {
-    sf::Vector2f cp(0.f, 0.f);
-    cp = sf::Vector2f(
+    return sf::Vector2f(
         this->m_sprite.getPosition().x + this->m_sprite.getGlobalBounds().size.x / 2.f,
         this->m_sprite.getPosition().y + this->m_sprite.getGlobalBounds().size.y / 2.f);
-    return cp;
 }

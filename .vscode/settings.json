@@ -104,7 +104,8 @@
         "semaphore": "cpp",
         "*.in": "xml",
         "execution": "cpp",
-        "print": "cpp"
+        "print": "cpp",
+        "regex": "cpp"
     },
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
@@ -134,5 +135,6 @@
     "todo-tree.tree.disableCompactFolders": false,
     "todo-tree.tree.showCountsInTree": false,
     "todo-tree.tree.scanMode": "workspace only",
-    "C_Cpp.errorSquiggles": "disabled"
+    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.default.compilerPath": "/usr/bin/clang"
 }

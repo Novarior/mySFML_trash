@@ -1,7 +1,4 @@
 #include "Core.h"
-#include "../locTexts/helperText.hpp"
-#include "LOGGER.hpp"
-#include "myConst.h"
 
 #if __APPLE__
 void Core::initDirectories()
@@ -138,6 +135,25 @@ void Core::initWindow()
     mWindow->setVerticalSyncEnabled(gfxSettings._struct.verticalSync);
     mWindow->setKeyRepeatEnabled(false);
 }
+void Core::initTextures()
+{
+    // null текстура
+    TextureManager::loadTexture("texture_null", myConst::textures::texture_NULL);
+    // текстуры для карты
+    TextureManager::loadTexture("texture_dirt", myConst::textures::texture_DIRT);
+    TextureManager::loadTexture("texture_grass", myConst::textures::texture_GRASS);
+    TextureManager::loadTexture("texture_ocean", myConst::textures::texture_OCEAN);
+    TextureManager::loadTexture("texture_ocean_anim", myConst::textures::texture_OCEAN_ANIM);
+    TextureManager::loadTexture("texture_sand", myConst::textures::texture_SAND);
+    TextureManager::loadTexture("texture_stone", myConst::textures::texture_STONE);
+    // загружаем текстуры сущностей
+    TextureManager::loadTexture("texture_Player", myConst::sprites::texture_PLAYER);
+    TextureManager::loadTexture("texture_Slime", myConst::sprites::texture_SLIME);
+    // бек в главном меню
+    TextureManager::loadTexture("texture_background_lay_1", myConst::gui::texture_background_mainmenu_lay_1);
+    TextureManager::loadTexture("texture_background_lay_2", myConst::gui::texture_background_mainmenu_lay_2);
+    TextureManager::loadTexture("texture_background_lay_3", myConst::gui::texture_background_mainmenu_lay_3);
+}
 
 Core::Core()
 {
@@ -147,6 +163,7 @@ Core::Core()
     this->initWindow();
     this->initStateData();
     this->initLocations();
+    this->initTextures();
     this->initState();
 
     FPS::reset();

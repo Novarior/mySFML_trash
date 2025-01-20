@@ -14,7 +14,7 @@
 #include <pwd.h>
 #include <unistd.h>
 #endif
-#include "myConst.h"
+#include "_myConst.h"
 
 class ApplicationsFunctions {
 private:

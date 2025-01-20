@@ -33,7 +33,7 @@ public:
         _struct.videoModes = sf::VideoMode::getFullscreenModes();
         _struct.fullscreen = true;
         _struct.frameRateLimit = 120;
-        _struct.contextSettings.antialiasingLevel = 0;
+        _struct.contextSettings.antiAliasingLevel = 0;
         _struct.gridSize = 16.f;
         _struct._sound_master_vol = 50.f;
         _struct._sound_music_vol = 50.f;
@@ -59,12 +59,12 @@ public:
         // Fill the object with data
         try {
             ifs >> j;
-            j["window"]["resolution"]["width"] = _struct.resolution.width;
-            j["window"]["resolution"]["height"] = _struct.resolution.height;
+            j["window"]["resolution"]["width"] = _struct.resolution.size.x;
+            j["window"]["resolution"]["height"] = _struct.resolution.size.y;
             j["window"]["fullscreen"] = _struct.fullscreen;
             j["window"]["frameRateLimit"] = _struct.frameRateLimit;
             j["window"]["verticalSync"] = _struct.verticalSync;
-            j["window"]["antialiasingLevel"] = _struct.contextSettings.antialiasingLevel;
+            j["window"]["antialiasingLevel"] = _struct.contextSettings.antiAliasingLevel;
             j["window"]["gridSize"] = _struct.gridSize;
         } catch (json::type_error& e) {
             Logger::logStatic("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);
@@ -115,12 +115,12 @@ public:
 
         // Заполняем данные из JSON
         try {
-            _struct.resolution.width = j["window"]["resolution"]["width"];
-            _struct.resolution.height = j["window"]["resolution"]["height"];
+            _struct.resolution.size.x = j["window"]["resolution"]["width"];
+            _struct.resolution.size.y = j["window"]["resolution"]["height"];
             _struct.fullscreen = j["window"]["fullscreen"];
             _struct.frameRateLimit = j["window"]["frameRateLimit"];
             _struct.verticalSync = j["window"]["verticalSync"];
-            _struct.contextSettings.antialiasingLevel = j["window"]["antialiasingLevel"];
+            _struct.contextSettings.antiAliasingLevel = j["window"]["antialiasingLevel"];
             _struct.gridSize = j["window"]["gridSize"];
         } catch (json::type_error& e) {
             Logger::logStatic("GFX::JSON::TYPE_ERROR: " + std::string(e.what()), "GFX()", logType::ERROR);

@@ -38,9 +38,9 @@ void Inventory::initializeCells(unsigned int rows, unsigned int cols, float cell
 
 // Конструктор инвентаря
 Inventory::Inventory(sf::Vector2f screen_size, unsigned int rows, unsigned int cols, sf::Font& font, float cell_size)
-    : m_font(font)
-    , isOpened(false)
+    : isOpened(false)
     , m_Coins(0, 0, 0)
+    , m_Text(font, "Inventory", 24)
 {
     // Фон инвентаря
     sf::Vector2f inventorySize(screen_size.x * 0.5f, screen_size.y * 0.5f);
@@ -54,10 +54,7 @@ Inventory::Inventory(sf::Vector2f screen_size, unsigned int rows, unsigned int c
     initializeCells(rows, cols, cell_size);
 
     // Инициализация текста
-    m_Text.setFont(m_font);
-    m_Text.setCharacterSize(24);
     m_Text.setFillColor(sf::Color::White);
-    m_Text.setString("Inventory");
     updateTextPosition();
 }
 

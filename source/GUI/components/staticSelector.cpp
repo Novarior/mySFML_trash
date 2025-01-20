@@ -43,20 +43,19 @@ StaticSelector::StaticSelector(sf::Vector2f pos, sf::Vector2f size, sf::Font& fo
     , keytime(0.f)
     , value(current_value)
     , sizeStep(change_step)
+    , text(font, "", character_size)
 {
     // init box
-    this->box.setPosition(pos.x + (mmath::p2pX(10, size.x)), pos.y);
+    this->box.setPosition({pos.x + (mmath::p2pX(10, size.x)), pos.y});
     this->box.setSize(sf::Vector2f(size.x - (mmath::p2pX(20, size.x)), size.y));
     this->box.setFillColor(sf::Color(50, 50, 50, 100));
     this->box.setOutlineThickness(-1.f);
     this->box.setOutlineColor(sf::Color(40, 40, 40, 120));
     // init text
-    this->text.setFont(font);
-    this->text.setCharacterSize(character_size);
     this->text.setFillColor(sf::Color(255, 255, 255, 200));
     this->text.setPosition(
-        this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f,
-        this->box.getPosition().y + this->box.getSize().y / 2.f - this->text.getGlobalBounds().height / 2.f);
+      {  this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().size.x / 2.f,
+        this->box.getPosition().y + this->box.getSize().y / 2.f - this->text.getGlobalBounds().size.y / 2.f});
     // init value's
 
     // init buttons
@@ -140,8 +139,8 @@ void StaticSelector::update(const float& delta_time, const sf::Vector2i& mousePo
 
     this->text.setString(ss.str());
     this->text.setPosition(
-        this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f,
-        this->box.getPosition().y + this->box.getSize().y / 2.f - this->text.getGlobalBounds().height / 2.f);
+       { this->box.getPosition().x + this->box.getSize().x / 2.f - this->text.getGlobalBounds().size.x / 2.f,
+        this->box.getPosition().y + this->box.getSize().y / 2.f - this->text.getGlobalBounds().size.y / 2.f});
 }
 
 // render

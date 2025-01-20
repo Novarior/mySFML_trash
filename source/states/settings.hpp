@@ -1,9 +1,9 @@
 #ifndef CPP_SETTINGS_STATE_HPP
 #define CPP_SETTINGS_STATE_HPP
 
+#include "../core/dataCollector/_man_Volume.hpp"
 #include "../locTexts/helperText.hpp"
 #include "State.hpp"
-#include "VolumeManager.hpp"
 
 /// @brief  Class for the settings state
 /// @note   Inherited from the State class

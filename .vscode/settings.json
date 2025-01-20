@@ -129,7 +129,6 @@
     "C_Cpp.codeAnalysis.clangTidy.codeAction.formatFixes": true,
     "editor.formatOnPaste": true,
     "editor.formatOnType": false,
-    "editor.defaultFormatter": "llvm-vs-code-extensions.vscode-clangd",
     "clang-format.executable": "clang-format",
     "todo-tree.tree.showBadges": true,
     "todo-tree.tree.disableCompactFolders": false,

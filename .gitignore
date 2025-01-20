@@ -1,7 +1,28 @@
+# macOS system files
 **/.DS_Store
 bin/.DS_Store
-bin/
+
+# Build and CMake directories
 build/
 CMakeFiles/
-source/res/*
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# Compiled binary files
+bin/
+
+# VSCode settings
+.vscode/
+
+
+
+# Cache and log files
 .cache
+*.log
+
+# SFML resources (if they're stored in source/res)
+source/res/*
+
+# Temporary files
+*.tmp

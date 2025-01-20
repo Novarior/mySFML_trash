@@ -47,6 +47,7 @@ private:
     sf::IntRect checkreck;
 
     sf::Vector2i worldSizeGrid;
+    sf::Vector2i worldSizeInt;
     sf::Vector2f worldSizeFloat;
 
     std::vector<std::vector<std::vector<BrickBlock*>>> tilemap;
@@ -89,6 +90,7 @@ public:
 
     inline const sf::Image& getMinimapImage() { return this->minimapImage; }
     inline const sf::Vector2i& getMapSizeOnTiles() { return this->worldSizeGrid; }
+    inline const sf::Vector2i& getMapSizeOnInt() { return this->worldSizeInt; }
     inline const sf::Vector2f& getMapSizeOnFloat() { return this->worldSizeFloat; }
     inline const rectangleWithOffset& getRenderArea() { return this->m_renderArea; }
 

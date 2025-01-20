@@ -73,7 +73,7 @@ public:
     // if mouse is on slider, slider is litle bit bigger and litle bit red
     void update(const sf::Vector2f& mouse_pos_view)
     {
-        if (_sliderBox.getGlobalBounds().contains(mouse_pos_view) && sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (_sliderBox.getGlobalBounds().contains(mouse_pos_view) && sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             // Обновляем слайдер если мышь находится гдето внутри рабочей области слайдера
             float new_x = mouse_pos_view.x - _sliderCircle.getRadius();
             new_x = std::max(new_x, _sliderBox.getPosition().x);

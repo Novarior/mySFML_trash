@@ -21,7 +21,6 @@ State::State(StateData* state_data)
     IkeytimeMax = 0.3f;
     IgridSize = state_data->sd_gridSize;
     IsupportedKeys = state_data->sd_supportedKeys;
-    Ievent = state_data->sd_Event;
 
     // get access to volume manager from global state data like a shared pointer and init it
     IvolumeManager = std::make_shared<VolumeManager>();

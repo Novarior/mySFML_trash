@@ -9,6 +9,10 @@ using libs:
 - SFML
 - nlohmann/JSON
 
+usind frameworks:
+- CoreFoundation
+- CoreServices
+
 Fonts was taken from:
 - https://www.1001fonts.com
 

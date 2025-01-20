@@ -1,6 +1,6 @@
 #ifndef AUDIO_MANAGER_HPP
 #define AUDIO_MANAGER_HPP
-#include "../core/header.h"
+#include "../../core/header.h"
 #include <string>
 
 enum class SoundCategory {

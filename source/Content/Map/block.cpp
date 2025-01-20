@@ -1,22 +1,21 @@
 #include "block.hpp"
 
-BrickBlock::BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collision,
+BrickBlock::BrickBlock(sf::Vector2i size, sf::Vector2i position, sf::Color color, bool collision,
     sf::Texture& texture, unsigned short type, bool isAnim, bool isSetTree)
-    : m_Texture(texture)
+    : m_sprite(texture)
     , m_type(type)
     , m_isAnim(isAnim)
     , isSetTree(isSetTree)
     , m_collision(collision)
     , m_size(size)
 {
-    this->m_sprite.setPosition(position);
+    this->m_sprite.setPosition(static_cast<sf::Vector2f>(position));
     this->m_sprite.setColor(color);
-    this->m_sprite.setTexture(this->m_Texture);
-    this->m_sprite.setTextureRect(sf::IntRect(0, 0, size.x, size.y));
+    this->m_sprite.setTextureRect(sf::IntRect({ 0, 0 }, { size.x, size.y }));
 
     if (isAnim) {
         this->currentFrame = 0;
-        this->framesCounter = this->m_sprite.getTexture()->getSize().y / size.y;
+        this->framesCounter = this->m_sprite.getTexture().getSize().y / size.y;
     }
 }
 
@@ -36,7 +35,7 @@ const sf::FloatRect BrickBlock::getGlobalBounds()
 
 const bool BrickBlock::intersects(sf::IntRect rect)
 {
-    return this->m_sprite.getGlobalBounds().intersects(static_cast<sf::FloatRect>(rect));
+    return this->m_sprite.getGlobalBounds().findIntersection(static_cast<sf::FloatRect>(rect)).has_value();
 }
 
 void BrickBlock::updateAnimation()
@@ -45,8 +44,9 @@ void BrickBlock::updateAnimation()
         if (this->currentFrame >= this->framesCounter)
             this->currentFrame = 0;
 
-        this->m_sprite.setTextureRect(sf::IntRect(0, this->currentFrame * this->m_size.y,
-            this->m_size.x, this->m_size.y));
+        this->m_sprite.setTextureRect(sf::IntRect(
+            { 0, static_cast<int>(this->currentFrame) * this->m_size.y },
+            { this->m_size.x, this->m_size.y }));
     }
 }
 

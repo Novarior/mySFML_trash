@@ -4,9 +4,9 @@
 #include "../GUI/GUISYS.hpp"
 #include "../core/MemoryUsageMonitor.hpp"
 #include "../core/staticFPSMetter.hpp"
+#include "../core/dataCollector/_man_Volume.hpp"
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
-#include "VolumeManager.hpp"
 #include "gfx.hpp"
 
 // Forward declaration of State class
@@ -23,13 +23,13 @@ public:
         this->sd_supportedKeys = nullptr;
         this->sd_States = nullptr;
         this->sd_gfxSettings = nullptr;
-        this->sd_Event = nullptr;
+
         this->reserGUI = false;
         this->sd_volumeManager = nullptr;
     }
 
     float sd_gridSize; // Size of the grid
-    sf::RenderWindow* sd_Window; // Pointer to the SFML window
+    std::shared_ptr<sf::RenderWindow> sd_Window; // Pointer to the SFML window
     sf::Font sd_font; // Font used in the game
     sf::Font sd_debugFont; // Font used for debugging
     GraphicsSettings* sd_gfxSettings; // Pointer to the graphics settings
@@ -42,8 +42,6 @@ public:
     unsigned int sd_characterSize_game_medium; // Character size for medium game text
     unsigned int sd_characterSize_game_small; // Character size for small game text
     bool reserGUI; // Flag to reset GUI
-
-    sf::Event* sd_Event; // Pointer to the SFML event
 };
 
 // Abstract class for game states
@@ -53,7 +51,7 @@ protected:
     // Variables
     StateData* IstateData; // Pointer to shared state data
     std::stack<State*>* Istates; // Stack of states
-    sf::RenderWindow* Iwindow; // Pointer to the SFML window
+    std::shared_ptr<sf::RenderWindow> Iwindow; // Pointer to the SFML window
     sf::Event* Ievent; // Pointer to the SFML event
     std::map<std::string, int>* IsupportedKeys; // Map of supported keys
     std::map<std::string, int> Ikeybinds; // Map of key bindings

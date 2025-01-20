@@ -15,9 +15,9 @@ void EditorState::initTabMenu()
 { // tab menu
     this->tabShape.setPosition(sf::Vector2f(
         mmath::p2pX(70, this->IstateData->sd_Window->getSize().x), 0));
-    this->tabShape.setSize(sf::Vector2f(
-        mmath::p2pX(30, this->IstateData->sd_Window->getSize().x),
-        this->IstateData->sd_Window->getSize().y));
+    this->tabShape.setSize(
+        sf::Vector2f(mmath::p2pX(30, this->IstateData->sd_Window->getSize().x),
+                     this->IstateData->sd_Window->getSize().y));
     // half transparent gray
     this->tabShape.setFillColor(sf::Color(150, 150, 150, 200));
     this->tabShape.setOutlineThickness(5.f);
@@ -28,34 +28,50 @@ void EditorState::initTabMenu()
 void EditorState::initButtons()
 { // init buttons
     this->buttons["G_NOICE"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, "Gen Noice", this->IstateData->sd_characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2,
+                     mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Gen Noice",
+        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["G_TREE"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, "Gen Tree", this->IstateData->sd_characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Vector2f(
+            this->tabShape.getPosition().x + this->tabShape.getSize().x / 2,
+            this->tabShape.getPosition().y + mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2,
+                     mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Gen Tree",
+        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["SAVE_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, "Save", this->IstateData->sd_characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2,
+                     mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Save",
+        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 
     this->buttons["LOAD_GENDATA"] = new gui::Button(
-        sf::Vector2f(this->tabShape.getPosition().x + this->tabShape.getSize().x / 2, this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x / 2, mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, "Load", this->IstateData->sd_characterSize_game_big,
-        sf::Color(200, 200, 200), sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Vector2f(
+            this->tabShape.getPosition().x + this->tabShape.getSize().x / 2,
+            this->tabShape.getPosition().y + mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x / 2,
+                     mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, "Load",
+        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
         sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
         sf::Color::Black, sf::Color::Black, sf::Color::Black);
 }
@@ -64,42 +80,66 @@ void EditorState::initSelectors()
 { // init static selector in tab menu
     this->staticSelector["OCTAVES"] = new gui::StaticSelector(
         sf::Vector2f(this->tabShape.getPosition()),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 1.f, true, "Octaves: ");
+        sf::Vector2f(this->tabShape.getSize().x,
+                     mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
+        10, 1.f, true, "Octaves: ");
 
     this->staticSelector["FREQUENCY"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 0.1f, true, "Frequency: ");
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x,
+                     mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
+        10, 0.1f, true, "Frequency: ");
 
     this->staticSelector["PERSISTENCE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 5, 0.1f, true, "Persistence: ");
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(14, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x,
+                     mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
+        5, 0.1f, true, "Persistence: ");
 
     this->staticSelector["AMPLIFIRE"] = new gui::StaticSelector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0, 10, 0.1f, true, "Amplifire: ");
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(21, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x,
+                     mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
+        10, 0.1f, true, "Amplifire: ");
 
-    std::vector<std::string> list = { "Linear", "Cosine", "Cubic", "Quintic", "Quartic", "Quadratic", "Hermite" };
+    std::vector<std::string> list = {"Linear", "Cosine", "Cubic", "Quintic",
+                                     "Quartic", "Quadratic", "Hermite"};
 
     this->selector = new gui::Selector(
-        sf::Vector2f(this->tabShape.getPosition().x, this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sd_Window->getSize().y)),
-        sf::Vector2f(this->tabShape.getSize().x, mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, list.data(), list.size(), 0);
+        sf::Vector2f(
+            this->tabShape.getPosition().x,
+            this->tabShape.getPosition().y + mmath::p2pX(28, this->IstateData->sd_Window->getSize().y)),
+        sf::Vector2f(this->tabShape.getSize().x,
+                     mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+        this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big,
+        list.data(), list.size(), 0);
 
     // set default value for static selector
-    this->staticSelector["OCTAVES"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().octaves);
-    this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().frequency);
-    this->staticSelector["AMPLIFIRE"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().amplifire);
-    this->staticSelector["PERSISTENCE"]->setCurrentValue(this->m_NoiceViewer->getNoiceData().persistence);
+    this->staticSelector["OCTAVES"]->setCurrentValue(
+        this->m_NoiceViewer->getNoiceData().octaves);
+    this->staticSelector["FREQUENCY"]->setCurrentValue(
+        this->m_NoiceViewer->getNoiceData().frequency);
+    this->staticSelector["AMPLIFIRE"]->setCurrentValue(
+        this->m_NoiceViewer->getNoiceData().amplifire);
+    this->staticSelector["PERSISTENCE"]->setCurrentValue(
+        this->m_NoiceViewer->getNoiceData().persistence);
 }
 
 void EditorState::initNoice()
 {
 
-    if (ParserJson::loadNoiceData(this->m_noiceData)) { // init noise data
+    if (ParserJson::loadNoiceData(this->m_noiceData))
+    { // init noise data
         this->m_noiceData.octaves = 8;
         std::srand(std::time(nullptr));
         this->m_noiceData.seed = std::rand();
@@ -108,10 +148,10 @@ void EditorState::initNoice()
         this->m_noiceData.persistence = 0.6f;
     }
     this->m_noiceData.gridSize = this->IstateData->sd_gridSize;
-    this->m_noiceData.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
-    this->m_noiceData.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
-    this->m_noiceData.mapSizeX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
-    this->m_noiceData.mapSizeY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
+    this->m_noiceData.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.size.x;
+    this->m_noiceData.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.size.y;
+    this->m_noiceData.mapSizeX = this->IstateData->sd_gfxSettings->_struct.resolution.size.x;
+    this->m_noiceData.mapSizeY = this->IstateData->sd_gfxSettings->_struct.resolution.size.y;
     this->m_noiceData.smoothMode = 0;
 
     // init data for noice viewer
@@ -129,11 +169,12 @@ void EditorState::initDebugText()
     this->Itext.setOutlineThickness(2.f);
 }
 
-EditorState::EditorState(StateData* statedata)
+EditorState::EditorState(StateData *statedata)
     : State(statedata)
 {
     // init logger
-    Logger::logStatic("Start initilization EditorState", "EditorState::EditorState()");
+    Logger::logStatic("Start initilization EditorState",
+                      "EditorState::EditorState()");
     // init keybinds
     this->initKeybinds();
     this->initTabMenu();
@@ -146,22 +187,26 @@ EditorState::EditorState(StateData* statedata)
     this->myLS = new LSystem();
     this->myLS->setRule('d', "qd");
     this->myLS->setRule('s', "d[-qqs]+qqs");
-    this->myLS->setOffsetPos(sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2, this->IstateData->sd_Window->getSize().y * 0.70));
+    this->myLS->setOffsetPos(
+        sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2,
+                     this->IstateData->sd_Window->getSize().y * 0.70));
     this->myLS->generate();
 
-    Logger::logStatic("End initilization EditorState", "EditorState::EditorState()");
+    Logger::logStatic("End initilization EditorState",
+                      "EditorState::EditorState()");
 }
 
 EditorState::~EditorState()
 {
-    Logger::logStatic("Start destruction EditorState", "EditorState::~EditorState()");
+    Logger::logStatic("Start destruction EditorState",
+                      "EditorState::~EditorState()");
 
     ParserJson::saveNoiceData(this->m_NoiceViewer->getNoiceData());
 
-    for (auto& it : this->buttons)
+    for (auto &it : this->buttons)
         delete it.second;
 
-    for (auto& it : this->staticSelector)
+    for (auto &it : this->staticSelector)
         delete it.second;
 
     delete this->m_NoiceViewer;
@@ -171,30 +216,31 @@ EditorState::~EditorState()
     delete this->myLS;
 }
 
-sf::IntRect EditorState::findNonTransparentRect(const sf::Image& image)
+sf::IntRect EditorState::findNonTransparentRect(const sf::Image &image)
 {
     // this function find non transparent pixels
     // and return IntRect without this pixels
     sf::Vector2u size = image.getSize();
-    sf::IntRect mrect(size.x, size.y, 0, 0);
+    sf::Rect<unsigned> mrect({size.x, size.y}, {0, 0});
 
     for (unsigned int x = 0; x < size.x; x++)
         for (unsigned int y = 0; y < size.y; y++)
-            if (image.getPixel(x, y) != sf::Color::Transparent) {
-                if (x < mrect.left)
-                    mrect.left = x;
-                if (y < mrect.top)
-                    mrect.top = y;
-                if (x > mrect.width)
-                    mrect.width = x;
-                if (y > mrect.height)
-                    mrect.height = y;
+            if (image.getPixel({x, y}) != sf::Color::Transparent)
+            {
+                if (x < mrect.position.x)
+                    mrect.position.x = x;
+                if (y < mrect.position.y)
+                    mrect.position.y = y;
+                if (x > mrect.size.x)
+                    mrect.size.x = x;
+                if (y > mrect.size.y)
+                    mrect.size.y = y;
             }
 
-    return mrect;
+    return sf::Rect<int>(mrect);
 }
 
-void EditorState::saveTreeAsImage(sf::RenderWindow& window)
+void EditorState::saveTreeAsImage(sf::RenderWindow &window)
 {
     // create texture with window size
     sf::Texture texture;
@@ -202,11 +248,12 @@ void EditorState::saveTreeAsImage(sf::RenderWindow& window)
 
     // get array shape
     std::vector<sf::RectangleShape> shapes;
-    shapes.insert(shapes.end(), this->myLS->internalArray(), this->myLS->internalArray() + this->myLS->getSizeArray());
+    shapes.insert(shapes.end(), this->myLS->internalArray(),
+                  this->myLS->internalArray() + this->myLS->getSizeArray());
 
     // Очищаем окно и рисуем все фигуры на текстуре
     window.clear(sf::Color::Transparent);
-    for (auto& it : shapes)
+    for (auto &it : shapes)
         window.draw(it);
 
     // update
@@ -230,13 +277,14 @@ void EditorState::saveTreeAsImage(sf::RenderWindow& window)
     // create name for image file
     // add time to name for unique name
     std::stringstream ss;
-    ss << myConst::textures::f_Trees << "tree" << std::to_string(std::time(nullptr)) << ".png";
+    ss << myConst::textures::f_Trees << "tree"
+       << std::to_string(std::time(nullptr)) << ".png";
 
     // save image
     simg.saveToFile(ss.str());
 }
 
-void EditorState::updateInput(const float& delta_time)
+void EditorState::updateInput(const float &delta_time)
 {
     // if pressed key ESC then end state
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("CLOSE"))) && this->getKeytime())
@@ -257,7 +305,8 @@ void EditorState::updateInput(const float& delta_time)
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))) && this->getKeytime())
         this->m_NoiceViewer->swithColorMode();
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_E"))) && this->getKeytime()) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_E"))) && this->getKeytime())
+    {
         if (this->current_View_Generator < 2)
             this->current_View_Generator++;
         else
@@ -268,26 +317,31 @@ void EditorState::updateInput(const float& delta_time)
         this->m_noiceData.fastMode = !this->m_noiceData.fastMode;
 }
 
-void EditorState::updateDebugText(const float& delta_time)
+void EditorState::updateDebugText(const float &delta_time)
 {
     // collect all data for debug text and update it
     double fps = 1.0f / delta_time;
-    this->IstringStream
-        << "FPS:\t" << fps
-        << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
-
-        << "\nCurent view generator:\t" << this->current_View_Generator
-        << "\nCurent noice view mode:\t" << this->m_NoiceViewer->getNoiceModelName() << ":\t" << this->m_NoiceViewer->getNoiceModel()
-        << "\nCurent noice color mode:\t" << this->m_NoiceViewer->getColorModeName() << ":\t" << this->m_NoiceViewer->getColorMode();
+    this->IstringStream << "FPS:\t" << fps << "\nCurrent memory usage:\t"
+                        << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+                        << "\nCurent view generator:\t"
+                        << this->current_View_Generator
+                        << "\nCurent noice view mode:\t"
+                        << this->m_NoiceViewer->getNoiceModelName() << ":\t"
+                        << this->m_NoiceViewer->getNoiceModel()
+                        << "\nCurent noice color mode:\t"
+                        << this->m_NoiceViewer->getColorModeName() << ":\t"
+                        << this->m_NoiceViewer->getColorMode();
     if (this->m_NoiceViewer->getNoiceModel() == noiceType::PERLIN_NOICE_V2)
-        this->IstringStream
-            << "\nCurent noice smooth mode:\t" << this->m_NoiceViewer->getNoiceSmouthName() << ":\t" << this->m_NoiceViewer->getNoiceData().smoothMode
-            << "\nSeed:\t" << this->m_NoiceViewer->getNoiceData().seed
-            << "\nFastMode" << this->m_NoiceViewer->getNoiceData().fastMode;
-    this->IstringStream
-        << "\nTree Data:"
-        << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
-        << "\nPause:\t" << this->Ipaused;
+        this->IstringStream << "\nCurent noice smooth mode:\t"
+                            << this->m_NoiceViewer->getNoiceSmouthName() << ":\t"
+                            << this->m_NoiceViewer->getNoiceData().smoothMode
+                            << "\nSeed:\t"
+                            << this->m_NoiceViewer->getNoiceData().seed
+                            << "\nFastMode"
+                            << this->m_NoiceViewer->getNoiceData().fastMode;
+    this->IstringStream << "\nTree Data:"
+                        << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
+                        << "\nPause:\t" << this->Ipaused;
 
     // update debug text
     this->Itext.setString(this->IstringStream.str());
@@ -295,42 +349,50 @@ void EditorState::updateDebugText(const float& delta_time)
     this->IstringStream.str("");
 }
 
-void EditorState::updateButtons(const float& delta_time)
+void EditorState::updateButtons(const float &delta_time)
 {
-    for (auto& it : this->buttons)
+    for (auto &it : this->buttons)
         it.second->update(this->ImousePosWindow);
 
-    for (auto& it : this->staticSelector)
+    for (auto &it : this->staticSelector)
         it.second->update(delta_time, this->ImousePosWindow);
 
     this->selector->update(delta_time, this->ImousePosWindow);
 
     // update buttons using switch case for each button
-    switch (this->current_View_Generator) {
+    switch (this->current_View_Generator)
+    {
     case 0: // noice case
-        if (this->staticSelector["OCTAVES"]->isValueChanged()) {
+        if (this->staticSelector["OCTAVES"]->isValueChanged())
+        {
             this->m_noiceData.octaves = this->staticSelector["OCTAVES"]->getCurrentValue();
             this->staticSelector["OCTAVES"]->closeChangeValue();
         }
-        if (this->staticSelector["FREQUENCY"]->isValueChanged()) {
+        if (this->staticSelector["FREQUENCY"]->isValueChanged())
+        {
             this->m_noiceData.frequency = this->staticSelector["FREQUENCY"]->getCurrentValue();
             this->staticSelector["FREQUENCY"]->closeChangeValue();
         }
-        if (this->staticSelector["PERSISTENCE"]->isValueChanged()) {
+        if (this->staticSelector["PERSISTENCE"]->isValueChanged())
+        {
             this->m_noiceData.persistence = this->staticSelector["PERSISTENCE"]->getCurrentValue();
             this->staticSelector["PERSISTENCE"]->closeChangeValue();
         }
-        if (this->staticSelector["AMPLIFIRE"]->isValueChanged()) {
+        if (this->staticSelector["AMPLIFIRE"]->isValueChanged())
+        {
             this->m_noiceData.amplifire = this->staticSelector["AMPLIFIRE"]->getCurrentValue();
             this->staticSelector["AMPLIFIRE"]->closeChangeValue();
         }
-        if (this->buttons["G_NOICE"]->isPressed()) {
+        if (this->buttons["G_NOICE"]->isPressed())
+        {
             this->m_NoiceViewer->generateNoice();
         }
-        if (this->buttons["SAVE_GENDATA"]->isPressed()) {
+        if (this->buttons["SAVE_GENDATA"]->isPressed())
+        {
             ParserJson::saveNoiceData(this->m_noiceData);
         }
-        if (this->buttons["LOAD_GENDATA"]->isPressed()) {
+        if (this->buttons["LOAD_GENDATA"]->isPressed())
+        {
             ParserJson::loadNoiceData(this->m_noiceData);
             this->staticSelector["OCTAVES"]->setCurrentValue(this->m_noiceData.octaves);
             this->staticSelector["FREQUENCY"]->setCurrentValue(this->m_noiceData.frequency);
@@ -341,7 +403,8 @@ void EditorState::updateButtons(const float& delta_time)
         this->m_NoiceViewer->setNoiceData(this->m_noiceData);
         break;
     case 1: // tree case
-        if (this->buttons["G_TREE"]->isPressed()) {
+        if (this->buttons["G_TREE"]->isPressed())
+        {
             this->myLS->generate();
             this->saveTreeAsImage(*this->IstateData->sd_Window);
         }
@@ -353,11 +416,9 @@ void EditorState::updateButtons(const float& delta_time)
     this->m_noiceData.smoothMode = this->selector->getActiveElementID();
 }
 
-void EditorState::updateSounds(const float& delta_time)
-{
-}
+void EditorState::updateSounds(const float &delta_time) {}
 
-void EditorState::update(const float& delta_time)
+void EditorState::update(const float &delta_time)
 {
     // update keytime for next function used it for keypress delay
     this->updateKeytime(delta_time);
@@ -372,23 +433,24 @@ void EditorState::update(const float& delta_time)
         this->updateDebugText(delta_time);
 }
 
-void EditorState::renderTabMenu(sf::RenderTarget& target)
+void EditorState::renderTabMenu(sf::RenderTarget &target)
 {
     target.draw(this->tabShape);
 
-    for (auto& it : this->staticSelector)
+    for (auto &it : this->staticSelector)
         it.second->render(target);
 
-    for (auto& it : this->buttons)
+    for (auto &it : this->buttons)
         it.second->render(target);
 
     this->selector->render(target);
 }
 
-void EditorState::render(sf::RenderWindow& target)
+void EditorState::render(sf::RenderWindow &target)
 {
     // layer 0 - noice render and tree render
-    switch (this->current_View_Generator) {
+    switch (this->current_View_Generator)
+    {
     case 0: // call noice render
         if (this->m_NoiceViewer != nullptr)
             this->m_NoiceViewer->render(target);

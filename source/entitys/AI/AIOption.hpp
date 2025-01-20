@@ -41,7 +41,7 @@ public:
         , _ai_state(StateTODO::Idle)
     {
         _ai_rad = sf::CircleShape(rad_radius);
-        _ai_rad.setOrigin(rad_radius, rad_radius);
+        _ai_rad.setOrigin({ rad_radius, rad_radius });
     }
 
     virtual ~AIOption() { }

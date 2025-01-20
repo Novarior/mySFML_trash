@@ -5,7 +5,7 @@ gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::st
     sf::Color idle_color, sf::Color hover_color, sf::Color active_color,
     sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color,
     short unsigned id)
-    : b_font(font)
+    : text(font, text, character_size)
 {
     this->buttonState = BTN_IDLE;
     this->id = id;
@@ -16,13 +16,10 @@ gui::Button::Button(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, std::st
     this->shape.setOutlineThickness(-1.f);
     this->shape.setOutlineColor(outline_idle_color);
 
-    this->text.setFont(font);
-    this->text.setString(text);
     this->text.setFillColor(text_idle_color);
-    this->text.setCharacterSize(character_size);
     this->text.setPosition(
-        this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->shape.getPosition().y + this->text.getGlobalBounds().height / 2.f);
+        { this->shape.getPosition().x + (this->shape.getGlobalBounds().size.x / 2.f) - this->text.getGlobalBounds().size.x / 2.f,
+            this->shape.getPosition().y + this->text.getGlobalBounds().size.y / 2.f });
 
     this->textIdleColor = text_idle_color;
     this->textHoverColor = text_hover_color;
@@ -86,7 +83,7 @@ void gui::Button::update(const sf::Vector2i& mousePosWindow)
         this->buttonState = gui::BTN_HOVER;
 
         // Pressed
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
             this->buttonState = gui::BTN_ACTIVE;
     }
 

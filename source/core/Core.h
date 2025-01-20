@@ -3,6 +3,10 @@
 
 #include "../states/MainMenu.hpp"
 #include "../states/gfx.hpp"
+#include "_cmakever.h"
+#include "_myConst.h"
+#include "dataCollector/_man_Texture.hpp"
+#include "dataCollector/_man_Volume.hpp"
 #include "systemFunctionUNIX.hpp"
 
 class Core {
@@ -10,11 +14,10 @@ private:
     float deltaTime;
     sf::Clock deltaClock;
 
-    sf::RenderWindow* mWindow;
+    std::shared_ptr<sf::RenderWindow> mWindow;
     StateData mStatedata;
     std::stack<State*> mState;
     GraphicsSettings gfxSettings;
-    sf::Event mEvents;
     std::map<std::string, int> supportedKeys;
 
     // initilization functions

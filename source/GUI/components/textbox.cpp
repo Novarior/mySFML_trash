@@ -3,7 +3,7 @@
 gui::Textbox::Textbox(sf::Vector2f pos, sf::Vector2f size,
     sf::Font& font, std::string text, int charSize,
     sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
-    : font(font)
+    : text(font, text, charSize)
 {
     this->limit = false;
     this->limitChar = 10;
@@ -13,13 +13,10 @@ gui::Textbox::Textbox(sf::Vector2f pos, sf::Vector2f size,
     this->shape.setSize(size);
     this->shape.setFillColor(idleColor);
 
-    this->text.setFont(font);
-    this->text.setString(text);
     this->text.setFillColor(sf::Color::Black);
-    this->text.setCharacterSize(charSize);
     this->text.setPosition(
-        this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);
+        { this->shape.getPosition().x + (this->shape.getGlobalBounds().size.x / 2.f) - this->text.getGlobalBounds().size.y / 2.f,
+            this->shape.getPosition().y + (this->shape.getGlobalBounds().size.x / 2.f) - this->text.getGlobalBounds().size.y / 2.f });
 
     this->idleColor = idleColor;
     this->hoverColor = hoverColor;
@@ -36,7 +33,7 @@ void gui::Textbox::update(const sf::Vector2i& mousePos)
     if (this->shape.getGlobalBounds().contains(sf::Vector2f(mousePos))) {
         this->shape.setFillColor(this->hoverColor);
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
             this->shape.setFillColor(this->activeColor);
             this->active = true;
             this->focused = true;
@@ -73,17 +70,12 @@ void gui::Textbox::setLimit(bool ToF, int lim)
     this->limitChar = lim;
 }
 
-void gui::Textbox::setFont(sf::Font& font)
-{
-    this->text.setFont(font);
-}
-
 void gui::Textbox::setPosition(sf::Vector2f pos)
 {
     this->shape.setPosition(pos);
     this->text.setPosition(
-        this->shape.getPosition().x + (this->shape.getGlobalBounds().width / 2.f) - this->text.getGlobalBounds().width / 2.f,
-        this->shape.getPosition().y + (this->shape.getGlobalBounds().height / 2.f) - this->text.getGlobalBounds().height / 2.f);
+        { this->shape.getPosition().x + (this->shape.getGlobalBounds().size.x / 2.f) - this->text.getGlobalBounds().size.x / 2.f,
+            this->shape.getPosition().y + (this->shape.getGlobalBounds().size.y / 2.f) - this->text.getGlobalBounds().size.y / 2.f });
 }
 
 void gui::Textbox::setSize(sf::Vector2f size)
@@ -116,52 +108,60 @@ bool gui::Textbox::getFocus()
 void gui::Textbox::typedOn(sf::Event* input)
 {
     if (this->focused) {
-        if (input->KeyPressed) {
-            int charTyped = input->text.unicode;
+        if (input->is<sf::Event::TextEntered>()) {
+            int charTyped = input->getIf<sf::Event::TextEntered>()->unicode;
             if (charTyped < 128) {
                 if (this->limit) {
                     if (this->str.length() <= this->limitChar) {
                         this->inputLogic(charTyped);
-                    } else if (this->str.length() > this->limitChar && charTyped == sf::Keyboard::Key::Delete) {
-                        this->deleteLastChar();
                     }
                 } else {
                     this->inputLogic(charTyped);
                 }
             }
         }
+        // Обработка клавиши Delete
+        else if (input->is<sf::Event::KeyPressed>()) {
+            if (input->getIf<sf::Event::KeyPressed>()->code == sf::Keyboard::Key::Delete) {
+                this->deleteLastChar();
+            }
+        }
     }
 }
 
 void gui::Textbox::inputLogic(int charTyped)
-{ // if not presse some keys
-    if (charTyped != sf::Keyboard::Key::Delete && charTyped != sf::Keyboard::Key::Enter && charTyped != sf::Keyboard::Key::Escape) {
-        if (charTyped != sf::Keyboard::Key::BackSpace && charTyped != sf::Keyboard::LAlt)
-            if (charTyped != sf::Keyboard::Key::LControl && charTyped != sf::Keyboard::Key::LShift && charTyped != sf::Keyboard::Key::Tab) {
+{
+    // Игнорируем специальные клавиши, такие как Delete, Enter, Escape
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::Delete) || charTyped == static_cast<int>(sf::Keyboard::Key::Enter) || charTyped == static_cast<int>(sf::Keyboard::Key::Escape)) {
+        return;
+    }
 
-                this->str += static_cast<char>(charTyped);
-                if (this->str.length() > 0) {
-                    if (this->str[this->str.length() - 1] == '.' || this->str[this->str.length() - 1] == ',' || this->str[this->str.length() - 1] == ';')
-                        this->deleteLastChar();
-                    if (this->str[this->str.length() - 1] == '\0' || this->str[this->str.length() - 1] == '\n' || this->str[this->str.length() - 1] == '\t')
-                        this->deleteLastChar();
-                    if (this->str[this->str.length() - 1] == ':' || this->str[this->str.length() - 1] == '!' || this->str[this->str.length() - 1] == '?')
-                        this->deleteLastChar();
-                    if (charTyped == 1 || charTyped == 95 || charTyped == 2 || charTyped == 94 || charTyped == 6)
-                        this->deleteLastChar();
-                    if (charTyped == 2 || charTyped == 94)
-                        //  this->deleteLastChar();
+    // Игнорируем модификаторы клавиш и другие спец. клавиши
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::Backspace))
+        return;
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::LAlt))
+        return;
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::LControl))
+        return;
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::LShift))
+        return;
+    if (charTyped == static_cast<int>(sf::Keyboard::Key::Tab))
+        return;
 
-                        if (charTyped == sf::Keyboard::Space)
-                            this->deleteLastChar();
-                }
-            }
-    } else if (charTyped == sf::Keyboard::Delete) {
-        if (this->str.length() > 0) {
+    // Добавляем символ в строку
+    if (charTyped >= 0 && charTyped <= 127) {
+        this->str += static_cast<char>(charTyped);
+    }
+
+    // Проверка на нежелательные символы (например, знаки препинания)
+    if (!this->str.empty()) {
+        char lastChar = this->str[this->str.length() - 1];
+        if (lastChar == '.' || lastChar == ',' || lastChar == ';' || lastChar == ':' || lastChar == '!' || lastChar == '?') {
             this->deleteLastChar();
         }
     }
 
+    // Обновляем текст
     this->text.setString(this->str);
 }
 

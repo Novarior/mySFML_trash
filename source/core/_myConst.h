@@ -32,18 +32,18 @@ namespace fonts { // fonts
 namespace gui { // GUI textures
     const char texture_CellInventory_path[] = "/textures/textures/CellOutLine.png";
 
-    const char texture_background_mainmenu_lay_1[] = "/textures/Images/Lay_1.png";
-    const char texture_background_mainmenu_lay_2[] = "/textures/Images/Lay_2.png";
-    const char texture_background_mainmenu_lay_3[] = "/textures/Images/Lay_3.png";
+    const char texture_background_mainmenu_lay_1[] = "/textures/gui/Lay_1.png";
+    const char texture_background_mainmenu_lay_2[] = "/textures/gui/Lay_2.png";
+    const char texture_background_mainmenu_lay_3[] = "/textures/gui/Lay_3.png";
 };
 
 namespace textures { // textures
-    const char texture_GRASS[] = "/textures/Tiles/grass.png";
-    const char texture_STONE[] = "/textures/Tiles/stone.png";
-    const char texture_OCEAN[] = "/textures/Tiles/ocean.png";
-    const char texture_OCEAN_ANIM[] = "/textures/Tiles/water_still.png";
-    const char texture_SAND[] = "/textures/Tiles/sand.png";
-    const char texture_DIRT[] = "/textures/Tiles/coarse_dirt.png";
+    const char texture_GRASS[] = "/textures/tiles/grass.png";
+    const char texture_STONE[] = "/textures/tiles/stone.png";
+    const char texture_OCEAN[] = "/textures/tiles/ocean.png";
+    const char texture_OCEAN_ANIM[] = "/textures/tiles/water_still.png";
+    const char texture_SAND[] = "/textures/tiles/sand.png";
+    const char texture_DIRT[] = "/textures/tiles/dirt.png";
 
     const char texture_NULL[] = "/textures/gui/nulltexture.png";
 
@@ -56,15 +56,16 @@ namespace shders { // shaders
 };
 
 namespace sprites { // sprites
-    const char texture_SLIME[] = "/textures/Entitys/slime_terratia.png";
-    const char texture_PLAYER[] = "/textures/Entitys/slime_terratia.png";
+    const char texture_SLIME[] = "/sprites/Slime_01.png";
+    const char texture_PLAYER[] = "/sprites/Slime_01.png";
 };
 
 namespace items { // items
-    const char item_img_gold_nugget[] = "/textures/Images/gold_nugget.png";
-    const char item_img_copper_nuggen[] = "/textures/Images/copper_nugget.png";
-    const char item_img_silver_nuggen[] = "/textures/Images/iron_nugget.png";
-    const char item_img_someore[] = "/textures/Images/some_ore.png";
+    const char item_img_gold_nugget[] = "/textures/items/coins/gold_nugget.png";
+    const char item_img_copper_nuggen[] = "/textures/items/coins/copper_nugget.png";
+    const char item_img_silver_nuggen[] = "/textures/items/coins/iron_nugget.png";
+
+    const char item_img_someore[] = "/textures/items/some_ore.png";
 };
 
 namespace backgrounds { // backgrounds
@@ -72,7 +73,7 @@ namespace backgrounds { // backgrounds
 };
 
 namespace sounds { // sounds
-    const char music_menu[] = "/sounds/music/test_01.wav";
+    const char music_menu[] = "/sounds/music/music_01.wav";
     const char selbtn_menu[] = "/sounds/sfx/selbtn_01.wav";
     const char press_newg[] = "/sounds/sfx/press_ng_01.wav";
     const char press_btn[] = "/sounds/sfx/press_btn_01.wav";

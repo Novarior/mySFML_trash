@@ -70,55 +70,46 @@ void TileMap::initTrees()
 
 void TileMap::loadTextuteMap()
 {
-    sf::Image img(sf::Vector2u(_map_dataNoice.gridSize, _map_dataNoice.gridSize));
-    if (!this->m_TexturesList["GRASS"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_DIRT)) {
-        Logger::logStatic("TileMap::initTextures()::GRASS::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(20, 200, 20));
-        this->m_TexturesList["GRASS"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["STONE"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_STONE)) {
-        Logger::logStatic("TileMap::initTextures()::STONE::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+    this->m_TexturesList["GRASS"].update(TextureManager::getTexture("texture_grass"));
+    this->m_TexturesList["STONE"].update(TextureManager::getTexture("texture_stone"));
+    this->m_TexturesList["OCEAN"].update(TextureManager::getTexture("texture_ocean"));
+    this->m_TexturesList["OCEAN_ANIM"].update(TextureManager::getTexture("texture_ocean_anim"));
+    this->m_TexturesList["SAND"].update(TextureManager::getTexture("texture_sand"));
+    this->m_TexturesList["DIRT"].update(TextureManager::getTexture("texture_dirt"));
+    /*
+         // sf::Image img(sf::Vector2u(_map_dataNoice.gridSize, _map_dataNoice.gridSize));
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(20, 200, 20));
+         // this->m_TexturesList["GRASS"].loadFromImage(img) throw std::logic_error("Texture 'GRASS' can't be update, check it for loading\t use default");
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(50, 55, 45));
-        this->m_TexturesList["STONE"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["OCEAN"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_OCEAN)) {
-        Logger::logStatic("TileMap::initTextures()::OCEAN::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(50, 55, 45));
+         // this->m_TexturesList["STONE"].loadFromImage(img) throw std::logic_error("Texture 'STONE' can't be update, check it for loading\t use default");
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
+         // this->m_TexturesList["OCEAN"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN' can't be update, check it for loading\t use default");
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
-        this->m_TexturesList["OCEAN"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["OCEAN_ANIM"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_OCEAN_ANIM)) {
-        Logger::logStatic("TileMap::initTextures()::OCEAN_ANIM::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
+         // this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN_ANIM' can't be update, check it for loading\t use default");
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
-        this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["SAND"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_SAND)) {
-        Logger::logStatic("TileMap::initTextures()::SAND::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(180, 180, 20));
+         // this->m_TexturesList["SAND"].loadFromImage(img) throw std::logic_error("Texture 'SAND' can't be update, check it for loading\t use default");
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(180, 180, 20));
-        this->m_TexturesList["SAND"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["DIRT"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_DIRT)) {
-        Logger::logStatic("TileMap::initTextures()::DIRT::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(49, 40, 31));
+         // this->m_TexturesList["DIRT"].loadFromImage(img) ;
+ */
 
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(sf::Vector2u(x, y), sf::Color(49, 40, 31));
-        this->m_TexturesList["DIRT"].loadFromImage(img);
-    };
+    Logger::logStatic("Textures LOADL", "CATCHED ME TileMap::loadTextuteMap()");
 }
 
 void TileMap::pushTree(int x, int y)

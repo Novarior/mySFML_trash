@@ -11,9 +11,11 @@ cmake_install.cmake
 
 # Compiled binary files
 bin/
+bin/*
 
 # VSCode settings
 .vscode/
+metadata/
 
 
 
@@ -22,7 +24,7 @@ bin/
 *.log
 
 # SFML resources (if they're stored in source/res)
-source/res/*
+
 
 # Temporary files
 *.tmp

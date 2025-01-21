@@ -262,7 +262,7 @@ void SettingsState::initSounsPage()
     float slidersizeY = mmath::p2pY(10, _pageBackground.getSize().y);
     sf::Vector2f slider_size = sf::Vector2f(slidersizeX, slidersizeY);
     sf::Vector2f background_size = _pageBackground.getSize();
-    sf::Vector2f offset_position_for_sliders = _pageBackground.getPosition(); // init slider from top left corner of _pageBackground
+    sf::Vector2f offset_position_for_sliders = _pageBackground.getPosition()/2.f; // init slider from top left corner of _pageBackground
     // next init all sliders for sound categories
 
     _sound_SliderMap[SoundCategory::vol_MASTER] = std::make_unique<gui::SliderInt>( // init MASTER slider

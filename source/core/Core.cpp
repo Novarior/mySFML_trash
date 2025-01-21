@@ -191,12 +191,12 @@ Core::~Core()
     if (this->mState.empty())
         Logger::logStatic("State is empty", "Core::~Core()");
     else
-        Logger::logStatic("State is not empty... mem leaked", "Core::~Core()");
+        Logger::logStatic("State is not empty... mem leaked", "Core::~Core()", logType::ERROR);
 
     if (this->mWindow == NULL)
-        Logger::logStatic("Window is not null", "Core::~Core()");
+        Logger::logStatic("Window is null", "Core::~Core()");
     else
-        Logger::logStatic("Window is null... mem leaked", "Core::~Core()");
+        Logger::logStatic("Window is null... mem leaked", "Core::~Core()", logType::ERROR);
 
     Logger::logStatic("Core Deleted", "Core::~Core()");
 #endif

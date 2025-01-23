@@ -4,29 +4,8 @@
 
 #include "../../entitys/entity.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"
+#include "../../math/LSystem.hpp"
 
-/*
-    // this is example of noiceData
-    have map size, grid size
-    seed, and etc for noice generator
-
-
-    unsigned int mapSizeX = 0;
-    unsigned int mapSizeY = 0;
-    float gridSize = 0;
-    unsigned  long seed = 0;
-    unsigned  long offsetSeed = 0;
-    float chanceToSpawnTree = 0.0f;
-    unsigned octaves = 0;
-    double frequency = 0;
-    float amplifire = 0;
-    float persistence = 0;
-    unsigned int RenderWindowX = 0;
-    unsigned int RenderWindowY = 0;
-    unsigned int smoothMode = 0;
-    bool fastMode = false;
-
-*/
 class Entity;
 
 struct rectangleWithOffset {
@@ -34,7 +13,6 @@ struct rectangleWithOffset {
     int fromY;
     int toX;
     int toY;
-
     int offsetX;
     int offsetY;
 };
@@ -54,6 +32,8 @@ private:
 
     mmath::noiceData _map_dataNoice;
     ProcessGenerationNoice mGen_noice;
+
+    std::unique_ptr<LSystem> _treeGenerator;
 
     std::vector<std::vector<float>> _map_heightMap; // 2d array for height map
     std::vector<std::vector<float>> _map_biomeMap; // 2d array for biome map
@@ -76,6 +56,8 @@ private:
     void loadTextuteMap();
     /// @brief generate map using noice and some math
     void generateMap();
+    sf::Texture getTreeTexture();
+
 
     // create tree on map using x and y position
     void pushTree(int x, int y);

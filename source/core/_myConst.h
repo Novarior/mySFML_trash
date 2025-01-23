@@ -38,12 +38,13 @@ namespace gui { // GUI textures
 };
 
 namespace textures { // textures
-    const char texture_GRASS[] = "/textures/tiles/grass.png";
-    const char texture_STONE[] = "/textures/tiles/stone.png";
+    const char texture_DEEP_OCEAN[] = "/textures/tiles/deep_ocean.png";
     const char texture_OCEAN[] = "/textures/tiles/ocean.png";
-    const char texture_OCEAN_ANIM[] = "/textures/tiles/water_still.png";
     const char texture_SAND[] = "/textures/tiles/sand.png";
+    const char texture_GRASS[] = "/textures/tiles/grass.png";
     const char texture_DIRT[] = "/textures/tiles/dirt.png";
+    const char texture_STONE[] = "/textures/tiles/stone.png";
+    const char texture_SNOW[] = "/textures/tiles/snow.png";
 
     const char texture_NULL[] = "/textures/gui/nulltexture.png";
 

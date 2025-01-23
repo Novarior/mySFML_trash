@@ -50,75 +50,65 @@ void TileMap::Clear()
 }
 
 void TileMap::initTrees()
-{ // load a lot images from floder and push to array
-  // find floder with trees
-  // load all images from floder
-  // push to array
-    sf::Texture texture;
-    try // попытка подгрузки деревьев в карту
-    {
-        for (const auto &it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::folder_Trees)))
-        {
-            if (it.path().extension() != ".png")
-                continue;
-            if (texture.loadFromFile(it.path().c_str()))
-            {
-                texture.setSmooth(true);
-                this->listTrees.push_back(texture);
-            }
-            else
-                Logger::logStatic("Trees Could not load %s", "TILEMAP", logType::WARNING);
-        }
-    }
-    catch (const std::exception &e)
-    {
-        Logger::logStatic(e.what(), "TRY >> TileMap::initTrees()", logType::WARNING);
+{
+    // prepare generator
+    this->_treeGenerator = std::make_unique<LSystem>(LSystem());
+    this->_treeGenerator.get()->setRule('d', "qd");
+    this->_treeGenerator.get()->setRule('s', "d[-qqs]+qqs");
+    this->_treeGenerator.get()->setOffsetPos(
+        sf::Vector2f(this->_map_dataNoice.RenderWindowX / 2,
+                     this->_map_dataNoice.RenderWindowY * 0.70));
 
-        // регенерируем деревья в доки и подгружаем их
-    }
-    std::cout << this->listTrees.size() << " trees loaded\n";
+    this->_treeGenerator.get()->generate();
+    // create texture with window size
+    sf::Texture texture(sf::Vector2u(_map_dataNoice.RenderWindowX, _map_dataNoice.RenderWindowY));
+    // get array shape
+
+
+    std::vector<sf::RectangleShape> shapes;
+    shapes.insert(shapes.end(), this->_treeGenerator.get()->internalArray(), this->_treeGenerator.get()->internalArray() + this->_treeGenerator.get()->getSizeArray());
+
+    // get snapshoot
+    sf::Image image = texture.copyToImage();
+
+    // find Transparent pixels
+    sf::Vector2u size = image.getSize();
+    sf::Rect<unsigned> mrect({size.x, size.y}, {0, 0});
+
+    for (unsigned int x = 0; x < size.x; x++)
+        for (unsigned int y = 0; y < size.y; y++)
+            if (image.getPixel({x, y}) != sf::Color::Transparent)
+            {
+                if (x < mrect.position.x)
+                    mrect.position.x = x;
+                if (y < mrect.position.y)
+                    mrect.position.y = y;
+                if (x > mrect.size.x)
+                    mrect.size.x = x;
+                if (y > mrect.size.y)
+                    mrect.size.y = y;
+            }
+    // create newe image on mrect base
+    sf::Image simg(sf::Vector2u(mrect.size.x - mrect.position.x, mrect.size.y - mrect.position.y), sf::Color::Transparent);
+
+    // copy pixels from original image
+    for (unsigned int x = mrect.position.x; x < mrect.size.x; x++)
+        for (unsigned int y = mrect.position.y; y < mrect.size.x; y++)
+            simg.setPixel(sf::Vector2u(x - mrect.position.x, y - mrect.position.y), image.getPixel({x, y}));
+}
+    sf::Texture buffT(simg);
+    this->listTrees.push_back(buffT);
 }
 
 void TileMap::loadTextuteMap()
 {
-
-    this->m_TexturesList["GRASS"].update(TextureManager::getTexture("texture_grass"));
-    this->m_TexturesList["STONE"].update(TextureManager::getTexture("texture_stone"));
-    this->m_TexturesList["OCEAN"].update(TextureManager::getTexture("texture_ocean"));
-    this->m_TexturesList["OCEAN_ANIM"].update(TextureManager::getTexture("texture_ocean_anim"));
-    this->m_TexturesList["SAND"].update(TextureManager::getTexture("texture_sand"));
-    this->m_TexturesList["DIRT"].update(TextureManager::getTexture("texture_dirt"));
-    /*
-         // sf::Image img(sf::Vector2u(_map_dataNoice.gridSize, _map_dataNoice.gridSize));
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(20, 200, 20));
-         // this->m_TexturesList["GRASS"].loadFromImage(img) throw std::logic_error("Texture 'GRASS' can't be update, check it for loading\t use default");
-
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(50, 55, 45));
-         // this->m_TexturesList["STONE"].loadFromImage(img) throw std::logic_error("Texture 'STONE' can't be update, check it for loading\t use default");
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
-         // this->m_TexturesList["OCEAN"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN' can't be update, check it for loading\t use default");
-
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
-         // this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN_ANIM' can't be update, check it for loading\t use default");
-
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(180, 180, 20));
-         // this->m_TexturesList["SAND"].loadFromImage(img) throw std::logic_error("Texture 'SAND' can't be update, check it for loading\t use default");
-
-         // for (int x = 0; x < img.getSize().x; x++)
-         //     for (int y = 0; y < img.getSize().y; y++)
-         //         img.setPixel(sf::Vector2u(x, y), sf::Color(49, 40, 31));
-         // this->m_TexturesList["DIRT"].loadFromImage(img) ;
- */
+    this->m_TexturesList["BLOCK_DEEP_OCEAN"].update(TextureManager::getTexture("texture_deep_ocean"));
+    this->m_TexturesList["BLOCK_OCEAN"].update(TextureManager::getTexture("texture_ocean"));
+    this->m_TexturesList["BLOCK_SAND"].update(TextureManager::getTexture("texture_sand"));
+    this->m_TexturesList["BLOCK_GRASS"].update(TextureManager::getTexture("texture_grass"));
+    this->m_TexturesList["BLOCK_DIRT"].update(TextureManager::getTexture("texture_dirt"));
+    this->m_TexturesList["BLOCK_STONE"].update(TextureManager::getTexture("texture_stone"));
+    this->m_TexturesList["BLOCK_SNOWMOUNT"].update(TextureManager::getTexture("texture_snow"));
 
     Logger::logStatic("Textures LOADL", "CATCHED ME TileMap::loadTextuteMap()");
 }
@@ -129,8 +119,8 @@ void TileMap::pushTree(int x, int y)
     tree.setSize(sf::Vector2f(256.f, 256.f));
     tree.setTexture(&this->listTrees[rand() % this->listTrees.size()]);
     this->trees.push_back(tree);
-    this->trees.back().setPosition({ x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize });
-    this->trees.back().setOrigin({ .01f, 0.01f });
+    this->trees.back().setPosition({x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize});
+    this->trees.back().setOrigin({.01f, 0.01f});
 }
 
 void TileMap::generateMap()
@@ -139,7 +129,7 @@ void TileMap::generateMap()
     this->worldSizeInt = sf::Vector2i(_map_dataNoice.mapSizeX * _map_dataNoice.gridSize, _map_dataNoice.mapSizeY * _map_dataNoice.gridSize);
     this->worldSizeFloat = sf::Vector2f(_map_dataNoice.mapSizeX * _map_dataNoice.gridSize, _map_dataNoice.mapSizeY * _map_dataNoice.gridSize);
 
-    double writebuff;
+    float buff_height;
     sf::Color buff;
     this->minimapImage = sf::Image(sf::Vector2u(this->worldSizeGrid.x, this->worldSizeGrid.y), sf::Color::Red);
 
@@ -152,57 +142,71 @@ void TileMap::generateMap()
         this->tilemap[x].resize(this->worldSizeGrid.y, std::vector<BrickBlock*>());
 
         for (int y = 0; y < _map_dataNoice.mapSizeY; y++) {
-            writebuff = this->mGen_noice.getNoice(x, y);
-            writebuff *= 255;
-            writebuff = static_cast<int>(writebuff) % 255;
-            if (writebuff < 0)
-                writebuff = writebuff * -1;
+            buff_height = mmath::normalize(this->mGen_noice.getNoice(x, y));
 
-            if (writebuff < 55) { // Ocean
-                buff = sf::Color(0, 10 + writebuff * 1.6, 100 + writebuff * 1.9, 255);
+            if (buff_height < 45)
+            {                                                     // Ocean
+                double depth_intensity = 100 + buff_height * 1.2; // Интенсивность синего
+                buff = sf::Color(0, std::max(0.0, 5 + buff_height * 0.4), std::min(255.0, depth_intensity), 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    true, this->m_TexturesList["OCEAN_ANIM"], BLOCK_OCEAN_ANIM, true));
-            } else if (writebuff < 66) { // sand
-
-                buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
+                    true, this->m_TexturesList["BLOCK_DEEP_OCEAN"], BLOCK_DEEP_OCEAN, true));
+            }
+            else if (buff_height < 66)
+            {
+                double shore_intensity = 100 + buff_height * 2.0;
+                buff = sf::Color(0, std::min(255.0, 15 + buff_height * 0.8), std::min(255.0, shore_intensity), 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    false, this->m_TexturesList["SAND"], BLOCK_SAND));
-
-            } else if (writebuff < 160) { // grass
-                buff = sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255);
+                    true, this->m_TexturesList["BLOCK_OCEAN"], BLOCK_OCEAN));
+            }
+            else if (buff_height < 85)
+            { // sand
+                buff = sf::Color(std::min(255.0, 200 + buff_height * 0.5), std::min(255.0, 180 + buff_height * 0.3), std::min(255.0, 100 + buff_height * 0.1), 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
+                    false, this->m_TexturesList["BLOCK_SAND"], BLOCK_SAND));
+            }
+            else if (buff_height < 120)
+            { // grass
+                buff = sf::Color(std::min(255.0, buff_height * 0.08), std::min(255.0, 40 + buff_height * 0.9), std::min(255.0, buff_height * 0.05), 255);
+                this->tilemap[x][y].push_back(new BrickBlock(
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    false, this->m_TexturesList["BLOCK_SAND"], BLOCK_GRASS));
 
                 // init Trees
                 if (rand() % 100 < 1)
                     this->pushTree(x, y);
                 this->m_listGrassBlocks.push_back(sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize));
-
-                // write grass block position on array
-            } else if (writebuff < 165) { // dirt
-                buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
+            }
+            else if (buff_height < 165)
+            { // dirt
+                buff = sf::Color(90 - buff_height * 0.1, 71 + buff_height * 0.15, 55 + buff_height * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    false, this->m_TexturesList["DIRT"], BLOCK_DIRT));
-            } else if (writebuff < 175) { // stone
-                buff = sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255);
+                    false, this->m_TexturesList["BLOCK_DIRT"], BLOCK_DIRT));
+            }
+            else if (buff_height < 200)
+            { // stone
+                buff = sf::Color(40 + buff_height * 0.1, 71 - buff_height * 0.2, 55 - buff_height * 0.2, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    false, this->m_TexturesList["STONE"], BLOCK_STONE));
-            } else { // other
-                buff = sf::Color(writebuff, writebuff, writebuff, 255);
+                    false, this->m_TexturesList["BLOCK_STONE"], BLOCK_STONE));
+            }
+            else
+            { // Snow
+                double intensity = 200 + (buff_height - 200) * 0.275;
+                buff = sf::Color(std::min(255.0, intensity), std::min(255.0, intensity), std::min(255.0, intensity), 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
                     sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
                     sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
-                    true, this->m_TexturesList["OCEAN"], NAN_DEF));
+                    false, this->m_TexturesList["BLOCK_SNOWMOUNT"], BLOCK_SNOWMOUNT));
             }
             this->minimapImage.setPixel(sf::Vector2u(x, y), this->tilemap[x][y].back()->getBlockColor());
         }

@@ -341,19 +341,8 @@ void EditorState::updateDebugText(const float &delta_time)
                             << this->m_NoiceViewer->getNoiceData().seed
                             << "\nFastMode"
                             << this->m_NoiceViewer->getNoiceData().fastMode
-                            << "\n\tDEBUG HEIGHT:\tpMIN/pMax"
-                            << this->m_NoiceViewer->_heigthMoment._myPerlinMin
-                            << " / "
-                            << this->m_NoiceViewer->_heigthMoment._myPerlinMax
-                            << "\n\tDEBUG Normal HEIGHT:\tpMIN/pMax"
-                            << this->m_NoiceViewer->_heigthMoment._myNPerlinMin
-                            << " / "
-                            << this->m_NoiceViewer->_heigthMoment._myNPerlinMax;
-    this->IstringStream << "\n\tDEBUG perlin HEIGHT:\tpMIN/pMax"
-                        << this->m_NoiceViewer->_heigthMoment._PerlinMin
-                        << " / "
-                        << this->m_NoiceViewer->_heigthMoment._PerlinMax
-                        << "\nTree Data:"
+                            << "\nHeigth on Cursor: " << this->m_NoiceViewer->getHeightMap(this->ImousePosWindow);
+    this->IstringStream << "\nTree Data:"
                         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
                         << "\nPause:\t" << this->Ipaused;
 

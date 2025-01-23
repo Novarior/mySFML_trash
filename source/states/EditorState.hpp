@@ -3,6 +3,7 @@
 
 #include "../GUI/GUISYS.hpp"
 #include "../math/LSystem.hpp"
+#include "../Content/Map/TileMap.hpp"
 #include "State.hpp"
 #include "editModes/NoiceViewer.hpp"
 
@@ -12,6 +13,8 @@ private:
     // Variables
     NoiceViewer* m_NoiceViewer; // Noise viewer
     mmath::noiceData m_noiceData; // Noise data
+    std::unique_ptr<TileMap> m_tileMap; // tile map
+
     // trees
     LSystem* myLS; // L-system for generating trees
 

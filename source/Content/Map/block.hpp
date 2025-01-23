@@ -2,14 +2,17 @@
 #define CPP_CONTENT_BLOCKS_HPP
 #include "../../core/header.h"
 
-enum BLOCKTYPE { NAN_DEF = 0,
-    BLOCK_GRASS,
-    BLOCK_SAND,
+enum BLOCKTYPE
+{
+    NAN_DEF = 0,
+    BLOCK_DEEP_OCEAN,
     BLOCK_OCEAN,
-    BLOCK_OCEAN_ANIM,
-    BLOCK_STONE,
+    BLOCK_SAND,
+    BLOCK_GRASS,
     BLOCK_DIRT,
-    BLOCK_MUD };
+    BLOCK_STONE,
+    BLOCK_SNOWMOUNT
+};
 
 class BrickBlock {
 private:

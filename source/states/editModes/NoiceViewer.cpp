@@ -58,24 +58,10 @@ void NoiceViewer::generateNoice()
             case PERLIN_NOICE:
                 h_buffer = this->m_perlin_noice->Noise(x, y, 0, 255, this->m_noice_data.fastMode);
                 this->noiceMap[x][y] = h_buffer;
-                // log moment
-                if (h_buffer > _heigthMoment._PerlinMin)
-                    _heigthMoment._PerlinMin = h_buffer;
-                if (h_buffer < _heigthMoment._PerlinMax)
-                    _heigthMoment._PerlinMax = h_buffer;
                 break;
             case PERLIN_NOICE_V2:
                 h_buffer = this->m_prn_noice->getNoice(x, y);
-                if (h_buffer > _heigthMoment._myPerlinMax)
-                    _heigthMoment._myPerlinMax = h_buffer;
-                if (h_buffer < _heigthMoment._myPerlinMin)
-                    _heigthMoment._myPerlinMin = h_buffer;
-                // normalise noice from -1 to 1 to 0 to 255
                 this->noiceMap[x][y] = mmath::normalize(h_buffer);
-                if (this->noiceMap[x][y] > _heigthMoment._myNPerlinMax)
-                    _heigthMoment._myNPerlinMax = this->noiceMap[x][y];
-                if (this->noiceMap[x][y] < _heigthMoment._myNPerlinMin)
-                    _heigthMoment._myNPerlinMin = this->noiceMap[x][y];
                 break;
             case SIMPLEX_NOICE:
                 h_buffer = this->m_simplex_noice->noise(x / this->m_noice_data.amplifire / 10.f, y / this->m_noice_data.amplifire / 10.f);
@@ -97,19 +83,38 @@ void NoiceViewer::generateNoice()
             {
                 if (vec_buffer < 45)
                 { // deep ocean
-                    this->noiceImage.setPixel({x, y}, sf::Color(0, 10 + vec_buffer * 0.6, 100 + vec_buffer * 1.5, 255));
+                    double depth_intensity = 100 + vec_buffer * 1.2; // Интенсивность синего
+                    this->noiceImage.setPixel({x, y}, sf::Color(
+                                                          0,                                   // Красный: полностью отсутствует
+                                                          std::max(0.0, 5 + vec_buffer * 0.4), // Зелёный: приглушённый
+                                                          std::min(255.0, depth_intensity),    // Синий: от 100 до 154
+                                                          255));                               // Альфа
                 }
                 else if (vec_buffer < 66)
                 { // ocean
-                    this->noiceImage.setPixel({x, y}, sf::Color(0, 20 + vec_buffer * 0.7, 100 + vec_buffer * 1.7, 255));
+                    double shore_intensity = 100 + vec_buffer * 2.0; // Синий: плавный переход от глубокого к светлому
+                    this->noiceImage.setPixel({x, y}, sf::Color(
+                                                          0,                                      // Красный: всегда отсутствует
+                                                          std::min(255.0, 15 + vec_buffer * 0.8), // Зелёный: усиливается от 15 до 67.8
+                                                          std::min(255.0, shore_intensity),       // Синий: от 100 до 232
+                                                          255));                                  // Альфа
                 }
                 else if (vec_buffer < 85)
                 { // sand
-                    this->noiceImage.setPixel({x, y}, sf::Color(150 + vec_buffer * 1.5, 120 + vec_buffer * 1.6, 90 + vec_buffer * 0.1, 255));
+                    this->noiceImage.setPixel({x, y}, sf::Color(
+                                                          std::min(255.0, 200 + vec_buffer * 0.5), // Красный: от 200 до 242.5
+                                                          std::min(255.0, 180 + vec_buffer * 0.3), // Зелёный: от 180 до 205.5
+                                                          std::min(255.0, 100 + vec_buffer * 0.1), // Синий: от 100 до 108.5
+                                                          255                                      // Альфа: 255
+                                                          ));
                 }
                 else if (vec_buffer < 120)
                 { // grass
-                    this->noiceImage.setPixel({x, y}, sf::Color(vec_buffer * 0.1, 50 + vec_buffer * 1.1, vec_buffer * 0.08, 255));
+                    this->noiceImage.setPixel({x, y}, sf::Color(
+                                                          std::min(255.0, vec_buffer * 0.08),     // Красный: чуть приглушённый
+                                                          std::min(255.0, 40 + vec_buffer * 0.9), // Зелёный: уменьшена насыщенность
+                                                          std::min(255.0, vec_buffer * 0.05),     // Синий: слегка усилен
+                                                          255));                                  // Альфа
                 }
                 else if (vec_buffer < 165)
                 { // dirt
@@ -121,7 +126,12 @@ void NoiceViewer::generateNoice()
                 }
                 else
                 { // snow
-                    this->noiceImage.setPixel({x, y}, sf::Color(255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255));
+                    double intensity = 200 + (vec_buffer - 200) * 0.275; // Градиент от 200 до 255
+                    this->noiceImage.setPixel({x, y}, sf::Color(
+                                                          std::min(255.0, intensity), // Красный
+                                                          std::min(255.0, intensity), // Зелёный
+                                                          std::min(255.0, intensity), // Синий
+                                                          255));                      // Альфа
                 }
                 break;
             }

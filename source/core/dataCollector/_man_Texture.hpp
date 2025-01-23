@@ -39,8 +39,7 @@ public:
             return m_textures[textureName];
         }
         else
-        {
-            // В случае отсутствия текстуры, логируем ошибку
+        { // В случае отсутствия текстуры, логируем ошибку
             Logger::logStatic("Texture not found: " + textureName, "TextureManager::getTexture()", logType::ERROR);
             throw std::runtime_error("Texture not found: " + textureName);
         }

@@ -23,14 +23,12 @@ private:
     std::array<std::string, 3> noiceModels = {
         "Perlin Noice",
         "Perlin Noice V2",
-        "Simplex Noice"
-    };
+        "Simplex Noice"};
 
     std::array<std::string, 3> colorModes = {
         "Full Color",
         "Noice Color",
-        "Biome Color"
-    };
+        "Biome Color 'add speciac viewport"};
 
     // Variables
     struct {
@@ -47,8 +45,10 @@ private:
         int snow = 0;
         int forest = 0;
     } m_BlocksCounter;
+
+    
     // Noice data colector
-    mmath::noiceData& m_noice_data;
+    mmath::noiceData &m_noice_data;
 
     // models Noice generators
     ProcessGenerationNoice* m_prn_noice;
@@ -71,6 +71,16 @@ private:
     std::vector<std::vector<double>> noiceMap;
 
 public:
+    struct
+    {
+        float _myPerlinMin = 0;
+        float _myPerlinMax = 0;
+        float _myNPerlinMin = 0;
+        float _myNPerlinMax = 0;
+        float _PerlinMin = 0;
+        float _PerlinMax = 0;
+
+    } _heigthMoment;
     NoiceViewer(mmath::noiceData& noicedata);
     ~NoiceViewer();
     mmath::noiceData& getNoiceData() { return this->m_noice_data; }

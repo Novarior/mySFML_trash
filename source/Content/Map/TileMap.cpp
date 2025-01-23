@@ -55,15 +55,26 @@ void TileMap::initTrees()
   // load all images from floder
   // push to array
     sf::Texture texture;
-    for (const auto &it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::folder_Trees)))
+    try // попытка подгрузки деревьев в карту
     {
-        if (it.path().extension() != ".png")
-            continue;
-        if (texture.loadFromFile(it.path().c_str())) {
-            texture.setSmooth(true);
-            this->listTrees.push_back(texture);
-        } else
-            Logger::logStatic("Trees Could not load %s", "TILEMAP", logType::WARNING);
+        for (const auto &it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::folder_Trees)))
+        {
+            if (it.path().extension() != ".png")
+                continue;
+            if (texture.loadFromFile(it.path().c_str()))
+            {
+                texture.setSmooth(true);
+                this->listTrees.push_back(texture);
+            }
+            else
+                Logger::logStatic("Trees Could not load %s", "TILEMAP", logType::WARNING);
+        }
+    }
+    catch (const std::exception &e)
+    {
+        Logger::logStatic(e.what(), "TRY >> TileMap::initTrees()", logType::WARNING);
+
+        // регенерируем деревья в доки и подгружаем их
     }
     std::cout << this->listTrees.size() << " trees loaded\n";
 }

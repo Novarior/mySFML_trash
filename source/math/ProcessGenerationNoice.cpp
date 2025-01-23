@@ -7,7 +7,7 @@ double ProcessGenerationNoice::Interpolate(double a, double b, double x)
         return mmath::interpolation::LinInter(x, a, b);
 
     switch (this->m_data.smoothMode) {
-    case 0: {
+    case 0:
         result = mmath::interpolation::LinInter(x, a, b);
         break;
     case 1:
@@ -32,7 +32,6 @@ double ProcessGenerationNoice::Interpolate(double a, double b, double x)
         result = mmath::interpolation::LinInter(x, a, b);
         break;
     }
-    }
     return result;
 }
 
@@ -42,7 +41,7 @@ double ProcessGenerationNoice::Noise(int i, int x, int y)
     int n = x + y * 31; // Changed from 57 to 31
 
     // Apply a bitwise shift and AND operation to get a new value
-    n = (n << 13) & n; // Changed XOR to AND
+    n = (n * 0x5DEECE66D) & ((n << 48) - 1); // Changed XOR to AND
 
     // Compute the values of a, b, and c based on the input data and the seed
     int a = (this->m_data.seed * x), // Changed addition to multiplication

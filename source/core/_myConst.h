@@ -61,11 +61,17 @@ namespace sprites { // sprites
 };
 
 namespace items { // items
-    const char item_img_gold_nugget[] = "/textures/items/coins/gold_nugget.png";
-    const char item_img_copper_nuggen[] = "/textures/items/coins/copper_nugget.png";
-    const char item_img_silver_nuggen[] = "/textures/items/coins/iron_nugget.png";
-
-    const char item_img_someore[] = "/textures/items/some_ore.png";
+    namespace coins
+    {
+        const char item_img_copper_nuggen[] = "/textures/items/coins/copper_nugget.png";
+        const char item_img_silver_nuggen[] = "/textures/items/coins/iron_nugget.png";
+        const char item_img_gold_nugget[] = "/textures/items/coins/gold_nugget.png";
+    };
+    namespace poison
+    {
+        const char item_img_poison_small_regeneration[] = "/textures/items/poison/Potion_1_Original.png";
+    }
+    const char item_img_stone[] = "/textures/items/stone_01.png";
 };
 
 namespace backgrounds { // backgrounds

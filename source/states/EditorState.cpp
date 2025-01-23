@@ -274,8 +274,7 @@ void EditorState::saveTreeAsImage(sf::RenderWindow &window)
     // create name for image file
     // add time to name for unique name
     std::stringstream ss;
-    ss << myConst::textures::folder_Trees << "tree"
-       << std::to_string(std::time(nullptr)) << ".png";
+    ss << ApplicationsFunctions::getDocumentsAppFolder() << "/tree/" << std::to_string(std::time(nullptr)) << ".png";
 
     // save image
     if (!simg.saveToFile(ss.str()))
@@ -321,6 +320,11 @@ void EditorState::updateDebugText(const float &delta_time)
     double fps = 1.0f / delta_time;
     this->IstringStream << "FPS:\t" << fps << "\nCurrent memory usage:\t"
                         << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
+                        << "Navigation:\n\t\t['/'] Togle info menu"
+                        << "\n\t\t['Q'] Switch Noice generator"
+                        << "\n\t\t['W'] Switch color mode"
+                        << "\n\t\t['E'] Change current viewport of generators"
+                        << "\n\t\t['R'] switch fast mode noices (not simplex)"
                         << "\nCurent view generator:\t"
                         << this->current_View_Generator
                         << "\nCurent noice view mode:\t"
@@ -336,8 +340,20 @@ void EditorState::updateDebugText(const float &delta_time)
                             << "\nSeed:\t"
                             << this->m_NoiceViewer->getNoiceData().seed
                             << "\nFastMode"
-                            << this->m_NoiceViewer->getNoiceData().fastMode;
-    this->IstringStream << "\nTree Data:"
+                            << this->m_NoiceViewer->getNoiceData().fastMode
+                            << "\n\tDEBUG HEIGHT:\tpMIN/pMax"
+                            << this->m_NoiceViewer->_heigthMoment._myPerlinMin
+                            << " / "
+                            << this->m_NoiceViewer->_heigthMoment._myPerlinMax
+                            << "\n\tDEBUG Normal HEIGHT:\tpMIN/pMax"
+                            << this->m_NoiceViewer->_heigthMoment._myNPerlinMin
+                            << " / "
+                            << this->m_NoiceViewer->_heigthMoment._myNPerlinMax;
+    this->IstringStream << "\n\tDEBUG perlin HEIGHT:\tpMIN/pMax"
+                        << this->m_NoiceViewer->_heigthMoment._PerlinMin
+                        << " / "
+                        << this->m_NoiceViewer->_heigthMoment._PerlinMax
+                        << "\nTree Data:"
                         << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
                         << "\nPause:\t" << this->Ipaused;
 

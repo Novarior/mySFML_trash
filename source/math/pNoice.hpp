@@ -3,27 +3,28 @@
 
 #include "mymath.hpp"
 
-class PerlinNoise {
+class PerlinNoise
+{
 public:
-    PerlinNoise()
+    explicit PerlinNoise(unsigned int seed = std::random_device{}())
     {
         // Initialize the permutation vector with the reference values
         for (int i = 0; i < 256; ++i)
             p[i] = i;
 
-        // shuffle the array
-        std::random_device rd;
-        std::mt19937 gen(rd());
+        // Shuffle the array with the given seed
+        std::mt19937 gen(seed);
         std::shuffle(p, p + 256, gen);
 
-        // duplicate the permutation vector
+        // Duplicate the permutation vector
         for (int i = 0; i < 256; ++i)
             p[256 + i] = p[i];
     }
-    double Noise(double x_cord, double y_cord, double minValue = -1, double maxValue = 1.0)
+
+    double Noise(double x_cord, double y_cord, double minValue = -1, double maxValue = 1.0, bool fastmode = false)
     {
-        int X = (int)floor(x_cord) & 255;
-        int Y = (int)floor(y_cord) & 255;
+        int X = static_cast<int>(floor(x_cord)) & 255;
+        int Y = static_cast<int>(floor(y_cord)) & 255;
 
         x_cord -= floor(x_cord);
         y_cord -= floor(y_cord);
@@ -38,14 +39,27 @@ public:
         int BA = p[B];
         int BB = p[B + 1];
 
-        double res = mmath::interpolation::LinInter(v,
-            mmath::interpolation::LinInter(u, mmath::Gradient(p[AA], x_cord, y_cord), mmath::Gradient(p[BA], x_cord - 1, y_cord)),
-            mmath::interpolation::LinInter(u, mmath::Gradient(p[AB], x_cord, y_cord - 1), mmath::Gradient(p[BB], x_cord - 1, y_cord - 1)));
+        double res = 0;
+        if (fastmode)
+            res = mmath::interpolation::QuinticInter(v,
+                                                     mmath::interpolation::QuinticInter(u,
+                                                                                        mmath::Gradient_v4(p[AA], x_cord, y_cord),
+                                                                                        mmath::Gradient_v4(p[BA], x_cord - 1, y_cord)),
+                                                     mmath::interpolation::QuinticInter(u,
+                                                                                        mmath::Gradient_v4(p[AB], x_cord, y_cord - 1),
+                                                                                        mmath::Gradient_v4(p[BB], x_cord - 1, y_cord - 1)));
+        else
+            res = mmath::interpolation::QuinticInter(v,
+                                                     mmath::interpolation::QuinticInter(u,
+                                                                                        mmath::Gradient_v16(p[AA], x_cord, y_cord), mmath::Gradient_v16(p[BA], x_cord - 1, y_cord)),
+                                                     mmath::interpolation::QuinticInter(u,
+                                                                                        mmath::Gradient_v16(p[AB], x_cord, y_cord - 1),
+                                                                                        mmath::Gradient_v16(p[BB], x_cord - 1, y_cord - 1)));
 
-        return mmath::normalize(res, minValue, maxValue);
+        return mmath::normalize(res);
     }
 
 private:
-    int p[512]; // permutation table
+    int p[512]; // Permutation table
 };
-#endif // CPP_MATH_PERLIN_NOISE_HPP
+#endif //

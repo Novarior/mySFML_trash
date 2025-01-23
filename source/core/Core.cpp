@@ -153,6 +153,13 @@ void Core::initTextures()
     TextureManager::loadTexture("texture_background_lay_1", myConst::gui::texture_background_mainmenu_lay_1);
     TextureManager::loadTexture("texture_background_lay_2", myConst::gui::texture_background_mainmenu_lay_2);
     TextureManager::loadTexture("texture_background_lay_3", myConst::gui::texture_background_mainmenu_lay_3);
+    // текстуры итемов и тп
+    TextureManager::loadTexture("items_potion_small_regeneration", myConst::items::poison::item_img_poison_small_regeneration);
+    TextureManager::loadTexture("items_stone", myConst::items::item_img_stone);
+    // текстуры для монет
+    TextureManager::loadTexture("coins_gold_nugget", myConst::items::coins::item_img_gold_nugget);
+    TextureManager::loadTexture("coins_copper_nugget", myConst::items::coins::item_img_copper_nuggen);
+    TextureManager::loadTexture("coins_silver_nugget", myConst::items::coins::item_img_silver_nuggen);
 }
 
 Core::Core()

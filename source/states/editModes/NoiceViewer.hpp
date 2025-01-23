@@ -30,23 +30,6 @@ private:
         "Noice Color",
         "Biome Color 'add speciac viewport"};
 
-    // Variables
-    struct {
-        int deep_ocean = 0;
-        int ocean = 0;
-        int seasand = 0;
-        int beath = 0;
-        int sand = 0;
-        int grass = 0;
-        int dirt = 0;
-        int rock = 0;
-        int other = 0;
-        int mountain = 0;
-        int snow = 0;
-        int forest = 0;
-    } m_BlocksCounter;
-
-    
     // Noice data colector
     mmath::noiceData &m_noice_data;
 
@@ -71,17 +54,7 @@ private:
     std::vector<std::vector<double>> noiceMap;
 
 public:
-    struct
-    {
-        float _myPerlinMin = 0;
-        float _myPerlinMax = 0;
-        float _myNPerlinMin = 0;
-        float _myNPerlinMax = 0;
-        float _PerlinMin = 0;
-        float _PerlinMax = 0;
-
-    } _heigthMoment;
-    NoiceViewer(mmath::noiceData& noicedata);
+    NoiceViewer(mmath::noiceData &noicedata);
     ~NoiceViewer();
     mmath::noiceData& getNoiceData() { return this->m_noice_data; }
 
@@ -93,6 +66,7 @@ public:
 
     int getNoiceModel() { return this->current_Noice_Model; }
     int getColorMode() { return this->current_Color_Mode; }
+    const double getHeightMap(sf::Vector2i mousepos) { return noiceMap[mousepos.x][mousepos.y]; }
     const std::string getNoiceSmouthName();
 
     void generateNoice();

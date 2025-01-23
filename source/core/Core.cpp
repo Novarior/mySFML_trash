@@ -140,12 +140,14 @@ void Core::initTextures()
     // null текстура
     TextureManager::loadTexture("texture_null", myConst::textures::texture_NULL);
     // текстуры для карты
-    TextureManager::loadTexture("texture_dirt", myConst::textures::texture_DIRT);
-    TextureManager::loadTexture("texture_grass", myConst::textures::texture_GRASS);
+    TextureManager::loadTexture("texture_deep_ocean", myConst::textures::texture_DEEP_OCEAN);
     TextureManager::loadTexture("texture_ocean", myConst::textures::texture_OCEAN);
-    TextureManager::loadTexture("texture_ocean_anim", myConst::textures::texture_OCEAN_ANIM);
     TextureManager::loadTexture("texture_sand", myConst::textures::texture_SAND);
+    TextureManager::loadTexture("texture_grass", myConst::textures::texture_GRASS);
+    TextureManager::loadTexture("texture_dirt", myConst::textures::texture_DIRT);
     TextureManager::loadTexture("texture_stone", myConst::textures::texture_STONE);
+    TextureManager::loadTexture("texture_snow", myConst::textures::texture_SNOW);
+
     // загружаем текстуры сущностей
     TextureManager::loadTexture("texture_Player", myConst::sprites::texture_PLAYER);
     TextureManager::loadTexture("texture_Slime", myConst::sprites::texture_SLIME);

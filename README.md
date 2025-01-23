@@ -87,8 +87,8 @@ For questions or feedback, open an issue or contact me via GitHub.
 
 
 ## using libs:
-- SFML 3.0.0
-- nlohmann/JSON
+- SFML 3.0.0 (https://github.com/SFML/SFML)
+- nlohmann/JSON (https://github.com/nlohmann/json)
 
 usind frameworks:
 - CoreFoundation

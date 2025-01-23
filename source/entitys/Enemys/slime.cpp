@@ -6,9 +6,10 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
         entityEnum::entityState::DISABLED,
         entityEnum::entityDirection::VOID)
 {
-    this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sprites::slime_texture));
+    this->m_texture.update(TextureManager::getTexture("texture_Slime"));
+
     this->m_sprite.setTexture(this->m_texture);
-    this->m_sprite.setScale(0.02f, 0.02f);
+    this->m_sprite.setScale({0.02f, 0.02f});
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 32.f, 32.f);
     this->createMovementComponent(2.f, 1.4f, 1.f);
     this->createAttributesComponent();

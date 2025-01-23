@@ -58,7 +58,7 @@ protected:
     int m_amount;
     unsigned m_maxAmount;
     Coins m_price;
-    sf::Texture m_texture;
+
     sf::RectangleShape m_shape;
 };
 

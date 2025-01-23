@@ -83,7 +83,7 @@ void LSystem::applyRules()
             bufferShape.setSize(sf::Vector2f(this->data.length, this->data.width));
             bufferShape.setOrigin(sf::Vector2f(half_length, 0));
             bufferShape.setPosition(nextPos + data.offsetPos);
-            bufferShape.setRotation(this->data.currentAngle + dis_angle(gen));
+            bufferShape.setRotation(sf::degrees(this->data.currentAngle + dis_angle(gen)));
             bufferShape.setFillColor(sf::Color(80, 35, 25, this->data.alpha));
             this->line.push_back(bufferShape);
             this->data.pos = nextPos;
@@ -97,7 +97,7 @@ void LSystem::applyRules()
                 bufferShape.setSize(sf::Vector2f(this->data.length + dis_angle(gen) % 3 + 1, this->data.width - 2));
                 bufferShape.setOrigin(sf::Vector2f(half_length, 0));
                 bufferShape.setPosition(this->data.pos + data.offsetPos);
-                bufferShape.setRotation(this->data.currentAngle + dis_angle(gen));
+                bufferShape.setRotation(sf::degrees(this->data.currentAngle + dis_angle(gen)));
                 // set random color in green range 80-255
                 int randcolor = dis_color(gen);
                 bufferShape.setFillColor(sf::Color(0, randcolor, 0));

@@ -14,7 +14,6 @@ private:
 
     sf::RectangleShape shape;
     sf::Text text;
-    sf::Font& b_font;
 
     sf::Color textIdleColor;
     sf::Color textHoverColor;

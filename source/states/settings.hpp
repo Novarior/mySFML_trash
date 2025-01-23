@@ -3,7 +3,6 @@
 
 #include "../locTexts/helperText.hpp"
 #include "State.hpp"
-#include "VolumeManager.hpp"
 
 /// @brief  Class for the settings state
 /// @note   Inherited from the State class

@@ -19,7 +19,7 @@ public:
     void setLimit(bool ToF);
     void setLimit(bool ToF, int lim);
 
-    void setFont(sf::Font& font);
+
     void setPosition(sf::Vector2f pos);
     void setSize(sf::Vector2f size);
     void setCharSize(int size);
@@ -32,7 +32,6 @@ public:
 
 private:
     sf::RectangleShape shape;
-    sf::Font& font;
     sf::Text text;
 
     std::string str;

@@ -7,16 +7,10 @@ class PoisonSmallRegeneration : public Item {
 private:
 public:
     PoisonSmallRegeneration(unsigned int gridSizeI)
-
-        : Item(2, "Poison of Regeneration", true, true, false, 1, 2, { 0, 1, 25 })
+        : Item(2, "Poison of Regeneration", true, true, false, 1, 2, {0, 1, 25})
     {
-
         this->m_shape.setSize(sf::Vector2f(gridSizeI, gridSizeI));
-
-        if (this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + itemTextures::item_img_poison_small_regeneration)))
-            this->m_shape.setTexture(&this->m_texture);
-        else
-            Logger::logStatic("ERROR::ITEM::COULD_NOT_LOAD_TEXTURE", "Items::PoisonSmallRegeneration", logType::WARNING);
+        this->m_shape.setTexture(&TextureManager::getTexture("items_potion_small_regeneration"));
     }
     virtual ~PoisonSmallRegeneration() { }
 

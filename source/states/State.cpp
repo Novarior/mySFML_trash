@@ -1,18 +1,19 @@
 #include "State.hpp"
-#include "VolumeManager.hpp"
 
 /**
  * @brief Construct a new State:: State object
  *
  * @param state_data
  */
-State::State(StateData* state_data)
+State::State(StateData *state_data)
+    : IstateData(state_data),
+      Itext(IstateData->sd_debugFont, "", state_data->sd_characterSize_debug)
 {
     // write log message what im here doing something
     Logger::logStatic("Start initilization state", "State::State()");
 
     // init variabless from state_data to curent state
-    IstateData = state_data;
+
     Iwindow = state_data->sd_Window;
     Istates = state_data->sd_States;
     Iquit = false;
@@ -21,7 +22,6 @@ State::State(StateData* state_data)
     IkeytimeMax = 0.3f;
     IgridSize = state_data->sd_gridSize;
     IsupportedKeys = state_data->sd_supportedKeys;
-    Ievent = state_data->sd_Event;
 
     // get access to volume manager from global state data like a shared pointer and init it
     IvolumeManager = std::make_shared<VolumeManager>();
@@ -29,11 +29,8 @@ State::State(StateData* state_data)
     IstringStream.str("");
     Idebud = __MDEBUG__;
 
-    Itext.setFillColor(sf::Color::White);
-    Itext.setCharacterSize(IstateData->sd_characterSize_debug);
     Itext.setOutlineThickness(1);
     Itext.setOutlineColor(sf::Color::Black);
-    Itext.setFont(IstateData->sd_debugFont);
 
     Logger::logStatic("End initilization state", "State::State()");
     this->initBuffer();

@@ -69,7 +69,7 @@ void MovementComponent::update(const float& delta_time) {
         this->velocity.x = this->handleVelocity(this->velocity.x, this->deceleration, this->maxVelocity, delta_time);
         this->velocity.y = this->handleVelocity(this->velocity.y, this->deceleration, this->maxVelocity, delta_time);
         // Final move
-        this->sprite.move(this->velocity.x, this->velocity.y); // Uses velocity
+        this->sprite.move({ this->velocity.x, this->velocity.y }); // Uses velocity
 }
 
 const sf::Vector2f& MovementComponent::getDirectionVec() const

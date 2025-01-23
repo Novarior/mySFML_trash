@@ -19,7 +19,7 @@ private:
 
 public:
     TextureSelector(float x, float y, float width, float height,
-        float gridSize, const sf::Texture* texture_sheet,
+        float gridSize, const sf::Texture& texture_sheet,
         sf::Font& font, std::string text);
     ~TextureSelector();
 

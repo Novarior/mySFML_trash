@@ -5,9 +5,10 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned
     std::string list[], unsigned nrOfElements, unsigned default_active_element)
     : keytime(0.f)
     , keytimeMax(0.3f)
+    , text(font, "", character_size)
 {
     // init box
-    this->box.setPosition(pos.x + (mmath::p2pX(10, size.x)), pos.y);
+    this->box.setPosition({ pos.x + (mmath::p2pX(10, size.x)), pos.y });
     this->box.setSize(sf::Vector2f(size.x - (mmath::p2pX(20, size.x)), size.y));
     this->box.setFillColor(sf::Color(50, 50, 50, 100));
     this->box.setOutlineThickness(-1.f);
@@ -29,12 +30,10 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font& font, unsigned
         sf::Color::Transparent, sf::Color::Transparent, sf::Color::Transparent);
 
     // init text
-    this->text.setFont(font);
     this->text.setString(list[0]);
-    this->text.setCharacterSize(character_size);
     this->text.setPosition(
-        this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f),
-        this->box.getPosition().y + this->text.getGlobalBounds().height / 2.f);
+        { this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().size.x / 2.f),
+            this->box.getPosition().y + this->text.getGlobalBounds().size.y / 2.f });
     this->text.setFillColor(sf::Color(255, 255, 255, 200));
 
     // init list
@@ -89,8 +88,8 @@ void Selector::update(const float& delta_time, const sf::Vector2i& mousePos)
         this->text.setString(this->list[this->activeElement]);
     }
     this->text.setPosition(
-        this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().width / 2.f),
-        this->box.getPosition().y + -this->text.getGlobalBounds().height / 2.f);
+        { this->box.getPosition().x + (this->box.getSize().x / 2.f - this->text.getGlobalBounds().size.x / 2.f),
+            this->box.getPosition().y + -this->text.getGlobalBounds().size.y / 2.f });
 }
 
 void Selector::updateKeyTime(const float& delta_time)

@@ -31,8 +31,8 @@ void MiniMap::update(sf::Vector2f playerPos, sf::Vector2f entitys)
     sf::Vector2f miniMapSize = this->m_background.getSize();
 
     // Выполните нормализацию координат точки в диапазоне [0, 1]
-    float normalizedX = (playerPos.x - this->m_worldBounds.left) / this->m_worldBounds.width;
-    float normalizedY = (playerPos.y - this->m_worldBounds.top) / this->m_worldBounds.height;
+    float normalizedX = (playerPos.x - this->m_worldBounds.position.x) / this->m_worldBounds.size.x;
+    float normalizedY = (playerPos.y - this->m_worldBounds.position.y) / this->m_worldBounds.size.y;
 
     // Умножьте нормализованные координаты на размеры миникарты
     sf::Vector2f miniMapPos;
@@ -42,8 +42,8 @@ void MiniMap::update(sf::Vector2f playerPos, sf::Vector2f entitys)
     // Установите позицию игрока на миникарте
     this->m_player.setPosition(miniMapPos + this->m_background.getPosition());
     // Выполните нормализацию координат точки в диапазоне [0, 1]
-    normalizedX = (entitys.x - this->m_worldBounds.left) / this->m_worldBounds.width;
-    normalizedY = (entitys.y - this->m_worldBounds.top) / this->m_worldBounds.height;
+    normalizedX = (entitys.x - this->m_worldBounds.position.x) / this->m_worldBounds.size.x;
+    normalizedY = (entitys.y - this->m_worldBounds.position.y) / this->m_worldBounds.size.y;
 
     // Умножьте нормализованные координаты на размеры миникарты
 

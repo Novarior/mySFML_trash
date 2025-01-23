@@ -5,7 +5,7 @@
 #include "../../entitys/entity.hpp"
 #include "../../entitys/player.hpp"
 #include "../../math/ProcessGenerationNoice.hpp"
-#include "../../states/VolumeManager.hpp"
+#include "../../core/dataCollector/_man_Volume.hpp"
 
 class Gamedata;
 class NodeViewer;

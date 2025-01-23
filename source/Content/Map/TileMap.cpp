@@ -55,80 +55,72 @@ void TileMap::initTrees()
   // load all images from floder
   // push to array
     sf::Texture texture;
-    for (const auto& it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::f_Trees))) {
-        if (it.path().extension() != ".png")
-            continue;
-        if (texture.loadFromFile(it.path().c_str())) {
-            texture.setSmooth(true);
-            this->listTrees.push_back(texture);
-        } else
-            Logger::logStatic("Trees Could not load %s", "TILEMAP", logType::WARNING);
+    try // попытка подгрузки деревьев в карту
+    {
+        for (const auto &it : std::filesystem::directory_iterator(std::string(ApplicationsFunctions::get_resources_dir() + myConst::textures::folder_Trees)))
+        {
+            if (it.path().extension() != ".png")
+                continue;
+            if (texture.loadFromFile(it.path().c_str()))
+            {
+                texture.setSmooth(true);
+                this->listTrees.push_back(texture);
+            }
+            else
+                Logger::logStatic("Trees Could not load %s", "TILEMAP", logType::WARNING);
+        }
+    }
+    catch (const std::exception &e)
+    {
+        Logger::logStatic(e.what(), "TRY >> TileMap::initTrees()", logType::WARNING);
+
+        // регенерируем деревья в доки и подгружаем их
     }
     std::cout << this->listTrees.size() << " trees loaded\n";
 }
 
 void TileMap::loadTextuteMap()
 {
-    if (!this->m_TexturesList["GRASS"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_DIRT)) {
-        Logger::logStatic("TileMap::initTextures()::GRASS::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(20, 200, 20));
-        this->m_TexturesList["GRASS"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["STONE"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_STONE)) {
-        Logger::logStatic("TileMap::initTextures()::STONE::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+    this->m_TexturesList["GRASS"].update(TextureManager::getTexture("texture_grass"));
+    this->m_TexturesList["STONE"].update(TextureManager::getTexture("texture_stone"));
+    this->m_TexturesList["OCEAN"].update(TextureManager::getTexture("texture_ocean"));
+    this->m_TexturesList["OCEAN_ANIM"].update(TextureManager::getTexture("texture_ocean_anim"));
+    this->m_TexturesList["SAND"].update(TextureManager::getTexture("texture_sand"));
+    this->m_TexturesList["DIRT"].update(TextureManager::getTexture("texture_dirt"));
+    /*
+         // sf::Image img(sf::Vector2u(_map_dataNoice.gridSize, _map_dataNoice.gridSize));
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(20, 200, 20));
+         // this->m_TexturesList["GRASS"].loadFromImage(img) throw std::logic_error("Texture 'GRASS' can't be update, check it for loading\t use default");
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(50, 55, 45));
-        this->m_TexturesList["STONE"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["OCEAN"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_OCEAN)) {
-        Logger::logStatic("TileMap::initTextures()::OCEAN::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(50, 55, 45));
+         // this->m_TexturesList["STONE"].loadFromImage(img) throw std::logic_error("Texture 'STONE' can't be update, check it for loading\t use default");
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
+         // this->m_TexturesList["OCEAN"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN' can't be update, check it for loading\t use default");
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(0, 25, 240));
-        this->m_TexturesList["OCEAN"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["OCEAN_ANIM"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_OCEAN_ANIM)) {
-        Logger::logStatic("TileMap::initTextures()::OCEAN_ANIM::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(0, 25, 240));
+         // this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img) throw std::logic_error("Texture 'OCEAN_ANIM' can't be update, check it for loading\t use default");
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(0, 25, 240));
-        this->m_TexturesList["OCEAN_ANIM"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["SAND"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_SAND)) {
-        Logger::logStatic("TileMap::initTextures()::SAND::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(180, 180, 20));
+         // this->m_TexturesList["SAND"].loadFromImage(img) throw std::logic_error("Texture 'SAND' can't be update, check it for loading\t use default");
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(180, 180, 20));
-        this->m_TexturesList["SAND"].loadFromImage(img);
-    };
-    if (!this->m_TexturesList["DIRT"].loadFromFile(ApplicationsFunctions::get_resources_dir() + myConst::textures::texture_DIRT)) {
-        Logger::logStatic("TileMap::initTextures()::DIRT::ERROR::COULD_NOT_LOAD", "TILEMAP", logType::WARNING);
+         // for (int x = 0; x < img.getSize().x; x++)
+         //     for (int y = 0; y < img.getSize().y; y++)
+         //         img.setPixel(sf::Vector2u(x, y), sf::Color(49, 40, 31));
+         // this->m_TexturesList["DIRT"].loadFromImage(img) ;
+ */
 
-        sf::Image img;
-        img.create(_map_dataNoice.gridSize, _map_dataNoice.gridSize);
-        for (int x = 0; x < img.getSize().x; x++)
-            for (int y = 0; y < img.getSize().y; y++)
-                img.setPixel(x, y, sf::Color(49, 40, 31));
-        this->m_TexturesList["DIRT"].loadFromImage(img);
-    };
+    Logger::logStatic("Textures LOADL", "CATCHED ME TileMap::loadTextuteMap()");
 }
 
 void TileMap::pushTree(int x, int y)
@@ -137,18 +129,19 @@ void TileMap::pushTree(int x, int y)
     tree.setSize(sf::Vector2f(256.f, 256.f));
     tree.setTexture(&this->listTrees[rand() % this->listTrees.size()]);
     this->trees.push_back(tree);
-    this->trees.back().setPosition(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize);
-    this->trees.back().setOrigin(0.01f, 0.01f);
+    this->trees.back().setPosition({ x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize });
+    this->trees.back().setOrigin({ .01f, 0.01f });
 }
 
 void TileMap::generateMap()
 {
     this->worldSizeGrid = sf::Vector2i(_map_dataNoice.mapSizeX, _map_dataNoice.mapSizeY);
+    this->worldSizeInt = sf::Vector2i(_map_dataNoice.mapSizeX * _map_dataNoice.gridSize, _map_dataNoice.mapSizeY * _map_dataNoice.gridSize);
     this->worldSizeFloat = sf::Vector2f(_map_dataNoice.mapSizeX * _map_dataNoice.gridSize, _map_dataNoice.mapSizeY * _map_dataNoice.gridSize);
 
     double writebuff;
     sf::Color buff;
-    this->minimapImage.create(this->worldSizeGrid.x, this->worldSizeGrid.y, sf::Color::Red);
+    this->minimapImage = sf::Image(sf::Vector2u(this->worldSizeGrid.x, this->worldSizeGrid.y), sf::Color::Red);
 
     this->tilemap.resize(this->worldSizeGrid.x, std::vector<std::vector<BrickBlock*>>());
 
@@ -168,22 +161,22 @@ void TileMap::generateMap()
             if (writebuff < 55) { // Ocean
                 buff = sf::Color(0, 10 + writebuff * 1.6, 100 + writebuff * 1.9, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     true, this->m_TexturesList["OCEAN_ANIM"], BLOCK_OCEAN_ANIM, true));
             } else if (writebuff < 66) { // sand
 
                 buff = sf::Color(140 + writebuff * 1.5, 120 + writebuff * 1.4, 80 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     false, this->m_TexturesList["SAND"], BLOCK_SAND));
 
             } else if (writebuff < 160) { // grass
                 buff = sf::Color(writebuff * 0.1, 50 + writebuff * 1.1, writebuff * 0.08, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     false, this->m_TexturesList["GRASS"], BLOCK_GRASS));
 
                 // init Trees
@@ -195,23 +188,23 @@ void TileMap::generateMap()
             } else if (writebuff < 165) { // dirt
                 buff = sf::Color(90 - writebuff * 0.1, 71 + writebuff * 0.15, 55 + writebuff * 0.1, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     false, this->m_TexturesList["DIRT"], BLOCK_DIRT));
             } else if (writebuff < 175) { // stone
                 buff = sf::Color(40 + writebuff * 0.1, 71 - writebuff * 0.2, 55 - writebuff * 0.2, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     false, this->m_TexturesList["STONE"], BLOCK_STONE));
             } else { // other
                 buff = sf::Color(writebuff, writebuff, writebuff, 255);
                 this->tilemap[x][y].push_back(new BrickBlock(
-                    sf::Vector2f(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
-                    sf::Vector2f(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
+                    sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
+                    sf::Vector2i(x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize), buff,
                     true, this->m_TexturesList["OCEAN"], NAN_DEF));
             }
-            this->minimapImage.setPixel(x, y, this->tilemap[x][y].back()->getBlockColor());
+            this->minimapImage.setPixel(sf::Vector2u(x, y), this->tilemap[x][y].back()->getBlockColor());
         }
     }
 }
@@ -279,15 +272,15 @@ void TileMap::updateWorldBoundsCollision(Entity* entity)
     if (entity->e_getPosition().x < 0.f) {
         entity->e_setPosition(0.f, entity->e_getPosition().y);
         entity->getMovement()->stopVelocityX();
-    } else if (entity->e_getPosition().x + entity->getGlobalBounds().width > this->worldSizeFloat.x) {
-        entity->e_setPosition(this->worldSizeFloat.x - entity->getGlobalBounds().width, entity->e_getPosition().y);
+    } else if (entity->e_getPosition().x + entity->getGlobalBounds().size.x > this->worldSizeFloat.x) {
+        entity->e_setPosition(this->worldSizeFloat.x - entity->getGlobalBounds().size.x, entity->e_getPosition().y);
         entity->getMovement()->stopVelocityX();
     }
     if (entity->e_getPosition().y < 0.f) {
         entity->e_setPosition(entity->e_getPosition().x, 0.f);
         entity->getMovement()->stopVelocityY();
-    } else if (entity->e_getPosition().y + entity->getGlobalBounds().height > this->worldSizeFloat.y) {
-        entity->e_setPosition(entity->e_getPosition().x, this->worldSizeFloat.y - entity->getGlobalBounds().height);
+    } else if (entity->e_getPosition().y + entity->getGlobalBounds().size.y > this->worldSizeFloat.y) {
+        entity->e_setPosition(entity->e_getPosition().x, this->worldSizeFloat.y - entity->getGlobalBounds().size.y);
         entity->getMovement()->stopVelocityY();
     }
 }
@@ -320,19 +313,19 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
                     // Горизонтальная коллизия
                     if (collisionDepth.x > 0) {
                         entity->getMovement()->stopVelocityX();
-                        entity->e_setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
+                        entity->e_setPosition(wallBounds.position.x - playerBounds.size.x, playerBounds.position.y);
                     } else {
                         entity->getMovement()->stopVelocityX();
-                        entity->e_setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                        entity->e_setPosition(wallBounds.position.x + wallBounds.size.x, playerBounds.position.y);
                     }
                 } else {
                     // Вертикальная коллизия
                     if (collisionDepth.y > 0) {
                         entity->getMovement()->stopVelocityY();
-                        entity->e_setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+                        entity->e_setPosition(playerBounds.position.x, wallBounds.position.x - playerBounds.size.y);
                     } else {
                         entity->getMovement()->stopVelocityY();
-                        entity->e_setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
+                        entity->e_setPosition(playerBounds.position.x, wallBounds.position.x + wallBounds.size.y);
                     }
                 }
             }
@@ -342,10 +335,10 @@ void TileMap::updateTileCollision(Entity* entity, const float& delta_time)
 
 sf::Vector2f TileMap::getCollisionDepth(const sf::IntRect& rectA, const sf::IntRect& rectB)
 {
-    float left = rectB.left - (rectA.left + rectA.width);
-    float right = (rectB.left + rectB.width) - rectA.left;
-    float top = rectB.top - (rectA.top + rectA.height);
-    float bottom = (rectB.top + rectB.height) - rectA.top;
+    float left = rectB.position.x - (rectA.position.x + rectA.size.x);
+    float right = (rectB.position.x + rectB.size.x) - rectA.position.x;
+    float top = rectB.position.y - (rectA.position.y + rectA.size.y);
+    float bottom = (rectB.position.y + rectB.size.y) - rectA.position.y;
 
     float depthX = (left < right) ? left : right;
     float depthY = (top < bottom) ? top : bottom;
@@ -355,34 +348,30 @@ sf::Vector2f TileMap::getCollisionDepth(const sf::IntRect& rectA, const sf::IntR
 
 bool TileMap::checkBottomCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
 {
-    return playerBounds.top < wallBounds.top
-        && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
-        && playerBounds.left < wallBounds.left + wallBounds.width
-        && playerBounds.left + playerBounds.width > wallBounds.left;
+    return playerBounds.position.y + playerBounds.size.y > wallBounds.position.y
+        && playerBounds.position.x < wallBounds.position.x + wallBounds.size.x
+        && playerBounds.position.x + playerBounds.size.x > wallBounds.position.x;
 }
 
 bool TileMap::checkTopCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
 {
-    return playerBounds.top > wallBounds.top
-        && playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
-        && playerBounds.left < wallBounds.left + wallBounds.width
-        && playerBounds.left + playerBounds.width > wallBounds.left;
+    return playerBounds.position.y < wallBounds.position.y + wallBounds.size.y
+        && playerBounds.position.x < wallBounds.position.x + wallBounds.size.x
+        && playerBounds.position.x + playerBounds.size.x > wallBounds.position.x;
 }
 
 bool TileMap::checkRightCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
 {
-    return playerBounds.left < wallBounds.left
-        && playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
-        && playerBounds.top < wallBounds.top + wallBounds.height
-        && playerBounds.top + playerBounds.height > wallBounds.top;
+    return playerBounds.position.x + playerBounds.size.x > wallBounds.position.x
+        && playerBounds.position.y < wallBounds.position.y + wallBounds.size.y
+        && playerBounds.position.y + playerBounds.size.y > wallBounds.position.y;
 }
 
 bool TileMap::checkLeftCollision(const sf::IntRect& playerBounds, const sf::IntRect& wallBounds)
 {
-    return playerBounds.left > wallBounds.left
-        && playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
-        && playerBounds.top < wallBounds.top + wallBounds.height
-        && playerBounds.top + playerBounds.height > wallBounds.top;
+    return playerBounds.position.x < wallBounds.position.x + wallBounds.size.x
+        && playerBounds.position.y < wallBounds.position.y + wallBounds.size.y
+        && playerBounds.position.y + playerBounds.size.y > wallBounds.position.y;
 }
 
 void TileMap::updateAnimationTiles(const float& delta_time)
@@ -422,8 +411,10 @@ void TileMap::updateRenderArea(const sf::Vector2i& playerPosition_grid) // updat
     }
 
     this->checkreck = sf::Rect<int>(
-        this->m_renderArea.fromX * _map_dataNoice.gridSize, this->m_renderArea.fromY * _map_dataNoice.gridSize,
-        this->m_renderArea.toX * _map_dataNoice.gridSize, this->m_renderArea.toY * _map_dataNoice.gridSize);
+        { static_cast<int>(this->m_renderArea.fromX * _map_dataNoice.gridSize),
+            static_cast<int>(this->m_renderArea.fromY * _map_dataNoice.gridSize) },
+        { static_cast<int>(this->m_renderArea.toX * _map_dataNoice.gridSize),
+            static_cast<int>(this->m_renderArea.toY * _map_dataNoice.gridSize) });
 }
 
 void TileMap::update(Entity* entity, const float& delta_time)
@@ -445,7 +436,7 @@ void TileMap::render(sf::RenderTarget* target)
 
     // Render trees on screen area
     for (int i = 0; i < this->trees.size(); i++)
-        if (this->checkreck.intersects(static_cast<sf::IntRect>(this->trees[i].getGlobalBounds())))
+        if (this->checkreck.findIntersection(static_cast<sf::IntRect>(this->trees[i].getGlobalBounds())))
             target->draw(this->trees[i]);
 
     // bariere box

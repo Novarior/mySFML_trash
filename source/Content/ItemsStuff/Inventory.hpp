@@ -98,7 +98,6 @@ private:
     Coins m_Coins;
 
     // Для отображения
-    sf::Font& m_font;
     sf::Text m_Text;
     sf::Texture m_CellInvTex;
     sf::RectangleShape m_background_inventory;

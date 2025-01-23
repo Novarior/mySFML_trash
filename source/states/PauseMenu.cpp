@@ -1,30 +1,28 @@
 #include "PauseMenu.hpp"
 
-PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font& font)
-    : font(font)
+PauseMenu::PauseMenu(sf::VideoMode vm, sf::Font &font)
+    : font(font),
+      menuText(font, "PAUSED", mmath::calcCharSize(vm))
 {
     // logger
     Logger::logStatic("PauseMenu constructor", "PauseMenu");
     // Init background
-    this->background.setSize(sf::Vector2f(static_cast<float>(vm.width), static_cast<float>(vm.height)));
+    this->background.setSize(sf::Vector2f(static_cast<float>(vm.size.x), static_cast<float>(vm.size.y)));
     this->background.setFillColor(sf::Color(30, 30, 30, 100));
 
     // Init container
     this->container.setSize(sf::Vector2f(
-        static_cast<float>(vm.width) / 2.5f,
-        static_cast<float>(vm.height) - mmath::p2pY(9.3f, vm)));
+        static_cast<float>(vm.size.x) / 2.5f,
+        static_cast<float>(vm.size.y) - mmath::p2pY(9.3f, vm)));
 
     this->container.setFillColor(sf::Color(30, 30, 30, 180));
-    this->container.setPosition(static_cast<float>(vm.width) / 2.f - this->container.getSize().x / 2.f, 30.f);
+    this->container.setPosition({static_cast<float>(vm.size.x) / 2.f - this->container.getSize().x / 2.f, 30.f});
 
     // Init text
-    this->menuText.setFont(this->font);
     this->menuText.setFillColor(sf::Color(200, 200, 200, 255));
-    this->menuText.setCharacterSize(mmath::calcCharSize(vm));
-    this->menuText.setString("PAUSED");
     this->menuText.setPosition(
-        this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().width / 2.f,
-        this->container.getPosition().y + mmath::p2pY(4.f, vm));
+        {this->container.getPosition().x + this->container.getSize().x / 2.f - this->menuText.getGlobalBounds().size.x / 2.f,
+         this->container.getPosition().y + mmath::p2pY(4.f, vm)});
 }
 
 

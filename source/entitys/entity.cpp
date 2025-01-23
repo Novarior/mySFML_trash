@@ -19,16 +19,10 @@ void Entity::createAttributesComponent(Atri* attributes)
 }
 
 Entity::Entity(entityEnum::entityBehaviorClass enumBehavior,
-    entityEnum::entityMovementState enumMovementState,
-    entityEnum::entityState enumState,
-    entityEnum::entityDirection enumDirection)
-    : e_movement(nullptr)
-    , e_hitbox(nullptr)
-    , e_attributes(nullptr)
-    , e_enumBehavior(enumBehavior)
-    , e_enumMovementState(enumMovementState)
-    , e_enumState(enumState)
-    , e_enumDirection(enumDirection)
+               entityEnum::entityMovementState enumMovementState,
+               entityEnum::entityState enumState,
+               entityEnum::entityDirection enumDirection)
+    : e_movement(nullptr), e_hitbox(nullptr), e_attributes(nullptr), e_enumBehavior(enumBehavior), e_enumMovementState(enumMovementState), e_enumState(enumState), e_enumDirection(enumDirection), m_sprite(TextureManager::getTexture("texture_null"))
 {
     this->ID_entity = this->count_entitys;
     this->count_entitys++;
@@ -57,7 +51,7 @@ const sf::FloatRect Entity::getNextPositionBounds(const float& delta_time)
     if (this->e_hitbox != nullptr && this->e_movement != nullptr)
         return this->e_hitbox->getNextPosition(this->e_movement->getVelocity() * delta_time);
 
-    return sf::FloatRect(0, 0, 1, 1);
+    return sf::FloatRect({ 0, 0 }, { 1, 1 });
 }
 
 const sf::Vector2i Entity::e_getGridPositionInt(const unsigned int& grisSize)
@@ -74,9 +68,7 @@ const sf::Vector2i Entity::e_getGridPositionInt(const unsigned int& grisSize)
 
 const sf::Vector2f Entity::e_getCenterPosition()
 {
-    sf::Vector2f cp(0.f, 0.f);
-    cp = sf::Vector2f(
-        this->m_sprite.getPosition().x + this->m_sprite.getGlobalBounds().width / 2.f,
-        this->m_sprite.getPosition().y + this->m_sprite.getGlobalBounds().height / 2.f);
-    return cp;
+    return sf::Vector2f(
+        this->m_sprite.getPosition().x + this->m_sprite.getGlobalBounds().size.x / 2.f,
+        this->m_sprite.getPosition().y + this->m_sprite.getGlobalBounds().size.y / 2.f);
 }

@@ -99,5 +99,5 @@ float SimplexNoise::noise(float xin, float yin)
     int gi2 = perm[ii + 1 + perm[jj + 1]] % 12;
 
     double result = 70.0 * (computeNoise(x0, y0, gi0, grad3) + computeNoise(x1, y1, gi1, grad3) + computeNoise(x2, y2, gi2, grad3));
-    return mmath::normalize(result, -1, 1);
+    return mmath::normalize(result);
 }

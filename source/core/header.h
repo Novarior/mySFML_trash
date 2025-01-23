@@ -40,7 +40,10 @@ using namespace nlohmann;
 // include in program files
 #include "../math/mymath.hpp"
 
-#include "cmakever.h"
-#include "myConst.h"
+#include "_cmakever.h"
+#include "_myConst.h"
+#include "dataCollector/_man_Texture.hpp"
+#include "MemoryUsageMonitor.hpp"
+#include "staticFPSMetter.hpp"
 
 #endif

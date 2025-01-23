@@ -133,7 +133,7 @@ public:
 
     /// @brief Loads a texture from a file and applies it to the entity's sprite.
     /// @param file_path The path to the texture file.
-    inline virtual void e_loadTexture(const std::string file_path) { this->m_texture.loadFromFile(file_path); }
+    inline virtual void e_updateTexture(const sf::Texture &_texture) { this->m_texture.update(_texture); }
 
     /// @brief Sets the entity's sprite texture using a pointer to an sf::Texture.
     /// @param texture A pointer to the sf::Texture to apply.

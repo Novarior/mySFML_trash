@@ -2,8 +2,8 @@
 
 void NoiceViewer::initvariables()
 {
-    this->noiceImage.create(this->m_noice_data.RenderWindowX, this->m_noice_data.RenderWindowY);
-    this->noiceTexture.create(this->m_noice_data.RenderWindowX, this->m_noice_data.RenderWindowY);
+    this->noiceImage = sf::Image({this->m_noice_data.RenderWindowX, this->m_noice_data.RenderWindowY}, sf::Color::Black);
+    this->noiceTexture = sf::Texture(this->noiceImage);
     this->noiceShape.setSize(sf::Vector2f(this->m_noice_data.RenderWindowX, this->m_noice_data.RenderWindowY));
 }
 
@@ -56,13 +56,26 @@ void NoiceViewer::generateNoice()
         for (int y = 0; y < this->m_noice_data.mapSizeY; y++)
             switch (noiceType(current_Noice_Model)) {
             case PERLIN_NOICE:
-                h_buffer = this->m_perlin_noice->Noise(x, y);
+                h_buffer = this->m_perlin_noice->Noise(x, y, 0, 255, this->m_noice_data.fastMode);
                 this->noiceMap[x][y] = h_buffer;
+                // log moment
+                if (h_buffer > _heigthMoment._PerlinMin)
+                    _heigthMoment._PerlinMin = h_buffer;
+                if (h_buffer < _heigthMoment._PerlinMax)
+                    _heigthMoment._PerlinMax = h_buffer;
                 break;
             case PERLIN_NOICE_V2:
                 h_buffer = this->m_prn_noice->getNoice(x, y);
+                if (h_buffer > _heigthMoment._myPerlinMax)
+                    _heigthMoment._myPerlinMax = h_buffer;
+                if (h_buffer < _heigthMoment._myPerlinMin)
+                    _heigthMoment._myPerlinMin = h_buffer;
                 // normalise noice from -1 to 1 to 0 to 255
-                this->noiceMap[x][y] = (h_buffer + 1) * 127.5;
+                this->noiceMap[x][y] = mmath::normalize(h_buffer);
+                if (this->noiceMap[x][y] > _heigthMoment._myNPerlinMax)
+                    _heigthMoment._myNPerlinMax = this->noiceMap[x][y];
+                if (this->noiceMap[x][y] < _heigthMoment._myNPerlinMin)
+                    _heigthMoment._myNPerlinMin = this->noiceMap[x][y];
                 break;
             case SIMPLEX_NOICE:
                 h_buffer = this->m_simplex_noice->noise(x / this->m_noice_data.amplifire / 10.f, y / this->m_noice_data.amplifire / 10.f);
@@ -74,44 +87,46 @@ void NoiceViewer::generateNoice()
 
     // fill image using vector array
     double vec_buffer = 0.f;
-    for (int x = 0; x < this->m_noice_data.mapSizeX; x++)
-        for (int y = 0; y < this->m_noice_data.mapSizeY; y++) {
+    for (unsigned int x = 0; x < this->m_noice_data.mapSizeX; x++)
+        for (unsigned int y = 0; y < this->m_noice_data.mapSizeY; y++)
+        {
             vec_buffer = this->noiceMap[x][y];
 
             switch (colorMode(current_Color_Mode)) {
-            case FULL_COLOR: {
-                if (vec_buffer < 45) { // deep ocean
-                    this->noiceImage.setPixel(x, y, sf::Color(0, 10 + vec_buffer * 0.6, 100 + vec_buffer * 1.5, 255));
-                    this->m_BlocksCounter.deep_ocean++;
-                } else if (vec_buffer < 66) { // ocean
-                    this->noiceImage.setPixel(x, y, sf::Color(0, 20 + vec_buffer * 0.7, 100 + vec_buffer * 1.7, 255));
-                    this->m_BlocksCounter.ocean++;
-                } else if (vec_buffer < 70) { //  sand
-                    this->noiceImage.setPixel(x, y, sf::Color(150 + vec_buffer * 1.5, 120 + vec_buffer * 1.6, 90 + vec_buffer * 0.1, 255));
-                    this->m_BlocksCounter.sand++;
-                } else if (vec_buffer < 74) { // sea sand
-                    this->noiceImage.setPixel(x, y, sf::Color(150 + vec_buffer * 1.5, 140 + vec_buffer * 1.6, 120 + vec_buffer * 0.1, 255));
-                    this->m_BlocksCounter.seasand++;
-                } else if (vec_buffer < 120) { // grass
-                    this->noiceImage.setPixel(x, y, sf::Color(vec_buffer * 0.1, 50 + vec_buffer * 1.1, vec_buffer * 0.08, 255));
-                    this->m_BlocksCounter.grass++;
-                } else if (vec_buffer < 165) { // ground
-                    this->noiceImage.setPixel(x, y, sf::Color(90 - vec_buffer * 0.1, 71 + vec_buffer * 0.15, 55 + vec_buffer * 0.1, 255));
-                    this->m_BlocksCounter.dirt++;
-                } else if (vec_buffer < 175) { // cave
-                    this->noiceImage.setPixel(x, y, sf::Color(40 + vec_buffer * 0.1, 71 - vec_buffer * 0.2, 55 - vec_buffer * 0.2, 255));
-                    this->m_BlocksCounter.rock++;
-                } else if (vec_buffer < 180) { // mountain
-                    this->noiceImage.setPixel(x, y, sf::Color(120 - vec_buffer * 0.2, 100 + vec_buffer * 0.2, 120 - vec_buffer * 0.2, 255));
-                    this->m_BlocksCounter.mountain++;
-                } else if (vec_buffer < 200) { // snow
-                    this->noiceImage.setPixel(x, y, sf::Color(255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255));
-                    this->m_BlocksCounter.snow++;
+            case FULL_COLOR:
+            {
+                if (vec_buffer < 45)
+                { // deep ocean
+                    this->noiceImage.setPixel({x, y}, sf::Color(0, 10 + vec_buffer * 0.6, 100 + vec_buffer * 1.5, 255));
+                }
+                else if (vec_buffer < 66)
+                { // ocean
+                    this->noiceImage.setPixel({x, y}, sf::Color(0, 20 + vec_buffer * 0.7, 100 + vec_buffer * 1.7, 255));
+                }
+                else if (vec_buffer < 85)
+                { // sand
+                    this->noiceImage.setPixel({x, y}, sf::Color(150 + vec_buffer * 1.5, 120 + vec_buffer * 1.6, 90 + vec_buffer * 0.1, 255));
+                }
+                else if (vec_buffer < 120)
+                { // grass
+                    this->noiceImage.setPixel({x, y}, sf::Color(vec_buffer * 0.1, 50 + vec_buffer * 1.1, vec_buffer * 0.08, 255));
+                }
+                else if (vec_buffer < 165)
+                { // dirt
+                    this->noiceImage.setPixel({x, y}, sf::Color(90 - vec_buffer * 0.1, 71 + vec_buffer * 0.15, 55 + vec_buffer * 0.1, 255));
+                }
+                else if (vec_buffer < 200)
+                { // rock
+                    this->noiceImage.setPixel({x, y}, sf::Color(40 + vec_buffer * 0.1, 71 - vec_buffer * 0.2, 55 - vec_buffer * 0.2, 255));
+                }
+                else
+                { // snow
+                    this->noiceImage.setPixel({x, y}, sf::Color(255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255 - vec_buffer * 0.4, 255));
                 }
                 break;
             }
             case NOICE_COLOR:
-                this->noiceImage.setPixel(x, y, sf::Color(vec_buffer, vec_buffer, vec_buffer, 255));
+                this->noiceImage.setPixel({x, y}, sf::Color(vec_buffer, vec_buffer, vec_buffer, 255));
                 break;
             case BIOME_COLOR:
                 break;
@@ -141,7 +156,6 @@ const std::string NoiceViewer::getNoiceModelName()
 
 const std::string NoiceViewer::getNoiceSmouthName()
 {
-
     std::array<std::string, 7> smoothModes = {
         "Linear",
         "Cosine",

@@ -8,8 +8,8 @@ const bool Process::loadGameData()
     else {
         this->noicedata.mapSizeX = 1000;
         this->noicedata.mapSizeY = 1000;
-        this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
-        this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
+        this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.size.x;
+        this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.size.y;
         this->noicedata.gridSize = this->IstateData->sd_gridSize;
     }
     return true;
@@ -87,15 +87,12 @@ void Process::initView()
     this->playerView.setSize(halfSize);
     this->playerView.setCenter(halfSize);
 
-    this->renderTexture.create(
-        this->IstateData->sd_Window->getSize().x,
-        this->IstateData->sd_Window->getSize().y);
+    if (!this->renderTexture.resize({ this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y }))
+        sf::RenderTexture _buffRenderTexture({this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y});
 
     this->renderSprite.setTexture(this->renderTexture.getTexture());
-
-    this->renderSprite.setTextureRect(sf::IntRect(0, 0,
-        this->IstateData->sd_Window->getSize().x,
-        this->IstateData->sd_Window->getSize().y));
+    this->renderSprite.setTextureRect(sf::IntRect({ 0, 0 },
+        sf::Vector2i(this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y)));
 }
 
 void Process::initPlayer()
@@ -118,10 +115,7 @@ void Process::initPlayer()
 
 void Process::initMiniMap() // init minimap
 {
-    sf::IntRect worldBounds(
-        0, 0,
-        this->mapTiles->getMapSizeOnFloat().x,
-        this->mapTiles->getMapSizeOnFloat().y);
+    sf::IntRect worldBounds({ 0, 0 }, this->mapTiles->getMapSizeOnInt());
 
     this->minimap = new gui::MiniMap(
         sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x), mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
@@ -139,8 +133,8 @@ void Process::initTileMapData()
     this->noicedata.octaves = 8;
     this->noicedata.frequency = 8;
     this->noicedata.amplifire = 0.5f;
-    this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.width;
-    this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.height;
+    this->noicedata.RenderWindowX = this->IstateData->sd_gfxSettings->_struct.resolution.size.x;
+    this->noicedata.RenderWindowY = this->IstateData->sd_gfxSettings->_struct.resolution.size.y;
     this->noicedata.mapSizeX = 620;
     this->noicedata.mapSizeY = 430;
     this->noicedata.persistence = 0.6f;
@@ -172,8 +166,9 @@ void Process::registerItems()
     Logger::logStatic("Items count: " + std::to_string(ItemRegistry::getAllItems().size()), "Process::registerItems()");
 }
 
-Process::Process(StateData* state_data, const bool defaultLoad)
-    : State(state_data)
+Process::Process(StateData *state_data, const bool defaultLoad)
+    : State(state_data), renderSprite(TextureManager::getTexture("texture_null"))
+
 { // init Parser
     if (defaultLoad)
         this->loadGameData();

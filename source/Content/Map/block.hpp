@@ -14,17 +14,16 @@ enum BLOCKTYPE { NAN_DEF = 0,
 class BrickBlock {
 private:
     sf::Sprite m_sprite;
-    sf::Texture& m_Texture;
     bool m_collision;
     bool m_isAnim;
     const unsigned short m_type;
     static unsigned currentFrame;
     unsigned framesCounter;
     bool isSetTree;
-    sf::Vector2f m_size;
+    sf::Vector2i m_size;
 
 public:
-    BrickBlock(sf::Vector2f size, sf::Vector2f position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false, bool isSetTree = false);
+    BrickBlock(sf::Vector2i size, sf::Vector2i position, sf::Color color, bool collosion, sf::Texture& texture, unsigned short type, bool isAnim = false, bool isSetTree = false);
     virtual ~BrickBlock();
 
     const sf::FloatRect getGlobalBounds();

@@ -40,15 +40,27 @@ void AIWander::update(const float& delta_time)
 #if __MDEBUG__
     _line.clear();
 
-    _line.setPrimitiveType(sf::Lines);
+    _line.setPrimitiveType(sf::PrimitiveType::Lines);
 
+    sf::Vertex _v1, _v2, _v3, _v4;
+    _v1.position = _ai_self.e_getPosition();
+    _v1.color = sf::Color::Red;
+
+    _v2.position = _ai_self.e_getPosition() + _direction * 20.f;
+    _v2.color = sf::Color::Red;
+
+    _v3.position = _ai_self.e_getPosition();
+    _v3.color = sf::Color::Green;
+
+    _v4.position = _center;
+    _v4.color = sf::Color::Green;
     // Линия от сущности к центру
-    _line.append(sf::Vertex(_ai_self.e_getPosition(), sf::Color::Red));
-    _line.append(sf::Vertex(_ai_self.e_getPosition() + _direction * 20.f, sf::Color::Red));
+    _line.append(_v1);
+    _line.append(_v2);
 
     // Линия от сущности к направлению
-    _line.append(sf::Vertex(_ai_self.e_getPosition(), sf::Color::Green));
-    _line.append(sf::Vertex(_center, sf::Color::Green));
+    _line.append(_v3);
+    _line.append(_v4);
 #endif
 
     // Обновляем позицию объекта на основе направления и времени

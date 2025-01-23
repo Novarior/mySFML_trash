@@ -39,4 +39,5 @@ private:
     static unsigned int mFps;
     static sf::Clock mClock;
 };
+
 #endif // FPS_HPP

@@ -2,15 +2,14 @@
 
 void MainMenu::initRenderDefines()
 {
-    this->renderTexture.create(
-        this->IstateData->sd_Window->getSize().x,
-        this->IstateData->sd_Window->getSize().y);
+    if (!this->renderTexture.resize({this->IstateData->sd_Window->getSize().x, this->IstateData->sd_Window->getSize().y}))
+        Logger::logStatic("renderTexture cannot be resize", "MainMenu::initRenderDefines()", logType::ERROR);
     this->renderTexture.setSmooth(true);
 
     this->renderSprite.setTexture(this->renderTexture.getTexture());
-    this->renderSprite.setTextureRect(sf::IntRect(0, 0,
-        this->IstateData->sd_Window->getSize().x,
-        this->IstateData->sd_Window->getSize().y));
+    this->renderSprite.setTextureRect(sf::IntRect({0, 0},
+                                                  {static_cast<int>(this->IstateData->sd_Window->getSize().x),
+                                                   static_cast<int>(this->IstateData->sd_Window->getSize().y)}));
 
     this->view.setSize(sf::Vector2f(
         static_cast<float>(this->IstateData->sd_Window->getSize().x),
@@ -34,18 +33,16 @@ void MainMenu::initBackground()
     for (int i = 0; i < 3; i++) {
         this->background_textures.push_back(sf::Texture());
     }
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_3));
-    tx.setSmooth(true);
+    tx.update(TextureManager::getTexture("texture_background_lay_1"));
     this->background_textures[0] = tx;
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_2));
-    tx.setSmooth(true);
+    tx.update(TextureManager::getTexture("texture_background_lay_2"));
     this->background_textures[1] = tx;
-    tx.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::backgrounds::texture_background_mainmenu_lay_1));
-    tx.setSmooth(true);
+    tx.update(TextureManager::getTexture("texture_background_lay_3"));
     this->background_textures[2] = tx;
 
     // init background shapes
-    for (size_t i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; i++)
+    {
         this->backgrond_shapes.push_back(sf::RectangleShape());
 
         this->backgrond_shapes[i].setSize(sf::Vector2f(this->background_textures[i].getSize()));
@@ -173,8 +170,8 @@ void MainMenu::initSounds()
             it.second.setVolume(50.f);
 }
 
-MainMenu::MainMenu(StateData* statedata)
-    : State(statedata)
+MainMenu::MainMenu(StateData *statedata)
+    : State(statedata), renderSprite(TextureManager::getTexture("texture_null"))
 {
     // logger
     Logger::logStatic("MainMenu constructor", "MainMenu");
@@ -228,9 +225,11 @@ void MainMenu::updateButtons()
 
             it.second->update(this->ImousePosWindow);
             if (it.second->isPressed())
-                this->IsoundsMap->at("PRESS_BUTTON").play(); // play sound once
+                if (this->IsoundsMap->at("PRESS_BUTTON").getStatus() != sf::Sound::Status::Playing)
+                    this->IsoundsMap->at("PRESS_BUTTON").play(); // play sound once
             if (it.second->isHover())
-                this->IsoundsMap->at("SELECT_MENU").play(); // play sound once
+                if (this->IsoundsMap->at("SELECT_MENU").getStatus() != sf::Sound::Status::Playing)
+                    this->IsoundsMap->at("SELECT_MENU").play(); // play sound once
         }
 
         if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime()) {
@@ -260,13 +259,13 @@ void MainMenu::updateGUI(const float& delta_time)
         this->IstringStream
             << "\nver:\t" << CMAKE_PROJECT_VERSION
             << "\nCurrent memory usage:\t" << MemoryUsageMonitor::formatMemoryUsage(MemoryUsageMonitor::getCurrentMemoryUsage())
-            << "\nCurrent state memory usage:\t" << getMemoryUsage()<< " bytes"
+            << "\nCurrent state memory usage:\t" << getMemoryUsage() << " bytes"
             << "\nFPS delta:\t" << 1 / delta_time
             << "\nFPS Clock:\t" << FPS::getFPS()
             << "\nFPS limit:\t" << this->IstateData->sd_gfxSettings->_struct.frameRateLimit
             << "\nDelta Time:\t" << delta_time
             << "\nResolution:\t" << this->IstateData->sd_Window->getSize().x << " x " << this->IstateData->sd_Window->getSize().y
-            << "\nAntialiasing:\t" << this->IstateData->sd_Window->getSettings().antialiasingLevel
+            << "\nAntialiasing:\t" << this->IstateData->sd_Window->getSettings().antiAliasingLevel
             << "\nvSync:\t" << this->IstateData->sd_gfxSettings->_struct.verticalSync
             << "\nMouse Pos:\t" << this->ImousePosWindow.x << " x " << this->ImousePosWindow.y
             << "\nVolume: "
@@ -285,8 +284,8 @@ void MainMenu::updateGUI(const float& delta_time)
     }
 
     // update GUI
-    this->backgrond_shapes[0].rotate(delta_time);
-    this->backgrond_shapes[1].rotate(-delta_time);
+    this->backgrond_shapes[0].rotate(sf::degrees(delta_time));
+    this->backgrond_shapes[1].rotate(sf::degrees(-delta_time));
 }
 
 void MainMenu::updateSounds(const float& delta_time)

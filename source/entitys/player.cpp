@@ -28,15 +28,15 @@ Player::Player(sf::Vector2f pos):
     attributes.damage = 1 + (attributes.level * 1.25) + (attributes.some_points * 0.0625 / 2);
     attributes.isAlive = true;
 
-    this->m_texture.loadFromFile(std::string(ApplicationsFunctions::get_resources_dir() + myConst::sprites::slime_texture));
+    this->m_texture.update(TextureManager::getTexture("texture_Player"));
     this->m_sprite.setTexture(this->m_texture);
-    this->m_sprite.setScale(0.02f, 0.02f);
+    this->m_sprite.setScale({ 0.02f, 0.02f });
     this->createHitboxComponent(this->m_sprite, 0.f, 0.f, 16.f, 16.f);
     this->createMovementComponent(10.f, 5.f, 3.f);
     this->createAttributesComponent(&attributes);
     this->e_setPosition(pos);
     this->m_radius.setRadius(100.f);
-    this->m_radius.setOrigin(this->m_radius.getRadius(), this->m_radius.getRadius());
+    this->m_radius.setOrigin({ this->m_radius.getRadius(), this->m_radius.getRadius() });
     this->m_radius.setPosition(this->m_sprite.getPosition());
     this->m_radius.setFillColor(sf::Color::Transparent);
     this->m_radius.setOutlineColor(sf::Color::Red);
@@ -67,7 +67,7 @@ void Player::e_render(sf::RenderTarget& target, const bool show_hitbox)
 void Player::e_attack(Entity* target, const float& delta_time)
 { // chek if some entity is in range
 
-    if (this->m_radius.getGlobalBounds().intersects(target->getGlobalBounds())) {
+    if (this->m_radius.getGlobalBounds().findIntersection(target->getGlobalBounds())) {
         this->m_radius.setOutlineColor(sf::Color::Green);
         target->e_takeDamage(this->e_attributes->getAttributes().damage);
     }

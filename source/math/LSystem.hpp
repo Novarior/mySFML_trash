@@ -4,6 +4,7 @@
 #include <vector>
 
 struct GData {
+  bool isGeneratorEnable;
   unsigned int seed;
   unsigned int steps;
   float angle;
@@ -57,6 +58,7 @@ public:
   void setRules(std::map<char, std::string> rules) { this->rules = rules; }
   void setRule(char key, std::string value) { this->rules[key] = value; }
   void setAxiom(char axiom) { this->axiom = axiom; }
+  size_t getAxiomSize();
   void setOffsetPos(sf::Vector2f offsetPos) {
     this->data.offsetPos = offsetPos;
   }

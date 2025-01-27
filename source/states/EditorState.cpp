@@ -189,10 +189,10 @@ EditorState::EditorState(StateData *statedata) : State(statedata) {
   // init LSystem
   this->myLS = new LSystem();
   this->myLS->setRule('d', "qd");
-  this->myLS->setRule('s', "d[-qqs]+qqs");
+  this->myLS->setRule('s', "d[-qqs]+qqs[+q|]-q|");
   this->myLS->setOffsetPos(
       sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2,
-                   this->IstateData->sd_Window->getSize().y * 0.70));
+                   this->IstateData->sd_Window->getSize().y * 0.90));
   this->myLS->generate();
 
   Logger::logStatic("End initilization EditorState",
@@ -363,6 +363,7 @@ void EditorState::updateDebugText(const float &delta_time) {
                                this->ImousePosWindow);
   this->IstringStream << "\nTree Data:"
                       << "\n\tTreeSize:\t" << this->myLS->getSizeTree()
+                      << "\n\tTreeAxiom\t" << this->myLS->getAxiomSize()
                       << "\nPause:\t" << this->Ipaused;
 
   // update debug text

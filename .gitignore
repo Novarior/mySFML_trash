@@ -22,9 +22,5 @@ metadata/
 # Cache and log files
 .cache
 *.log
-
-# SFML resources (if they're stored in source/res)
-
-
-# Temporary files
 *.tmp
+*.cmake

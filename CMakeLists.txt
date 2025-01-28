@@ -1,6 +1,6 @@
 # Установка минимальной версии CMake
 cmake_minimum_required(VERSION 3.10.0)
-project(Ekzeckt VERSION 0.0.8)
+project(Ekzeckt VERSION 0.0.9)
 
 # Установка минимальной версии C++ стандарта
 set(CMAKE_CXX_STANDARD 17)
@@ -103,3 +103,27 @@ if(APPLE)
         copy_to_bundle(${library})
     endforeach()
 endif()
+
+# Указываем путь к файлам, которые будут установлены
+install(TARGETS Ekzeckt DESTINATION bin)
+
+# Указываем дополнительные файлы (например, документацию)
+install(FILES README.md DESTINATION share/doc/MyApp)
+
+# Настройка CPack
+set(CPACK_PACKAGE_NAME "EKZECKT")                # Имя пакета
+set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}") # Версия пакета
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "My Application Installer")
+set(CPACK_PACKAGE_VENDOR "Novarior FLow")
+set(CPACK_PACKAGE_CONTACT "Xle6yIIIeK1337@gmail.com")
+set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${CPACK_PACKAGE_VERSION}")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE") # Файл лицензии
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "MyAppInstallDir")         # Директория установки
+set(CPACK_PACKAGE_EXECUTABLES "EKZECKT" "My Application")
+set(CPACK_NSIS_DISPLAY_NAME "My Application Installer")
+
+# Указываем генераторы пакетов
+set(CPACK_GENERATOR "ZIP;TGZ;NSIS;DragNDrop") # Генерация пакетов в формате ZIP и TAR.GZ
+
+# Подключаем CPack
+include(CPack)

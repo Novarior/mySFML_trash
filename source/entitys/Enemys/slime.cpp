@@ -6,7 +6,7 @@ Slime::Slime(float spawn_pos_x, float spawn_pos_y, Entity& targer_follow)
         entityEnum::entityState::DISABLED,
         entityEnum::entityDirection::VOID)
 {
-    this->m_texture.update(TextureManager::getTexture("texture_Slime"));
+    this->m_texture=TextureManager::getTexture("texture_Slime");
 
     this->m_sprite.setTexture(this->m_texture);
     this->m_sprite.setScale({0.02f, 0.02f});

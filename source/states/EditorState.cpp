@@ -189,7 +189,7 @@ EditorState::EditorState(StateData *statedata) : State(statedata) {
   // init LSystem
   this->myLS = new LSystem();
   this->myLS->setRule('d', "qd");
-  this->myLS->setRule('s', "d[-qqs]+qqs[+q|]-q|");
+  this->myLS->setRule('s', "d[[-qqs]qs]+qqs[+q|]-q|");
   this->myLS->setOffsetPos(
       sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2,
                    this->IstateData->sd_Window->getSize().y * 0.90));

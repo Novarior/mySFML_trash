@@ -41,7 +41,7 @@ void LSystem::generate() {
   this->data.width = 15;
   this->data.length = 25;
   this->data.half_length = -this->data.width / 2;
-  this->data.steps = 12;
+  this->data.steps = 9;
   this->data.alpha = 255;
   this->data.chanceSkip = 50;
   this->data.seed = 0;
@@ -80,8 +80,8 @@ void LSystem::applyRules() {
   std::random_device rd;
   std::mt19937 gen(rd());
   std::uniform_int_distribution<> dis(0, 100);
-  std::uniform_int_distribution<> dis_angle(0, 15);
-  std::uniform_int_distribution<> dis_color(80, 255);
+  std::uniform_int_distribution<> dis_angle(0, 25);
+  std::uniform_int_distribution<> dis_color(80, 220);
 
   sf::RectangleShape bufferShape;
   this->debug_dots =
@@ -188,9 +188,6 @@ void LSystem::applyRules() {
       this->data.pos = data.nextPos; // Обновляем текущую позицию
       break;
     }
-    case '+': // Вращение направо
-      this->data.currentAngle += 25 + dis_angle(gen);
-      break;
     case '|': {
       // Настраиваем параметры формы для листвы
       bufferShape.setSize(sf::Vector2f(
@@ -217,6 +214,9 @@ void LSystem::applyRules() {
       this->data.pos = data.nextPos; // Обновляем текущую позицию}
       break;
     }
+    case '+': // Вращение направо
+      this->data.currentAngle += 25 + dis_angle(gen);
+      break;
     case '-': // Вращение налево
       this->data.currentAngle -= 25 + dis_angle(gen);
       break;

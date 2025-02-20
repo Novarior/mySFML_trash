@@ -56,15 +56,15 @@ void TileMap::initTrees() {
   // prepare generator
   this->_treeGenerator = std::make_unique<LSystem>(LSystem());
   this->_treeGenerator.get()->setRule('d', "qd");
-  this->_treeGenerator.get()->setRule('s', "d[-qqs]+qqs");
+  this->_treeGenerator.get()->setRule('s', "d[[-qqs]qs]+qqs[+q|]-q|");
   this->_treeGenerator.get()->setOffsetPos(sf::Vector2f(
       static_cast<float>(this->_map_dataNoice.RenderWindowX) / 2,
       static_cast<float>(this->_map_dataNoice.RenderWindowY) * 0.70));
 
+  std::vector<sf::RectangleShape> shapes;
   for (auto _it = 0; _it < 20; _it++) {
     sf::RenderTexture _rTexture(sf::Vector2u(_map_dataNoice.RenderWindowX,
                                              _map_dataNoice.RenderWindowY));
-    std::vector<sf::RectangleShape> shapes;
 
     this->_treeGenerator.get()->generate();
     // create texture with window size
@@ -77,6 +77,7 @@ void TileMap::initTrees() {
 
     // get snapshoot
     sf::Image image(_rTexture.getTexture().copyToImage());
+    image.flipVertically();
 
     // find Transparent pixels
     sf::Vector2u size = image.getSize();
@@ -94,6 +95,7 @@ void TileMap::initTrees() {
           if (y > mrect.size.y)
             mrect.size.y = y;
         }
+
     // create newe image on mrect base
     sf::Image simg(sf::Vector2u(mrect.size.x - mrect.position.x,
                                 mrect.size.y - mrect.position.y),
@@ -108,25 +110,6 @@ void TileMap::initTrees() {
     sf::Texture buffT(simg);
     this->listTrees.push_back(buffT);
   }
-}
-
-void TileMap::loadTextuteMap() {
-  this->m_TexturesList["BLOCK_DEEP_OCEAN"].update(
-      TextureManager::getTexture("texture_deep_ocean"));
-  this->m_TexturesList["BLOCK_OCEAN"].update(
-      TextureManager::getTexture("texture_ocean"));
-  this->m_TexturesList["BLOCK_SAND"].update(
-      TextureManager::getTexture("texture_sand"));
-  this->m_TexturesList["BLOCK_GRASS"].update(
-      TextureManager::getTexture("texture_grass"));
-  this->m_TexturesList["BLOCK_DIRT"].update(
-      TextureManager::getTexture("texture_dirt"));
-  this->m_TexturesList["BLOCK_STONE"].update(
-      TextureManager::getTexture("texture_stone"));
-  this->m_TexturesList["BLOCK_SNOWMOUNT"].update(
-      TextureManager::getTexture("texture_snow"));
-
-  Logger::logStatic("Textures LOADL", "CATCHED ME TileMap::loadTextuteMap()");
 }
 
 void TileMap::pushTree(int x, int y) {
@@ -176,7 +159,7 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, true, this->m_TexturesList["BLOCK_DEEP_OCEAN"],
+            buff, true, TextureManager::getTexture("texture_deep_ocean"),
             BLOCK_DEEP_OCEAN, true));
       } else if (buff_height < 66) {
         double shore_intensity = 100 + buff_height * 2.0;
@@ -186,7 +169,8 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, true, this->m_TexturesList["BLOCK_OCEAN"], BLOCK_OCEAN));
+            buff, true, TextureManager::getTexture("texture_ocean"),
+            BLOCK_OCEAN));
       } else if (buff_height < 85) { // sand
         buff = sf::Color(std::min(255.0, 200 + buff_height * 0.5),
                          std::min(255.0, 180 + buff_height * 0.3),
@@ -195,7 +179,8 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, false, this->m_TexturesList["BLOCK_SAND"], BLOCK_SAND));
+            buff, false, TextureManager::getTexture("texture_sand"),
+            BLOCK_SAND));
       } else if (buff_height < 120) { // grass
         buff = sf::Color(std::min(255.0, buff_height * 0.08),
                          std::min(255.0, 40 + buff_height * 0.9),
@@ -204,11 +189,13 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, false, this->m_TexturesList["BLOCK_SAND"], BLOCK_GRASS));
+            buff, false, TextureManager::getTexture("texture_grass"),
+            BLOCK_GRASS));
 
         // init Trees
         if (rand() % 100 < 1)
           this->pushTree(x, y);
+
         this->m_listGrassBlocks.push_back(sf::Vector2f(
             x * _map_dataNoice.gridSize, y * _map_dataNoice.gridSize));
       } else if (buff_height < 165) { // dirt
@@ -218,7 +205,8 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, false, this->m_TexturesList["BLOCK_DIRT"], BLOCK_DIRT));
+            buff, false, TextureManager::getTexture("texture_dirt"),
+            BLOCK_DIRT));
       } else if (buff_height < 200) { // stone
         buff = sf::Color(40 + buff_height * 0.1, 71 - buff_height * 0.2,
                          55 - buff_height * 0.2, 255);
@@ -226,7 +214,8 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, false, this->m_TexturesList["BLOCK_STONE"], BLOCK_STONE));
+            buff, false, TextureManager::getTexture("texture_stone"),
+            BLOCK_STONE));
       } else { // Snow
         double intensity = 200 + (buff_height - 200) * 0.275;
         buff = sf::Color(std::min(255.0, intensity), std::min(255.0, intensity),
@@ -235,7 +224,7 @@ void TileMap::generateMap() {
             sf::Vector2i(_map_dataNoice.gridSize, _map_dataNoice.gridSize),
             sf::Vector2i(x * _map_dataNoice.gridSize,
                          y * _map_dataNoice.gridSize),
-            buff, false, this->m_TexturesList["BLOCK_SNOWMOUNT"],
+            buff, false, TextureManager::getTexture("texture_snow"),
             BLOCK_SNOWMOUNT));
       }
       this->minimapImage.setPixel(sf::Vector2u(x, y),
@@ -248,7 +237,6 @@ TileMap::TileMap(mmath::noiceData datanoice, ProcessGenerationNoice *noice)
     : keyTime(0.f), keyTimeMax(0.5f), _map_dataNoice(datanoice),
       mGen_noice(*noice) {
   this->initMapVariables();
-  this->loadTextuteMap();
   this->initTrees();
   this->generateMap();
   this->updateRenderArea(sf::Vector2i(0, 0));
@@ -273,7 +261,6 @@ TileMap::TileMap(mmath::noiceData datanoice, ProcessGenerationNoice *noice)
 TileMap::~TileMap() {
   this->Clear();
   this->listTrees.clear();
-  this->m_TexturesList.clear();
 }
 
 bool TileMap::getCollision(const unsigned int x, const unsigned int y) const {
@@ -331,92 +318,50 @@ void TileMap::updateTileCollision(Entity *entity, const float &delta_time) {
   this->m_colisionArea.toY =
       std::min(this->worldSizeGrid.y, entityGridPos.y + 3);
 
+  sf::FloatRect playerBounds = entity->getGlobalBounds();
+  sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(delta_time);
+
   for (int x = this->m_colisionArea.fromX; x < this->m_colisionArea.toX; x++) {
     for (int y = this->m_colisionArea.fromY; y < this->m_colisionArea.toY;
          y++) {
       auto tile = this->tilemap[x][y][0];
-      if (!tile->getCollision())
+
+      if (!tile || !tile->getCollision())
         continue;
 
-      sf::IntRect playerBounds = sf::IntRect(entity->getGlobalBounds());
-      sf::IntRect wallBounds = sf::IntRect(tile->getGlobalBounds());
-      sf::IntRect nextPositionBounds =
-          sf::IntRect(entity->getNextPositionBounds(delta_time));
+      sf::FloatRect wallBounds = tile->getGlobalBounds();
 
       if (tile->intersects(nextPositionBounds)) {
         sf::Vector2f collisionDepth =
             getCollisionDepth(playerBounds, wallBounds);
 
-        // Определение направления коллизии по глубине пересечения
-        if (collisionDepth.x < collisionDepth.y) {
-          // Горизонтальная коллизия
-          if (collisionDepth.x > 0) {
-            entity->getMovement()->stopVelocityX();
-            entity->e_setPosition(wallBounds.position.x - playerBounds.size.x,
-                                  playerBounds.position.y);
-          } else {
-            entity->getMovement()->stopVelocityX();
-            entity->e_setPosition(wallBounds.position.x + wallBounds.size.x,
-                                  playerBounds.position.y);
-          }
+        if (std::abs(collisionDepth.x) < std::abs(collisionDepth.y)) {
+          // Горизонтальное столкновение
+          entity->getMovement()->stopVelocityX();
+          entity->e_setPosition(playerBounds.position.x - collisionDepth.x,
+                                playerBounds.position.y);
         } else {
-          // Вертикальная коллизия
-          if (collisionDepth.y > 0) {
-            entity->getMovement()->stopVelocityY();
-            entity->e_setPosition(playerBounds.position.x,
-                                  wallBounds.position.x - playerBounds.size.y);
-          } else {
-            entity->getMovement()->stopVelocityY();
-            entity->e_setPosition(playerBounds.position.x,
-                                  wallBounds.position.x + wallBounds.size.y);
-          }
+          // Вертикальное столкновение
+          entity->getMovement()->stopVelocityY();
+          entity->e_setPosition(playerBounds.position.x,
+                                playerBounds.position.y - collisionDepth.y);
         }
       }
     }
   }
 }
 
-sf::Vector2f TileMap::getCollisionDepth(const sf::IntRect &rectA,
-                                        const sf::IntRect &rectB) {
+sf::Vector2f TileMap::getCollisionDepth(const sf::FloatRect &rectA,
+                                        const sf::FloatRect &rectB) {
   float left = rectB.position.x - (rectA.position.x + rectA.size.x);
   float right = (rectB.position.x + rectB.size.x) - rectA.position.x;
   float top = rectB.position.y - (rectA.position.y + rectA.size.y);
   float bottom = (rectB.position.y + rectB.size.y) - rectA.position.y;
 
-  float depthX = (left < right) ? left : right;
-  float depthY = (top < bottom) ? top : bottom;
+  float depthX = (std::abs(left) < std::abs(right)) ? left : right;
+  float depthY = (std::abs(top) < std::abs(bottom)) ? top : bottom;
 
   return sf::Vector2f(depthX, depthY);
-}
-
-bool TileMap::checkBottomCollision(const sf::IntRect &playerBounds,
-                                   const sf::IntRect &wallBounds) {
-  return playerBounds.position.y + playerBounds.size.y >
-             wallBounds.position.y &&
-         playerBounds.position.x < wallBounds.position.x + wallBounds.size.x &&
-         playerBounds.position.x + playerBounds.size.x > wallBounds.position.x;
-}
-
-bool TileMap::checkTopCollision(const sf::IntRect &playerBounds,
-                                const sf::IntRect &wallBounds) {
-  return playerBounds.position.y < wallBounds.position.y + wallBounds.size.y &&
-         playerBounds.position.x < wallBounds.position.x + wallBounds.size.x &&
-         playerBounds.position.x + playerBounds.size.x > wallBounds.position.x;
-}
-
-bool TileMap::checkRightCollision(const sf::IntRect &playerBounds,
-                                  const sf::IntRect &wallBounds) {
-  return playerBounds.position.x + playerBounds.size.x >
-             wallBounds.position.x &&
-         playerBounds.position.y < wallBounds.position.y + wallBounds.size.y &&
-         playerBounds.position.y + playerBounds.size.y > wallBounds.position.y;
-}
-
-bool TileMap::checkLeftCollision(const sf::IntRect &playerBounds,
-                                 const sf::IntRect &wallBounds) {
-  return playerBounds.position.x < wallBounds.position.x + wallBounds.size.x &&
-         playerBounds.position.y < wallBounds.position.y + wallBounds.size.y &&
-         playerBounds.position.y + playerBounds.size.y > wallBounds.position.y;
 }
 
 void TileMap::updateAnimationTiles(const float &delta_time) {
@@ -457,11 +402,11 @@ void TileMap::updateRenderArea(
       this->m_renderArea.toY = this->worldSizeGrid.y;
   }
 
-  this->checkreck = sf::Rect<int>(
-      {static_cast<int>(this->m_renderArea.fromX * _map_dataNoice.gridSize),
-       static_cast<int>(this->m_renderArea.fromY * _map_dataNoice.gridSize)},
-      {static_cast<int>(this->m_renderArea.toX * _map_dataNoice.gridSize),
-       static_cast<int>(this->m_renderArea.toY * _map_dataNoice.gridSize)});
+  this->checkreck = sf::FloatRect(
+      {static_cast<float>(this->m_renderArea.fromX * _map_dataNoice.gridSize),
+       static_cast<float>(this->m_renderArea.fromY * _map_dataNoice.gridSize)},
+      {static_cast<float>(this->m_renderArea.toX * _map_dataNoice.gridSize),
+       static_cast<float>(this->m_renderArea.toY * _map_dataNoice.gridSize)});
 }
 
 void TileMap::update(Entity *entity, const float &delta_time) {
@@ -481,8 +426,7 @@ void TileMap::render(sf::RenderTarget *target) { // Render tiles
 
   // Render trees on screen area
   for (int i = 0; i < this->trees.size(); i++)
-    if (this->checkreck.findIntersection(
-            static_cast<sf::IntRect>(this->trees[i].getGlobalBounds())))
+    if (this->checkreck.findIntersection(this->trees[i].getGlobalBounds()))
       target->draw(this->trees[i]);
 
   // bariere box

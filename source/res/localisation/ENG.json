@@ -10,7 +10,8 @@
         "LOCAL_LOAD" : "Load",
         "LOCAL_NEW_GAME" : "New Game",
         "LOCAL_CONTINUE" : "Continue",
-        "LOCAL_NOICE_EDITOR": "Noice Editor"
+        "LOCAL_NOICE_EDITOR": "Noice Editor",
+        "LOCAL_DRS":"Debug ROOM"
     },
 
     "AUDIO_OPTIONS": {

@@ -4,28 +4,27 @@
         "LOCAL_OPTIONS": "Настройки",
         "LOCAL_EXIT": "Выход",
         "LOCAL_BACK": "Назад",
-        "LOCAL_APPLY" : "Принять",
-        "LOCAL_CANCEL" : "Отмена",
-        "LOCAL_SAVE" : "Сохранить",
-        "LOCAL_LOAD" : "Загрузить",
-        "LOCAL_NEW_GAME" : "Новая игра",
-        "LOCAL_CONTINUE" : "Продолжить",    
-        "LOCAL_NOICE_EDITOR": "Редактор "
+        "LOCAL_APPLY": "Принять",
+        "LOCAL_CANCEL": "Отмена",
+        "LOCAL_SAVE": "Сохранить",
+        "LOCAL_LOAD": "Загрузить",
+        "LOCAL_NEW_GAME": "Новая игра",
+        "LOCAL_CONTINUE": "Продолжить",
+        "LOCAL_NOICE_EDITOR": "Редактор",
+        "LOCAL_DRS": "Debug ROOM"
     },
-
     "AUDIO_OPTIONS": {
         "LOCAL_MASTER": "Общая громкость",
         "LOCAL_SFX": "Эффекты",
         "LOCAL_MUSIC": "Музыка",
         "LOCAL_AMBIENT": "Окружающие звуки",
         "LOCAL_ENTITYSFX": "Враждебные существа",
-        "LOCAL_UI_VOL" : "Громкость интерфейса",
-        "LOCAL_DIALOGUE_VOL" : "Громкость диалогов",
+        "LOCAL_UI_VOL": "Громкость интерфейса",
+        "LOCAL_DIALOGUE_VOL": "Громкость диалогов",
         "LOCAL_FOLEYVOL": "IDK",
         "LOCAL_WEAPONVOL": "оружие",
         "LOCAL_ENVIRONMENTVOL": "Чтототам"
     },
-
     "SETTING_OPTIONS": {
         "LOCAL_RESOLUTION": "Resolution",
         "LOCAL_FULLSCREEN": "Fullscreen",
@@ -40,6 +39,6 @@
         "LOCAL_CREDITS": "Об игре",
         "LOCAL_SAVE": "Сохранить",
         "LOCAL_LOAD": "Загрузить",
-        "LOCAL_EXIT": "Exit"
-    }       
+        "LOCAL_EXIT": "Выйти"
+    }
 }

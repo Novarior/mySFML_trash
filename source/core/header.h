@@ -4,6 +4,7 @@
 // including stl lib
 #include <algorithm>
 #include <cmath>
+#include <cstdint>
 #include <execution>
 #include <filesystem>
 #include <fstream>
@@ -40,10 +41,10 @@ using namespace nlohmann;
 // include in program files
 #include "../math/mymath.hpp"
 
+#include "MemoryUsageMonitor.hpp"
 #include "_cmakever.h"
 #include "_myConst.h"
 #include "dataCollector/_man_Texture.hpp"
-#include "MemoryUsageMonitor.hpp"
 #include "staticFPSMetter.hpp"
 
 #endif

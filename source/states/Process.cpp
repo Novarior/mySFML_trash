@@ -92,8 +92,8 @@ void Process::intGUI() // init GUI
 
 void Process::initView() {
   sf::Vector2f halfSize = sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x / 2),
-      static_cast<float>(this->IstateData->sd_Window->getSize().y / 2));
+      static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2.f,
+      static_cast<float>(this->IstateData->sd_Window->getSize().y) / 2.f);
 
   this->view.setSize(halfSize);
   this->view.setCenter(halfSize);

@@ -67,7 +67,7 @@ void MainMenu::initButtons() {
   int offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
   int offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
 
-  this->buttons["CONT_BTN"] = new gui::Button(
+  this->buttons["CONT_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
                    mmath::p2pX(60, this->Iwindow->getSize().y) -
                        offsetY), // pos
@@ -79,7 +79,7 @@ void MainMenu::initButtons() {
       sf::Color(100, 100, 100), sf::Color(140, 140, 140),
       sf::Color(80, 80, 90));
 
-  this->buttons["START_BTN"] = new gui::Button(
+  this->buttons["START_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
                    mmath::p2pX(70, this->Iwindow->getSize().y) -
                        offsetY), // pos
@@ -91,7 +91,7 @@ void MainMenu::initButtons() {
       sf::Color(100, 100, 100), sf::Color(140, 140, 140),
       sf::Color(80, 80, 90));
 
-  this->buttons["SETTINGS_BTN"] = new gui::Button(
+  this->buttons["SETTINGS_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
                    mmath::p2pX(80, this->Iwindow->getSize().y) -
                        offsetY), // pos
@@ -103,7 +103,7 @@ void MainMenu::initButtons() {
       sf::Color(100, 100, 100), sf::Color(140, 140, 140),
       sf::Color(80, 80, 90));
 
-  this->buttons["EXIT_BTN"] = new gui::Button(
+  this->buttons["EXIT_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
                    mmath::p2pX(90, this->Iwindow->getSize().y) -
                        offsetY), // pos
@@ -115,7 +115,7 @@ void MainMenu::initButtons() {
       sf::Color(100, 100, 100), sf::Color(140, 140, 140),
       sf::Color(80, 80, 90));
 
-  this->buttons["NOICE_BNT"] = new gui::Button(
+  this->buttons["NOICE_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
                    mmath::p2pX(10, this->Iwindow->getSize().y) -
                        offsetY), // pos
@@ -126,6 +126,20 @@ void MainMenu::initButtons() {
       sf::Color(180, 180, 180), sf::Color(160, 160, 180),
       sf::Color(100, 100, 100), sf::Color(140, 140, 140),
       sf::Color(80, 80, 90));
+
+#if __MDEBUG__ == 1
+  this->buttons["DRS_BTN"] = std::make_unique<gui::Button>(
+      sf::Vector2f(mmath::p2pX(5, this->Iwindow->getSize().x) - offsetX,
+                   mmath::p2pX(10, this->Iwindow->getSize().y) -
+                       offsetY), // pos
+      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
+                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
+      this->IstateData->sd_font, helperText::Button::BUTTON_DEBUG_ROOM_STATE,
+      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
+      sf::Color(80, 80, 90));
+#endif
 }
 
 void MainMenu::initGUI() {
@@ -136,9 +150,7 @@ void MainMenu::initGUI() {
 void MainMenu::resetGUI() {
   // delete buttons
   if (!this->buttons.empty())
-    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
-      delete it->second;
-  this->buttons.clear();
+    this->buttons.clear();
 
   this->backgrond_shapes.clear();
 
@@ -260,9 +272,7 @@ MainMenu::~MainMenu() {
 
   // delete buttons
   if (!this->buttons.empty())
-    for (auto it = this->buttons.begin(); it != this->buttons.end(); ++it)
-      delete it->second;
-  this->buttons.clear();
+    this->buttons.clear();
 
   this->backgrond_shapes.clear();
   this->IsoundsMap.get()->clear();
@@ -320,7 +330,7 @@ void MainMenu::updateButtons() {
     if (this->buttons["SETTINGS_BTN"]->isPressed() && this->getKeytime())
       this->Istates->push(new SettingsState(this->IstateData));
 
-    if (this->buttons["NOICE_BNT"]->isPressed() && this->getKeytime())
+    if (this->buttons["NOICE_BTN"]->isPressed() && this->getKeytime())
       this->Istates->push(new EditorState(this->IstateData));
   }
 }

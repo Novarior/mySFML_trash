@@ -1,7 +1,6 @@
 #ifndef CPP_MATH_LSYSTEM_HPP
 #define CPP_MATH_LSYSTEM_HPP
 #include "mymath.hpp"
-#include <vector>
 
 struct GData {
   bool isGeneratorEnable;
@@ -53,6 +52,10 @@ public:
   sf::RectangleShape *internalArray() { return this->line.data(); }
   size_t getSizeArray() { return this->line.size(); }
 
+  // REWRITING
+  // genetare tree from basic axiom unsing some rules
+  //
+  // see on LSystem::applyRules for more detail
   void generate();
   void setAxiom(std::string axiom) { this->axiom = axiom; }
   void setRules(std::map<char, std::string> rules) { this->rules = rules; }

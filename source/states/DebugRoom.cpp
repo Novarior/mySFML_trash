@@ -37,6 +37,7 @@ void DebugRoomStaet::init_pPausemenu() {
       this->IstateData->sd_gfxSettings->_struct.resolution,
       this->IstateData->sd_font);
 
+  // add buttons to pause
   this->p_pausemenu->addButton("EXIT_BUTTON", mmath::p2pY(74.f, vm),
                                mmath::p2pX(13.f, vm), mmath::p2pY(6.f, vm),
                                mmath::calcCharSize(vm), "Quit");
@@ -46,7 +47,7 @@ void DebugRoomStaet::init_pPausemenu() {
 }
 void DebugRoomStaet::init_pRenderSprite() {
   // init render sprite
-  // using like a default strite (look on sf::Sprite)
+  // using like a default sprite (look on sf::Sprite)
   // but for rendering current frame
   // bing our texture for sprite
   this->p_renderSprite.setTexture(this->p_renderTexture.getTexture());
@@ -64,18 +65,22 @@ void DebugRoomStaet::init_pRenderTexture() {
                          this->IstateData->sd_Window->getSize().y});
 }
 void DebugRoomStaet::init_pInventory() {
+  // init inventory with 2D array with [10,4] size
   this->p_inventory = std::make_shared<Inventory>(
       sf::Vector2f(this->IstateData->sd_Window->getSize()), 10, 4,
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
 }
 void DebugRoomStaet::init_pPlayer() {
+  // init player
   this->p_player = std::make_shared<Player>(sf::Vector2f(0, 0));
 }
 void DebugRoomStaet::init_pMapTiles() {
+  // init map putin with "data noice" & model of generator
   this->p_mapTiles =
       std::make_shared<TileMap>(this->p_noicedata, this->p_myGN.get());
 }
 void DebugRoomStaet::init_pNoicedata() {
+  // noice data sheet
   this->p_noicedata.seed = 0;
   this->p_noicedata.gridSize = this->IstateData->sd_gridSize;
   this->p_noicedata.octaves = 9;
@@ -93,28 +98,35 @@ void DebugRoomStaet::init_pNoicedata() {
   this->p_noicedata.smoothMode = 0;
 }
 void DebugRoomStaet::init_pEntitys() {
+  // init one slime to p_entitys array with target
   this->p_entitys.push_back(
       std::make_shared<Slime>(30, 0, *this->p_player.get()));
 }
 void DebugRoomStaet::init_pMyGN() {
+  // init model PGN with noice data
   this->p_myGN = std::make_unique<ProcessGenerationNoice>(this->p_noicedata);
 }
 // initialisation editor data for nex debug...
 void DebugRoomStaet::init_edNoiceViewer() {
   // init data for noice viewer
   this->ed_m_NoiceViewer = std::make_unique<NoiceViewer>(this->p_noicedata);
+  // call function (look on NoiceViewer)
   this->ed_m_NoiceViewer->generateNoice();
 }
 void DebugRoomStaet::init_edMYLS() {
+  // init LSystem algorithm for making trees
   this->ed_myLS = std::make_unique<LSystem>();
+  // setup rule and size of window, for offseting his position
   this->ed_myLS->setRule('d', "qd");
   this->ed_myLS->setRule('s', "d[[-qqs]qs]+qqs[+q|]-q|");
   this->ed_myLS->setOffsetPos(sf::Vector2f(
       static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2.0,
       static_cast<float>(this->IstateData->sd_Window->getSize().y) * 0.90));
+  // generate tree ()
   this->ed_myLS->generate();
 }
 void DebugRoomStaet::init_edButtons() {
+  // init "side bar" buttons
   this->ed_buttons["G_NOICE"] = std::make_unique<gui::Button>(
       sf::Vector2f(
           this->ed_tabShape.getPosition().x,
@@ -168,6 +180,7 @@ void DebugRoomStaet::init_edButtons() {
       sf::Color::Black, sf::Color::Black, sf::Color::Black);
 }
 void DebugRoomStaet::init_edTabShape() {
+  // init shape for "side bar"
   this->ed_tabShape.setPosition(sf::Vector2f(
       mmath::p2pX(70, this->IstateData->sd_Window->getSize().x), 0));
   this->ed_tabShape.setSize(
@@ -180,6 +193,7 @@ void DebugRoomStaet::init_edTabShape() {
   this->ed_showTabmenu = false;
 }
 void DebugRoomStaet::init_edStaticSelector() {
+  // init StaticSelector's for manipulation with datanoice
   this->ed_staticSelector["OCTAVES"] = std::make_unique<gui::StaticSelector>(
       sf::Vector2f(this->ed_tabShape.getPosition()),
       sf::Vector2f(this->ed_tabShape.getSize().x,
@@ -231,6 +245,8 @@ void DebugRoomStaet::init_edStaticSelector() {
       this->ed_m_NoiceViewer->getNoiceData().persistence);
 }
 void DebugRoomStaet::init_edSelector() {
+  // init selector
+  //  list of model smooth
   std::vector<std::string> list = {"Linear",  "Cosine",    "Cubic",  "Quintic",
                                    "Quartic", "Quadratic", "Hermite"};
 
@@ -269,6 +285,7 @@ DebugRoomStaet::DebugRoomStaet(StateData *_data)
   this->init_edMYLS();           // 5
 }
 DebugRoomStaet ::~DebugRoomStaet() {
+  // delete all usage
   this->p_pausemenu.reset();
   this->p_inventory.reset();
   this->p_player.reset();
@@ -291,7 +308,8 @@ void DebugRoomStaet::updateKeytime(const float &delta_time) {}
 void DebugRoomStaet::updateInput(const float &delta_time) {}
 void DebugRoomStaet::update(const float &delta_time) {}
 void DebugRoomStaet::render(sf::RenderWindow &target) {
-  this->p_renderTexture.clear();
+  // clear buffer
+  this->p_renderTexture.clear(sf::Color::Black);
   this->p_renderTexture.setView(this->mView);
   // draw ect
   this->p_renderTexture.display();

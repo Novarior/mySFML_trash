@@ -46,9 +46,9 @@ const double mmath::Rescale(double r_value, double minInput, double maxInput, do
 }
 
 //  Calculates the character size for text using the current resolution and a constant.
-//  @param		sf::VideoMode& vm		The current videomode of the window (resolution).
-//  @param		unsigned modifier		Used to modify the character size in a more custom way.
-//  @return		unsigned int			The calculated character size value.
+///  @brief	sf::VideoMode& vm		The current videomode of the window (resolution).
+///  @param		unsigned modifier		Used to modify the character size in a more custom way.
+///  @return		unsigned int			The calculated character size value.
 const unsigned int mmath::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
 {
     return static_cast<unsigned int>((vm.size.x + vm.size.y) / modifier);

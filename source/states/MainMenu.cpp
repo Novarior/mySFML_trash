@@ -64,84 +64,55 @@ void MainMenu::initBackground() {
 }
 
 void MainMenu::initButtons() {
-  int offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
-  int offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
+  struct ButtonInfo {
+    std::string key;
+    std::string text;
 
-  this->buttons["CONT_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(60, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_CONTINUE,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
+    ButtonInfo(const char *k, std::string t) : key(k), text(t) {}
+  };
 
-  this->buttons["START_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(70, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_PLAY,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
+  float offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
+  float offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
 
-  this->buttons["SETTINGS_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(80, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_OPTIONS,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
+  sf::Vector2f sizebutton = {mmath::p2pX(15, this->Iwindow->getSize().x),
+                             mmath::p2pX(7, this->Iwindow->getSize().y)};
+  // Массив с координатами для каждой кнопки
+  std::vector<sf::Vector2f> buttonOffsets = {
+      {offsetX * 15.5f, offsetY * 2},  // noice
+      {offsetX * 15.5f, offsetY * 10}, // continue
+      {offsetX * 15.5f, offsetY * 12}, // start
+      {offsetX * 15.5f, offsetY * 14}, // settings
+      {offsetX * 15.5f, offsetY * 18}  // exit
+  };
 
-  this->buttons["EXIT_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(90, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_EXIT,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
+  // Данные о кнопках
+  std::vector<ButtonInfo> buttonData = {
+      {"NOICE_BTN", helperText::Button::BUTTON_NOICE_EDITOR},
+      {"CONT_BTN", helperText::Button::BUTTON_CONTINUE},
+      {"START_BTN", helperText::Button::BUTTON_PLAY},
+      {"SETTINGS_BTN", helperText::Button::BUTTON_OPTIONS},
+      {"EXIT_BTN", helperText::Button::BUTTON_EXIT}};
 
-  this->buttons["NOICE_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(85, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(10, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_NOICE_EDITOR,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
-
+// Добавляем кнопку для отладки в режиме отладки
 #if __MDEBUG__ == 1
-  this->buttons["DRS_BTN"] = std::make_unique<gui::Button>(
-      sf::Vector2f(mmath::p2pX(5, this->Iwindow->getSize().x) - offsetX,
-                   mmath::p2pX(10, this->Iwindow->getSize().y) -
-                       offsetY), // pos
-      sf::Vector2f(mmath::p2pX(15, this->Iwindow->getSize().x),
-                   mmath::p2pX(7, this->Iwindow->getSize().y)), // size
-      this->IstateData->sd_font, helperText::Button::BUTTON_DEBUG_ROOM_STATE,
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-      sf::Color(80, 80, 90));
-#endif
-}
+  buttonData.push_back(
+      {"DRS_BTN", helperText::Button::BUTTON_DEBUG_ROOM_STATE});
 
+  // Добавляем позицию для кнопки отладки
+  buttonOffsets.push_back({offsetX, offsetY});
+#endif
+
+  // Цикл для создания кнопок с данными из массива
+  for (size_t i = 0; i < buttonData.size(); ++i) {
+    const auto &button = buttonData[i];
+    this->buttons[button.key] = std::make_unique<gui::Button>(
+        buttonOffsets[i], sizebutton, this->IstateData->sd_font, button.text,
+        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
+        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
+        sf::Color(100, 100, 100), sf::Color(140, 140, 140),
+        sf::Color(80, 80, 90));
+  }
+}
 void MainMenu::initGUI() {
   this->initBackground();
   this->initButtons();
@@ -173,86 +144,36 @@ void MainMenu::resetView() {
 void MainMenu::initSounds() {
   // link to volume manager
   this->IvolumeManager = this->IstateData->sd_volumeManager;
-#if __MDEBUG__ == 1
-  if (!this->loadSoundtoBuffer(
-          std::string(ApplicationsFunctions::get_resources_dir() +
-                      myConst::sounds::music_menu),
-          "MAIN_MENU"))
-    Logger::logStatic(
-        "Cannot load to buffer" +
-            std::string(ApplicationsFunctions::get_resources_dir() +
-                        myConst::sounds::music_menu),
-        "MainMenu::initSounds()", logType::ERROR);
-  if (!this->loadSoundtoBuffer(
-          std::string(ApplicationsFunctions::get_resources_dir() +
-                      myConst::sounds::selbtn_menu),
-          "SELECT_MENU"))
-    Logger::logStatic(
-        "Cannot load to buffer" +
-            std::string(ApplicationsFunctions::get_resources_dir() +
-                        myConst::sounds::selbtn_menu),
-        "MainMenu::initSounds()", logType::ERROR);
-  if (!this->loadSoundtoBuffer(
-          std::string(ApplicationsFunctions::get_resources_dir() +
-                      myConst::sounds::press_newg),
-          "PRESS_NEW_GAME"))
-    Logger::logStatic(
-        "Cannot load to buffer" +
-            std::string(ApplicationsFunctions::get_resources_dir() +
-                        myConst::sounds::press_newg),
-        "MainMenu::initSounds()", logType::ERROR);
-  if (!this->loadSoundtoBuffer(
-          std::string(ApplicationsFunctions::get_resources_dir() +
-                      myConst::sounds::press_btn),
-          "PRESS_BUTTON"))
-    Logger::logStatic(
-        "Cannot load to buffer" +
-            std::string(ApplicationsFunctions::get_resources_dir() +
-                        myConst::sounds::press_btn),
-        "MainMenu::initSounds()", logType::ERROR);
 
-  // upload sounds from buffer
+  try {
+    for (const auto &[category, soundKey, mapKey] :
+         {std::tuple{SoundCategory::vol_MUSIC, myConst::sounds::music_menu,
+                     "MAIN_MENU"},
+          {SoundCategory::vol_UI, myConst::sounds::selbtn_menu, "SELECT_MENU"},
+          {SoundCategory::vol_UI, myConst::sounds::press_newg,
+           "PRESS_NEW_GAME"},
+          {SoundCategory::vol_UI, myConst::sounds::press_btn,
+           "PRESS_BUTTON"}}) {
+      if (!this->loadSoundtoBuffer(category, soundKey, mapKey)) {
+        throw soundKey;
+      }
+    }
+  } catch (std::exception &e) {
+    Logger::logStatic("can't load: " + std::string(e.what()),
+                      "MainMenu::initSounds()", logType::ERROR);
+  }
 
-  this->IsoundsMap.get()->at("MAIN_MENU") =
-      sf::Sound(this->IsoundBufferMap.get()->at("MAIN_MENU"));
+  // Upload sounds from buffer
+  for (const auto &[mapKey, category] :
+       {std::pair{"MAIN_MENU", SoundCategory::vol_MUSIC},
+        {"SELECT_MENU", SoundCategory::vol_UI},
+        {"PRESS_NEW_GAME", SoundCategory::vol_UI},
+        {"PRESS_BUTTON", SoundCategory::vol_UI}}) {
+    this->IsoundsMap.emplace(mapKey, this->IsoundBufferMap[category][mapKey]);
+  }
 
-#else
-  // load sounds
-  this->loadSoundtoBuffer(
-      std::string(ApplicationsFunctions::get_resources_dir() +
-                  myConst::sounds::music_menu),
-      "MAIN_MENU");
-  this->loadSoundtoBuffer(
-      std::string(ApplicationsFunctions::get_resources_dir() +
-                  myConst::sounds::selbtn_menu),
-      "SELECT_MENU");
-  this->loadSoundtoBuffer(
-      std::string(ApplicationsFunctions::get_resources_dir() +
-                  myConst::sounds::press_newg),
-      "PRESS_NEW_GAME");
-  this->loadSoundtoBuffer(
-      std::string(ApplicationsFunctions::get_resources_dir() +
-                  myConst::sounds::press_btn),
-      "PRESS_BUTTON");
-
-  // upload sounds from buffer
-  this->IsoundBufferMap.get()->emplace(
-      "MAIN_MENU", std::make_shared<sf::SoundBuffer>(
-                       this->IsoundBufferMap.get()->at("MAIN_MENU")));
-  this->IsoundBufferMap.get()->emplace(
-      "SELECT_MENU", std::make_shared<sf::SoundBuffer>(
-                         this->IsoundBufferMap.get()->at("SELECT_MENU")));
-  this->IsoundBufferMap.get()->emplace(
-      "PRESS_NEW_GAME", std::make_shared<sf::SoundBuffer>(
-                            this->IsoundBufferMap.get()->at("PRESS_NEW_GAME")));
-  this->IsoundBufferMap.get()->emplace(
-      "PRESS_BUTTON", std::make_shared<sf::SoundBuffer>(
-                          this->IsoundBufferMap.get()->at("PRESS_BUTTON")));
-
-#endif
   // set volume in sound map
-  for (auto &it : *this->IsoundsMap.get())
-    it.second.setVolume(50.f);
+  this->updateSounds(0.f);
 }
 
 MainMenu::MainMenu(StateData *statedata)
@@ -260,8 +181,8 @@ MainMenu::MainMenu(StateData *statedata)
       renderSprite(TextureManager::getTexture("texture_null")) {
   // logger
   Logger::logStatic("MainMenu constructor", "MainMenu");
-  this->initGUI();
   this->initRenderDefines();
+  this->initGUI();
   this->initKeybinds();
   this->initButtons();
   this->initSounds();
@@ -275,8 +196,8 @@ MainMenu::~MainMenu() {
     this->buttons.clear();
 
   this->backgrond_shapes.clear();
-  this->IsoundsMap.get()->clear();
-  this->IsoundBufferMap.get()->clear();
+  this->IsoundsMap.clear();
+  this->IsoundBufferMap.clear();
 }
 
 void MainMenu::update(const float &delta_time) {
@@ -306,13 +227,13 @@ void MainMenu::updateButtons() {
 
       it.second->update(this->ImousePosWindow);
       if (it.second->isPressed())
-        if (this->IsoundsMap->at("PRESS_BUTTON").getStatus() !=
+        if (this->IsoundsMap.find("PRESS_BUTTON")->second.getStatus() !=
             sf::Sound::Status::Playing)
-          this->IsoundsMap->at("PRESS_BUTTON").play(); // play sound once
+          this->IsoundsMap.at("PRESS_BUTTON").play(); // play sound once
       if (it.second->isHover())
-        if (this->IsoundsMap->at("SELECT_MENU").getStatus() !=
+        if (this->IsoundsMap.find("SELECT_MENU")->second.getStatus() !=
             sf::Sound::Status::Playing)
-          this->IsoundsMap->at("SELECT_MENU").play(); // play sound once
+          this->IsoundsMap.at("SELECT_MENU").play(); // play sound once
     }
 
     if (this->buttons["EXIT_BTN"]->isPressed() && this->getKeytime()) {
@@ -395,33 +316,28 @@ void MainMenu::updateGUI(const float &delta_time) {
 
 void MainMenu::updateSounds(const float &delta_time) {
   // update for music menu
-  this->IsoundsMap->at("MAIN_MENU")
-      .setVolume(
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER) *
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MUSIC) /
-          100);
-  this->IsoundsMap->at("SELECT_MENU")
-      .setVolume(
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER) *
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_SFX) /
-          100);
-  this->IsoundsMap->at("PRESS_NEW_GAME")
-      .setVolume(
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER) *
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_SFX) /
-          100);
-  this->IsoundsMap->at("PRESS_BUTTON")
-      .setVolume(
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_MASTER) *
-          this->IvolumeManager->getCategoryVolume(SoundCategory::vol_SFX) /
-          100);
+  for (const auto &[key, category] :
+       {std::pair{"MAIN_MENU", SoundCategory::vol_MUSIC},
+        {"SELECT_MENU", SoundCategory::vol_UI},
+        {"PRESS_NEW_GAME", SoundCategory::vol_UI},
+        {"PRESS_BUTTON", SoundCategory::vol_UI}}) {
+    auto it = this->IsoundsMap.find(key);
+    if (it != this->IsoundsMap.end()) {
+      it->second.setVolume(this->IvolumeManager->getCategoryVolume(category));
+    }
+  }
 
   // check for playing music "main menu"
-  if (this->IsoundsMap->at("MAIN_MENU").getStatus() !=
+  if (this->IsoundsMap.find("MAIN_MENU")->second.getStatus() !=
       sf::Sound::Status::Playing)
-    this->IsoundsMap->at("MAIN_MENU").play();
+    this->IsoundsMap.find("MAIN_MENU")->second.play();
 
   // check for playing sound "select menu" when cursor on button
+
+  // stop if lost focus on window
+  if (!this->Iwindow->hasFocus())
+    for (auto &it : this->IsoundsMap)
+      it.second.pause();
 }
 
 void MainMenu::render(sf::RenderWindow &target) {

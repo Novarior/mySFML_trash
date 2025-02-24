@@ -38,18 +38,12 @@ public:
                       "VolumeManager::VolumeManager()");
   }
   // set value Volume by category
-  void setCategoryVolume(SoundCategory category, float volume,
-                         void *data = nullptr) {
-    // write idk what need
-    // wath for categoryes
-
-    Logger::logStatic("Set volume SoundCategory to category",
-                      "VolumeManager::setCategoryVolume()");
-    Logger::logStatic(
-        "Category: " + std::to_string(static_cast<int>(category)) +
-            " Volume: " + std::to_string(volume),
-        "VolumeManager::setCategoryVolume()");
-    categoryVolumes[category] = volume;
+  void setCategoryVolume(SoundCategory category, float volume) {
+    if (category != SoundCategory::vol_MASTER)
+      categoryVolumes[category] =
+          volume * categoryVolumes[SoundCategory::vol_MASTER] / 100.f;
+    else
+      categoryVolumes[category] = volume;
   }
 
   // get value Volume by category

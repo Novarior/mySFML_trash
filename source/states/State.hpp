@@ -6,7 +6,6 @@
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
 #include "gfx.hpp"
-
 // Forward declaration of State class
 class State;
 
@@ -64,10 +63,10 @@ protected:
   float IkeytimeMax; // Maximum time between key presses
   float IgridSize;   // Size of the grid
 
-  sf::Vector2i ImousePosScreen; // Position of the mouse on the screen
-  sf::Vector2i ImousePosWindow; // Position of the mouse in the window
-  sf::Vector2f ImousePosView;   // Position of the mouse in the view
-  sf::Vector2i ImousePosGrid;   // Position of the mouse on the grid
+  sf::Vector2i ImousePosScreen;
+  sf::Vector2i ImousePosWindow;
+  sf::Vector2f ImousePosView;
+  sf::Vector2i ImousePosGrid;
 
   std::stringstream IstringStream;              // Stream for debug string
   sf::Text Itext;                               // Debug text
@@ -75,10 +74,13 @@ protected:
   std::map<std::string, sf::Texture> Itextures; // Map of textures
 
   // Sounds and him elements for game (volume, sound, buffer, ect )
-  std::shared_ptr<std::map<std::string, sf::Sound>>
-      IsoundsMap; // shared map with sounds and name itself
-  std::shared_ptr<std::map<std::string, sf::SoundBuffer>>
-      IsoundBufferMap; // Map of sound buffers, one buffer with one sound
+
+  // shared map with sounds and name itself
+  std::map<std::string, sf::Sound> IsoundsMap;
+
+  // Map of sound buffers, one key one sound
+  std::unordered_map<SoundCategory, std::map<std::string, sf::SoundBuffer>>
+      IsoundBufferMap;
 
   void initBuffer(); // Initialize buffer
 
@@ -87,16 +89,21 @@ protected:
   initKeybinds() = 0; // Initialize key bindings (pure virtual function)
   void reCaclulateCharacterSize(); // Recalculate character size
 
-  // Functions for sounds
-  virtual bool loadSoundtoBuffer(std::string _namepath,
-                                 std::string _typename); // Load sound to buffer
-  void playSound(std::string _typename);                 // Play sound
+  // Functions for sounds key
+  // for calling sf::Sound from map using category layer
+  virtual bool loadSoundtoBuffer(SoundCategory _soundcategory,
+                                 std::string _namepath, std::string _typename);
+
+  void playSound(SoundCategory _soundcategory,
+                 std::string _typename); // Play sound from category[_typename]
 
   // functions accses
   inline void setVolume(SoundCategory _category,
-                        const float _newVal) // Set volume
+                        const float _newVal) // Set volume for all categories
   {
     this->IvolumeManager->setCategoryVolume(_category, _newVal);
+    for (auto &it : IsoundsMap)
+      it.second.setVolume(IvolumeManager->getCategoryVolume(_category));
   }
 
 public:

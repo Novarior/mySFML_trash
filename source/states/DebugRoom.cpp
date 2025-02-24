@@ -311,7 +311,8 @@ void DebugRoomStaet::render(sf::RenderWindow &target) {
   // clear buffer
   this->p_renderTexture.clear(sf::Color::Black);
   this->p_renderTexture.setView(this->mView);
-  // draw ect
+  // draw stuff
+  // draw frame
   this->p_renderTexture.display();
   target.draw(this->p_renderSprite);
 }

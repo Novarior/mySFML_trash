@@ -7,7 +7,6 @@
 #include "Process.hpp"
 #include "State.hpp"
 #include "settings.hpp"
-#include <memory>
 
 // The MainMenu class represents the game's main menu
 class MainMenu : public State {

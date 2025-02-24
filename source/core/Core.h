@@ -38,6 +38,7 @@ public:
 
     void updateEventsWindow();
     void updateDeltaTime();
+    void updateSound();
     void update();
     void render();
 };

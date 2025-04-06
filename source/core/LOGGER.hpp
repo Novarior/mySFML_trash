@@ -1,23 +1,21 @@
-#ifndef SOURCE_LOGGER_HPP_
-#define SOURCE_LOGGER_HPP_
+#ifndef LOGGER
+#define LOGGER
 
+#include "_myFiles.h"
 #include "systemFunctionUNIX.hpp"
-#include <array>
-#include <chrono>
-#include <filesystem>
 #include <fstream>
-#include <iomanip>
-#include <iostream>
-#include <stdexcept>
-#include <string>
 
 // Типы логов
 enum class logType { INFO = 0, WARNING = 1, ERROR = 2 };
 
 class Logger {
 private:
-  std::ofstream logFile;
-  std::string logPath;
+  std::ofstream mOutFile;
+  std::stringstream mBuffer;
+  std::filesystem::path mFilePathName =
+      ApplicationsFunctions::getDocumentsAppFolder() + AppFiles::f_logger;
+  std::string backupPath =
+      ApplicationsFunctions::getDocumentsAppFolder() + AppFiles::f_backup;
 
   // Получение строки для типа лога
   static const std::string &logTypeToString(logType level) {
@@ -26,34 +24,39 @@ private:
     return logTypes[static_cast<int>(level)];
   }
 
-  // Открытие файла лога с обработкой ошибок
-  void openLogFile() {
-    logPath = ApplicationsFunctions::getDocumentsAppFolder() + "/log.log";
-    logFile.open(logPath, std::ios::app);
+  // file and buffer manipulation
+  void openmOutFile() {
+    // get path to docs/AppDocs/log.log
 
-    if (!logFile) {
+    // open file
+    mOutFile.open(mFilePathName, std::ios::app | std::ios::out);
+
+    if (!mOutFile) {
       std::cerr << "Logger: Unable to open the log file. Creating a new one."
                 << std::endl;
-      logFile.open(ApplicationsFunctions::getDocumentsAppFolder() +
-                       "/backup_log.log",
-                   std::ios::app);
+      mOutFile.open(ApplicationsFunctions::getDocumentsAppFolder() +
+                        "/backup_log.log",
+                    std::ios::app);
 
-      if (!logFile) {
-        throw std::runtime_error(
-            "Logger: Unable to open both the main and backup log files.");
+      try {
+        if (!mOutFile.is_open())
+
+          throw std::runtime_error(
+              "Logger: Unable to open both the main and backup log files.");
+      }
+
+      catch (std::exception &e) {
+        std::cout << e.what();
       }
     }
   }
 
   // Создание резервной копии лог-файла
-  void backupLogFile() {
+  void backupmOutFile() {
     try {
-      std::string backupPath =
-          ApplicationsFunctions::getDocumentsAppFolder() + "/backup_log.log";
-
-      if (std::filesystem::exists(logPath)) {
+      if (std::filesystem::exists(mFilePathName)) {
         std::filesystem::copy(
-            logPath, backupPath,
+            mFilePathName, backupPath,
             std::filesystem::copy_options::overwrite_existing);
       }
     } catch (const std::exception &e) {
@@ -63,27 +66,27 @@ private:
   }
 
 public:
-  Logger() { openLogFile(); }
+  Logger() { openmOutFile(); }
 
   ~Logger() {
-    if (logFile.is_open()) {
-      logFile.close();
-      backupLogFile();
+    if (mOutFile.is_open()) {
+      mOutFile.close();
+      backupmOutFile();
     }
   }
 
   // Метод для записи лога
   void log(const std::string &message, const std::string &source,
            logType level = logType::INFO) {
-    if (!logFile.is_open()) {
-      openLogFile();
+    if (!mOutFile.is_open()) {
+      openmOutFile();
     }
 
     std::string logEntry = "[" + ApplicationsFunctions::getCurrentTime() +
                            "] " + logTypeToString(level) + "\t" +
                            "_S: " + source + " -> " + message;
 
-    logFile << logEntry << std::endl;
+    mOutFile << logEntry << std::endl;
 
     // Также выводим в консоль, если уровень лога - WARNING или ERROR
     if (level == logType::WARNING || level == logType::ERROR) {
@@ -103,4 +106,4 @@ public:
   }
 };
 
-#endif // SOURCE_LOGGER_HPP_
+#endif /* LOGGER */

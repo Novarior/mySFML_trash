@@ -1,10 +1,13 @@
 #include "Core.h"
+#include "LOGGER.hpp"
+#include "_myConst.h"
+#include "dataCollector/_man_Texture.hpp"
 
 #if __APPLE__
 void Core::initDirectories() { // check if app directory exists
   if (ApplicationsFunctions::checkAppDirectoryExists())
-    Logger::logStatic("App directory not exists, Create...",
-                      "Core::initDirectories()");
+    Logger::logStatic("App directory already exists",
+                      "l:7 -> Core::initDirectories()");
 }
 #endif
 
@@ -70,39 +73,52 @@ void Core::initStateData() {
 }
 
 void Core::initKeyBinds() { // init default keys
-  supportedKeys["Escape"] = static_cast<int>(sf::Keyboard::Scancode::Escape);
-  supportedKeys["A"] = static_cast<int>(sf::Keyboard::Scancode::A);
-  supportedKeys["C"] = static_cast<int>(sf::Keyboard::Scancode::C);
-  supportedKeys["D"] = static_cast<int>(sf::Keyboard::Scancode::D);
-  supportedKeys["E"] = static_cast<int>(sf::Keyboard::Scancode::E);
-  supportedKeys["F"] = static_cast<int>(sf::Keyboard::Scancode::F);
-  supportedKeys["Q"] = static_cast<int>(sf::Keyboard::Scancode::Q);
-  supportedKeys["R"] = static_cast<int>(sf::Keyboard::Scancode::R);
-  supportedKeys["S"] = static_cast<int>(sf::Keyboard::Scancode::S);
-  supportedKeys["W"] = static_cast<int>(sf::Keyboard::Scancode::W);
-  supportedKeys["X"] = static_cast<int>(sf::Keyboard::Scancode::X);
-  supportedKeys["Z"] = static_cast<int>(sf::Keyboard::Scancode::Z);
-  supportedKeys["1"] = static_cast<int>(sf::Keyboard::Scancode::Num1);
-  supportedKeys["2"] = static_cast<int>(sf::Keyboard::Scancode::Num2);
-  supportedKeys["3"] = static_cast<int>(sf::Keyboard::Scancode::Num3);
-  supportedKeys["4"] = static_cast<int>(sf::Keyboard::Scancode::Num4);
-  supportedKeys["5"] = static_cast<int>(sf::Keyboard::Scancode::Num5);
-  supportedKeys["6"] = static_cast<int>(sf::Keyboard::Scancode::Num6);
-  supportedKeys["7"] = static_cast<int>(sf::Keyboard::Scancode::Num7);
-  supportedKeys["8"] = static_cast<int>(sf::Keyboard::Scancode::Num8);
-  supportedKeys["9"] = static_cast<int>(sf::Keyboard::Scancode::Num9);
-  supportedKeys["0"] = static_cast<int>(sf::Keyboard::Scancode::Num0);
-  supportedKeys["Space"] = static_cast<int>(sf::Keyboard::Scancode::Space);
-  supportedKeys["Enter"] = static_cast<int>(sf::Keyboard::Scancode::Enter);
-  supportedKeys["BackSpace"] =
-      static_cast<int>(sf::Keyboard::Scancode::Backspace);
-  supportedKeys["Slash"] = static_cast<int>(sf::Keyboard::Scancode::Slash);
-  supportedKeys["Tab"] = static_cast<int>(sf::Keyboard::Scancode::Tab);
-  supportedKeys["F1"] = static_cast<int>(sf::Keyboard::Scancode::F1);
-  supportedKeys["F2"] = static_cast<int>(sf::Keyboard::Scancode::F2);
-  supportedKeys["F3"] = static_cast<int>(sf::Keyboard::Scancode::F3);
-  // save default keys to file
-  ParserJson::saveKeyBinds(this->supportedKeys);
+
+  // load key binds from file
+  if (!ParserJson::loadKeyBinds(this->supportedKeys)) {
+    Logger::logStatic("Key binds not loaded", "Core::initKeyBinds()");
+  } else { // load default key binds
+    Logger::logStatic("Key binds loaded", "Core::initKeyBinds()");
+    supportedKeys["Escape"] = static_cast<int>(sf::Keyboard::Scancode::Escape);
+    supportedKeys["A"] = static_cast<int>(sf::Keyboard::Scancode::A);
+    supportedKeys["C"] = static_cast<int>(sf::Keyboard::Scancode::C);
+    supportedKeys["D"] = static_cast<int>(sf::Keyboard::Scancode::D);
+    supportedKeys["E"] = static_cast<int>(sf::Keyboard::Scancode::E);
+    supportedKeys["F"] = static_cast<int>(sf::Keyboard::Scancode::F);
+    supportedKeys["Q"] = static_cast<int>(sf::Keyboard::Scancode::Q);
+    supportedKeys["R"] = static_cast<int>(sf::Keyboard::Scancode::R);
+    supportedKeys["S"] = static_cast<int>(sf::Keyboard::Scancode::S);
+    supportedKeys["W"] = static_cast<int>(sf::Keyboard::Scancode::W);
+    supportedKeys["X"] = static_cast<int>(sf::Keyboard::Scancode::X);
+    supportedKeys["Z"] = static_cast<int>(sf::Keyboard::Scancode::Z);
+    supportedKeys["1"] = static_cast<int>(sf::Keyboard::Scancode::Num1);
+    supportedKeys["2"] = static_cast<int>(sf::Keyboard::Scancode::Num2);
+    supportedKeys["3"] = static_cast<int>(sf::Keyboard::Scancode::Num3);
+    supportedKeys["4"] = static_cast<int>(sf::Keyboard::Scancode::Num4);
+    supportedKeys["5"] = static_cast<int>(sf::Keyboard::Scancode::Num5);
+    supportedKeys["6"] = static_cast<int>(sf::Keyboard::Scancode::Num6);
+    supportedKeys["7"] = static_cast<int>(sf::Keyboard::Scancode::Num7);
+    supportedKeys["8"] = static_cast<int>(sf::Keyboard::Scancode::Num8);
+    supportedKeys["9"] = static_cast<int>(sf::Keyboard::Scancode::Num9);
+    supportedKeys["0"] = static_cast<int>(sf::Keyboard::Scancode::Num0);
+    supportedKeys["Space"] = static_cast<int>(sf::Keyboard::Scancode::Space);
+    supportedKeys["Enter"] = static_cast<int>(sf::Keyboard::Scancode::Enter);
+    supportedKeys["BackSpace"] =
+        static_cast<int>(sf::Keyboard::Scancode::Backspace);
+    supportedKeys["Slash"] = static_cast<int>(sf::Keyboard::Scancode::Slash);
+    supportedKeys["Tab"] = static_cast<int>(sf::Keyboard::Scancode::Tab);
+    supportedKeys["F1"] = static_cast<int>(sf::Keyboard::Scancode::F1);
+    supportedKeys["F2"] = static_cast<int>(sf::Keyboard::Scancode::F2);
+    supportedKeys["F3"] = static_cast<int>(sf::Keyboard::Scancode::F3);
+
+#if __MDEBUG__ == 1
+    // logger moment with key binds
+    Logger::logStatic("Key binds inited by deafault", "Core::initKeyBinds()");
+
+#endif
+    // save default keys to file
+    ParserJson::saveKeyBinds(this->supportedKeys);
+  }
 
 #if __MDEBUG__ == 1
   // logger moment with key binds
@@ -129,8 +145,6 @@ void Core::initState() {
 
 void Core::initLocations() {
   helperText::ApplicationLangue::setLanguage(helperText::Language::ENG);
-
-  // debuggg
 }
 
 void Core::initWindow() {
@@ -179,6 +193,9 @@ void Core::initTextures() {
   TextureManager::loadTexture("texture_background_lay_3",
                               myConst::gui::texture_background_mainmenu_lay_3);
   // текстуры итемов и тп
+  // Загружаем текстуру для ячеек
+  TextureManager::loadTexture("inventory_cell_texture",
+                              myConst::items::inv_cell_back);
   TextureManager::loadTexture(
       "items_potion_small_regeneration",
       myConst::items::poison::item_img_poison_small_regeneration);
@@ -274,6 +291,9 @@ void Core::updateEventsWindow() {
   while (const std::optional event = mWindow.get()->pollEvent()) {
     if (event->is<sf::Event::Closed>())
       this->mWindow->close();
+    if (event->is<sf::Event::TextEntered>()) {
+      continue; // Просто игнорируем текстовые события
+    }
   }
 }
 

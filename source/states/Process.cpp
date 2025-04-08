@@ -4,7 +4,7 @@ const bool Process::loadGameData() {
   // load noice config
   if (ParserJson::loadNoiceData(this->noicedata))
     printf("ERROR::PROCESS::LOAD::NOICEDATA::COULD_NOT_LOAD\n   %s\n",
-           myConst::config::config_noicedata);
+           AppFiles::config_noicedata);
   else {
     this->noicedata.mapSizeX = 1000;
     this->noicedata.mapSizeY = 1000;

@@ -14,7 +14,7 @@ private:
   std::stringstream mBuffer;
   std::filesystem::path mFilePathName =
       ApplicationsFunctions::getDocumentsAppFolder() + AppFiles::f_logger;
-  std::string backupPath =
+  std::filesystem::path backupPath =
       ApplicationsFunctions::getDocumentsAppFolder() + AppFiles::f_backup;
 
   // Получение строки для типа лога
@@ -34,15 +34,13 @@ private:
     if (!mOutFile) {
       std::cerr << "Logger: Unable to open the log file. Creating a new one."
                 << std::endl;
-      mOutFile.open(ApplicationsFunctions::getDocumentsAppFolder() +
-                        "/backup_log.log",
-                    std::ios::app);
+      mOutFile.open(mFilePathName, std::ios::app);
 
       try {
         if (!mOutFile.is_open())
 
           throw std::runtime_error(
-              "Logger: Unable to open both the main and backup log files.");
+              "Logger: Unable to open both the main and backup log files.\n");
       }
 
       catch (std::exception &e) {
@@ -83,8 +81,8 @@ public:
     }
 
     std::string logEntry = "[" + ApplicationsFunctions::getCurrentTime() +
-                           "] " + logTypeToString(level) + "\t" +
-                           "_S: " + source + " -> " + message;
+                           "] " + logTypeToString(level) + "\t_src: " + source +
+                           " _msg: " + message;
 
     mOutFile << logEntry << std::endl;
 

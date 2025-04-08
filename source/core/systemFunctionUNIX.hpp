@@ -16,18 +16,6 @@
 
 class ApplicationsFunctions {
 private:
-  /// @brief Создание директорий приложения в папке "Документы"
-  static void createAppDirectories() {
-
-    // collect path to application directory as string
-    std::string appDirectory =
-        std::string(getHomeDirectory()) + "/Documents/" + myConst::app_name;
-
-    // create dir
-    std::filesystem::create_directories(appDirectory);
-    std::filesystem::create_directories(appDirectory + "/config");
-  }
-
   /// @brief Получение пути к домашней директории
   /// @return Путь к домашней директории или `nullptr`, если не удалось
   static const char *getHomeDirectory() {
@@ -43,6 +31,17 @@ private:
 public:
   ApplicationsFunctions() = default;
   ~ApplicationsFunctions() = default;
+
+  /// @brief Создание директорий приложения в папке "Документы"
+  static void createAppDirectories() {
+    // collect path to application directory as string
+    std::string appDirectory =
+        std::string(getHomeDirectory()) + "/Documents/" + myConst::app_name;
+
+    // create dir
+    std::filesystem::create_directories(appDirectory);
+    std::filesystem::create_directories(appDirectory + "/config");
+  }
 
   /// @brief Получение пути к ресурсам приложения (только macOS)
   /// @return Путь к папке ресурсов
@@ -72,6 +71,7 @@ public:
   }
 
   /// @brief Получение пути к директории приложения в "Документах"
+  /// @ /Users/$user/Documents/
   /// @return Путь к папке приложения
   static std::string getDocumentsAppFolder() {
     return std::string(getHomeDirectory()) + "/Documents/" + myConst::app_name;
@@ -80,13 +80,18 @@ public:
   /// @brief Получение пути к директории приложения в "Документах"
   /// @return Путь к папке приложения
   static std::string getAppConfigFolder() {
-    return std::string(getDocumentsAppFolder()) + "/config/";
+    return std::string(getDocumentsAppFolder()) + "/config";
   }
 
   /// @brief checking for exists app folder
   /// @return `true`, if directories exist, else create them
   static bool checkAppDirectoryExists() {
-    return std::filesystem::exists(getDocumentsAppFolder());
+    if (std::filesystem::exists(getDocumentsAppFolder())) {
+      return true;
+    } else {
+      createAppDirectories(); // Создание директорий
+      return false;
+    }
   }
 
   /// @brief Получение текущего времени в формате "YYYY-MM-DD HH:MM:SS"

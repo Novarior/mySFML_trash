@@ -1,4 +1,6 @@
 #include "entity.hpp"
+#include "entityEnum.hpp"
+#include <memory>
 
 void Entity::createHitboxComponent(sf::Sprite &sprite, float offset_x,
                                    float offset_y, float width, float height) {
@@ -20,19 +22,49 @@ void Entity::createAttributesComponent(Atri *attributes) {
     this->e_attributes = std::make_unique<Attributes>();
 }
 
+// Method to create an inventory component for the entity.
+void Entity::createInventoryComponent(unsigned int rows, unsigned int cols) {
+  this->e_inventory = std::make_unique<Inventory>(rows, cols);
+}
+
+// Method to create an item for entity
+void Entity::createItemComponent(std::shared_ptr<Item> _shrd_item) {
+  // we get from item registry
+  // copy it
+  this->e_item = std::make_unique<Item>(*_shrd_item);
+}
+
 Entity::Entity(entityEnum::entityBehaviorClass enumBehavior,
                entityEnum::entityMovementState enumMovementState,
                entityEnum::entityState enumState,
                entityEnum::entityDirection enumDirection)
     : e_movement(nullptr), e_hitbox(nullptr), e_attributes(nullptr),
-      e_enumBehavior(enumBehavior), e_enumMovementState(enumMovementState),
-      e_enumState(enumState), e_enumDirection(enumDirection),
+      e_inventory(nullptr), e_item(nullptr), e_enumBehavior(enumBehavior),
+      e_enumMovementState(enumMovementState), e_enumState(enumState),
+      e_enumDirection(enumDirection),
       m_sprite(TextureManager::getTexture("texture_null")) {
+  // apply id's this entity
   this->ID_entity = this->count_entitys;
   this->count_entitys++;
 }
 
-Entity::~Entity() { this->count_entitys--; }
+Entity::~Entity() {
+#if __MDEBUG__
+  // check memory leak
+  this->e_inventory->clearInventory();
+  this->e_inventory.reset();
+  // call logger and print message with "Bit size"
+  Logger::logStatic("Entity has been destroyed, ID: " +
+                        std::to_string(this->ID_entity),
+                    "~Entity", logType::INFO);
+  // send info about inventory
+  Logger::logStatic("included inventory memory size: " +
+                        std::to_string(sizeof(*this->e_inventory)) + " bytes",
+                    "~Entity", logType::INFO);
+
+#endif
+  this->count_entitys--;
+}
 
 void Entity::e_move(const float &dir_x, const float &dir_y,
                     const float &delta_time) {

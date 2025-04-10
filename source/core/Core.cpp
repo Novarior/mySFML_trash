@@ -193,20 +193,23 @@ void Core::initTextures() {
   TextureManager::loadTexture("texture_background_lay_3",
                               myConst::gui::texture_background_mainmenu_lay_3);
   // текстуры итемов и тп
-  // Загружаем текстуру для ячеек
+  // Загружаем текстуру для ячеек и предметов
+  TextureManager::loadTexture("items_NULL", ItemTextures::item_NULL);
+
   TextureManager::loadTexture("inventory_cell_texture",
-                              myConst::items::inv_cell_back);
+                              ItemTextures::inv_cell_back);
   TextureManager::loadTexture(
       "items_potion_small_regeneration",
-      myConst::items::poison::item_img_poison_small_regeneration);
-  TextureManager::loadTexture("items_stone", myConst::items::item_img_stone);
+      ItemTextures::poison::item_img_poison_small_regeneration);
+  TextureManager::loadTexture("items_stone",
+                              ItemTextures::items::item_img_stone);
   // текстуры для монет
   TextureManager::loadTexture("coins_gold_nugget",
-                              myConst::items::coins::item_img_gold_nugget);
+                              ItemTextures::coins::item_img_gold_nugget);
   TextureManager::loadTexture("coins_copper_nugget",
-                              myConst::items::coins::item_img_copper_nuggen);
+                              ItemTextures::coins::item_img_copper_nuggen);
   TextureManager::loadTexture("coins_silver_nugget",
-                              myConst::items::coins::item_img_silver_nuggen);
+                              ItemTextures::coins::item_img_silver_nuggen);
 }
 
 Core::Core() {

@@ -23,9 +23,9 @@ const bool Process::saveGameData() {
     Logger::logStatic("Parser::savePlayer()::ERROR::",
                       "Process::saveGameData()", logType::ERROR);
   // save inventory to JSON file
-  if (ParserJson::saveInventory(t_inventory))
-    Logger::logStatic("Parser::saveInventory()::ERROR::",
-                      "Process::saveGameData()", logType::ERROR);
+  // if (ParserJson::saveInventory(t_inventory))
+  //   Logger::logStatic("Parser::saveInventory()::ERROR::",
+  //                     "Process::saveGameData()", logType::ERROR);
   // save entitys pos and other data
   if (ParserJson::saveEntitys(this->entitys))
     Logger::logStatic("Parser::saveEntitys()::ERROR::",
@@ -34,8 +34,7 @@ const bool Process::saveGameData() {
   return true;
 }
 
-// init data who dont use loaded dates
-void Process::initKeybinds() {
+void Process::initKeybinds() { // init data who dont use loaded dates
   this->Ikeybinds["KEY_CLOSE"] = this->IsupportedKeys->at("Escape");
   this->Ikeybinds["KEY_TAB"] = this->IsupportedKeys->at("Tab");
   this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
@@ -69,8 +68,7 @@ void Process::initTileMap() {
   this->mapTiles = std::make_shared<TileMap>(this->noicedata, myGN);
 }
 
-void Process::intGUI() // init GUI
-{
+void Process::intGUI() { // init GUI
   // init player HP bar on top right on screen math position using mmath::p2pX/X
   this->playerBar["HP_BAR"] = new gui::ProgressBar(
       sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x),
@@ -118,14 +116,16 @@ void Process::initPlayer() {
   // set player position to random position getting from spawnPosArray
   this->player =
       std::make_shared<Player>(spawnPosArray[rand() % spawnPosArray.size()]);
-  this->t_inventory = std::make_shared<Inventory>(
-      sf::Vector2f(this->IstateData->sd_Window->getSize()), 10, 4,
-      this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big);
 
   std::shared_ptr<Item> stoneItem =
       std::make_shared<Items::Stone>(64); // 64 - это gridSizeI
 
-  t_inventory->addItem(stoneItem);
+  // add item like stone to player inventory
+  this->player->e_getInventory().addItem(stoneItem);
+
+  // add item like a from registry
+  this->player->e_getInventory().addItem(ItemRegistry::getItem(2));
+  ;
   //  this->t_inventoryHUD = std::make_unique<InventoryHUD>(
   //     sf::Vector2f(this->IstateData->sd_Window->getSize()), 32.0f,
   //     this->IstateData->sd_font,
@@ -146,8 +146,7 @@ void Process::initMiniMap() // init minimap
   this->minimap->setImage(this->mapTiles->getMinimapImage());
 }
 
-// Defauld Init Data
-void Process::initTileMapData() {
+void Process::initTileMapData() { // Defauld Init Data
   this->noicedata.seed = std::time(0);
   this->noicedata.gridSize = this->IstateData->sd_gridSize;
   this->noicedata.octaves = 9;
@@ -174,15 +173,19 @@ void Process::initEntitys() {
         spawnPosArray[rand() % spawnPosArray.size()].x,
         spawnPosArray[rand() % spawnPosArray.size()].y, *this->player));
   }
+
+  // add item like stone to world
+  this->entitys.push_back(new EntityItem(ItemRegistry::getItem(1)));
 }
 
 void Process::registerItems() {
   int size = this->IstateData->sd_gridSize;
 
   // register items to registry
-  ItemRegistry::registerItem(0, std::make_unique<Items::Stone>(size));
+  ItemRegistry::registerItem(0, std::make_unique<Items::Item_NULL>());
+  ItemRegistry::registerItem(1, std::make_unique<Items::Stone>(size));
   ItemRegistry::registerItem(
-      1, std::make_unique<Items::PoisonSmallRegeneration>(size));
+      2, std::make_unique<Items::PoisonSmallRegeneration>(size));
 
   Logger::logStatic("Items has been registered", "Process::registerItems()");
   Logger::logStatic("Items count: " +
@@ -224,7 +227,6 @@ Process::~Process() {
   this->mapTiles.reset();
   delete this->pausemenu;
   this->player.reset();
-  this->t_inventory.reset();
   delete this->minimap;
 
   // clear bar
@@ -245,7 +247,7 @@ void Process::updateInput(const float &delta_time) {
   if (sf::Keyboard::isKeyPressed(
           sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) &&
       this->getKeytime())
-    this->t_inventory.get()->toggleInventory();
+    this->player->e_getInventory().toggleInventory();
   if (sf::Keyboard::isKeyPressed(
           sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) &&
       this->getKeytime())
@@ -298,8 +300,8 @@ void Process::updateEntitys(const float &delta_time) { // update entitys
 }
 
 void Process::updateGUI(const float &delta_time) {
-  if (this->t_inventory->isInventoryOpened()) // update inventory
-    this->t_inventory->update(this->ImousePosWindow);
+  if (this->player->e_getInventory().isInventoryOpened()) // update inventory
+    this->player->e_getInventory().update(this->ImousePosWindow);
   if (this->minimap != nullptr) // update minimap
     this->minimap->update(this->player->e_getPosition(),
                           this->entitys[0]->e_getPosition());
@@ -350,20 +352,40 @@ void Process::update(const float &delta_time) {
 
 void Process::updateDebug(const float &delta_time) {
   double fps = 1.0f / delta_time;
-  this->IstringStream
-      << "FPS:\t" << fps << "\nCurrent memory usage:\t"
-      << MemoryUsageMonitor::formatMemoryUsage(
-             MemoryUsageMonitor::getCurrentMemoryUsage())
+  this->IstringStream << "FPS:\t" << fps << "\nCurrent memory usage:\t"
+                      << MemoryUsageMonitor::formatMemoryUsage(
+                             MemoryUsageMonitor::getCurrentMemoryUsage())
 
-      << "\nResolution: " << this->Iwindow->getSize().x << " x "
-      << this->Iwindow->getSize().y << "\nPlayer:"
-      << "\nComponents: "
-      << "\n\tvelX: " << this->player->e_getVelocity().x
-      << "\n\tvelY: " << this->player->e_getVelocity().y << "\nPosition:"
-      << "\n\tx: " << this->player->e_getPosition().x
-      << "\n\ty: " << this->player->e_getPosition().y
-      << "\n\tSecected Cell ID: "
-      << this->t_inventory->getCurrentCellID(this->ImousePosWindow)
+                      << "\nResolution: " << this->Iwindow->getSize().x << " x "
+                      << this->Iwindow->getSize().y << "\nPlayer:"
+                      << "\nComponents: "
+                      << "\n\tvelX: " << this->player->e_getVelocity().x
+                      << "\n\tvelY: " << this->player->e_getVelocity().y
+                      << "\nPosition:"
+                      << "\n\tx: " << this->player->e_getPosition().x
+                      << "\n\ty: " << this->player->e_getPosition().y;
+  if (this->player->e_getInventory().isInventoryOpened()) {
+    // предмет буффер
+    // для отладки инвентаря
+    Item *mitem =
+        this->player->e_getInventory()
+            .getItemFromSlot(this->player->e_getInventory().getCurrentCellID(
+                this->ImousePosWindow))
+            .get();
+    this->IstringStream << "\nPlayer Inv:"
+                        << "\n\tSecected Cell ID: "
+                        << this->player->e_getInventory().getCurrentCellID(
+                               this->ImousePosWindow)
+                        << "\n\tSelected Item: " << mitem->getName()
+                        << "\n\tSelected Item ID: " << mitem->getID()
+                        << "\n\tSelected Item Amount: " << mitem->getAmount()
+                        << "\n\tSelected Item Pickable: " << mitem->isPickable()
+                        << "\n\tSelected Item Stackable: "
+                        << mitem->isStackable()
+                        << "\n\tSelected Item Usable: " << mitem->isUsable()
+                        << "\n\tSelected Item Price: " << mitem->getPrice();
+  }
+  this->IstringStream
       << "\n\tgrid x: "
       << this->player->e_getGridPositionFloat(this->IgridSize).x
       << "\n\tgrid y: "
@@ -389,11 +411,9 @@ void Process::updateDebug(const float &delta_time) {
       << ' ' << this->entitys[0]->getMovement()->getVelocity().y
       << "\n\tTileMap: " << sizeof(*this->mapTiles) << " bytes"
       << "\n\tPauseMenu: " << sizeof(*this->pausemenu) << " bytes"
-      << "\n\tInventory: " << sizeof(*this->t_inventory) << " bytes"
       << "\n\tTotal usage: "
       << sizeof(*this->player) + (this->entitys.size() * sizeof(Entity)) +
-             sizeof(this->mapTiles) + sizeof(*this->pausemenu) +
-             sizeof(*this->t_inventory)
+             sizeof(this->mapTiles) + sizeof(*this->pausemenu)
       << " bytes"
       << "\nGenerator data:"
       << "\n\tSeed:\t" << this->noicedata.seed << "\n\tOctaves:\t"
@@ -425,8 +445,9 @@ void Process::renderGUI(sf::RenderTarget &target) {
     if (this->pausemenu != nullptr)
       this->pausemenu->render(target);
   } else {
-    if (this->t_inventory->isInventoryOpened()) // inventory  menu render
-      this->t_inventory->render(target);
+    // inventory  menu render
+    if (this->player->e_getInventory().isInventoryOpened())
+      this->player->e_getInventory().render(target);
     else
       // this->t_inventoryHUD.get()->render(target);
       for (auto &it : this->playerBar) // render player bars

@@ -350,7 +350,7 @@ void MainMenu::render(sf::RenderWindow &target) {
   // render GUI
   if (!this->buttons.empty())
     for (auto &it : this->buttons)
-      it.second->render(renderTexture);
+      target.draw(*it.second);
   // fadeout fx
 
   // debug text

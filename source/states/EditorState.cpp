@@ -462,7 +462,7 @@ void EditorState::renderTabMenu(sf::RenderTarget &target) {
     it.second->render(target);
 
   for (auto &it : this->buttons)
-    it.second->render(target);
+    target.draw(*it.second);
 
   this->selector->render(target);
 }

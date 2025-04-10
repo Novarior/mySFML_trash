@@ -70,33 +70,37 @@ ParserJson::saveInventory(const std::shared_ptr<Inventory> &inventory) {
   try {
     // Сохраняем информацию об инвентаре
     j["inventory"]["size"] = inventory->getTotalSlots();
+    j["inventory"]["info"] = "Static inventory size data"; // Уточняющая строка
 
     // Ссылаемся на инвентарь для удобства
-    const auto &invArray =
-        inventory->getInventoryArray(); // Получаем доступ к инвентарю
+    const auto &invArray = inventory->getInventoryArray();
     int slot = 0;
+
+    // Получаем предмет-затычку из реестра
+    auto nullItem = ItemRegistry::getItem(0);
 
     // Сохраняем предметы
     for (const auto &row : invArray) {
       for (const auto &item : row) {
-        if (item) {
-          // Сохраняем информацию о предмете
-          j["inventory"]["items"][slot]["slot"] = slot;
-          j["inventory"]["items"][slot]["name"] = item->getName();
-          j["inventory"]["items"][slot]["amount"] = item->getAmount();
-          j["inventory"]["items"][slot]["price"]["Gold"] =
+        // Пропускаем предмет-затычку
+        if (item && item != nullItem) {
+          // Сохраняем шаблон предмета
+          j["inventory"]["items"][slot]["template"] = "Item";
+
+          // Сохраняем данные предмета
+          j["inventory"]["items"][slot]["data"]["slot"] = slot;
+          j["inventory"]["items"][slot]["data"]["name"] = item->getName();
+          j["inventory"]["items"][slot]["data"]["amount"] = item->getAmount();
+          j["inventory"]["items"][slot]["data"]["price"]["Gold"] =
               item->getPrice().get_GoldCointCount();
-          j["inventory"]["items"][slot]["price"]["Silver"] =
+          j["inventory"]["items"][slot]["data"]["price"]["Silver"] =
               item->getPrice().get_SilverCointCount();
-          j["inventory"]["items"][slot]["price"]["Copper"] =
+          j["inventory"]["items"][slot]["data"]["price"]["Copper"] =
               item->getPrice().get_CopperCointCount();
-          j["inventory"]["items"][slot]["stackable"] = item->isStackable();
-          j["inventory"]["items"][slot]["usable"] = item->isUsable();
-          j["inventory"]["items"][slot]["unic ID"] = item->getID();
-        }
-        // Пропускаем пустые ячейки
-        else {
-          j["inventory"]["items"][slot]["slot"] = nullptr;
+          j["inventory"]["items"][slot]["data"]["stackable"] =
+              item->isStackable();
+          j["inventory"]["items"][slot]["data"]["usable"] = item->isUsable();
+          j["inventory"]["items"][slot]["data"]["unic ID"] = item->getID();
         }
         slot++;
       }

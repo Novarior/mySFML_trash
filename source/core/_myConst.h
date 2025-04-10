@@ -55,24 +55,6 @@ const char texture_SLIME[] = "/sprites/Slime_01.png";
 const char texture_PLAYER[] = "/sprites/Slime_01.png";
 }; // namespace sprites
 
-namespace items { // items
-const char item_NULL[] = "/textures/gui/nulltexture.png";
-const char inv_cell_back[] = "/textures/gui/inv_cell_back.png";
-
-namespace coins {
-const char item_img_silver_nuggen[] = "/textures/items/coins/iron_nugget.png";
-const char item_img_copper_nuggen[] = "/textures/items/coins/copper_nugget.png";
-const char item_img_gold_nugget[] = "/textures/items/coins/gold_nugget.png";
-}; // namespace coins
-
-namespace poison {
-const char item_img_poison_small_regeneration[] =
-    "/textures/items/poison/Potion_1_Original.png";
-}
-const char item_img_stone[] = "/textures/items/item/stone_01.png";
-const char item_img_coblestone[] = "/textures/items/item/stone_02.png";
-}; // namespace items
-
 namespace sounds { // sounds
 const char music_menu[] = "/sounds/music/music_01.wav";
 const char selbtn_menu[] = "/sounds/sfx/selbtn_01.wav";

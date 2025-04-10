@@ -27,74 +27,74 @@ ParserJson::loadInventory(const std::shared_ptr<Inventory> &inventory) {
   std::ifstream ifs(ApplicationsFunctions::getAppConfigFolder() +
                     AppFiles::config_inventory);
 
-  // Проверка, что файл открылся
-  if (!ifs.is_open()) {
-    printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n",
-           AppFiles::config_inventory);
-    return false;
-  }
+  // // Проверка, что файл открылся
+  // if (!ifs.is_open()) {
+  //   printf("ERROR::PARSER::LOAD::INVENTORY::FILE_NOT_OPEN\n   %s\n",
+  //          AppFiles::config_inventory);®´`´´E´
+  //   return false;
+  // }
 
-  // Парсим JSON из файла
-  try {
-    json j;
-    if (!(ifs >> j)) {
-      throw std::runtime_error("Failed to parse JSON from file.");
-    }
+  // // Парсим JSON из файла
+  // try {
+  //   json j;
+  //   if (!(ifs >> j)) {
+  //     throw std::runtime_error("Failed to parse JSON from file.");
+  //   }
 
-    // Проверка наличия ключа "inventory" и "items"
-    if (!j.contains("inventory") || !j["inventory"].contains("items")) {
-      throw std::runtime_error("Missing 'inventory' or 'items' in JSON.");
-    }
+  //   // Проверка наличия ключа "inventory" и "items"
+  //   if (!j.contains("inventory") || !j["inventory"].contains("items")) {
+  //     throw std::runtime_error("Missing 'inventory' or 'items' in JSON.");
+  //   }
 
-    // Загружаем предметы
-    for (auto &item : j["inventory"]["items"]) {
-      if (!item["slot"].is_null()) { // Проверяем на null
-        // Получаем предмет по ID
-        Item *newItem =
-            static_cast<Item *>(ItemRegistry::getItem(item["unic ID"]));
+  //   // Загружаем предметы
+  //   for (auto &item : j["inventory"]["items"]) {
+  //     if (!item["slot"].is_null()) { // Проверяем на null
+  //       // Получаем предмет по ID
+  //       Item *newItem =
+  //           static_cast<Item>(ItemRegistry::getItem(item["unic ID"]));
 
-        // Проверка, что предмет найден
-        if (!newItem) {
-          printf("ERROR::PARSER::LOAD::ITEM_NOT_FOUND::ID=%d\n",
-                 item["unic ID"].get<int>());
-          continue; // Пропускаем этот предмет
-        }
+  //       // Проверка, что предмет найден
+  //       if (!newItem) {
+  //         printf("ERROR::PARSER::LOAD::ITEM_NOT_FOUND::ID=%d\n",
+  //                item["unic ID"].get<int>());
+  //         continue; // Пропускаем этот предмет
+  //       }
 
-        // Добавляем предмет в инвентарь
-        if (!inventory->addItem(std::shared_ptr<Item>(newItem))) {
-          printf("ERROR::PARSER::LOAD::ITEM_ADD_FAILED::ID=%d\n",
-                 item["unic ID"].get<int>());
-        }
-      }
-    }
+  //       // Добавляем предмет в инвентарь
+  //       if (!inventory->addItem(std::shared_ptr<Item>(newItem))) {
+  //         printf("ERROR::PARSER::LOAD::ITEM_ADD_FAILED::ID=%d\n",
+  //                item["unic ID"].get<int>());
+  //       }
+  //     }
+  //   }
 
-    // Проверка наличия ключа "coins"
-    if (!j["inventory"].contains("coins")) {
-      throw std::runtime_error("Missing 'coins' in JSON.");
-    }
+  //   // Проверка наличия ключа "coins"
+  //   if (!j["inventory"].contains("coins")) {
+  //     throw std::runtime_error("Missing 'coins' in JSON.");
+  //   }
 
-    // Загружаем монеты
-    if (j["inventory"]["coins"].contains("gold")) {
-      inventory->getCoins().set_GoldCoinCouns(
-          j["inventory"]["coins"]["gold"].get<int>());
-    }
+  //   // Загружаем монеты
+  //   if (j["inventory"]["coins"].contains("gold")) {
+  //     inventory->getCoins().set_GoldCoinCouns(
+  //         j["inventory"]["coins"]["gold"].get<int>());
+  //   }
 
-    if (j["inventory"]["coins"].contains("silver")) {
-      inventory->getCoins().set_SilverCoinCouns(
-          j["inventory"]["coins"]["silver"].get<int>());
-    }
+  //   if (j["inventory"]["coins"].contains("silver")) {
+  //     inventory->getCoins().set_SilverCoinCouns(
+  //         j["inventory"]["coins"]["silver"].get<int>());
+  //   }
 
-    if (j["inventory"]["coins"].contains("copper")) {
-      inventory->getCoins().set_CopperCoinCouns(
-          j["inventory"]["coins"]["copper"].get<int>());
-    }
+  //   if (j["inventory"]["coins"].contains("copper")) {
+  //     inventory->getCoins().set_CopperCoinCouns(
+  //         j["inventory"]["coins"]["copper"].get<int>());
+  //   }
 
-  } catch (const std::exception &e) {
-    Logger::logStatic("Cant load inventory: " + std::string(e.what()),
-                      "CORE->PARS", logType::ERROR);
-    printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n", e.what());
-    return false;
-  }
+  // } catch (const std::exception &e) {
+  //   Logger::logStatic("Cant load inventory: " + std::string(e.what()),
+  //                     "CORE->PARS", logType::ERROR);
+  //   printf("ERROR::PARSER::LOAD::INVENTORY::UNKNOWN_LINE\n   %s\n",
+  //   e.what()); return false;
+  // }
 
   return true;
 }

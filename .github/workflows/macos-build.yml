@@ -29,7 +29,7 @@ jobs:
       run: cmake --install build --prefix dist
 
     - name: Upload app bundle or binary
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: Ekzeckt-macOS
         path: |

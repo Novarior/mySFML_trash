@@ -17,9 +17,13 @@ unsigned int FPS::mFps = 0;
 sf::Clock FPS::mClock = sf::Clock();
 // Инициализация статического контейнера
 std::unordered_map<std::string, sf::Texture> TextureManager::m_textures;
+// Инициализация словаря для маппинга TextureID к строкам
+std::unordered_map<TextureID, std::string> TextureIDMapping::idToStringMap;
 
 int main() {
   ApplicationsFunctions::createAppDirectories();
+  // Инициализируем маппинг TextureID
+  TextureIDMapping::initialize();
 
   Logger::logStatic(
       "\n=====================\n=====================\n=====================",

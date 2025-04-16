@@ -63,24 +63,14 @@ void SettingsState::initButtons() { // Navigaton buttons in settings
   // exit gui button
   _pageButtons["BACK_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(window_size.x - 120, 0.f), sf::Vector2f(120.f, 50.f),
-      this->IstateData->sd_font, helperText::Button::BUTTON_BACK,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(255, 0, 0, 200), sf::Color(255, 0, 0, 250),
-      sf::Color(255, 0, 0, 50), 0);
+      helperText::Button::BUTTON_BACK, gui::styles::buttons::btn_default,
+      gui::type::BUTTON);
   // apply gui button
   // set "apply" button position litle bit left from "back" button
   _pageButtons["APPLY_BTN"] = std::make_unique<gui::Button>(
       sf::Vector2f(window_size.x - 240, 0.f), sf::Vector2f(120.f, 50.f),
-      this->IstateData->sd_font, helperText::Button::BUTTON_APPLY,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(0, 255, 0, 200), sf::Color(0, 255, 0, 250),
-      sf::Color(0, 255, 0, 50), 1);
+      helperText::Button::BUTTON_APPLY, gui::styles::buttons::btn_default,
+      gui::type::BUTTON);
 
   //=====================================================================================================
   //=====================================   PAGE BUTTONS
@@ -94,50 +84,26 @@ void SettingsState::initButtons() { // Navigaton buttons in settings
   _pageButtons["PGB_AUDIO"] = std::make_unique<gui::Button>(
       sf::Vector2f(background_layer_pos.x,
                    background_layer_pos.y - button_size.y),
-      button_size, this->IstateData->sd_font,
-      helperText::SettingsTexts::TEXT_AUDIO,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250),
-      sf::Color(255, 255, 255, 50), 0);
+      button_size, helperText::SettingsTexts::TEXT_AUDIO,
+      gui::styles::buttons::btn_default, gui::type::BUTTON);
 
   _pageButtons["PGB_GRAPHICS"] = std::make_unique<gui::Button>(
       sf::Vector2f(background_layer_pos.x + button_size.x,
                    background_layer_pos.y - button_size.y),
-      button_size, this->IstateData->sd_font,
-      helperText::SettingsTexts::TEXT_GRAPHICS,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250),
-      sf::Color(255, 255, 255, 50), 0);
+      button_size, helperText::SettingsTexts::TEXT_GRAPHICS,
+      gui::styles::buttons::btn_default, gui::type::BUTTON);
 
   _pageButtons["PGB_CONTROLS"] = std::make_unique<gui::Button>(
       sf::Vector2f(background_layer_pos.x + button_size.x * 2,
                    background_layer_pos.y - button_size.y),
-      button_size, this->IstateData->sd_font,
-      helperText::SettingsTexts::TEXT_CONTROLS,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250),
-      sf::Color(255, 255, 255, 50), 0);
+      button_size, helperText::SettingsTexts::TEXT_CONTROLS,
+      gui::styles::buttons::btn_default, gui::type::BUTTON);
 
   _pageButtons["PGB_GAMEPLAY"] = std::make_unique<gui::Button>(
       sf::Vector2f(background_layer_pos.x + button_size.x * 3,
                    background_layer_pos.y - button_size.y),
-      button_size, this->IstateData->sd_font,
-      helperText::SettingsTexts::TEXT_GAMEPLAY,
-      this->IstateData->sd_characterSize_game_medium,
-      sf::Color(100, 100, 100, 200), sf::Color(180, 180, 180, 250),
-      sf::Color(60, 60, 60, 50), sf::Color(70, 70, 70, 200),
-      sf::Color(150, 150, 150, 250), sf::Color(20, 20, 20, 50),
-      sf::Color(255, 255, 255, 200), sf::Color(255, 255, 255, 250),
-      sf::Color(255, 255, 255, 50), 0);
+      button_size, helperText::SettingsTexts::TEXT_GAMEPLAY,
+      gui::styles::buttons::btn_default, gui::type::BUTTON);
 }
 
 void SettingsState::initGraphicsPage() {

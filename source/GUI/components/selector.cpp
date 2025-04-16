@@ -15,16 +15,12 @@ Selector::Selector(sf::Vector2f pos, sf::Vector2f size, sf::Font &font,
   // init buttons
   this->buttons["left"] = new gui::Button(
       sf::Vector2f(pos.x, pos.y), sf::Vector2f(mmath::p2pX(15, size.x), size.y),
-      font, "-", 30, sf::Color::White, sf::Color(200, 200, 200, 200),
-      sf::Color(150, 150, 150, 200), sf::Color::Transparent,
-      sf::Color::Transparent, sf::Color::Transparent);
+      "-", gui::styles::buttons::btn_selector, gui::type::BUTTON);
 
   this->buttons["right"] = new gui::Button(
       sf::Vector2f(this->box.getPosition().x + this->box.getSize().x, pos.y),
-      sf::Vector2f(mmath::p2pX(15, size.x), size.y), font, "+", 30,
-      sf::Color::White, sf::Color(200, 200, 200, 200),
-      sf::Color(150, 150, 150, 200), sf::Color::Transparent,
-      sf::Color::Transparent, sf::Color::Transparent);
+      sf::Vector2f(mmath::p2pX(15, size.x), size.y), "+",
+      gui::styles::buttons::btn_selector, gui::type::BUTTON);
 
   // init text
   this->text.setString(list[0]);

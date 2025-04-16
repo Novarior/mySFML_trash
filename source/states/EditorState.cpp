@@ -31,11 +31,7 @@ void EditorState::initButtons() { // init buttons
               mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
       sf::Vector2f(this->tabShape.getSize().x / 2,
                    mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-      this->IstateData->sd_font, "Gen Noice",
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-      sf::Color::Black, sf::Color::Black, sf::Color::Black);
+      "Gen Noice", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["G_TREE"] = new gui::Button(
       sf::Vector2f(
@@ -44,11 +40,7 @@ void EditorState::initButtons() { // init buttons
               mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
       sf::Vector2f(this->tabShape.getSize().x / 2,
                    mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-      this->IstateData->sd_font, "Gen Tree",
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-      sf::Color::Black, sf::Color::Black, sf::Color::Black);
+      "Gen Tree", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["SAVE_GENDATA"] = new gui::Button(
       sf::Vector2f(
@@ -57,11 +49,7 @@ void EditorState::initButtons() { // init buttons
               mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
       sf::Vector2f(this->tabShape.getSize().x / 2,
                    mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-      this->IstateData->sd_font, "Save",
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-      sf::Color::Black, sf::Color::Black, sf::Color::Black);
+      "Save", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["LOAD_GENDATA"] = new gui::Button(
       sf::Vector2f(
@@ -70,11 +58,7 @@ void EditorState::initButtons() { // init buttons
               mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
       sf::Vector2f(this->tabShape.getSize().x / 2,
                    mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-      this->IstateData->sd_font, "Load",
-      this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-      sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-      sf::Color(100, 100, 100), sf::Color(140, 140, 140), sf::Color(80, 80, 90),
-      sf::Color::Black, sf::Color::Black, sf::Color::Black);
+      "Load", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 }
 
 void EditorState::initSelectors() { // init static selector in tab menu

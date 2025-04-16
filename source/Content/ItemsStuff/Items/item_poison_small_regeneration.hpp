@@ -1,5 +1,5 @@
-#ifndef item_poison_small_regeneration_hpp
-#define item_poison_small_regeneration_hpp
+#ifndef ITEM_POISON_SMALL_REGENERATION
+#define ITEM_POISON_SMALL_REGENERATION
 #include "../Item.hpp"
 
 namespace Items {
@@ -30,4 +30,4 @@ public:
   void update(const float &delta_time, sf::Vector2i mouse_pos) {}
 };
 } // namespace Items
-#endif /* item_poison_small_regeneration_hpp */
+#endif /* ITEM_POISON_SMALL_REGENERATION */

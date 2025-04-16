@@ -24,6 +24,7 @@ void MainMenu::initRenderDefines() {
 void MainMenu::initKeybinds() {
   this->Ikeybinds["CLOSE"] = this->IsupportedKeys->at("Escape");
   this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
+  this->Ikeybinds["KEY_R"] = this->IsupportedKeys->at("R");
 }
 
 void MainMenu::initBackground() {
@@ -106,11 +107,8 @@ void MainMenu::initButtons() {
   for (size_t i = 0; i < buttonData.size(); ++i) {
     const auto &button = buttonData[i];
     this->buttons[button.key] = std::make_unique<gui::Button>(
-        buttonOffsets[i], sizebutton, this->IstateData->sd_font, button.text,
-        this->IstateData->sd_characterSize_game_big, sf::Color(200, 200, 200),
-        sf::Color(180, 180, 180), sf::Color(160, 160, 180),
-        sf::Color(100, 100, 100), sf::Color(140, 140, 140),
-        sf::Color(80, 80, 90));
+        buttonOffsets[i], sizebutton, button.text,
+        gui::styles::buttons::btn_default, gui::type::BUTTON);
   }
 }
 void MainMenu::initGUI() {
@@ -219,6 +217,12 @@ void MainMenu::updateInput(const float &delta_time) {
           sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) &&
       this->getKeytime())
     this->Idebud = !this->Idebud;
+
+  if (sf::Keyboard::isKeyPressed(
+          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_R"))) &&
+      this->getKeytime()) {
+    this->resetGUI();
+  }
 }
 
 void MainMenu::updateButtons() {
@@ -347,11 +351,13 @@ void MainMenu::render(sf::RenderWindow &target) {
   // render background shapes
   for (auto &it : this->backgrond_shapes)
     renderTexture.draw(it);
+
   // render GUI
   if (!this->buttons.empty())
     for (auto &it : this->buttons)
-      target.draw(*it.second);
-  // fadeout fx
+      renderTexture.draw(
+          *it.second
+               .get()); // Отрисовываем кнопки в renderTexture, а не в target
 
   // debug text
   if (this->Idebud)

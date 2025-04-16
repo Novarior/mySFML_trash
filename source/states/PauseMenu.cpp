@@ -51,11 +51,9 @@ void PauseMenu::addButton(std::string key, float y, float width, float height,
   float x = this->container.getPosition().x +
             this->container.getSize().x / 2.f - width / 2.f;
 
-  this->buttons[key] = new gui::Button(
-      sf::Vector2f(x, y), sf::Vector2f(width, height), this->font, text, 60,
-      sf::Color(170, 170, 170, 200), sf::Color(250, 250, 250, 250),
-      sf::Color(120, 120, 120, 150), sf::Color(70, 70, 70, 0),
-      sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
+  this->buttons[key] =
+      new gui::Button(sf::Vector2f(x, y), sf::Vector2f(width, height), text,
+                      gui::styles::buttons::btn_pause, gui::type::BUTTON);
 }
 
 void PauseMenu::update(const sf::Vector2i &mousePosWindow) {

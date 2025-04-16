@@ -121,15 +121,13 @@ void Process::initPlayer() {
       std::make_shared<Items::Stone>(64); // 64 - это gridSizeI
 
   // add item like stone to player inventory
-  this->player->e_getInventory().addItem(stoneItem);
+  this->player->e_getInventory()->addItem(stoneItem);
 
   // add item like a from registry
-  this->player->e_getInventory().addItem(ItemRegistry::getItem(2));
-  ;
-  //  this->t_inventoryHUD = std::make_unique<InventoryHUD>(
-  //     sf::Vector2f(this->IstateData->sd_Window->getSize()), 32.0f,
-  //     this->IstateData->sd_font,
-  //     this->IstateData->sd_characterSize_game_big);
+  this->player->e_getInventory()->addItem(ItemRegistry::getItem(2));
+
+  // add test item to player inventory
+  this->player->e_getInventory()->addItem(ItemRegistry::getItem(99));
 }
 
 void Process::initMiniMap() // init minimap
@@ -186,11 +184,33 @@ void Process::registerItems() {
   ItemRegistry::registerItem(1, std::make_unique<Items::Stone>(size));
   ItemRegistry::registerItem(
       2, std::make_unique<Items::PoisonSmallRegeneration>(size));
+  ItemRegistry::registerItem(3, std::make_unique<Items::Wood>(size));
+  ItemRegistry::registerItem(4, std::make_unique<Items::IronSword>(size));
+  ItemRegistry::registerItem(5, std::make_unique<Items::Bread>(size));
+  ItemRegistry::registerItem(6, std::make_unique<Items::LeatherArmor>(size));
+  ItemRegistry::registerItem(7, std::make_unique<Items::HealthPotion>(size));
+  ItemRegistry::registerItem(8, std::make_unique<Items::GoldCoin>(size));
+  ItemRegistry::registerItem(99, std::make_unique<Items::TestItem>(
+                                     size)); // Регистрация тестового предмета
 
   Logger::logStatic("Items has been registered", "Process::registerItems()");
   Logger::logStatic("Items count: " +
                         std::to_string(ItemRegistry::getAllItems().size()),
                     "Process::registerItems()");
+}
+
+void Process::initInventoryGUI() {
+  // Создаем GUI для инвентаря
+  this->inventoryGUI = std::make_unique<GUI::InventoryGUI>(
+      this->player->e_getInventory(), // e_getInventory уже возвращает
+                                      // shared_ptr, который будет автоматически
+                                      // преобразован в weak_ptr
+      sf::Vector2f(this->IstateData->sd_Window->getSize()),
+      this->IstateData->sd_font,
+      64.0f, // Размер ячейки инвентаря
+      this->IstateData->sd_characterSize_game_small);
+
+  Logger::logStatic("Inventory GUI initialized", "Process::initInventoryGUI()");
 }
 
 Process::Process(StateData *state_data, const bool defaultLoad)
@@ -211,6 +231,7 @@ Process::Process(StateData *state_data, const bool defaultLoad)
   this->initPlayer();
   this->initEntitys();
   this->intGUI();
+  this->initInventoryGUI();
 
   Logger::logStatic("End initilization process", "Process::Process()");
 }
@@ -247,7 +268,7 @@ void Process::updateInput(const float &delta_time) {
   if (sf::Keyboard::isKeyPressed(
           sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) &&
       this->getKeytime())
-    this->player->e_getInventory().toggleInventory();
+    this->player->e_getInventory()->toggleInventory();
   if (sf::Keyboard::isKeyPressed(
           sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) &&
       this->getKeytime())
@@ -294,18 +315,29 @@ void Process::updateEntitys(const float &delta_time) { // update entitys
   for (size_t i = 0; i < this->entitys.size(); i++) {
     this->entitys[i]->e_update(delta_time);
 
-    if (!this->entitys[i]->e_isAlive())
-      this->entitys.erase(this->entitys.begin() + i);
+    if (!this->entitys[i]->getAttributes())
+      if (!this->entitys[i]->e_isAlive())
+        this->entitys.erase(this->entitys.begin() + i);
   }
 }
 
 void Process::updateGUI(const float &delta_time) {
-  if (this->player->e_getInventory().isInventoryOpened()) // update inventory
-    this->player->e_getInventory().update(this->ImousePosWindow);
-  if (this->minimap != nullptr) // update minimap
+  // Обновляем GUI инвентаря, если он открыт
+  if (this->player->e_getInventory()->isInventoryOpened()) {
+    this->inventoryGUI->update(delta_time, this->ImousePosWindow);
+    // Синхронизируем видимость с состоянием инвентаря
+    this->inventoryGUI->setVisible(true);
+  } else {
+    // Скрываем GUI инвентаря, если инвентарь закрыт
+    this->inventoryGUI->setVisible(false);
+  }
+
+  // Обновляем мини-карту
+  if (this->minimap != nullptr)
     this->minimap->update(this->player->e_getPosition(),
                           this->entitys[0]->e_getPosition());
 
+  // Обновляем полоски здоровья и маны
   this->playerBar["HP_BAR"]->update(
       this->player->getAttributes()->getAttributes().health,
       this->player->getAttributes()->getAttributes().max_health);
@@ -340,6 +372,15 @@ void Process::update(const float &delta_time) {
       this->reCaclulateCharacterSize();
     }
   } else { // update game
+    // Обработка событий GUI инвентаря
+    if (this->player->e_getInventory()->isInventoryOpened()) {
+      // Обновляем интерфейс инвентаря напрямую без событий
+      // Поскольку события уже обрабатываются в State::updateKeyTime
+      this->inventoryGUI->setVisible(true);
+    } else {
+      this->inventoryGUI->setVisible(false);
+    }
+
     this->updateEntitys(delta_time);
     this->updatePlayerInputs(delta_time);
     this->player->e_update(delta_time);
@@ -364,17 +405,17 @@ void Process::updateDebug(const float &delta_time) {
                       << "\nPosition:"
                       << "\n\tx: " << this->player->e_getPosition().x
                       << "\n\ty: " << this->player->e_getPosition().y;
-  if (this->player->e_getInventory().isInventoryOpened()) {
+  if (this->player->e_getInventory()->isInventoryOpened()) {
     // предмет буффер
     // для отладки инвентаря
     Item *mitem =
         this->player->e_getInventory()
-            .getItemFromSlot(this->player->e_getInventory().getCurrentCellID(
+            ->getItemFromSlot(this->player->e_getInventory()->getCurrentCellID(
                 this->ImousePosWindow))
             .get();
     this->IstringStream << "\nPlayer Inv:"
                         << "\n\tSecected Cell ID: "
-                        << this->player->e_getInventory().getCurrentCellID(
+                        << this->player->e_getInventory()->getCurrentCellID(
                                this->ImousePosWindow)
                         << "\n\tSelected Item: " << mitem->getName()
                         << "\n\tSelected Item ID: " << mitem->getID()
@@ -440,21 +481,24 @@ void Process::renderGUI(sf::RenderTarget &target) {
   if (this->Idebud) // debuging text render
     target.draw(this->Itext);
 
+  // Отрисовка информации о здоровье и мане
+  for (auto &it : this->playerBar) // render player bars
+    it.second->render(target);
+
+  // Отрисовка мини-карты
+  if (this->minimap != nullptr)
+    this->minimap->render(target);
+
   if (this->Ipaused) // Pause menu render
   {
     if (this->pausemenu != nullptr)
       this->pausemenu->render(target);
   } else {
-    // inventory  menu render
-    if (this->player->e_getInventory().isInventoryOpened())
-      this->player->e_getInventory().render(target);
-    else
-      // this->t_inventoryHUD.get()->render(target);
-      for (auto &it : this->playerBar) // render player bars
-        it.second->render(target);
-
-    if (this->minimap != nullptr)
-      this->minimap->render(target);
+    // Отрисовка GUI инвентаря, если он открыт
+    if (this->player->e_getInventory()->isInventoryOpened() &&
+        this->inventoryGUI) {
+      target.draw(*this->inventoryGUI);
+    }
   }
 }
 

@@ -1,10 +1,11 @@
 #ifndef PROCESS
 #define PROCESS
 
-#include "../Content/ItemsStuff/Inventory.hpp"
 #include "../Content/ItemsStuff/ItemEntity/entity_item.hpp"
+#include "../Content/ItemsStuff/Items/all_items.hpp"
 #include "../Content/Map/TileMap.hpp"
 #include "../GUI/GUISYS.hpp"
+#include "../GUI/components/inventoryGUI.hpp"
 #include "../entitys/Enemys/slime.hpp"
 #include "../entitys/player.hpp"
 #include "../math/ProcessGenerationNoice.hpp"
@@ -22,28 +23,29 @@ private:
   sf::RenderTexture renderTexture;
 
   // Game elements
-  // std::unique_ptr<InventoryHUD> t_inventoryHUD; // Inventory HUD
-  std::shared_ptr<Player> player;    // Player
-  std::shared_ptr<TileMap> mapTiles; // Tile map
-  mmath::noiceData noicedata;        // Noise data
-  std::vector<Entity *> entitys;     // Entities
-  ProcessGenerationNoice *myGN;      // Noise generation
-  sf::Shader shader;                 // Shader
+  std::unique_ptr<GUI::InventoryGUI> inventoryGUI; // GUI для инвентаря
+  std::shared_ptr<Player> player;                  // Player
+  std::shared_ptr<TileMap> mapTiles;               // Tile map
+  mmath::noiceData noicedata;                      // Noise data
+  std::vector<Entity *> entitys;                   // Entities
+  ProcessGenerationNoice *myGN;                    // Noise generation
+  sf::Shader shader;                               // Shader
 
   // GUI
   std::map<std::string, gui::ProgressBar *> playerBar; // Player's progress bar
   gui::MiniMap *minimap;                               // Minimap
 
   // Initialization functions that don't use loaded data
-  void initKeybinds();    // Initialize key bindings
-  void initPauseMenu();   // Initialize pause menu
-  void initView();        // Initialize view
-  void initTileMap();     // Initialize tile map
-  void initTileMapData(); // Initialize tile map data
-  void registerItems();   // Register items
-  void initPlayer();      // Initialize player
-  void initEntitys();     // Initialize entities
-  void initMiniMap();     // Initialize minimap
+  void initKeybinds();     // Initialize key bindings
+  void initPauseMenu();    // Initialize pause menu
+  void initView();         // Initialize view
+  void initTileMap();      // Initialize tile map
+  void initTileMapData();  // Initialize tile map data
+  void registerItems();    // Register items
+  void initPlayer();       // Initialize player
+  void initEntitys();      // Initialize entities
+  void initMiniMap();      // Initialize minimap
+  void initInventoryGUI(); // Initialize inventory GUI
 
   void intGUI(); // Initialize GUI
 

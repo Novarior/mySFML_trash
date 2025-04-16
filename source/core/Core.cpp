@@ -167,49 +167,83 @@ void Core::initWindow() {
 }
 void Core::initTextures() {
   // null текстура
-  TextureManager::loadTexture("texture_null", myConst::textures::texture_NULL);
+  TextureManager::loadTexture(TextureID::TEXTURE_NULL,
+                              myConst::textures::texture_NULL);
   // текстуры для карты
-  TextureManager::loadTexture("texture_deep_ocean",
+  TextureManager::loadTexture(TextureID::TEXTURE_DEEP_OCEAN,
                               myConst::textures::texture_DEEP_OCEAN);
-  TextureManager::loadTexture("texture_ocean",
+  TextureManager::loadTexture(TextureID::TEXTURE_OCEAN,
                               myConst::textures::texture_OCEAN);
-  TextureManager::loadTexture("texture_sand", myConst::textures::texture_SAND);
-  TextureManager::loadTexture("texture_grass",
+  TextureManager::loadTexture(TextureID::TEXTURE_SAND,
+                              myConst::textures::texture_SAND);
+  TextureManager::loadTexture(TextureID::TEXTURE_GRASS,
                               myConst::textures::texture_GRASS);
-  TextureManager::loadTexture("texture_dirt", myConst::textures::texture_DIRT);
-  TextureManager::loadTexture("texture_stone",
+  TextureManager::loadTexture(TextureID::TEXTURE_DIRT,
+                              myConst::textures::texture_DIRT);
+  TextureManager::loadTexture(TextureID::TEXTURE_STONE,
                               myConst::textures::texture_STONE);
-  TextureManager::loadTexture("texture_snow", myConst::textures::texture_SNOW);
+  TextureManager::loadTexture(TextureID::TEXTURE_SNOW,
+                              myConst::textures::texture_SNOW);
 
   // загружаем текстуры сущностей
-  TextureManager::loadTexture("texture_Player",
+  TextureManager::loadTexture(TextureID::TEXTURE_PLAYER,
                               myConst::sprites::texture_PLAYER);
-  TextureManager::loadTexture("texture_Slime", myConst::sprites::texture_SLIME);
+  TextureManager::loadTexture(TextureID::TEXTURE_SLIME,
+                              myConst::sprites::texture_SLIME);
+
   // бек в главном меню
-  TextureManager::loadTexture("texture_background_lay_1",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_1,
                               myConst::gui::texture_background_mainmenu_lay_1);
-  TextureManager::loadTexture("texture_background_lay_2",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_2,
                               myConst::gui::texture_background_mainmenu_lay_2);
-  TextureManager::loadTexture("texture_background_lay_3",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_3,
                               myConst::gui::texture_background_mainmenu_lay_3);
+
   // текстуры итемов и тп
   // Загружаем текстуру для ячеек и предметов
-  TextureManager::loadTexture("items_NULL", ItemTextures::item_NULL);
-
-  TextureManager::loadTexture("inventory_cell_texture",
+  TextureManager::loadTexture(TextureID::ITEMS_NULL, ItemTextures::item_NULL);
+  TextureManager::loadTexture(TextureID::INVENTORY_CELL_TEXTURE,
                               ItemTextures::inv_cell_back);
   TextureManager::loadTexture(
-      "items_potion_small_regeneration",
+      TextureID::ITEMS_POISON_SMALL_REGENERATION,
       ItemTextures::poison::item_img_poison_small_regeneration);
-  TextureManager::loadTexture("items_stone",
+  TextureManager::loadTexture(TextureID::ITEMS_STONE,
                               ItemTextures::items::item_img_stone);
+
+  // Дополнительные текстуры для новых предметов
+  // Эти текстуры должны быть добавлены в resources, пока используем
+  // существующие
+  TextureManager::loadTexture(
+      TextureID::ITEMS_WOOD,
+      ItemTextures::items::item_img_stone2); // Временно используем текстуру
+                                             // камня
+  TextureManager::loadTexture(
+      TextureID::ITEMS_IRON_SWORD,
+      ItemTextures::items::item_img_claster_crystal); // Временно используем
+                                                      // текстуру кристалла
+  TextureManager::loadTexture(
+      TextureID::ITEMS_BREAD,
+      ItemTextures::item_NULL); // Временно используем пустую текстуру
+  TextureManager::loadTexture(
+      TextureID::ITEMS_LEATHER_ARMOR,
+      ItemTextures::item_NULL); // Временно используем пустую текстуру
+  TextureManager::loadTexture(
+      TextureID::ITEMS_HEALTH_POTION,
+      ItemTextures::poison::item_img_poison_small_regeneration); // Временно
+                                                                 // используем
+                                                                 // текстуру яда
+
   // текстуры для монет
-  TextureManager::loadTexture("coins_gold_nugget",
+  TextureManager::loadTexture(TextureID::COINS_GOLD_NUGGET,
                               ItemTextures::coins::item_img_gold_nugget);
-  TextureManager::loadTexture("coins_copper_nugget",
+  TextureManager::loadTexture(TextureID::COINS_COPPER_NUGGET,
                               ItemTextures::coins::item_img_copper_nuggen);
-  TextureManager::loadTexture("coins_silver_nugget",
+  TextureManager::loadTexture(TextureID::COINS_SILVER_NUGGET,
                               ItemTextures::coins::item_img_silver_nuggen);
+  TextureManager::loadTexture(
+      TextureID::ITEMS_GOLD_COIN,
+      ItemTextures::coins::item_img_gold_nugget); // Используем текстуру золотой
+                                                  // монеты
 }
 
 Core::Core() {

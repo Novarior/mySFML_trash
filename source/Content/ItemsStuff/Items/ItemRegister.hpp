@@ -2,9 +2,7 @@
 #define ITEMREGISTER
 
 #include "../Item.hpp"
-#include "item_NULL.hpp"
-#include "item_poison_small_regeneration.hpp"
-#include "item_stone.hpp"
+#include "all_items.hpp"
 
 class ItemRegistry {
 private:
@@ -13,6 +11,18 @@ private:
 public:
   static bool registerItem(int id, std::shared_ptr<Item> item) {
     if (items.find(id) == items.end()) {
+      unsigned int itemID = item->getID();
+      for (const auto &pair : items) {
+        if (pair.second->getID() == itemID && id != itemID) {
+          Logger::logStatic(
+              "Conflict detected: Item with ID " + std::to_string(itemID) +
+                  " already exists with a different registry key: " +
+                  std::to_string(pair.first),
+              "ItemRegistry", logType::WARNING);
+          return false;
+        }
+      }
+
       items[id] = item;
       Logger::logStatic("Item with id: " + std::to_string(id) +
                             " has been registered",

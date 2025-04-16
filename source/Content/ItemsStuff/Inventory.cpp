@@ -1,4 +1,5 @@
 #include "Inventory.hpp"
+#include "../../GUI/components/inventoryGUI.hpp"
 #include "Items/ItemRegister.hpp"
 #include "itemtextures.hpp"
 #include <memory>
@@ -15,32 +16,12 @@ void Inventory::clearInventory() {
     }
 }
 
-void Inventory::initializeCells(unsigned int rows, unsigned int cols,
-                                float cell_size, sf::Vector2f _offset) {
-  // Резервируем память для двух векторов: ячеек и инвентаря
-  CellsInventory.resize(
-      rows, std::vector<Cell>(cols, Cell(sf::Vector2f(0, 0), cell_size)));
-
-  InventoryArray.resize(rows,
-                        std::vector<std::shared_ptr<Item>>(cols, nullptr));
-
-  // Инициализация каждой ячейки
-  for (unsigned int row = 0; row < rows; ++row) {
-    for (unsigned int col = 0; col < cols; ++col) {
-      // Позиция ячейки на экране
-      sf::Vector2f cellPosition(_offset.x + row * cell_size,
-                                _offset.y + col * cell_size);
-
-      // Создание ячейки
-      CellsInventory[row][col] =
-          Cell(cellPosition, cell_size, rows * row + col);
-    }
-  }
-}
-
 // Конструктор инвентаря
 Inventory::Inventory(unsigned int rows, unsigned int cols)
-    : isOpened(false), m_Coins(0, 0, 0) {}
+    : isOpened(false), m_Coins(0, 0, 0), m_gui() {
+  InventoryArray.resize(rows,
+                        std::vector<std::shared_ptr<Item>>(cols, nullptr));
+}
 
 /// Получаем ID текущей ячейки по позиции мыши
 /// @param mouse_pos Позиция мыши в окне
@@ -48,28 +29,30 @@ Inventory::Inventory(unsigned int rows, unsigned int cols)
 /// @note ID ячейки - это номер ячейки в инвентаре, начиная с 0
 /// @note Если мышь не в пределах инвентаря, возвращаем -1
 unsigned int Inventory::getCurrentCellID(sf::Vector2i mouse_pos) const {
-  // Получаем размеры ячеек
-  // Предполагаем, что все ячейки одного размера
-  float cell_size = CellsInventory[0][0].getSize().x;
+  // // Получаем размеры ячеек
+  // // Предполагаем, что все ячейки одного размера
+  // float cell_size = CellsInventory[0][0].getSize().x;
 
-  // Проверяем, что позиция мыши находится в пределах инвентаря
-  if (mouse_pos.x < inventoryPosition.x || mouse_pos.y < inventoryPosition.y ||
-      mouse_pos.x > inventoryPosition.x + inventoryPosition.x ||
-      mouse_pos.y > inventoryPosition.y + inventoryPosition.y) {
-    return -1; // Если мышь не внутри инвентаря
-  }
+  // // Проверяем, что позиция мыши находится в пределах инвентаря
+  // if (mouse_pos.x < inventoryPosition.x || mouse_pos.y < inventoryPosition.y
+  // ||
+  //     mouse_pos.x > inventoryPosition.x + inventoryPosition.x ||
+  //     mouse_pos.y > inventoryPosition.y + inventoryPosition.y) {
+  //   return -1; // Если мышь не внутри инвентаря
+  // }
 
-  // Рассчитываем индексы строки и столбца в сетке инвентаря
-  unsigned int row = (mouse_pos.x - inventoryPosition.x) / cell_size;
-  unsigned int col = (mouse_pos.y - inventoryPosition.y) / cell_size;
+  // // Рассчитываем индексы строки и столбца в сетке инвентаря
+  // unsigned int row = (mouse_pos.x - inventoryPosition.x) / cell_size;
+  // unsigned int col = (mouse_pos.y - inventoryPosition.y) / cell_size;
 
-  // Проверяем, что индексы находятся в пределах размеров инвентаря
-  if (row >= CellsInventory.size() || col >= CellsInventory[0].size()) {
-    return -1; // Если координаты вне допустимого диапазона
-  }
+  // // Проверяем, что индексы находятся в пределах размеров инвентаря
+  // if (row >= CellsInventory.size() || col >= CellsInventory[0].size()) {
+  //   return -1; // Если координаты вне допустимого диапазона
+  // }
 
-  // Возвращаем идентификатор ячейки
-  return CellsInventory[row][col].getIDCell();
+  // // Возвращаем идентификатор ячейки
+  // return CellsInventory[row][col].getIDCell();
+  return 0;
 }
 
 // Деструктор инвентаря
@@ -77,34 +60,37 @@ Inventory::~Inventory() { clearInventory(); }
 
 bool Inventory::addItem(std::shared_ptr<Item> item) {
   if (!item)
-    return false; //
+    return false;
 
   // Если предмет можно складывать
-  if (item->isStackable()) {
-    for (auto &row : InventoryArray) {
-      for (auto &slot : row) {
+  if (item->isStackable())
+    for (auto &row : InventoryArray)
+      for (auto &slot : row)
         if (slot && slot->getID() == item->getID() &&
             slot->getAmount() < slot->getMaxAmount()) {
           slot->addAmount(item->getAmount());
+
+          // Обновляем позиции всех предметов через GUI
+          if (auto gui = m_gui.lock()) {
+            gui->updateItemPosGUI();
+          }
+
           return true;
         }
-      }
-    }
-  }
 
   // Если предмет не складывается, ищем пустой слот
-  for (size_t row = 0; row < InventoryArray.size(); ++row) {
-    for (size_t col = 0; col < InventoryArray[row].size(); ++col) {
+  for (size_t row = 0; row < InventoryArray.size(); ++row)
+    for (size_t col = 0; col < InventoryArray[row].size(); ++col)
       if (!InventoryArray[row][col]) {
         InventoryArray[row][col] = item;
 
-        // Привязка позиции и размера предмета к ячейке
-        item->setPosition(CellsInventory[row][col].getPosition());
-        item->setSize(CellsInventory[row][col].getSize());
+        // Обновляем позиции всех предметов через GUI
+        if (auto gui = m_gui.lock()) {
+          gui->updateItemPosGUI();
+        }
+
         return true;
       }
-    }
-  }
 
   return false; // Инвентарь заполнен
 }
@@ -118,6 +104,12 @@ bool Inventory::removeItemByID(unsigned int ID) {
 
     if (it != row.end()) {
       *it = nullptr; // Освобождение слота
+
+      // Обновляем позиции всех предметов через GUI
+      if (auto gui = m_gui.lock()) {
+        gui->updateItemPosGUI();
+      }
+
       return true;
     }
   }
@@ -164,13 +156,5 @@ int Inventory::getTotalSlots() const {
   return static_cast<int>(InventoryArray.size() * InventoryArray[0].size());
 }
 
-Coins &Inventory::getCoins() { return m_Coins; }
-
 // Обновление инвентаря
-void Inventory::update(sf::Vector2i mouse_pos) {
-  for (auto &row : CellsInventory) {
-    for (auto &cell : row) {
-      cell.update(mouse_pos);
-    }
-  }
-}
+void Inventory::update(sf::Vector2i mouse_pos) {}

@@ -42,7 +42,7 @@ public:
   ~DropDownList();
 
   // Accessors
-  const unsigned short &getActiveElementId() const;
+  const unsigned short getActiveElementId() const;
 
   // Functions
   const bool getKeytime();

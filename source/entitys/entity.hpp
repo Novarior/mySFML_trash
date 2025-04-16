@@ -37,9 +37,9 @@ protected:
   // etc.).
   std::unique_ptr<Attributes> e_attributes;
   // The component that handles the entity's inventory (items, equipment, etc.).
-  std::unique_ptr<Inventory> e_inventory;
+  std::shared_ptr<Inventory> e_inventory;
   // basic slot for item for entity
-  std::unique_ptr<Item> e_item;
+  std::shared_ptr<Item> e_item;
 
   bool isCollision; // A flag indicating whether the entity is currently in a
                     // state of collision with another entity or not.
@@ -122,7 +122,9 @@ public:
 
   /// @brief return the inventory of the entity
   /// @return pointer to the inventory of the entity
-  inline Inventory &e_getInventory() const { return *this->e_inventory; }
+  inline std::shared_ptr<Inventory> e_getInventory() const {
+    return this->e_inventory;
+  }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////

@@ -1,5 +1,5 @@
-#ifndef ITEM_TEXTURES_HPP
-#define ITEM_TEXTURES_HPP
+#ifndef ITEMTEXTURES
+#define ITEMTEXTURES
 
 namespace ItemTextures {
 // DEFAULT TEXTURE IS NULL TEXTURA =)
@@ -29,4 +29,4 @@ const char item_img_poison_small_regeneration[] =
 
 } // namespace ItemTextures
 
-#endif /* ITEM_TEXTURES_HPP */
+#endif /* ITEMTEXTURES */

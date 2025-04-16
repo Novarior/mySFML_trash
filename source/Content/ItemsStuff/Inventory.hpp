@@ -4,6 +4,10 @@
 #include "Coins.hpp"
 #include "Items/ItemRegister.hpp"
 
+namespace GUI {
+class InventoryGUI;
+}
+
 class Inventory {
 public:
   Inventory(unsigned int rows, unsigned int cols);
@@ -12,7 +16,6 @@ public:
   // Основные функции
   unsigned int getCurrentCellID(sf::Vector2i mouse_pos) const;
   void update(sf::Vector2i mouse_pos);
-  void render(sf::RenderTarget &target);
 
   // Функции для работы с предметами
   bool addItem(std::shared_ptr<Item> _item);
@@ -39,23 +42,21 @@ public:
 
   // Получение состояния
   int getTotalSlots() const;
-  Coins &getCoins();
+  inline const Coins &getCoins() { return m_Coins; }
 
-  void initializeCells(unsigned int rows, unsigned int cols, float cell_size,
-                       sf::Vector2f _offset);
-
-  // for GUI
+  // Ссылка на GUI инвентаря для позиционирования предметов
+  void setGUI(std::shared_ptr<GUI::InventoryGUI> gui) { m_gui = gui; }
+  std::weak_ptr<GUI::InventoryGUI> getGUI() const { return m_gui; }
 
 private:
-  bool isOpened; // Открыт ли инвентарь
-
+  // Открыт ли инвентарь
+  bool isOpened;
   // Слоты для предметов
   std::vector<std::vector<std::shared_ptr<Item>>> InventoryArray;
-
-  sf::Vector2f inventoryPosition;
-
   // Монеты
   Coins m_Coins;
+  // Ссылка на GUI инвентаря
+  std::weak_ptr<GUI::InventoryGUI> m_gui;
 };
 
 #endif /* INVENTORY */

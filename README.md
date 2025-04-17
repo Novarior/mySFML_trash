@@ -1,4 +1,4 @@
-# MySFML Trash
+# Ekzeckt a game
 
 This repository contains the game project "Ekzeckt"
 in it I learn the c++ language and its capabilities

@@ -9,6 +9,7 @@ on:
 
 jobs:
   update-dates:
+    name: check date and update
     runs-on: ubuntu-latest
     permissions:
       contents: write  # Добавлены права на запись

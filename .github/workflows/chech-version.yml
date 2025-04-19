@@ -9,6 +9,7 @@ on:
 
 jobs:
   update-footer:
+    name: check version and update
     runs-on: ubuntu-latest
     permissions:
       contents: write

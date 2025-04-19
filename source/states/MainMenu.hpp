@@ -1,8 +1,8 @@
-#ifndef CPP_MAINMENU_CORESTATE_HPP
-#define CPP_MAINMENU_CORESTATE_HPP
+#ifndef MAINMENU
+#define MAINMENU
 
 #include "../GUI/GUISYS.hpp"
-#include "DebugRoom.hpp"
+
 #include "EditorState.hpp"
 #include "Process.hpp"
 #include "State.hpp"
@@ -49,4 +49,4 @@ public:
 
   virtual size_t getMemoryUsage() const { return sizeof(*this); }
 };
-#endif
+#endif /* MAINMENU */

@@ -1,100 +1,58 @@
 #include "Inventory.hpp"
+#include "../../GUI/components/inventoryGUI.hpp"
+#include "Items/ItemRegister.hpp"
+#include "itemtextures.hpp"
+#include <memory>
 
 // Очистка инвентаря
 void Inventory::clearInventory() {
+  // if not nullptr
+  if (InventoryArray[0][0] == nullptr)
+    return; // Если инвентарь пуст, ничего не делаем
+
   for (auto &row : InventoryArray)
     for (auto &item : row) {
       item.reset(); // Умное указание освободит память
     }
 }
 
-void Inventory::initializeCells(unsigned int rows, unsigned int cols,
-                                float cell_size) {
-  // Резервируем память для двух векторов: ячеек и инвентаря
-  CellsInventory.resize(
-      rows, std::vector<Cell>(cols, Cell(sf::Vector2f(0, 0), cell_size,
-                                         TextureManager::getTexture(
-                                             "inventory_cell_texture"))));
+// Конструктор инвентаря
+Inventory::Inventory(unsigned int rows, unsigned int cols)
+    : isOpened(false), m_Coins(0, 0, 0), m_gui() {
   InventoryArray.resize(rows,
                         std::vector<std::shared_ptr<Item>>(cols, nullptr));
-
-  // Инициализация каждой ячейки
-  for (unsigned int row = 0; row < rows; ++row) {
-    for (unsigned int col = 0; col < cols; ++col) {
-      // Позиция ячейки на экране
-      sf::Vector2f cellPosition(
-          m_background_inventory.getPosition().x + col * cell_size,
-          m_background_inventory.getPosition().y + row * cell_size);
-
-      // Создание ячейки
-      CellsInventory[row][col] =
-          Cell(cellPosition, cell_size, this->m_CellInvTex);
-    }
-  }
 }
 
-// Конструктор инвентаря
-Inventory::Inventory(sf::Vector2f screen_size, unsigned int rows,
-                     unsigned int cols, sf::Font &font, float cell_size)
-    : isOpened(false), m_Coins(0, 0, 0), m_Text(font, "Inventory", 24) {
-  // Фон инвентаря
-  sf::Vector2f inventorySize(screen_size.x * 0.5f, screen_size.y * 0.5f);
-  sf::Vector2f inventoryPosition(screen_size.x * 0.25f, screen_size.y * 0.25f);
-
-  m_background_inventory.setSize(inventorySize);
-  m_background_inventory.setPosition(inventoryPosition);
-  m_background_inventory.setFillColor(sf::Color(40, 40, 40, 225));
-
-  // Инициализация ячеек
-  this->m_CellInvTex.update(
-      TextureManager::getTexture("inventory_cell_texture"));
-  initializeCells(rows, cols, cell_size);
-
-  // Инициализация текста
-  m_Text.setFillColor(sf::Color::White);
-  updateTextPosition();
-}
-
-void Inventory::updateTextPosition() {
-  // Позиционируем текст в верхней части инвентаря (например, чуть выше фона)
-  sf::Vector2f textPosition(m_background_inventory.getPosition().x +
-                                10.f, // сдвиг от левого края фона
-                            m_background_inventory.getPosition().y -
-                                30.f // сдвиг от верхнего края фона
-  );
-
-  m_Text.setPosition(textPosition);
-}
-
+/// Получаем ID текущей ячейки по позиции мыши
+/// @param mouse_pos Позиция мыши в окне
+/// @return ID ячейки или -1, если мышь не в пределах инвентаря
+/// @note ID ячейки - это номер ячейки в инвентаре, начиная с 0
+/// @note Если мышь не в пределах инвентаря, возвращаем -1
 unsigned int Inventory::getCurrentCellID(sf::Vector2i mouse_pos) const {
-  // Получаем размеры ячеек
-  float cell_size = CellsInventory[0][0]
-                        .getSize()
-                        .x; // Предполагаем, что все ячейки одного размера
+  // // Получаем размеры ячеек
+  // // Предполагаем, что все ячейки одного размера
+  // float cell_size = CellsInventory[0][0].getSize().x;
 
-  // Проверяем, что позиция мыши находится в пределах инвентаря
-  if (mouse_pos.x < m_background_inventory.getPosition().x ||
-      mouse_pos.y < m_background_inventory.getPosition().y ||
-      mouse_pos.x > m_background_inventory.getPosition().x +
-                        m_background_inventory.getSize().x ||
-      mouse_pos.y > m_background_inventory.getPosition().y +
-                        m_background_inventory.getSize().y) {
-    return -1; // Если мышь не внутри инвентаря
-  }
+  // // Проверяем, что позиция мыши находится в пределах инвентаря
+  // if (mouse_pos.x < inventoryPosition.x || mouse_pos.y < inventoryPosition.y
+  // ||
+  //     mouse_pos.x > inventoryPosition.x + inventoryPosition.x ||
+  //     mouse_pos.y > inventoryPosition.y + inventoryPosition.y) {
+  //   return -1; // Если мышь не внутри инвентаря
+  // }
 
-  // Рассчитываем индексы строки и столбца в сетке инвентаря
-  unsigned int row =
-      (mouse_pos.y - m_background_inventory.getPosition().y) / cell_size;
-  unsigned int col =
-      (mouse_pos.x - m_background_inventory.getPosition().x) / cell_size;
+  // // Рассчитываем индексы строки и столбца в сетке инвентаря
+  // unsigned int row = (mouse_pos.x - inventoryPosition.x) / cell_size;
+  // unsigned int col = (mouse_pos.y - inventoryPosition.y) / cell_size;
 
-  // Проверяем, что индексы находятся в пределах размеров инвентаря
-  if (row >= CellsInventory.size() || col >= CellsInventory[0].size()) {
-    return -1; // Если координаты вне допустимого диапазона
-  }
+  // // Проверяем, что индексы находятся в пределах размеров инвентаря
+  // if (row >= CellsInventory.size() || col >= CellsInventory[0].size()) {
+  //   return -1; // Если координаты вне допустимого диапазона
+  // }
 
-  // Возвращаем идентификатор ячейки
-  return CellsInventory[row][col].getID();
+  // // Возвращаем идентификатор ячейки
+  // return CellsInventory[row][col].getIDCell();
+  return 0;
 }
 
 // Деструктор инвентаря
@@ -105,31 +63,34 @@ bool Inventory::addItem(std::shared_ptr<Item> item) {
     return false;
 
   // Если предмет можно складывать
-  if (item->isStackable()) {
-    for (auto &row : InventoryArray) {
-      for (auto &slot : row) {
+  if (item->isStackable())
+    for (auto &row : InventoryArray)
+      for (auto &slot : row)
         if (slot && slot->getID() == item->getID() &&
             slot->getAmount() < slot->getMaxAmount()) {
           slot->addAmount(item->getAmount());
+
+          // Обновляем позиции всех предметов через GUI
+          if (auto gui = m_gui.lock()) {
+            gui->updateItemPosGUI();
+          }
+
           return true;
         }
-      }
-    }
-  }
 
   // Если предмет не складывается, ищем пустой слот
-  for (size_t row = 0; row < InventoryArray.size(); ++row) {
-    for (size_t col = 0; col < InventoryArray[row].size(); ++col) {
+  for (size_t row = 0; row < InventoryArray.size(); ++row)
+    for (size_t col = 0; col < InventoryArray[row].size(); ++col)
       if (!InventoryArray[row][col]) {
         InventoryArray[row][col] = item;
 
-        // Привязка позиции и размера предмета к ячейке
-        item->setPosition(CellsInventory[row][col].getPosition());
-        item->setSize(CellsInventory[row][col].getSize());
+        // Обновляем позиции всех предметов через GUI
+        if (auto gui = m_gui.lock()) {
+          gui->updateItemPosGUI();
+        }
+
         return true;
       }
-    }
-  }
 
   return false; // Инвентарь заполнен
 }
@@ -143,77 +104,57 @@ bool Inventory::removeItemByID(unsigned int ID) {
 
     if (it != row.end()) {
       *it = nullptr; // Освобождение слота
+
+      // Обновляем позиции всех предметов через GUI
+      if (auto gui = m_gui.lock()) {
+        gui->updateItemPosGUI();
+      }
+
       return true;
     }
   }
   return false; // Предмет с таким ID не найден
 }
 
+/// Получаем предмет по ID предмета
 std::shared_ptr<Item> Inventory::getItem(unsigned int ID) const {
-  for (const auto &row : InventoryArray) {
-    for (const auto &item : row) {
-      if (item && item->getID() == ID) {
+  for (const auto &row : InventoryArray)
+    for (const auto &item : row)
+      if (item && item->getID() == ID)
         return item;
-      }
-    }
-  }
-  return nullptr; // Предмет не найден
+  // Предмет не найден
+  // Возвращаем предмет затычку
+  return ItemRegistry::getItem(0); // Предмет не найден
 }
 
 std::shared_ptr<Item> Inventory::getItemFromSlot(unsigned int slot) const {
+  // Проверяем, что инвентарь не пуст
+  if (InventoryArray.empty() || InventoryArray[0].empty()) {
+    Logger::logStatic("ERROR::INVENTORY::GET_ITEM_FROM_SLOT::EMPTY_INVENTORY",
+                      "Inventory", logType::ERROR);
+    return ItemRegistry::getItem(0); // Возвращаем предмет-затычку
+  }
+
   unsigned int rows = InventoryArray.size();
   unsigned int cols = InventoryArray[0].size();
 
-  if (slot >= rows * cols)
-    return nullptr;
+  // Проверяем, что слот находится в пределах инвентаря
+  if (slot >= rows * cols) {
+    Logger::logStatic(
+        "ERROR::INVENTORY::GET_ITEM_FROM_SLOT::OUT_OF_BOUNDS_SLOT: " +
+            std::to_string(slot),
+        "Inventory", logType::WARNING);
+    return ItemRegistry::getItem(0); // Возвращаем предмет-затычку
+  }
 
-  return InventoryArray[slot / cols][slot % cols];
+  // Возвращаем предмет из указанного слота или предмет-затычку, если слот пуст
+  auto item = InventoryArray[slot / cols][slot % cols];
+  return item ? item : ItemRegistry::getItem(0);
 }
 
 int Inventory::getTotalSlots() const {
   return static_cast<int>(InventoryArray.size() * InventoryArray[0].size());
 }
 
-Coins &Inventory::getCoins() { return m_Coins; }
-
 // Обновление инвентаря
-void Inventory::update(sf::Vector2i mouse_pos) {
-  for (auto &row : CellsInventory) {
-    for (auto &cell : row) {
-      cell.update(mouse_pos);
-    }
-  }
-
-  // Обновление текста с монетами
-  m_StringStream.str("");
-  m_StringStream.clear();
-  m_StringStream << "Gold: " << m_Coins.get_GoldCointCount() << " | "
-                 << "Silver: " << m_Coins.get_SilverCointCount() << " | "
-                 << "Copper: " << m_Coins.get_CopperCointCount();
-  m_Text.setString(m_StringStream.str());
-}
-
-void Inventory::render(sf::RenderTarget &target) {
-  if (!isOpened)
-    return;
-
-  // Отображение фона и ячеек
-  target.draw(m_background_inventory);
-  for (const auto &row : CellsInventory) {
-    for (const auto &cell : row) {
-      target.draw(cell);
-    }
-  }
-
-  // Отображение текста
-  target.draw(m_Text);
-
-  // Отображение предметов
-  for (const auto &row : InventoryArray) {
-    for (const auto &item : row) {
-      if (item) {
-        item->render(target);
-      }
-    }
-  }
-}
+void Inventory::update(sf::Vector2i mouse_pos) {}

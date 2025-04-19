@@ -1,65 +1,116 @@
-#ifndef ITEMSTUFF_ITEM_H
-#define ITEMSTUFF_ITEM_H
+#ifndef ITEM_HPP
+#define ITEM_HPP
 #include "../../core/header.h"
 #include "Coins.hpp"
 #include "itemtextures.hpp"
 
 class Item {
 public:
-    Item(unsigned int id = 0, const std::string& name = "Default", bool pickable = false, bool stackable = false,
-        bool usable = false, int amount = 0, unsigned maxAmount = 0, const Coins& price = { 0, 0, 1 })
-        : item_ID(id)
-        , m_name(name)
-        , m_pickable(pickable)
-        , m_stackable(stackable)
-        , m_usable(usable)
-        , m_amount(amount)
-        , m_maxAmount(maxAmount)
-        , m_price(price)
-    {
-    }
+  Item(unsigned int id = 0, const std::string &name = "NULL",
+       bool pickable = false, bool stackable = false, bool usable = false,
+       int amount = 0, unsigned maxAmount = 0, int durability = 0,
+       int maxDurability = 0, const Coins &price = {0, 0, 0},
+       const sf::Texture &texture = TextureManager::getTexture("items_NULL")) {
+    iInfo.m_name = name;
+    iInfo.item_ID = id;
+    iData.m_pickable = pickable;
+    iData.m_stackable = stackable;
+    iData.m_usable = usable;
+    iData.m_amount = amount;
+    iData.m_maxAmount = maxAmount;
+    m_price = price;
+  }
 
-    virtual ~Item() noexcept = default;
+  virtual ~Item() noexcept = default;
 
-    // Modifiers
-    void addAmount(int _amount) noexcept { m_amount += _amount; }
-    void removeAmount(int _amount) noexcept { m_amount -= _amount; }
+  // Modifiers
+  void addAmount(int _amount) noexcept {
+    iData.m_amount = std::min(static_cast<int>(iData.m_maxAmount),
+                              iData.m_amount + iData.m_amount);
+  }
+  void removeAmount(int _amount) noexcept {
+    iData.m_amount = std::max(0, iData.m_amount - iData.m_amount);
+    if (iData.m_amount == 0)
+      iData.flagForDeleteFromInventory = true;
+  }
 
-    // Getters
-    unsigned int getID() const noexcept { return item_ID; }
-    const std::string& getName() const noexcept { return m_name; }
-    int getAmount() const noexcept { return m_amount; }
-    unsigned getMaxAmount() const noexcept { return m_maxAmount; }
-    bool isPickable() const noexcept { return m_pickable; }
-    bool isStackable() const noexcept { return m_stackable; }
-    bool isUsable() const noexcept { return m_usable; }
-    Coins& getPrice() noexcept { return m_price; }
+  // Getters
+  /// @brief get ID of item
+  /// @return unsigned int
+  unsigned int getID() const noexcept { return iInfo.item_ID; }
 
-    // Setters
-    void setID(unsigned int ID) noexcept { item_ID = ID; }
-    void setName(const std::string& name) noexcept { m_name = name; }
-    void setAmount(int amount) noexcept { m_amount = amount; }
-    void setPickable(bool pickable) noexcept { m_pickable = pickable; }
-    void setStackable(bool stackable) noexcept { m_stackable = stackable; }
+  /// @brief get name of item
+  /// @return std::string
+  const std::string &getName() const noexcept { return iInfo.m_name; }
 
-    virtual void useItem() = 0;
-    virtual void update(float delta_time, sf::Vector2i mouse_pos) { }
-    virtual void render(sf::RenderTarget& target) noexcept { target.draw(m_shape); }
+  /// @brief get amount of item
+  /// @return int
+  int getAmount() const noexcept { return iData.m_amount; }
 
-    void setPosition(sf::Vector2f position) noexcept { m_shape.setPosition(position); }
-    void setSize(sf::Vector2f size) noexcept { m_shape.setSize(size); }
+  /// @brief get max amount of item
+  int getMaxAmount() const noexcept { return iData.m_maxAmount; }
+
+  /// @brief item is pickable?
+  bool isPickable() const noexcept { return iData.m_pickable; }
+
+  /// @brief item is stackable?
+  bool isStackable() const noexcept { return iData.m_stackable; }
+
+  /// @brief item is usable?
+  bool isUsable() const noexcept { return iData.m_usable; }
+
+  /// @brief get "price" of item
+  /// @return Coins
+  Coins &getPrice() noexcept { return m_price; }
+
+  /// @brief get self item for next interactions after
+  /// @return shared_ptr<Item>
+  /// @note for example: when you use item, you need to get self item
+  std::shared_ptr<Item> getSelf() noexcept {
+    return std::make_shared<Item>(*this);
+  }
+
+  // Setters
+  void setID(unsigned int ID) noexcept { iInfo.item_ID = ID; }
+  void setName(const std::string &name) noexcept { iInfo.m_name = name; }
+  void setAmount(int amount) noexcept { iData.m_amount = amount; }
+  void setPickable(bool pickable) noexcept { iData.m_pickable = pickable; }
+  void setStackable(bool stackable) noexcept { iData.m_stackable = stackable; }
+
+  virtual void useItem() {}
+  virtual void update(float delta_time, sf::Vector2i mouse_pos) {}
+  virtual void render(sf::RenderTarget &target) noexcept {
+    target.draw(m_item_shape);
+  }
+
+  inline void setPosition(sf::Vector2f position) noexcept {
+    m_item_shape.setPosition(position);
+  }
+  inline void setSize(sf::Vector2f size) noexcept {
+    m_item_shape.setSize(size);
+  }
 
 protected:
-    unsigned int item_ID;
+  struct ItemInfo {
     std::string m_name;
+    unsigned int item_ID;
+  } iInfo;
+  struct ItemData {
     bool m_pickable;
     bool m_stackable;
     bool m_usable;
     int m_amount;
-    unsigned m_maxAmount;
-    Coins m_price;
+    int m_maxAmount;
+    int durability;
+    int maxDurability;
 
-    sf::RectangleShape m_shape;
+    // Flag for delete from inventory
+    // when item is used and when amount is 0
+    bool flagForDeleteFromInventory = false;
+  } iData;
+  Coins m_price;
+
+  sf::RectangleShape m_item_shape;
 };
 
-#endif
+#endif /* ITEM */

@@ -1,0 +1,28 @@
+name: Update Wiki Dates
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'Ekzeckt.wiki/**'  # Обновлен путь к Wiki файлам
+
+jobs:
+  update-dates:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Добавлены права на запись
+    steps:
+      - uses: actions/checkout@v3
+      - name: Update dates
+        run: |
+          find Ekzeckt.wiki -type f -name "*.md" | while read file; do
+            sed -i "s/🔄 Last updated:.*$/🔄 Last updated: $(date +'%B %Y')/" "$file"
+          done
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .
+          git commit -m "Update wiki dates" || echo "No changes to commit"
+          git push

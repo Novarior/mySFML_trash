@@ -1,11 +1,12 @@
-#ifndef CPP_STATE_CORESTATE_HPP
-#define CPP_STATE_CORESTATE_HPP
+#ifndef STATE
+#define STATE
 
 #include "../GUI/GUISYS.hpp"
 
 #include "../math/mymath.hpp"
 #include "../source/mypars/parsJSON.hpp"
 #include "gfx.hpp"
+#include <memory>
 // Forward declaration of State class
 class State;
 
@@ -15,7 +16,6 @@ class StateData {
 public:
   // Constructor initializes all pointers to nullptr
   StateData() {
-    this->sd_Window = nullptr;
     this->sd_supportedKeys = nullptr;
     this->sd_States = nullptr;
     this->sd_gfxSettings = nullptr;
@@ -24,23 +24,29 @@ public:
     this->sd_volumeManager = nullptr;
   }
 
-  float sd_gridSize;                           // Size of the grid
-  std::shared_ptr<sf::RenderWindow> sd_Window; // Pointer to the SFML window
-  sf::Font sd_font;                            // Font used in the game
-  sf::Font sd_debugFont;                       // Font used for debugging
-  GraphicsSettings *sd_gfxSettings; // Pointer to the graphics settings
-  std::shared_ptr<VolumeManager>
-      sd_volumeManager; // Vector for link to volume manager
+  float sd_gridSize;                         // Size of the grid
+  std::weak_ptr<sf::RenderWindow> sd_Window; // Pointer to the SFML window
+  sf::Font sd_font;                          // Font used in the game
+  sf::Font sd_debugFont;                     // Font used for debugging
+  GraphicsSettings *sd_gfxSettings;          // Pointer to the graphics settings
+  // Vector for link to volume manager
+  std::shared_ptr<VolumeManager> sd_volumeManager;
 
-  std::stack<State *> *sd_States;               // Stack of states
-  std::map<std::string, int> *sd_supportedKeys; // Map of supported keys
-  unsigned int sd_characterSize_debug;          // Character size for debug text
-  unsigned int sd_characterSize_game_big; // Character size for big game text
-  unsigned int
-      sd_characterSize_game_medium; // Character size for medium game text
-  unsigned int
-      sd_characterSize_game_small; // Character size for small game text
-  bool reserGUI;                   // Flag to reset GUI
+  // Stack of states
+  std::stack<State *> *sd_States;
+  // Map of supported keys
+  std::map<std::string, uint32_t> *sd_supportedKeys;
+  // Character size for debug text
+  unsigned int sd_characterSize_debug;
+  // Character size for big game text
+  unsigned int sd_characterSize_game_big;
+  // Character size for medium game text
+  unsigned int sd_characterSize_game_medium;
+  // Character size for small game text
+  unsigned int sd_characterSize_game_small;
+  std::weak_ptr<keyboardOSX> sd_keyboard; // Pointer to keyboard
+  // Flag to reset GUI
+  bool reserGUI;
 };
 
 // Abstract class for game states
@@ -48,13 +54,15 @@ class State {
 private:
 protected:
   // Variables
-  StateData *IstateData;                         // Pointer to shared state data
-  std::stack<State *> *Istates;                  // Stack of states
-  std::shared_ptr<sf::RenderWindow> Iwindow;     // Pointer to the SFML window
-  sf::Event *Ievent;                             // Pointer to the SFML event
-  std::map<std::string, int> *IsupportedKeys;    // Map of supported keys
-  std::map<std::string, int> Ikeybinds;          // Map of key bindings
+  StateData *IstateData;                   // Pointer to shared state data
+  std::stack<State *> *Istates;            // Stack of states
+  std::weak_ptr<sf::RenderWindow> Iwindow; // Weak pointer to the SFML window
+  // Map of all supported keys
+  std::map<std::string, uint32_t> *IsupportedKeys;
+  // Map of used key in current state
+  std::map<std::string, uint32_t> Ikeybinds;
   std::shared_ptr<VolumeManager> IvolumeManager; // Volume manager
+  std::weak_ptr<keyboardOSX> Ikeyboard;          // Pointer to keyboard
 
   // Resources
   bool Iquit;        // Flag to quit the state
@@ -68,13 +76,11 @@ protected:
   sf::Vector2f ImousePosView;
   sf::Vector2i ImousePosGrid;
 
-  std::stringstream IstringStream;              // Stream for debug string
-  sf::Text Itext;                               // Debug text
-  bool Idebud;                                  // Flag for debug mode into game
-  std::map<std::string, sf::Texture> Itextures; // Map of textures
+  std::stringstream IstringStream; // Stream for debug string
+  sf::Text Itext;                  // Debug text
+  bool Idebud;                     // Flag for debug mode into game
 
   // Sounds and him elements for game (volume, sound, buffer, ect )
-
   // shared map with sounds and name itself
   std::map<std::string, sf::Sound> IsoundsMap;
 
@@ -134,4 +140,4 @@ public:
   // Render the state (pure virtual function)
   virtual void render(sf::RenderWindow &target) = 0;
 };
-#endif
+#endif /* STATE */

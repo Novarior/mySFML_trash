@@ -1,6 +1,6 @@
 # Установка минимальной версии CMake
 cmake_minimum_required(VERSION 3.10.0)
-project(Ekzeckt VERSION 0.0.9)
+project(Ekzeckt VERSION 0.0.10)
 
 # Установка минимальной версии C++ стандарта
 set(CMAKE_CXX_STANDARD 17)
@@ -89,6 +89,7 @@ if(APPLE)
         nlohmann_json::nlohmann_json
         "-framework CoreFoundation"
         "-framework CoreServices"
+         "-framework IOKit"
     )
 
     # Установка rpath

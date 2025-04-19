@@ -2,6 +2,10 @@
 #include "LOGGER.hpp"
 #include "_myConst.h"
 #include "dataCollector/_man_Texture.hpp"
+#include "keyboard.hpp"
+#include <IOKit/hid/IOHIDUsageTables.h>
+#include <iostream>
+#include <memory>
 
 #if __APPLE__
 void Core::initDirectories() { // check if app directory exists
@@ -56,11 +60,15 @@ void Core::initStateData() {
   this->mStatedata.sd_volumeManager =
       std::shared_ptr<VolumeManager>(new VolumeManager());
 
+  // share acsess to keyboard
+  this->keyboard = std::make_shared<keyboardOSX>();
+  this->mStatedata.sd_keyboard = this->keyboard;
+
 #if __MDEBUG__ == 1
   // logger moment
 
   // check if window is not null
-  if (!this->mStatedata.sd_Window)
+  if (!this->mStatedata.sd_Window.lock())
     Logger::logStatic("ERROR::WINDOW::NOT INITED", "Core::initStateData()",
                       logType::ERROR);
 
@@ -75,50 +83,48 @@ void Core::initStateData() {
 void Core::initKeyBinds() { // init default keys
 
   // load key binds from file
-  if (!ParserJson::loadKeyBinds(this->supportedKeys)) {
-    Logger::logStatic("Key binds not loaded", "Core::initKeyBinds()");
-  } else { // load default key binds
-    Logger::logStatic("Key binds loaded", "Core::initKeyBinds()");
-    supportedKeys["Escape"] = static_cast<int>(sf::Keyboard::Scancode::Escape);
-    supportedKeys["A"] = static_cast<int>(sf::Keyboard::Scancode::A);
-    supportedKeys["C"] = static_cast<int>(sf::Keyboard::Scancode::C);
-    supportedKeys["D"] = static_cast<int>(sf::Keyboard::Scancode::D);
-    supportedKeys["E"] = static_cast<int>(sf::Keyboard::Scancode::E);
-    supportedKeys["F"] = static_cast<int>(sf::Keyboard::Scancode::F);
-    supportedKeys["Q"] = static_cast<int>(sf::Keyboard::Scancode::Q);
-    supportedKeys["R"] = static_cast<int>(sf::Keyboard::Scancode::R);
-    supportedKeys["S"] = static_cast<int>(sf::Keyboard::Scancode::S);
-    supportedKeys["W"] = static_cast<int>(sf::Keyboard::Scancode::W);
-    supportedKeys["X"] = static_cast<int>(sf::Keyboard::Scancode::X);
-    supportedKeys["Z"] = static_cast<int>(sf::Keyboard::Scancode::Z);
-    supportedKeys["1"] = static_cast<int>(sf::Keyboard::Scancode::Num1);
-    supportedKeys["2"] = static_cast<int>(sf::Keyboard::Scancode::Num2);
-    supportedKeys["3"] = static_cast<int>(sf::Keyboard::Scancode::Num3);
-    supportedKeys["4"] = static_cast<int>(sf::Keyboard::Scancode::Num4);
-    supportedKeys["5"] = static_cast<int>(sf::Keyboard::Scancode::Num5);
-    supportedKeys["6"] = static_cast<int>(sf::Keyboard::Scancode::Num6);
-    supportedKeys["7"] = static_cast<int>(sf::Keyboard::Scancode::Num7);
-    supportedKeys["8"] = static_cast<int>(sf::Keyboard::Scancode::Num8);
-    supportedKeys["9"] = static_cast<int>(sf::Keyboard::Scancode::Num9);
-    supportedKeys["0"] = static_cast<int>(sf::Keyboard::Scancode::Num0);
-    supportedKeys["Space"] = static_cast<int>(sf::Keyboard::Scancode::Space);
-    supportedKeys["Enter"] = static_cast<int>(sf::Keyboard::Scancode::Enter);
-    supportedKeys["BackSpace"] =
-        static_cast<int>(sf::Keyboard::Scancode::Backspace);
-    supportedKeys["Slash"] = static_cast<int>(sf::Keyboard::Scancode::Slash);
-    supportedKeys["Tab"] = static_cast<int>(sf::Keyboard::Scancode::Tab);
-    supportedKeys["F1"] = static_cast<int>(sf::Keyboard::Scancode::F1);
-    supportedKeys["F2"] = static_cast<int>(sf::Keyboard::Scancode::F2);
-    supportedKeys["F3"] = static_cast<int>(sf::Keyboard::Scancode::F3);
+  // if (!ParserJson::loadKeyBinds(this->supportedKeys)) {
+  //   Logger::logStatic("Key binds not loaded", "Core::initKeyBinds()");
+  // } else { // load default key binds
+  //   Logger::logStatic("Key binds loaded", "Core::initKeyBinds()");
+  supportedKeys["Escape"] = kHIDUsage_KeyboardEscape;
+  supportedKeys["A"] = kHIDUsage_KeyboardA;
+  supportedKeys["C"] = kHIDUsage_KeyboardC;
+  supportedKeys["D"] = kHIDUsage_KeyboardD;
+  supportedKeys["E"] = kHIDUsage_KeyboardE;
+  supportedKeys["F"] = kHIDUsage_KeyboardF;
+  supportedKeys["Q"] = kHIDUsage_KeyboardQ;
+  supportedKeys["R"] = kHIDUsage_KeyboardR;
+  supportedKeys["S"] = kHIDUsage_KeyboardS;
+  supportedKeys["W"] = kHIDUsage_KeyboardW;
+  supportedKeys["X"] = kHIDUsage_KeyboardX;
+  supportedKeys["Z"] = kHIDUsage_KeyboardZ;
+  supportedKeys["1"] = kHIDUsage_Keyboard1;
+  supportedKeys["2"] = kHIDUsage_Keyboard2;
+  supportedKeys["3"] = kHIDUsage_Keyboard3;
+  supportedKeys["4"] = kHIDUsage_Keyboard4;
+  supportedKeys["5"] = kHIDUsage_Keyboard5;
+  supportedKeys["6"] = kHIDUsage_Keyboard6;
+  supportedKeys["7"] = kHIDUsage_Keyboard7;
+  supportedKeys["8"] = kHIDUsage_Keyboard8;
+  supportedKeys["9"] = kHIDUsage_Keyboard9;
+  supportedKeys["0"] = kHIDUsage_Keyboard0;
+  supportedKeys["Space"] = kHIDUsage_KeyboardSpacebar;
+  supportedKeys["Enter"] = kHIDUsage_KeyboardReturnOrEnter;
+  supportedKeys["BackSpace"] = kHIDUsage_KeyboardDeleteOrBackspace;
+  supportedKeys["Slash"] = kHIDUsage_KeyboardSlash;
+  supportedKeys["Tab"] = kHIDUsage_KeyboardTab;
+  supportedKeys["F1"] = kHIDUsage_KeyboardF1;
+  supportedKeys["F2"] = kHIDUsage_KeyboardF2;
+  supportedKeys["F3"] = kHIDUsage_KeyboardF3;
 
 #if __MDEBUG__ == 1
-    // logger moment with key binds
-    Logger::logStatic("Key binds inited by deafault", "Core::initKeyBinds()");
+  // logger moment with key binds
+  Logger::logStatic("Key binds inited by deafault", "Core::initKeyBinds()");
 
 #endif
-    // save default keys to file
-    ParserJson::saveKeyBinds(this->supportedKeys);
-  }
+  // save default keys to file
+  //  ParserJson::saveKeyBinds(this->supportedKeys);
 
 #if __MDEBUG__ == 1
   // logger moment with key binds
@@ -126,7 +132,8 @@ void Core::initKeyBinds() { // init default keys
 
   // log all keys
   for (auto &i : supportedKeys)
-    Logger::logStatic("Key: " + i.first + " Value: " + std::to_string(i.second),
+    Logger::logStatic("Key: " + i.first + " Value: " +
+                          std::to_string(static_cast<int>(i.second)),
                       "Core::initKeyBinds()");
 
 #endif
@@ -167,46 +174,83 @@ void Core::initWindow() {
 }
 void Core::initTextures() {
   // null текстура
-  TextureManager::loadTexture("texture_null", myConst::textures::texture_NULL);
+  TextureManager::loadTexture(TextureID::TEXTURE_NULL,
+                              myConst::textures::texture_NULL);
   // текстуры для карты
-  TextureManager::loadTexture("texture_deep_ocean",
+  TextureManager::loadTexture(TextureID::TEXTURE_DEEP_OCEAN,
                               myConst::textures::texture_DEEP_OCEAN);
-  TextureManager::loadTexture("texture_ocean",
+  TextureManager::loadTexture(TextureID::TEXTURE_OCEAN,
                               myConst::textures::texture_OCEAN);
-  TextureManager::loadTexture("texture_sand", myConst::textures::texture_SAND);
-  TextureManager::loadTexture("texture_grass",
+  TextureManager::loadTexture(TextureID::TEXTURE_SAND,
+                              myConst::textures::texture_SAND);
+  TextureManager::loadTexture(TextureID::TEXTURE_GRASS,
                               myConst::textures::texture_GRASS);
-  TextureManager::loadTexture("texture_dirt", myConst::textures::texture_DIRT);
-  TextureManager::loadTexture("texture_stone",
+  TextureManager::loadTexture(TextureID::TEXTURE_DIRT,
+                              myConst::textures::texture_DIRT);
+  TextureManager::loadTexture(TextureID::TEXTURE_STONE,
                               myConst::textures::texture_STONE);
-  TextureManager::loadTexture("texture_snow", myConst::textures::texture_SNOW);
+  TextureManager::loadTexture(TextureID::TEXTURE_SNOW,
+                              myConst::textures::texture_SNOW);
 
   // загружаем текстуры сущностей
-  TextureManager::loadTexture("texture_Player",
+  TextureManager::loadTexture(TextureID::TEXTURE_PLAYER,
                               myConst::sprites::texture_PLAYER);
-  TextureManager::loadTexture("texture_Slime", myConst::sprites::texture_SLIME);
+  TextureManager::loadTexture(TextureID::TEXTURE_SLIME,
+                              myConst::sprites::texture_SLIME);
+
   // бек в главном меню
-  TextureManager::loadTexture("texture_background_lay_1",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_1,
                               myConst::gui::texture_background_mainmenu_lay_1);
-  TextureManager::loadTexture("texture_background_lay_2",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_2,
                               myConst::gui::texture_background_mainmenu_lay_2);
-  TextureManager::loadTexture("texture_background_lay_3",
+  TextureManager::loadTexture(TextureID::TEXTURE_BACKGROUND_LAY_3,
                               myConst::gui::texture_background_mainmenu_lay_3);
+
   // текстуры итемов и тп
-  // Загружаем текстуру для ячеек
-  TextureManager::loadTexture("inventory_cell_texture",
-                              myConst::items::inv_cell_back);
+  // Загружаем текстуру для ячеек и предметов
+  TextureManager::loadTexture(TextureID::ITEMS_NULL, ItemTextures::item_NULL);
+  TextureManager::loadTexture(TextureID::INVENTORY_CELL_TEXTURE,
+                              ItemTextures::inv_cell_back);
   TextureManager::loadTexture(
-      "items_potion_small_regeneration",
-      myConst::items::poison::item_img_poison_small_regeneration);
-  TextureManager::loadTexture("items_stone", myConst::items::item_img_stone);
+      TextureID::ITEMS_POISON_SMALL_REGENERATION,
+      ItemTextures::poison::item_img_poison_small_regeneration);
+  TextureManager::loadTexture(TextureID::ITEMS_STONE,
+                              ItemTextures::items::item_img_stone);
+
+  // Дополнительные текстуры для новых предметов
+  // Эти текстуры должны быть добавлены в resources, пока используем
+  // существующие
+  TextureManager::loadTexture(
+      TextureID::ITEMS_WOOD,
+      ItemTextures::items::item_img_stone2); // Временно используем текстуру
+                                             // камня
+  TextureManager::loadTexture(
+      TextureID::ITEMS_IRON_SWORD,
+      ItemTextures::items::item_img_claster_crystal); // Временно используем
+                                                      // текстуру кристалла
+  TextureManager::loadTexture(
+      TextureID::ITEMS_BREAD,
+      ItemTextures::item_NULL); // Временно используем пустую текстуру
+  TextureManager::loadTexture(
+      TextureID::ITEMS_LEATHER_ARMOR,
+      ItemTextures::item_NULL); // Временно используем пустую текстуру
+  TextureManager::loadTexture(
+      TextureID::ITEMS_HEALTH_POTION,
+      ItemTextures::poison::item_img_poison_small_regeneration); // Временно
+                                                                 // используем
+                                                                 // текстуру яда
+
   // текстуры для монет
-  TextureManager::loadTexture("coins_gold_nugget",
-                              myConst::items::coins::item_img_gold_nugget);
-  TextureManager::loadTexture("coins_copper_nugget",
-                              myConst::items::coins::item_img_copper_nuggen);
-  TextureManager::loadTexture("coins_silver_nugget",
-                              myConst::items::coins::item_img_silver_nuggen);
+  TextureManager::loadTexture(TextureID::COINS_GOLD_NUGGET,
+                              ItemTextures::coins::item_img_gold_nugget);
+  TextureManager::loadTexture(TextureID::COINS_COPPER_NUGGET,
+                              ItemTextures::coins::item_img_copper_nuggen);
+  TextureManager::loadTexture(TextureID::COINS_SILVER_NUGGET,
+                              ItemTextures::coins::item_img_silver_nuggen);
+  TextureManager::loadTexture(
+      TextureID::ITEMS_GOLD_COIN,
+      ItemTextures::coins::item_img_gold_nugget); // Используем текстуру золотой
+                                                  // монеты
 }
 
 Core::Core() {
@@ -273,6 +317,8 @@ void Core::update() {
 
   if (!this->mState.empty()) {
     if (this->mWindow->hasFocus()) {
+
+      keyboard.get()->update();
       this->mState.top()->update(this->deltaTime);
 
       if (this->mState.top()->getQuit()) {
@@ -288,13 +334,9 @@ void Core::update() {
 }
 
 void Core::updateEventsWindow() {
-  while (const std::optional event = mWindow.get()->pollEvent()) {
+  while (const std::optional event = mWindow.get()->pollEvent())
     if (event->is<sf::Event::Closed>())
       this->mWindow->close();
-    if (event->is<sf::Event::TextEntered>()) {
-      continue; // Просто игнорируем текстовые события
-    }
-  }
 }
 
 void Core::render() {

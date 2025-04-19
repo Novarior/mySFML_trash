@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Ekzeckt.wiki/**'  # Обновлен путь к Wiki файлам
+      - 'Ekzeckt.wiki/**/*'  # Обновлен путь к Wiki файлам
 
 jobs:
   update-dates:

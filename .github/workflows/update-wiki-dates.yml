@@ -13,6 +13,7 @@ jobs:
     permissions:
       contents: write  # Добавлены права на запись
     steps:
+      
       - uses: actions/checkout@v4
       - name: Update dates
         run: |

@@ -13,13 +13,6 @@ jobs:
     permissions:
       contents: write
     steps:
-        - name: Debug Info
-        run: |
-          echo "Current directory structure:"
-          ls -la
-          echo "Files in Ekzeckt.wiki:"
-          ls -la Ekzeckt.wiki/
-
       - uses: actions/checkout@v4
       
       - name: Extract version from CMakeLists.txt

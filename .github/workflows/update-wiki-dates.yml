@@ -5,35 +5,53 @@ on:
     branches: 
       - main
     paths:
-      - 'Ekzeckt.wiki/**/*'  # Обновлен путь к Wiki файлам
+      - 'Ekzeckt.wiki/**'
 
 jobs:
   update-dates:
-    name: check date and update
+    name: Update Wiki Dates
     runs-on: ubuntu-latest
-
+    
     permissions:
-      contents: write  # Добавлены права на запись
+      contents: write
+      
     steps:
-      - uses: actions/checkout@v4
-
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: Debug Info
         run: |
-          echo "Current directory structure:"
+          echo "Checking directory structure..."
+          pwd
           ls -la
-          echo "Files in Ekzeckt.wiki:"
-          ls -la Ekzeckt.wiki/
+          echo "Checking wiki files..."
+          ls -la Ekzeckt.wiki/ || echo "Wiki directory not found"
 
-      - name: Update dates
+      - name: Update dates in files
         run: |
-          find Ekzeckt.wiki -type f -name "*.md" | while read file; do
-            sed -i "s/🔄 Last updated:.*$/🔄 Last updated: $(date +'%B %Y')/" "$file"
-          done
+          current_date=$(date '+%B %Y')
+          echo "Current date: $current_date"
+          
+          if [ -d "Ekzeckt.wiki" ]; then
+            find Ekzeckt.wiki -type f -name "*.md" -print0 | while IFS= read -r -d '' file; do
+              echo "Processing file: $file"
+              sed -i "s/🔄 Last updated:.*$/🔄 Last updated: $current_date/" "$file"
+            done
+          else
+            echo "Error: Wiki directory not found!"
+            exit 1
+          fi
 
-      - name: Commit changes
+      - name: Commit and push changes
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add .
-          git commit -m "Update wiki dates" || echo "No changes to commit"
-          git push
+          if git diff --quiet; then
+            echo "No changes to commit"
+          else
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            git add Ekzeckt.wiki/
+            git commit -m "docs: Update wiki dates to $(date '+%B %Y')"
+            git push
+          fi

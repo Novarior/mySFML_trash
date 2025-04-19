@@ -2,7 +2,8 @@ name: Update Wiki Dates
 
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
     paths:
       - 'Ekzeckt.wiki/**/*'  # Обновлен путь к Wiki файлам
 
@@ -15,7 +16,7 @@ jobs:
       contents: write  # Добавлены права на запись
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Debug Info
         run: |
           echo "Current directory structure:"

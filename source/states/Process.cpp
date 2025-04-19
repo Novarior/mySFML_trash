@@ -71,17 +71,21 @@ void Process::initTileMap() {
 void Process::intGUI() { // init GUI
   // init player HP bar on top right on screen math position using mmath::p2pX/X
   this->playerBar["HP_BAR"] = new gui::ProgressBar(
-      sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(75, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(3, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(20, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(3, this->IstateData->sd_Window.lock()->getSize().y)),
       sf::Color::Red, this->IstateData->sd_characterSize_game_small,
       this->IstateData->sd_font);
   this->playerBar["MP_BAR"] = new gui::ProgressBar(
-      sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(3, this->IstateData->sd_Window->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(75, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(20, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(3, this->IstateData->sd_Window.lock()->getSize().y)),
       sf::Color::Blue, this->IstateData->sd_characterSize_game_small,
       this->IstateData->sd_font);
 
@@ -90,24 +94,26 @@ void Process::intGUI() { // init GUI
 
 void Process::initView() {
   sf::Vector2f halfSize = sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2.f,
-      static_cast<float>(this->IstateData->sd_Window->getSize().y) / 2.f);
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x) / 2.f,
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y) /
+          2.f);
 
   this->view.setSize(halfSize);
   this->view.setCenter(halfSize);
   this->playerView.setSize(halfSize);
   this->playerView.setCenter(halfSize);
 
-  if (!this->renderTexture.resize({this->IstateData->sd_Window->getSize().x,
-                                   this->IstateData->sd_Window->getSize().y}))
+  if (!this->renderTexture.resize(
+          {this->IstateData->sd_Window.lock()->getSize().x,
+           this->IstateData->sd_Window.lock()->getSize().y}))
     sf::RenderTexture _buffRenderTexture(
-        {this->IstateData->sd_Window->getSize().x,
-         this->IstateData->sd_Window->getSize().y});
+        {this->IstateData->sd_Window.lock()->getSize().x,
+         this->IstateData->sd_Window.lock()->getSize().y});
 
   this->renderSprite.setTexture(this->renderTexture.getTexture());
   this->renderSprite.setTextureRect(sf::IntRect(
-      {0, 0}, sf::Vector2i(this->IstateData->sd_Window->getSize().x,
-                           this->IstateData->sd_Window->getSize().y)));
+      {0, 0}, sf::Vector2i(this->IstateData->sd_Window.lock()->getSize().x,
+                           this->IstateData->sd_Window.lock()->getSize().y)));
 }
 
 void Process::initPlayer() {
@@ -135,10 +141,12 @@ void Process::initMiniMap() // init minimap
   sf::IntRect worldBounds({0, 0}, this->mapTiles->getMapSizeOnInt());
 
   this->minimap = new gui::MiniMap(
-      sf::Vector2f(mmath::p2pX(75, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(mmath::p2pX(20, this->IstateData->sd_Window->getSize().x),
-                   mmath::p2pX(20, this->IstateData->sd_Window->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(75, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(10, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          mmath::p2pX(20, this->IstateData->sd_Window.lock()->getSize().x),
+          mmath::p2pX(20, this->IstateData->sd_Window.lock()->getSize().y)),
       worldBounds);
 
   this->minimap->setImage(this->mapTiles->getMinimapImage());
@@ -205,7 +213,7 @@ void Process::initInventoryGUI() {
       this->player->e_getInventory(), // e_getInventory уже возвращает
                                       // shared_ptr, который будет автоматически
                                       // преобразован в weak_ptr
-      sf::Vector2f(this->IstateData->sd_Window->getSize()),
+      sf::Vector2f(this->IstateData->sd_Window.lock()->getSize()),
       this->IstateData->sd_font,
       64.0f, // Размер ячейки инвентаря
       this->IstateData->sd_characterSize_game_small);
@@ -265,36 +273,28 @@ Process::~Process() {
 ////////////////////////////////////////////////////////////////////////////////////
 // sub update functions
 void Process::updateInput(const float &delta_time) {
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_TAB"))) &&
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_TAB")) &&
       this->getKeytime())
     this->player->e_getInventory()->toggleInventory();
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_CLOSE"))) &&
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_CLOSE")) &&
       this->getKeytime())
     this->Ipaused = !this->Ipaused;
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) &&
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_SLASH")) &&
       this->getKeytime())
     this->Idebud = !this->Idebud;
 }
 
 void Process::updatePlayerInputs(const float &delta_time) {
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_A"))))
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_A")))
     this->player->e_move(-1.f, 0.f, delta_time);
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_D"))))
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_D")))
     this->player->e_move(1.f, 0.f, delta_time);
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_S"))))
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_S")))
     this->player->e_move(0.f, 1.f, delta_time);
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_W"))))
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_W")))
     this->player->e_move(0.f, -1.f, delta_time);
 
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SPACE"))) &&
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_SPACE")) &&
       this->getKeytime()) {
     for (auto &it : this->entitys)
       this->player->e_attack(it, delta_time);
@@ -397,8 +397,9 @@ void Process::updateDebug(const float &delta_time) {
                       << MemoryUsageMonitor::formatMemoryUsage(
                              MemoryUsageMonitor::getCurrentMemoryUsage())
 
-                      << "\nResolution: " << this->Iwindow->getSize().x << " x "
-                      << this->Iwindow->getSize().y << "\nPlayer:"
+                      << "\nResolution: " << this->Iwindow.lock()->getSize().x
+                      << " x " << this->Iwindow.lock()->getSize().y
+                      << "\nPlayer:"
                       << "\nComponents: "
                       << "\n\tvelX: " << this->player->e_getVelocity().x
                       << "\n\tvelY: " << this->player->e_getVelocity().y

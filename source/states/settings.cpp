@@ -21,11 +21,15 @@ void SettingsState::initKeybinds() { // init key escape like defoult back button
   this->Ikeybinds["KEY_SLASH"] = this->IsupportedKeys->at("Slash");
   this->Ikeybinds["KEY_BACK_PAGE"] = this->IsupportedKeys->at("Q");
   this->Ikeybinds["KEY_FORWARD_PAGE"] = this->IsupportedKeys->at("E");
+  this->Ikeybinds["KEY_A"] = this->IsupportedKeys->at("A");
+  this->Ikeybinds["KEY_W"] = this->IsupportedKeys->at("W");
+  this->Ikeybinds["KEY_S"] = this->IsupportedKeys->at("S");
+  this->Ikeybinds["KEY_D"] = this->IsupportedKeys->at("D");
 }
 
 void SettingsState::initGui() { // init gui with next call functions
   //
-  sf::Vector2u window_size = this->Iwindow->getSize();
+  sf::Vector2u window_size = this->Iwindow.lock()->getSize();
 
   // init background
   this->background.setSize(sf::Vector2f(window_size.x, window_size.y));
@@ -53,7 +57,7 @@ void SettingsState::initGui() { // init gui with next call functions
 }
 
 void SettingsState::initButtons() { // Navigaton buttons in settings
-  sf::Vector2u window_size = this->Iwindow->getSize();
+  sf::Vector2u window_size = this->Iwindow.lock()->getSize();
   sf::Vector2f background_layer_pos = sf::Vector2f(
       mmath::p2pX(50, window_size.x) - _pageBackground.getSize().x / 2,
       mmath::p2pY(50, window_size.y) - _pageBackground.getSize().y / 2);
@@ -109,7 +113,7 @@ void SettingsState::initButtons() { // Navigaton buttons in settings
 void SettingsState::initGraphicsPage() {
   //=======================================   GRAPHICS
   //===============================================
-  sf::Vector2u window_size = this->Iwindow->getSize();
+  sf::Vector2u window_size = this->Iwindow.lock()->getSize();
   sf::Vector2f background_layer_pos = sf::Vector2f(
       mmath::p2pX(50, window_size.x) - _pageBackground.getSize().x / 2,
       mmath::p2pY(50, window_size.y) - _pageBackground.getSize().y / 2);
@@ -395,7 +399,7 @@ void SettingsState::initSounsPage() { // init sound page
 }
 
 void SettingsState::initKeyboardPage() { // init keyboard page
-  sf::Vector2u window_size = this->Iwindow->getSize();
+  sf::Vector2u window_size = this->Iwindow.lock()->getSize();
   sf::Vector2f button_size = sf::Vector2f(mmath::p2pX(16, window_size.x),
                                           mmath::p2pY(5, window_size.y));
 
@@ -407,7 +411,8 @@ void SettingsState::initKeyboardPage() { // init keyboard page
   int i = 0;
   float i2 = i;
   for (const auto &keybind : *this->IstateData->sd_supportedKeys) {
-    text.setString(keybind.first + ": " + std::to_string(keybind.second));
+    text.setString(keybind.first + ": " +
+                   std::to_string(static_cast<int>(keybind.second)));
 
     float posX = mmath::p2pX(12.f * (i % 3), window_size.x);
     float posY = mmath::p2pY(40.f, window_size.y) +
@@ -451,12 +456,12 @@ void SettingsState::resetGui() { // reser to new resolution, and other settings
 
   // reset window
   if (gfx.fullscreen)
-    this->Iwindow->create(gfx.resolution, gfx.title, sf::State::Fullscreen,
-                          gfx.contextSettings);
+    this->Iwindow.lock()->create(gfx.resolution, gfx.title,
+                                 sf::State::Fullscreen, gfx.contextSettings);
   else
-    this->Iwindow->create(gfx.resolution, gfx.title, sf::State::Windowed,
-                          gfx.contextSettings);
-  this->Iwindow->setFramerateLimit(gfx.frameRateLimit);
+    this->Iwindow.lock()->create(gfx.resolution, gfx.title, sf::State::Windowed,
+                                 gfx.contextSettings);
+  this->Iwindow.lock()->setFramerateLimit(gfx.frameRateLimit);
 
   this->IstateData->reserGUI = true;
   this->saveVolumeSettings();
@@ -491,11 +496,12 @@ void SettingsState::initPageLayout() {}
 SettingsState::SettingsState(StateData *state_data)
     : State(state_data), page(settingPage::GRAPHICS),
       pageName("GRAPHICS") { // init variables
-  this->initPageLayout();
-  this->initVariables();
-  this->initFonts();
-  this->initGui();
-  this->initKeybinds();
+  initPageLayout();
+  initVariables();
+  initFonts();
+  initGui();
+  initKeybinds();
+
   Logger::logStatic("End initilization settings state",
                     "SettingsState::SettingsState()", logType::INFO);
 }
@@ -690,8 +696,9 @@ void SettingsState::updateGui(const float &delta_time) {
         << "\nFramerate limit: " +
                std::to_string(
                    this->IstateData->sd_gfxSettings->_struct.frameRateLimit)
-        << "\nResolution: " << this->IstateData->sd_Window->getSize().x << "x"
-        << this->IstateData->sd_Window->getSize().y << "\nAntialiasing: "
+        << "\nResolution: " << this->IstateData->sd_Window.lock()->getSize().x
+        << "x" << this->IstateData->sd_Window.lock()->getSize().y
+        << "\nAntialiasing: "
         << this->IstateData->sd_gfxSettings->_struct.contextSettings
                .antiAliasingLevel
         << "\nvSync: " << this->IstateData->sd_gfxSettings->_struct.verticalSync
@@ -725,7 +732,6 @@ void SettingsState::update(const float &delta_time) {
 
 void SettingsState::renderGui(sf::RenderTarget &target) {
   // render gui elements on some page
-  //
 
   // render page buttons
   for (auto &it : _pageButtons)
@@ -765,9 +771,8 @@ void SettingsState::renderGui(sf::RenderTarget &target) {
     break;
   }
 }
-void SettingsState::renderPageLayout(
-    sf::RenderTarget &target) // Render page layout
-{
+// Render page layout
+void SettingsState::renderPageLayout(sf::RenderTarget &target) {
   // render page layout
   target.draw(_pageBackground);
 }

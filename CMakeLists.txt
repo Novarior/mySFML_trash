@@ -89,6 +89,7 @@ if(APPLE)
         nlohmann_json::nlohmann_json
         "-framework CoreFoundation"
         "-framework CoreServices"
+         "-framework IOKit"
     )
 
     # Установка rpath

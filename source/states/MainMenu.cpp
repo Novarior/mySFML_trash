@@ -1,24 +1,27 @@
 #include "MainMenu.hpp"
+#include <IOKit/hid/IOHIDUsageTables.h>
 
 void MainMenu::initRenderDefines() {
-  if (!this->renderTexture.resize({this->IstateData->sd_Window->getSize().x,
-                                   this->IstateData->sd_Window->getSize().y}))
+  if (!this->renderTexture.resize(
+          {this->IstateData->sd_Window.lock()->getSize().x,
+           this->IstateData->sd_Window.lock()->getSize().y}))
     Logger::logStatic("renderTexture cannot be resize",
                       "MainMenu::initRenderDefines()", logType::ERROR);
   this->renderTexture.setSmooth(true);
 
   this->renderSprite.setTexture(this->renderTexture.getTexture());
   this->renderSprite.setTextureRect(sf::IntRect(
-      {0, 0}, {static_cast<int>(this->IstateData->sd_Window->getSize().x),
-               static_cast<int>(this->IstateData->sd_Window->getSize().y)}));
+      {0, 0},
+      {static_cast<int>(this->IstateData->sd_Window.lock()->getSize().x),
+       static_cast<int>(this->IstateData->sd_Window.lock()->getSize().y)}));
 
   this->view.setSize(sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x),
-      static_cast<float>(this->IstateData->sd_Window->getSize().y)));
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x),
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y)));
 
   this->view.setCenter(sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2,
-      static_cast<float>(this->IstateData->sd_Window->getSize().y) / 2));
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x) / 2,
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y) / 2));
 }
 
 void MainMenu::initKeybinds() {
@@ -54,10 +57,12 @@ void MainMenu::initBackground() {
                      this->backgrond_shapes[i].getSize().y / 2));
 
     this->backgrond_shapes[i].setPosition(sf::Vector2f(
-        static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2 -
+        static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x) /
+                2 -
             (this->backgrond_shapes[i].getSize().x / 2) +
             this->backgrond_shapes[i].getOrigin().x,
-        static_cast<float>(this->IstateData->sd_Window->getSize().y) / 2 -
+        static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y) /
+                2 -
             (this->backgrond_shapes[i].getSize().y / 2) +
             this->backgrond_shapes[i].getOrigin().y));
   }
@@ -72,11 +77,11 @@ void MainMenu::initButtons() {
     ButtonInfo(const char *k, std::string t) : key(k), text(t) {}
   };
 
-  float offsetX = mmath::p2pX(5, this->Iwindow->getSize().x);
-  float offsetY = mmath::p2pX(5, this->Iwindow->getSize().y);
+  float offsetX = mmath::p2pX(5, this->Iwindow.lock()->getSize().x);
+  float offsetY = mmath::p2pX(5, this->Iwindow.lock()->getSize().y);
 
-  sf::Vector2f sizebutton = {mmath::p2pX(15, this->Iwindow->getSize().x),
-                             mmath::p2pX(7, this->Iwindow->getSize().y)};
+  sf::Vector2f sizebutton = {mmath::p2pX(15, this->Iwindow.lock()->getSize().x),
+                             mmath::p2pX(7, this->Iwindow.lock()->getSize().y)};
   // Массив с координатами для каждой кнопки
   std::vector<sf::Vector2f> buttonOffsets = {
       {offsetX * 15.5f, offsetY * 2},  // noice
@@ -131,12 +136,12 @@ void MainMenu::resetGUI() {
 
 void MainMenu::resetView() {
   this->view.setSize(sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x),
-      static_cast<float>(this->IstateData->sd_Window->getSize().y)));
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x),
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y)));
 
   this->view.setCenter(sf::Vector2f(
-      static_cast<float>(this->IstateData->sd_Window->getSize().x) / 2,
-      static_cast<float>(this->IstateData->sd_Window->getSize().y) / 2));
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().x) / 2,
+      static_cast<float>(this->IstateData->sd_Window.lock()->getSize().y) / 2));
 }
 
 void MainMenu::initSounds() {
@@ -213,16 +218,13 @@ void MainMenu::update(const float &delta_time) {
 }
 
 void MainMenu::updateInput(const float &delta_time) {
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_SLASH"))) &&
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_SLASH")) &&
       this->getKeytime())
     this->Idebud = !this->Idebud;
 
-  if (sf::Keyboard::isKeyPressed(
-          sf::Keyboard::Scancode(this->Ikeybinds.at("KEY_R"))) &&
-      this->getKeytime()) {
+  if (Ikeyboard.lock()->isKeyPressed(this->Ikeybinds.at("KEY_R")) &&
+      this->getKeytime())
     this->resetGUI();
-  }
 }
 
 void MainMenu::updateButtons() {
@@ -272,9 +274,10 @@ void MainMenu::updateGUI(const float &delta_time) {
         << FPS::getFPS() << "\nFPS limit:\t"
         << this->IstateData->sd_gfxSettings->_struct.frameRateLimit
         << "\nDelta Time:\t" << delta_time << "\nResolution:\t"
-        << this->IstateData->sd_Window->getSize().x << " x "
-        << this->IstateData->sd_Window->getSize().y << "\nAntialiasing:\t"
-        << this->IstateData->sd_Window->getSettings().antiAliasingLevel
+        << this->IstateData->sd_Window.lock()->getSize().x << " x "
+        << this->IstateData->sd_Window.lock()->getSize().y
+        << "\nAntialiasing:\t"
+        << this->IstateData->sd_Window.lock()->getSettings().antiAliasingLevel
         << "\nvSync:\t"
         << this->IstateData->sd_gfxSettings->_struct.verticalSync
         << "\nMouse Pos:\t" << this->ImousePosWindow.x << " x "
@@ -339,7 +342,7 @@ void MainMenu::updateSounds(const float &delta_time) {
   // check for playing sound "select menu" when cursor on button
 
   // stop if lost focus on window
-  if (!this->Iwindow->hasFocus())
+  if (!this->Iwindow.lock()->hasFocus())
     for (auto &it : this->IsoundsMap)
       it.second.pause();
 }

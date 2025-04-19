@@ -12,10 +12,10 @@ void EditorState::initKeybinds() {
 
 void EditorState::initTabMenu() { // tab menu
   this->tabShape.setPosition(sf::Vector2f(
-      mmath::p2pX(70, this->IstateData->sd_Window->getSize().x), 0));
-  this->tabShape.setSize(
-      sf::Vector2f(mmath::p2pX(30, this->IstateData->sd_Window->getSize().x),
-                   this->IstateData->sd_Window->getSize().y));
+      mmath::p2pX(70, this->IstateData->sd_Window.lock()->getSize().x), 0));
+  this->tabShape.setSize(sf::Vector2f(
+      mmath::p2pX(30, this->IstateData->sd_Window.lock()->getSize().x),
+      this->IstateData->sd_Window.lock()->getSize().y));
   // half transparent gray
   this->tabShape.setFillColor(sf::Color(150, 150, 150, 200));
   this->tabShape.setOutlineThickness(5.f);
@@ -28,44 +28,49 @@ void EditorState::initButtons() { // init buttons
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x / 2,
-                   mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(90, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x / 2,
+          mmath::p2pX(10, this->IstateData->sd_Window.lock()->getSize().y)),
       "Gen Noice", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["G_TREE"] = new gui::Button(
       sf::Vector2f(
           this->tabShape.getPosition().x + this->tabShape.getSize().x / 2,
           this->tabShape.getPosition().y +
-              mmath::p2pX(90, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x / 2,
-                   mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(90, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x / 2,
+          mmath::p2pX(10, this->IstateData->sd_Window.lock()->getSize().y)),
       "Gen Tree", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["SAVE_GENDATA"] = new gui::Button(
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x / 2,
-                   mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(80, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x / 2,
+          mmath::p2pX(10, this->IstateData->sd_Window.lock()->getSize().y)),
       "Save", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 
   this->buttons["LOAD_GENDATA"] = new gui::Button(
       sf::Vector2f(
           this->tabShape.getPosition().x + this->tabShape.getSize().x / 2,
           this->tabShape.getPosition().y +
-              mmath::p2pX(80, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x / 2,
-                   mmath::p2pX(10, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(80, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x / 2,
+          mmath::p2pX(10, this->IstateData->sd_Window.lock()->getSize().y)),
       "Load", gui::styles::buttons::btn_editor, gui::type::BUTTON);
 }
 
 void EditorState::initSelectors() { // init static selector in tab menu
   this->staticSelector["OCTAVES"] = new gui::StaticSelector(
       sf::Vector2f(this->tabShape.getPosition()),
-      sf::Vector2f(this->tabShape.getSize().x,
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x,
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
       10, 1.f, true, "Octaves: ");
 
@@ -73,9 +78,10 @@ void EditorState::initSelectors() { // init static selector in tab menu
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x,
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x,
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
       10, 0.1f, true, "Frequency: ");
 
@@ -83,9 +89,10 @@ void EditorState::initSelectors() { // init static selector in tab menu
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(14, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x,
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(14, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x,
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
       5, 0.1f, true, "Persistence: ");
 
@@ -93,9 +100,10 @@ void EditorState::initSelectors() { // init static selector in tab menu
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(21, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x,
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(21, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x,
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big, 0,
       10, 0.1f, true, "Amplifire: ");
 
@@ -106,9 +114,10 @@ void EditorState::initSelectors() { // init static selector in tab menu
       sf::Vector2f(
           this->tabShape.getPosition().x,
           this->tabShape.getPosition().y +
-              mmath::p2pX(28, this->IstateData->sd_Window->getSize().y)),
-      sf::Vector2f(this->tabShape.getSize().x,
-                   mmath::p2pX(7, this->IstateData->sd_Window->getSize().y)),
+              mmath::p2pX(28, this->IstateData->sd_Window.lock()->getSize().y)),
+      sf::Vector2f(
+          this->tabShape.getSize().x,
+          mmath::p2pX(7, this->IstateData->sd_Window.lock()->getSize().y)),
       this->IstateData->sd_font, this->IstateData->sd_characterSize_game_big,
       list.data(), list.size(), 0);
 
@@ -175,8 +184,8 @@ EditorState::EditorState(StateData *statedata) : State(statedata) {
   this->myLS->setRule('d', "qd");
   this->myLS->setRule('s', "d[[-qqs]qs]+qqs[+q|]-q|");
   this->myLS->setOffsetPos(
-      sf::Vector2f(this->IstateData->sd_Window->getSize().x / 2,
-                   this->IstateData->sd_Window->getSize().y * 0.90));
+      sf::Vector2f(this->IstateData->sd_Window.lock()->getSize().x / 2,
+                   this->IstateData->sd_Window.lock()->getSize().y * 0.90));
   this->myLS->generate();
 
   Logger::logStatic("End initilization EditorState",
@@ -411,7 +420,7 @@ void EditorState::updateButtons(const float &delta_time) {
   case 1: // tree case
     if (this->buttons["G_TREE"]->isPressed()) {
       this->myLS->generate();
-      this->saveTreeAsImage(*this->IstateData->sd_Window);
+      this->saveTreeAsImage(*this->IstateData->sd_Window.lock());
     }
     break;
   default: // default case

@@ -1,7 +1,7 @@
 #ifndef SETTINGS
 #define SETTINGS
 
-#include "../locTexts/helperText.hpp"
+#include "../localisation/helperText.hpp"
 #include "State.hpp"
 
 /// @brief  Class for the settings state

@@ -8,12 +8,12 @@ on:
 
 jobs:
   update-dates:
-    name: check date and update
     runs-on: ubuntu-latest
+    name: check date and update
     permissions:
       contents: write  # Добавлены права на запись
     steps:
-      
+
       - uses: actions/checkout@v4
       - name: Update dates
         run: |

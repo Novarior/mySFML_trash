@@ -9,7 +9,8 @@ on:
 jobs:
   update-footer:
     name: check version and update
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
+
     permissions:
       contents: write
     steps:

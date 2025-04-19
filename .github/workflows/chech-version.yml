@@ -2,8 +2,7 @@ name: Update Footer Version
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
     paths:
       - 'CMakeLists.txt'
 

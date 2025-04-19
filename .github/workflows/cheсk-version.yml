@@ -40,13 +40,35 @@ jobs:
           
       - name: Update Footer Version
         run: |
-          if [ -f "Ekzeckt.wiki/_Footer.md" ]; then
-            sed -i "s/📝 Версия: \[.*\]/📝 Версия: [${{ env.PROJECT_VERSION }}]/" Ekzeckt.wiki/_Footer.md
-            echo "Updated version in Footer.md"
-          else
-            echo "Error: Footer.md not found"
+          # Проверяем структуру директорий
+          echo "Current directory: $(pwd)"
+          echo "Looking for wiki directory..."
+          
+          # Проверяем наличие wiki директории
+          if [ ! -d "Ekzeckt.wiki" ]; then
+            echo "Error: Wiki directory not found"
+            ls -la
             exit 1
           fi
+          
+          # Проверяем наличие Footer файла
+          echo "Looking for _Footer.md..."
+          if [ -f "Ekzeckt.wiki/_Footer.md" ]; then
+            echo "Found _Footer.md"
+          elif [ -f "_Footer.md" ]; then
+            echo "Found _Footer.md in root"
+            cp _Footer.md Ekzeckt.wiki/_Footer.md
+          else
+            echo "Creating _Footer.md..."
+            mkdir -p Ekzeckt.wiki
+            echo "---" > Ekzeckt.wiki/_Footer.md
+            echo "" >> Ekzeckt.wiki/_Footer.md
+            echo "📝 Версия: [0.0.0]" >> Ekzeckt.wiki/_Footer.md
+          fi
+          
+          # Обновляем версию
+          sed -i "s/📝 Версия: \[.*\]/📝 Версия: [${{ env.PROJECT_VERSION }}]/" Ekzeckt.wiki/_Footer.md
+          echo "Updated version in _Footer.md"
           
       - name: Commit changes
         run: |

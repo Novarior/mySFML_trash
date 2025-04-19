@@ -20,28 +20,7 @@ also minimal work with MacOS frameworks
 
 ## Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/Novarior/mySFML_trash.git
-   cd mySFML_trash
-   ```
-
-2. Configure the project using CMake:
-   ```bash
-   mkdir build && cd build
-   cmake .. -DCMAKE_BUILD_TYPE=Release
-   ```
-   or for Debug:
-   ```bash
-   cmake .. -DCMAKE_BUILD_TYPE=Debug
-   ```
-
-3. Build the project:
-   ```bash
-   cmake --build .
-   ```
-
-4. After build, u can find applications in `build/bin/` directory.
+guide for [install](https://github.com/Novarior/Ekzeckt/wiki/Getting-Started)
 
 ## Structure
 

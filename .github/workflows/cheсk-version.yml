@@ -14,25 +14,26 @@ jobs:
     permissions:
       contents: write
     steps:
-        - uses: actions/checkout@v4
+      - name: check rep
+        uses: actions/checkout@v4
       
-        - name: Debug Info
+      - name: Debug Info
         run: |
           echo "Current directory structure:"
           ls -la
           echo "Files in Ekzeckt.wiki:"
           ls -la Ekzeckt.wiki/
 
-        - name: Extract version from CMakeLists.txt
+      - name: Extract version from CMakeLists.txt
         run: |
           VERSION=$(grep -E "project\(.*VERSION" CMakeLists.txt | grep -o -E "[0-9]+\.[0-9]+\.[0-9]+")
           echo "PROJECT_VERSION=$VERSION" >> $GITHUB_ENV
           
-        - name: Update Footer Version
+      - name: Update Footer Version
         run: |
           sed -i "s/📝 Версия: \[.*\]/📝 Версия: [${{ env.PROJECT_VERSION }}]/" Ekzeckt.wiki/_Footer.md
           
-        - name: Commit changes
+      - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"

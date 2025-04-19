@@ -8,18 +8,27 @@ on:
 
 jobs:
   update-dates:
-    runs-on: ubuntu-latest
     name: check date and update
+    runs-on: ubuntu-latest
+
     permissions:
       contents: write  # Добавлены права на запись
     steps:
-
       - uses: actions/checkout@v4
+      
+      - name: Debug Info
+        run: |
+          echo "Current directory structure:"
+          ls -la
+          echo "Files in Ekzeckt.wiki:"
+          ls -la Ekzeckt.wiki/
+
       - name: Update dates
         run: |
           find Ekzeckt.wiki -type f -name "*.md" | while read file; do
             sed -i "s/🔄 Last updated:.*$/🔄 Last updated: $(date +'%B %Y')/" "$file"
           done
+
       - name: Commit changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
